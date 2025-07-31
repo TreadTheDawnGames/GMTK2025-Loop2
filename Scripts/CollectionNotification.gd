@@ -46,15 +46,15 @@ func _on_fade_timer_timeout() -> void:
 static func create_notification(parent: Node, collectable_name: String, points: int, screen_position: Vector2) -> CollectionNotification:
 	# Load the notification scene
 	var notification_scene = preload("res://Scenes/UI/CollectionNotification.tscn")
-	var notification = notification_scene.instantiate()
+	var localNotification = notification_scene.instantiate()
 	
 	# Add to parent
-	parent.add_child(notification)
+	parent.add_child(localNotification)
 	
 	# Position it
-	notification.position = screen_position
+	localNotification.position = screen_position
 	
 	# Show the collection
-	notification.show_collection(collectable_name, points)
+	localNotification.show_collection(collectable_name, points)
 	
-	return notification
+	return localNotification

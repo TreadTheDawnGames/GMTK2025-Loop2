@@ -39,8 +39,8 @@ var _current_aim_pull_vector: Vector2 = Vector2.ZERO
 var SingleTouchDown : bool = false
 
 # Lose condition variables
-@export var max_distance_from_origin: float = 15000.0  # Maximum distance before losing
-var origin_position: Vector2 = Vector2.ZERO
+static var max_distance_from_origin: float = 15000.0  # Maximum distance before losing
+static var origin_position: Vector2 = Vector2.ZERO
 var has_lost: bool = false
 
 # This creates a reference to the Line2D node for drawing the power bar.
@@ -58,9 +58,10 @@ func _ready() -> void:
 
 # Apply the current ship color from GameManager
 func apply_ship_color() -> void:
-	var ship_color = GameManager.get_ship_color()
+	#var ship_color = GameManager.get_ship_color()
 	#Sprite.modulate = ship_color
-
+	pass
+	
 # Called when ship color changes in GameManager
 func _on_ship_color_changed(_new_color: Color) -> void:
 	apply_ship_color()
@@ -74,8 +75,10 @@ func check_lose_condition() -> void:
 	if distance_from_origin > max_distance_from_origin:
 		has_lost = true
 		print("Player went too far! Distance: ", distance_from_origin)
+		
 		# Show lose screen after a short delay
-		await get_tree().create_timer(1.0).timeout
+		#await get_tree().create_timer(1.0).timeout
+		#Actually don't lol
 		GameManager.show_lose_screen()
 
 # This function is called by Godot when an input event occurs on this object.
@@ -130,17 +133,14 @@ func _physics_process(delta: float) -> void:
 
 	# Check lose condition - if player is too far from origin
 	check_lose_condition()
-
-	var collision : KinematicCollision2D = move_and_collide(Vector2.ZERO, true)
-	if(collision):
-		print("Collided")
-		var collider = collision.get_collider()
-		print(collider)
-		if collider.owner is BasePlanet:
-			print("OnPlanet")
-			if(!onPlanet):
-				Reset()
-			onPlanet = true
+	if is_inside_tree():
+		var collision : KinematicCollision2D = move_and_collide(Vector2.ZERO, true)
+		if(collision):
+			var collider = collision.get_collider()
+			if collider.owner is BasePlanet:
+				if(!onPlanet):
+					Reset()
+				onPlanet = true
 
 	# This checks if the player is in the air.
 	if current_state == State.LAUNCHED:

@@ -34,6 +34,7 @@ gravity_scale = 0.0
 script = ExtResource("1_kyqiw")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 5.68434e-14)
 rotation = -1.5708
 scale = Vector2(0.453657, 0.453657)
 texture = ExtResource("2_kyqiw")
@@ -58,10 +59,10 @@ script = ExtResource("5_5ixxa")
 length = 15
 metadata/_custom_type_script = "uid://dgc8vmme70xjb"
 
-[node name="Node2D" type="Node2D" parent="CollisionShape2D/Node2D"]
-position = Vector2(0, 72)
+[node name="Node2D2" type="Node2D" parent="CollisionShape2D"]
+position = Vector2(-39, 36)
 
-[node name="Trail2D" type="Line2D" parent="CollisionShape2D/Node2D/Node2D"]
+[node name="Trail2D" type="Line2D" parent="CollisionShape2D/Node2D2"]
 position = Vector2(-3, 0)
 points = PackedVector2Array(5, -1, -88, -0.999996)
 width = 13.415

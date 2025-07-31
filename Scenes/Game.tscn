@@ -1,7 +1,6 @@
-[gd_scene load_steps=18 format=3 uid="uid://c0pbif8cyy7x7"]
+[gd_scene load_steps=15 format=3 uid="uid://c0pbif8cyy7x7"]
 
 [ext_resource type="PackedScene" uid="uid://cvy6qvmeierso" path="res://Scenes/planet_large.tscn" id="1_j5yw3"]
-[ext_resource type="Texture2D" uid="uid://u0nthwjjti6c" path="res://Assets/StarBackgroundTile.png" id="2_2irst"]
 [ext_resource type="PackedScene" uid="uid://vuorl2ga7vdk" path="res://Scenes/planet_medium.tscn" id="2_kldst"]
 [ext_resource type="Script" uid="uid://dx7wa3d4fr6xu" path="res://Scripts/star_background.gd" id="3_2irst"]
 [ext_resource type="PackedScene" uid="uid://d1rrwaam8e5cr" path="res://Scenes/planet_small.tscn" id="3_b2bpf"]
@@ -26,23 +25,6 @@ shader_parameter/smallStarAmount = 0.002
 shader_parameter/mediumStarAmount = 0.01
 shader_parameter/bigStarAmount = 0.02
 
-[sub_resource type="Shader" id="Shader_fgofq"]
-code = "shader_type canvas_item;
-
-uniform float paralax = 0.001;
-uniform vec2 offset = vec2(0,0);
-
-
-void vertex() {
-	// Called for every vertex the material is visible on.
-	UV += offset * paralax;
-}"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_fgofq"]
-shader = SubResource("Shader_fgofq")
-shader_parameter/paralax = 1.0
-shader_parameter/offset = Vector2(0, 0)
-
 [node name="Game" type="Node2D"]
 script = ExtResource("9_controller")
 
@@ -65,18 +47,6 @@ offset_bottom = 1626.0
 color = Color(0, 0, 0, 1)
 script = ExtResource("3_2irst")
 
-[node name="TextureRect" type="TextureRect" parent="CanvasLayer/ColorRect"]
-visible = false
-z_index = -1
-z_as_relative = false
-material = SubResource("ShaderMaterial_fgofq")
-layout_mode = 0
-offset_right = 3445.0
-offset_bottom = 1985.0
-texture = ExtResource("2_2irst")
-stretch_mode = 1
-script = ExtResource("3_2irst")
-
 [node name="Planet" parent="." instance=ExtResource("1_j5yw3")]
 position = Vector2(-1319, 568)
 gravityCurve = null
@@ -90,7 +60,7 @@ position = Vector2(10, -924)
 gravityCurve = null
 
 [node name="Player" parent="." instance=ExtResource("4_kldst")]
-position = Vector2(695, -24)
+position = Vector2(839, 280)
 launch_power = 5.0
 
 [node name="Planet4" parent="." instance=ExtResource("5_b2bpf")]
