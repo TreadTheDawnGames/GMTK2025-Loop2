@@ -29,10 +29,11 @@ var ship_colors: Array[Color] = [
 	Color.WHITE       # Special case
 ]
 
+@onready var Background: StarBackground
+
 func _ready() -> void:
 	# Set initial ship color
 	set_ship_color_from_hue(0.0)  # Start with red
-
 # Set ship color based on hue value (0.0 to 1.0)
 func set_ship_color_from_hue(hue_value: float) -> void:
 	ship_color_hue = clamp(hue_value, 0.0, 1.0)

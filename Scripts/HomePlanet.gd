@@ -18,5 +18,5 @@ func BodyEntered(node : Node2D):
 		GameManager.show_win_screen()
 	return
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass

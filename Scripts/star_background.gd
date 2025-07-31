@@ -1,10 +1,10 @@
 extends TextureRect
+class_name StarBackground
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
-func UpdateShaderUV(position : Vector2):
-	self.get_material().set_shader_param("my_value",position)
+	
+func _process(_delta: float) -> void:
+	material.set("shader_parameter/offset", Player.Position * 0.0001)
+	#material.set("shader_parameter/paralax", amount)
 	return
+
+	

@@ -23,6 +23,7 @@ enum State {
 # This exports a variable for the boost impulse strength.
 @export var boost_strength: float = 1000.0
 
+static var Position : Vector2
 # This variable will hold the player's current state from the enum above.
 var current_state: State = State.READY_TO_AIM
 # This boolean tracks if the one-time boost is still available.
@@ -58,7 +59,7 @@ func apply_ship_color() -> void:
 	Sprite.modulate = ship_color
 
 # Called when ship color changes in GameManager
-func _on_ship_color_changed(new_color: Color) -> void:
+func _on_ship_color_changed(_new_color: Color) -> void:
 	apply_ship_color()
 
 # Check if player has gone too far and should lose
@@ -84,7 +85,10 @@ func _input(ev: InputEvent) -> void:
 			
 	
 # This function is called every frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
+	#change the offset position of the background so it looks more like you're moving
+	Position = global_position
+	
 	#Reset whether ship can aim
 	if (Input.is_action_just_pressed("DEBUG-RESET_LAUNCH")):
 		Reset()
