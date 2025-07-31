@@ -21,7 +21,7 @@ position = Vector2(261, -765)
 gravityCurve = null
 
 [node name="Player" parent="." instance=ExtResource("4_kldst")]
-position = Vector2(1043, 619)
+position = Vector2(1169, -1073)
 launch_power = 5.0
 
 [node name="Planet4" parent="." instance=ExtResource("5_b2bpf")]

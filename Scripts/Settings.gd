@@ -1,43 +1,33 @@
 extends Control
 
-@onready var current_color_label: Label = $VBoxContainer/CurrentColorLabel
-
-# Current selected ship color
-var selected_ship_color: String = "White"
+@onready var color_slider: HSlider = $VBoxContainer/ColorSliderContainer/ColorSlider
+@onready var example_ship: Sprite2D = $VBoxContainer/ExampleShipContainer/ExampleShip
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	update_color_display()
+	# Set initial slider value from GameManager
+	color_slider.value = GameManager.get_ship_color_hue()
+	# Update example ship color
+	update_example_ship_color()
 
-# Update the display to show current selected color
-func update_color_display() -> void:
-	current_color_label.text = "Current Color: " + selected_ship_color
+	# Connect to GameManager signal for color changes
+	GameManager.ship_color_changed.connect(_on_ship_color_changed)
 
-# Called when Red button is pressed
-func _on_red_button_pressed() -> void:
-	selected_ship_color = "Red"
-	update_color_display()
-	print("Ship color changed to Red")
+# Called when the color slider value changes
+func _on_color_slider_value_changed(value: float) -> void:
+	# Update GameManager with new hue value
+	GameManager.set_ship_color_from_hue(value)
 
-# Called when Blue button is pressed
-func _on_blue_button_pressed() -> void:
-	selected_ship_color = "Blue"
-	update_color_display()
-	print("Ship color changed to Blue")
+# Called when GameManager ship color changes
+func _on_ship_color_changed(new_color: Color) -> void:
+	update_example_ship_color()
 
-# Called when Green button is pressed
-func _on_green_button_pressed() -> void:
-	selected_ship_color = "Green"
-	update_color_display()
-	print("Ship color changed to Green")
-
-# Called when Yellow button is pressed
-func _on_yellow_button_pressed() -> void:
-	selected_ship_color = "Yellow"
-	update_color_display()
-	print("Ship color changed to Yellow")
+# Update the example ship sprite color
+func update_example_ship_color() -> void:
+	var ship_color = GameManager.get_ship_color()
+	example_ship.modulate = ship_color
 
 # Called when Back button is pressed
 func _on_back_button_pressed() -> void:
 	# Return to main menu
-	get_tree().change_scene_to_file("res://Scenes/UI/MainMenu.tscn")
+	GameManager.go_to_main_menu()

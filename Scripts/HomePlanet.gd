@@ -14,6 +14,8 @@ func BodyEntered(node : Node2D):
 	if(node is Player):
 		LevelComplete.emit()
 		print("YOU WIN!")
+		# Show win screen
+		GameManager.show_win_screen()
 	return
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

@@ -6,8 +6,8 @@ func _ready() -> void:
 
 # Called when Start Game button is pressed
 func _on_start_button_pressed() -> void:
-	# Load the Game scene
-	get_tree().change_scene_to_file("res://Scenes/Game.tscn")
+	# Start the game through GameManager
+	GameManager.restart_game()
 
 # Called when Settings button is pressed
 func _on_settings_button_pressed() -> void:

@@ -34,10 +34,45 @@ var _current_aim_pull_vector: Vector2 = Vector2.ZERO
 #stores whether a single touch is happening
 var SingleTouchDown : bool = false
 
+# Lose condition variables
+var max_distance_from_origin: float = 15000.0  # Maximum distance before losing
+var origin_position: Vector2 = Vector2.ZERO
+var has_lost: bool = false
+
 # This creates a reference to the Line2D node for drawing the power bar.
 @onready var line_2d: Line2D = $Line2D
 # This creates a reference to the Sprite2D node.
 @onready var sprite: Sprite2D = $Sprite2D
+
+func _ready() -> void:
+	# Store starting position as origin
+	origin_position = global_position
+	# Apply ship color from GameManager
+	apply_ship_color()
+	# Connect to color change signal
+	GameManager.ship_color_changed.connect(_on_ship_color_changed)
+
+# Apply the current ship color from GameManager
+func apply_ship_color() -> void:
+	var ship_color = GameManager.get_ship_color()
+	Sprite.modulate = ship_color
+
+# Called when ship color changes in GameManager
+func _on_ship_color_changed(new_color: Color) -> void:
+	apply_ship_color()
+
+# Check if player has gone too far and should lose
+func check_lose_condition() -> void:
+	if has_lost:
+		return
+
+	var distance_from_origin = global_position.distance_to(origin_position)
+	if distance_from_origin > max_distance_from_origin:
+		has_lost = true
+		print("Player went too far! Distance: ", distance_from_origin)
+		# Show lose screen after a short delay
+		await get_tree().create_timer(1.0).timeout
+		GameManager.show_lose_screen()
 
 # This function is called by Godot when an input event occurs on this object.
 func _input(ev: InputEvent) -> void:
@@ -85,7 +120,10 @@ func _process(delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	# Debug movement (assuming "DEBUG-*" inputs are set up)
 	global_position += Vector2(Input.get_axis("DEBUG-LEFT", "DEBUG-RIGHT"), Input.get_axis("DEBUG-UP", "DEBUG-DOWN")) * 50 * delta
-	
+
+	# Check lose condition - if player is too far from origin
+	check_lose_condition()
+
 	# This checks if the player is in the air.
 	if current_state == State.LAUNCHED:
 		# This makes the rocket point in the direction it's moving.
