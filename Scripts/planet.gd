@@ -12,6 +12,11 @@ var bodies_in_gravity_field: Array[RigidBody2D] = []
 # Orbit detection variables
 var player_orbit_data: Dictionary = {}  # Stores orbit tracking data for each player
 
+@onready var PlanetBody: AnimatableBody2D = $AnimatableBody2D
+
+func _ready() -> void:
+	PlanetBody = get_node("AnimatableBody2D")
+
 # This function runs every physics frame.
 func _physics_process(_delta: float) -> void:
 	# This loops through every body currently stored in the array.
@@ -28,7 +33,8 @@ func _physics_process(_delta: float) -> void:
 		# Track orbit for players
 		if body is Player:
 			track_player_orbit(body)
-
+		
+	
 
 # This function runs when a body enters the Area2D's collision shape.
 func _on_body_entered(body: Node2D) -> void:
@@ -47,6 +53,9 @@ func _on_body_entered(body: Node2D) -> void:
 # This function runs when a body exits the Area2D's collision shape.
 func _on_body_exited(body: Node2D) -> void:
 	# This checks if the exiting body is in the tracking array.
+	if body is not RigidBody2D:
+		return
+		
 	if body in bodies_in_gravity_field:
 		# This removes the body from the array, stopping the gravity effect.
 		bodies_in_gravity_field.erase(body)
@@ -104,6 +113,6 @@ func get_angle_to_player(player: Player) -> float:
 	return direction.angle()
 
 # Award score for completing an orbit
-func award_orbit_score(player: Player) -> void:
+func award_orbit_score(_player: Player) -> void:
 	GameManager.add_score(100)
 	print("Player completed orbit around planet! +100 points")

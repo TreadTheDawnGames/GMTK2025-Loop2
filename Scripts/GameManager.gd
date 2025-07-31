@@ -90,7 +90,7 @@ func go_to_main_menu() -> void:
 # Show win screen
 func show_win_screen() -> void:
 	set_game_state(GameState.WIN)
-	get_tree().change_scene_to_file("res://Scenes/UI/WinScreen.tscn")
+	get_tree().change_scene_to_file.call_deferred("res://Scenes/UI/WinScreen.tscn")
 
 # Show lose screen
 func show_lose_screen() -> void:

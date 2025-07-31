@@ -21,7 +21,10 @@ enum State {
 # This exports a variable for the maximum drag distance (100% power).
 @export var max_pull_distance: float = 200.0
 # This exports a variable for the boost impulse strength.
-@export var boost_strength: float = 100.0
+@export var boost_strength: float = 1000.0
+
+# Flag to double launch if on planet
+var onPlanet : bool = false
 
 static var Position : Vector2
 # This variable will hold the player's current state from the enum above.
@@ -128,6 +131,17 @@ func _physics_process(delta: float) -> void:
 	# Check lose condition - if player is too far from origin
 	check_lose_condition()
 
+	var collision : KinematicCollision2D = move_and_collide(Vector2.ZERO, true)
+	if(collision):
+		print("Collided")
+		var collider = collision.get_collider()
+		print(collider)
+		if collider.owner is BasePlanet:
+			print("OnPlanet")
+			if(!onPlanet):
+				Reset()
+			onPlanet = true
+
 	# This checks if the player is in the air.
 	if current_state == State.LAUNCHED:
 		# This makes the rocket point in the direction it's moving.
@@ -136,14 +150,16 @@ func _physics_process(delta: float) -> void:
 		# This checks if the boost is available and the user pressed boost.
 		if has_boost and Input.is_action_just_pressed("ui_select"):
 			apply_boost()
-
+			
 # This function handles the logic for launching the player.
 func launch() -> void:
+	
+	
 	# Use the pre-calculated and stored aim vector.
 	var final_pull_vector = _current_aim_pull_vector
 	
 	# This sets the player's initial velocity based on the stored pull vector and launch power.
-	linear_velocity = final_pull_vector * launch_power
+	linear_velocity = final_pull_vector * launch_power * (2.0 if onPlanet else 1.0)
 	
 	# This changes the state to LAUNCHED.
 	current_state = State.LAUNCHED
@@ -153,6 +169,12 @@ func launch() -> void:
 	line_2d.clear_points()
 	
 	_LaunchParticles.Emit()
+	
+	#If you're on the planet and boost, you're getting off the planet, but it needs to happen AFTER the math is done.
+	if(onPlanet):
+		print("OffPlanet")
+		onPlanet = false
+			
 	# TODO: Add a sound for the boost here!
 
 # This function applies the one-time boost.
@@ -168,6 +190,8 @@ func apply_boost() -> void:
 	_BoostParticles.Emit()
 	Sprite.frame_coords.y = 1
 	camera_2d.Shake()
+	
+
 	# TODO: Add a sound for the boost here!
 
 # This function draws and updates the aiming line.
