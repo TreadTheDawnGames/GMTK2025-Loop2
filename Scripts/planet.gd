@@ -16,7 +16,7 @@ func _physics_process(delta: float) -> void:
 		var direction_to_planet = (global_position - body.global_position).normalized()
 
 		# This calculates the force vector by combining direction and strength.
-		var gravity_force = direction_to_planet * gravity_strength
+		var gravity_force = direction_to_planet * gravity_strength # * remap distance vs radius
 		
 		# This applies the calculated force to the center of the body.
 		body.apply_central_force(gravity_force)

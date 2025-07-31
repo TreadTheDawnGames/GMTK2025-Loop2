@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bkgfm5k1vexr" path="res://Scripts/planet.gd" id="1_ej51v"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_effgs"]
-radius = 96.0052
+radius = 137.058
 
 [node name="Planet2" type="Area2D"]
 script = ExtResource("1_ej51v")

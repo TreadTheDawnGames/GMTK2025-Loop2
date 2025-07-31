@@ -49,8 +49,8 @@ func _process(delta: float) -> void:
 		update_aim_line()
 		
 		# This makes the ship face the mouse cursor while aiming.
-		var mouse_position = get_global_mouse_position()
-		look_at(mouse_position)
+		var mouse_position = to_local(global_position) - to_local(get_global_mouse_position())
+		look_at(to_global(mouse_position))
 	
 	# This checks if the player is aiming and spacebar is pressed to launch.
 	# Note: This is separate from mouse release to allow "set and shoot" with space.
@@ -103,7 +103,7 @@ func apply_boost() -> void:
 # This function draws and updates the aiming line.
 func update_aim_line() -> void:
 	# This calculates the global vector from the player's current position to the current mouse position.
-	var pull_vector_from_player_to_mouse = get_global_mouse_position() - global_position
+	var pull_vector_from_player_to_mouse = global_position - get_global_mouse_position()
 	# This clamps the vector's length to the max_pull_distance.
 	_current_aim_pull_vector = pull_vector_from_player_to_mouse.limit_length(max_pull_distance)
 	

@@ -3,9 +3,8 @@
 [ext_resource type="Script" uid="uid://dton838gyavdl" path="res://Scripts/player.gd" id="1_kyqiw"]
 [ext_resource type="Texture2D" uid="uid://b3yadhtuplhg2" path="res://Assets/kenney_space-shooter-extension/PNG/Sprites X2/Ships/spaceShips_001.png" id="2_kyqiw"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rpqav"]
-radius = 32.0
-height = 84.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_kyqiw"]
+radius = 26.0192
 
 [node name="Player" type="RigidBody2D"]
 input_pickable = true
@@ -18,6 +17,6 @@ scale = Vector2(0.453657, 0.453657)
 texture = ExtResource("2_kyqiw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CapsuleShape2D_rpqav")
+shape = SubResource("CircleShape2D_kyqiw")
 
 [node name="Line2D" type="Line2D" parent="."]
