@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://dax0eji7jya8u"]
+
+[ext_resource type="Script" path="res://Scripts/CollectionNotification.gd" id="1_notification"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1"]
+font_size = 20
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+
+[node name="CollectionNotification" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 200.0
+offset_bottom = 40.0
+script = ExtResource("1_notification")
+
+[node name="NotificationLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "+10 Star"
+label_settings = SubResource("LabelSettings_1")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="FadeTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true

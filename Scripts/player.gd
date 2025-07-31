@@ -36,7 +36,7 @@ var _current_aim_pull_vector: Vector2 = Vector2.ZERO
 var SingleTouchDown : bool = false
 
 # Lose condition variables
-var max_distance_from_origin: float = 15000.0  # Maximum distance before losing
+@export var max_distance_from_origin: float = 15000.0  # Maximum distance before losing
 var origin_position: Vector2 = Vector2.ZERO
 var has_lost: bool = false
 

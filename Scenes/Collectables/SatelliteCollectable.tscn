@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3 uid="uid://d9y8z3rn9rstuv"]
+
+[ext_resource type="Script" path="res://Scripts/Collectable.gd" id="1_collectable"]
+[ext_resource type="Texture2D" uid="uid://dbwppht6bg6ff" path="res://Assets/kenney_simple-space/PNG/Default/satellite_A.png" id="2_satellite"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1"]
+radius = 18.0
+
+[node name="SatelliteCollectable" type="Area2D"]
+script = ExtResource("1_collectable")
+collectable_type = 1
+point_value = 25
+orbit_radius = 180.0
+orbit_speed = 0.8
+collection_name = "Satellite"
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_satellite")
+modulate = Color(0.8, 1, 1, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_1")
+
+[node name="CollectionParticles" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 20
+lifetime = 1.0
+explosiveness = 1.0
+direction = Vector3(0, -1, 0)
+initial_velocity_min = 60.0
+initial_velocity_max = 120.0
+gravity = Vector3(0, 80, 0)
+scale_amount_min = 0.4
+scale_amount_max = 1.2
+color = Color(0, 1, 1, 1)

@@ -12,6 +12,11 @@ var bodies_in_gravity_field: Array[RigidBody2D] = []
 # Orbit detection variables
 var player_orbit_data: Dictionary = {}  # Stores orbit tracking data for each player
 
+func _ready() -> void:
+	# Add to planets group
+	add_to_group("planets")
+
+
 # This function runs every physics frame.
 func _physics_process(_delta: float) -> void:
 	# This loops through every body currently stored in the array.

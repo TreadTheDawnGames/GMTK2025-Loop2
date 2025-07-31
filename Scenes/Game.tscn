@@ -1,16 +1,18 @@
-[gd_scene load_steps=12 format=3 uid="uid://c0pbif8cyy7x7"]
+[gd_scene load_steps=16 format=3 uid="uid://c0pbif8cyy7x7"]
 
 [ext_resource type="PackedScene" uid="uid://cvy6qvmeierso" path="res://Scenes/planet_large.tscn" id="1_j5yw3"]
 [ext_resource type="Texture2D" uid="uid://u0nthwjjti6c" path="res://Assets/StarBackgroundTile.png" id="2_2irst"]
 [ext_resource type="PackedScene" uid="uid://vuorl2ga7vdk" path="res://Scenes/planet_medium.tscn" id="2_kldst"]
-[ext_resource type="Script" path="res://Scripts/star_background.gd" id="3_2irst"]
+[ext_resource type="Script" uid="uid://dx7wa3d4fr6xu" path="res://Scripts/star_background.gd" id="3_2irst"]
 [ext_resource type="PackedScene" uid="uid://d1rrwaam8e5cr" path="res://Scenes/planet_small.tscn" id="3_b2bpf"]
 [ext_resource type="PackedScene" uid="uid://big3rsi88wl76" path="res://Scenes/Player.tscn" id="4_kldst"]
 [ext_resource type="PackedScene" path="res://Scenes/Home.tscn" id="5_b2bpf"]
-[ext_resource type="Shader" path="res://Assets/Shaders/StarBackground.gdshader" id="6_fgofq"]
-[ext_resource type="Texture2D" uid="uid://xyl1ckcy423q" path="res://Assets/1020x1080Rect.png" id="7_2irst"]
 [ext_resource type="PackedScene" uid="uid://p4aoyegbc6gj" path="res://Scenes/UI/GameHUD.tscn" id="8_hud"]
 [ext_resource type="Script" uid="uid://dfjdljl46khuv" path="res://Scripts/GameController.gd" id="9_controller"]
+[ext_resource type="PackedScene" uid="uid://c8x7y2qm8qrst" path="res://Scenes/Collectables/StarCollectable.tscn" id="10_star"]
+[ext_resource type="PackedScene" uid="uid://bpykgsig0p7c4" path="res://Scenes/Collectables/SatelliteCollectable.tscn" id="11_satellite"]
+[ext_resource type="PackedScene" uid="uid://dkjlxh0onjytk" path="res://Scenes/Collectables/CrystalCollectable.tscn" id="12_crystal"]
+[ext_resource type="PackedScene" uid="uid://c1lsn0rglq41p" path="res://Scenes/Collectables/EnergyCoreCollectable.tscn" id="13_energy"]
 
 [sub_resource type="Shader" id="Shader_fgofq"]
 code = "shader_type canvas_item;
@@ -126,6 +128,46 @@ gravityCurve = null
 [node name="Planet17" parent="." instance=ExtResource("1_j5yw3")]
 position = Vector2(706, -4260)
 gravityCurve = null
+
+[node name="StarCollectable2" parent="." instance=ExtResource("10_star")]
+position = Vector2(261, -765)
+orbit_radius = 150.0
+
+[node name="StarCollectable3" parent="." instance=ExtResource("10_star")]
+position = Vector2(-1319, 568)
+orbit_radius = 200.0
+
+[node name="StarCollectable4" parent="." instance=ExtResource("10_star")]
+position = Vector2(1858, 2858)
+orbit_radius = 250.0
+
+[node name="StarCollectable5" parent="." instance=ExtResource("10_star")]
+position = Vector2(-2462, -2367)
+orbit_radius = 250.0
+
+[node name="SatelliteCollectable1" parent="." instance=ExtResource("11_satellite")]
+position = Vector2(2252, 5014)
+orbit_radius = 250.0
+
+[node name="SatelliteCollectable2" parent="." instance=ExtResource("11_satellite")]
+position = Vector2(-3226, 216)
+orbit_radius = 270.0
+
+[node name="SatelliteCollectable3" parent="." instance=ExtResource("11_satellite")]
+position = Vector2(4738, 2858)
+orbit_radius = 280.0
+
+[node name="CrystalCollectable1" parent="." instance=ExtResource("12_crystal")]
+position = Vector2(-6838, 3592)
+orbit_radius = 250.0
+
+[node name="CrystalCollectable2" parent="." instance=ExtResource("12_crystal")]
+position = Vector2(706, -4260)
+orbit_radius = 270.0
+
+[node name="EnergyCoreCollectable1" parent="." instance=ExtResource("13_energy")]
+position = Vector2(-4396, 1953)
+orbit_radius = 270.0
 
 [node name="HUDLayer" type="CanvasLayer" parent="."]
 layer = 10
