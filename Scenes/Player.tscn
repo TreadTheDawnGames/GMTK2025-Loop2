@@ -1,9 +1,11 @@
 [gd_scene load_steps=4 format=3 uid="uid://big3rsi88wl76"]
 
 [ext_resource type="Script" uid="uid://dton838gyavdl" path="res://Scripts/player.gd" id="1_kyqiw"]
-[ext_resource type="Texture2D" uid="uid://vh6d3hkqfs2c" path="res://Assets/icon.svg" id="1_rpqav"]
+[ext_resource type="Texture2D" uid="uid://b3yadhtuplhg2" path="res://Assets/kenney_space-shooter-extension/PNG/Sprites X2/Ships/spaceShips_001.png" id="2_kyqiw"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rpqav"]
+radius = 32.0
+height = 84.0
 
 [node name="Player" type="RigidBody2D"]
 input_pickable = true
@@ -11,7 +13,9 @@ gravity_scale = 0.0
 script = ExtResource("1_kyqiw")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_rpqav")
+rotation = 3.14159
+scale = Vector2(0.453657, 0.453657)
+texture = ExtResource("2_kyqiw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_rpqav")

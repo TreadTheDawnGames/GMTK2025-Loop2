@@ -52,6 +52,9 @@ func _process(delta: float) -> void:
 
 # This function runs every physics frame, ideal for physics-related code.
 func _physics_process(delta: float) -> void:
+	
+	global_position += Vector2(Input.get_axis("DEBUG-LEFT", "DEBUG-RIGHT"), Input.get_axis("DEBUG-UP", "DEBUG-DOWN")) * 50
+	
 	# This checks if the player is in the air.
 	if current_state == State.LAUNCHED:
 		# This makes the rocket point in the direction it's moving.
