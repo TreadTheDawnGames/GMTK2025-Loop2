@@ -46,6 +46,7 @@ func _input(ev: InputEvent) -> void:
 			SingleTouchDown = true
 		elif ev.index == 0 and not ev.is_pressed():
 			SingleTouchDown = false
+			
 	
 # This function is called every frame.
 func _process(delta: float) -> void:
@@ -61,6 +62,7 @@ func _process(delta: float) -> void:
 			current_state = State.AIMING
 			# Immediately update aim line for visual feedback.
 			update_aim_line()
+			
 		# This launches on mouse release while AIMING.
 
 	# This updates the aim line only while AIMING and the mouse button is held.
@@ -156,3 +158,4 @@ func update_aim_line() -> void:
 func Reset():
 	Sprite.frame_coords.y = 0
 	current_state = State.READY_TO_AIM
+	has_boost = true

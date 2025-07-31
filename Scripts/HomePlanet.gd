@@ -1,7 +1,7 @@
 extends BasePlanet
 class_name HomePlanet
 
-@onready var Surface: Area2D = $HomeArea
+@onready var Surface: Area2D = $Sprite/HomeArea
 
 signal LevelComplete
 

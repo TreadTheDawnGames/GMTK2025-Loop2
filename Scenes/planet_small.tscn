@@ -4,12 +4,13 @@
 [ext_resource type="Texture2D" uid="uid://bk7d1uwiwf5vm" path="res://Assets/kenney_planets/Planets/planet02.png" id="2_ngwap"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ngwap"]
-radius = 236.053
+radius = 398.062
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_s31nm"]
 radius = 47.0
 
 [node name="Planet3" instance=ExtResource("1_xtc1m")]
+gravity_strength = 1000.0
 
 [node name="Sprite" parent="." index="0"]
 scale = Vector2(0.0914834, 0.0914834)
@@ -17,6 +18,9 @@ texture = ExtResource("2_ngwap")
 
 [node name="CollisionShape2D" parent="." index="1"]
 shape = SubResource("CircleShape2D_ngwap")
+
+[node name="Sprite2D" parent="CollisionShape2D" index="0"]
+scale = Vector2(1.15884, 1.15884)
 
 [node name="CollisionShape2D" parent="AnimatableBody2D" index="0"]
 shape = SubResource("CircleShape2D_s31nm")

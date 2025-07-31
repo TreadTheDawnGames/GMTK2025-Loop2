@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://c0pbif8cyy7x7"]
 
-[ext_resource type="PackedScene" uid="uid://cvy6qvmeierso" path="res://Scenes/large_planet.tscn" id="1_j5yw3"]
-[ext_resource type="PackedScene" uid="uid://vuorl2ga7vdk" path="res://Scenes/medium_planet.tscn" id="2_kldst"]
-[ext_resource type="PackedScene" uid="uid://d1rrwaam8e5cr" path="res://Scenes/small_planet.tscn" id="3_b2bpf"]
+[ext_resource type="PackedScene" uid="uid://cvy6qvmeierso" path="res://Scenes/planet_large.tscn" id="1_j5yw3"]
+[ext_resource type="PackedScene" uid="uid://vuorl2ga7vdk" path="res://Scenes/planet_medium.tscn" id="2_kldst"]
+[ext_resource type="PackedScene" uid="uid://d1rrwaam8e5cr" path="res://Scenes/planet_small.tscn" id="3_b2bpf"]
 [ext_resource type="PackedScene" uid="uid://big3rsi88wl76" path="res://Scenes/Player.tscn" id="4_kldst"]
 [ext_resource type="PackedScene" uid="uid://14epulnfjodl" path="res://Scenes/Home.tscn" id="5_b2bpf"]
 
@@ -10,15 +10,12 @@
 
 [node name="Planet" parent="." instance=ExtResource("1_j5yw3")]
 position = Vector2(254, 385)
-gravity_strength = 2000.0
 
 [node name="Planet2" parent="." instance=ExtResource("2_kldst")]
 position = Vector2(912, -351)
-gravity_strength = 1332.0
 
 [node name="Planet3" parent="." instance=ExtResource("3_b2bpf")]
 position = Vector2(261, -765)
-gravity_strength = 1000.0
 
 [node name="Player" parent="." instance=ExtResource("4_kldst")]
 position = Vector2(1043, 619)
@@ -26,3 +23,42 @@ launch_power = 5.0
 
 [node name="Planet4" parent="." instance=ExtResource("5_b2bpf")]
 position = Vector2(659, -1086)
+
+[node name="Planet5" parent="." instance=ExtResource("1_j5yw3")]
+position = Vector2(-3226, 216)
+
+[node name="Planet6" parent="." instance=ExtResource("5_b2bpf")]
+position = Vector2(-3022, 6248)
+
+[node name="Planet7" parent="." instance=ExtResource("2_kldst")]
+position = Vector2(2252, 5014)
+
+[node name="Planet8" parent="." instance=ExtResource("1_j5yw3")]
+position = Vector2(-6838, 3592)
+
+[node name="Planet9" parent="." instance=ExtResource("3_b2bpf")]
+position = Vector2(-6426, -260)
+
+[node name="Planet10" parent="." instance=ExtResource("3_b2bpf")]
+position = Vector2(-1900, 3592)
+
+[node name="Planet11" parent="." instance=ExtResource("1_j5yw3")]
+position = Vector2(-3790, 5119)
+
+[node name="Planet12" parent="." instance=ExtResource("2_kldst")]
+position = Vector2(-4396, 1953)
+
+[node name="Planet13" parent="." instance=ExtResource("3_b2bpf")]
+position = Vector2(1858, 2858)
+
+[node name="Planet14" parent="." instance=ExtResource("2_kldst")]
+position = Vector2(4738, 2858)
+
+[node name="Planet15" parent="." instance=ExtResource("3_b2bpf")]
+position = Vector2(-2462, -2367)
+
+[node name="Planet16" parent="." instance=ExtResource("3_b2bpf")]
+position = Vector2(3421, -2573)
+
+[node name="Planet17" parent="." instance=ExtResource("1_j5yw3")]
+position = Vector2(706, -4260)

@@ -1,9 +1,32 @@
-[gd_scene load_steps=3 format=3 uid="uid://d0j2xqgs8463m"]
+[gd_scene load_steps=8 format=3 uid="uid://d0j2xqgs8463m"]
 
 [ext_resource type="Script" uid="uid://bkgfm5k1vexr" path="res://Scripts/planet.gd" id="1_ej51v"]
+[ext_resource type="Shader" uid="uid://dttlrh3oqhy7w" path="res://Assets/Shaders/Atmosphere.gdshader" id="2_ej51v"]
+[ext_resource type="Texture2D" uid="uid://cttrn2nakn67e" path="res://Assets/Circle.png" id="2_r86au"]
+[ext_resource type="Script" uid="uid://cqvosktsb48d3" path="res://Scripts/tools/planet_atmo.gd" id="4_aogve"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_aogve"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_effgs"]
-radius = 137.058
+radius = 207.002
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_umgws"]
+shader = ExtResource("2_ej51v")
+shader_parameter/center = Vector2(0.5, 0.5)
+shader_parameter/size = 1.0
+shader_parameter/squishness = Vector2(1, 1)
+shader_parameter/color1 = Color(0, 1, 0, 0)
+shader_parameter/color2 = Color(0, 0, 0, 1)
+shader_parameter/color3 = Color(0, 1, 0, 0.0313726)
+shader_parameter/color4 = Color(0, 0, 0, 1)
+shader_parameter/color5 = Color(0, 1, 0, 0.243137)
+shader_parameter/color6 = Color(0, 0, 0, 1)
+shader_parameter/step1 = 0.159
+shader_parameter/step2 = 0.182
+shader_parameter/step3 = 0.233
+shader_parameter/step4 = 0.264
+shader_parameter/step5 = 0.265
+shader_parameter/step6 = 0.266
 
 [node name="Planet2" type="Area2D"]
 script = ExtResource("1_ej51v")
@@ -11,7 +34,14 @@ script = ExtResource("1_ej51v")
 [node name="Sprite" type="Sprite2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+material = SubResource("ShaderMaterial_aogve")
 shape = SubResource("CircleShape2D_effgs")
+
+[node name="Sprite2D" type="Sprite2D" parent="CollisionShape2D"]
+material = SubResource("ShaderMaterial_umgws")
+scale = Vector2(0.602626, 0.602626)
+texture = ExtResource("2_r86au")
+script = ExtResource("4_aogve")
 
 [node name="AnimatableBody2D" type="AnimatableBody2D" parent="."]
 
