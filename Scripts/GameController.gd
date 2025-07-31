@@ -27,3 +27,18 @@ func _ready() -> void:
 
 	# Set up HUD references with all the found nodes
 	hud.setup_references(player, home_planet, all_planets)
+
+	# Connect to collectable collection signals
+	call_deferred("connect_collectables")
+
+func connect_collectables() -> void:
+	# Find and connect to all collectables
+	var collectables = get_tree().get_nodes_in_group("collectables")
+	for collectable in collectables:
+		if collectable is Collectable:
+			collectable.collected.connect(_on_collectable_collected)
+
+func _on_collectable_collected(collectable: Collectable) -> void:
+	# Show notification in HUD
+	var info = collectable.get_collectable_info()
+	hud.show_collection_notification(info["name"], info["points"])

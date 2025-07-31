@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://big3rsi88wl76"]
+[gd_scene load_steps=11 format=3 uid="uid://big3rsi88wl76"]
 
 [ext_resource type="Script" uid="uid://dton838gyavdl" path="res://Scripts/player.gd" id="1_kyqiw"]
 [ext_resource type="Texture2D" uid="uid://b3yadhtuplhg2" path="res://Assets/kenney_space-shooter-extension/PNG/Sprites X2/Ships/spaceShips_001.png" id="2_kyqiw"]
 [ext_resource type="Script" uid="uid://dwottdnvtkjgy" path="res://Scenes/particle_effect.gd" id="3_gntrk"]
 [ext_resource type="Script" uid="uid://vv5wxkdlfjyc" path="res://Scripts/camera_shake.gd" id="4_dewec"]
+[ext_resource type="Script" uid="uid://c6gtd8tis0mq4" path="res://Scripts/Effects/trial.gd" id="5_5ixxa"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kyqiw"]
 radius = 26.0192
@@ -111,3 +112,6 @@ script = ExtResource("3_gntrk")
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(0.345, 0.345)
 script = ExtResource("4_dewec")
+
+[node name="Line2D2" type="Line2D" parent="."]
+script = ExtResource("5_5ixxa")

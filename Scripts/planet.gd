@@ -8,14 +8,14 @@ class_name BasePlanet
 var bodies_in_gravity_field: Array[RigidBody2D] = []
 @export var gravityCurve : Curve
 @onready var Sprite: Sprite2D = $CollisionShape2D/Sprite2D
-
 # Orbit detection variables
 var player_orbit_data: Dictionary = {}  # Stores orbit tracking data for each player
 
-@onready var PlanetBody: AnimatableBody2D = $AnimatableBody2D
 
 func _ready() -> void:
-	PlanetBody = get_node("AnimatableBody2D")
+	# Add to planets group
+	add_to_group("planets")
+
 
 # This function runs every physics frame.
 func _physics_process(_delta: float) -> void:

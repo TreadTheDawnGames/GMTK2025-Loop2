@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://bvn8x7y2qm8qr"]
+
+[ext_resource type="Script" path="res://Scripts/Collectable.gd" id="1_collectable"]
+[ext_resource type="Texture2D" uid="uid://ba4pw6xs2250w" path="res://Assets/kenney_simple-space/PNG/Default/star_medium.png" id="2_star"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1"]
+radius = 20.0
+
+[sub_resource type="Curve" id="Curve_1"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="Collectable" type="Area2D"]
+script = ExtResource("1_collectable")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_star")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_1")
+
+[node name="CollectionParticles" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 20
+lifetime = 1.0
+explosiveness = 1.0
+direction = Vector3(0, -1, 0)
+initial_velocity_min = 50.0
+initial_velocity_max = 100.0
+gravity = Vector3(0, 98, 0)
+scale_amount_min = 0.5
+scale_amount_max = 1.5
+color = Color(1, 1, 0, 1)

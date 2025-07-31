@@ -6,6 +6,8 @@ class_name GameHUD
 @onready var boosts_label: Label = $VBoxContainer/BoostsLabel
 @onready var boost_power_label: Label = $VBoxContainer/BoostPowerLabel
 @onready var compass = %Compass
+@onready var objectives_panel: ObjectivesPanel = $ObjectivesPanel
+@onready var notification_container: Control = $NotificationContainer
 
 # References to game objects
 var player: RigidBody2D
@@ -16,6 +18,10 @@ func _ready() -> void:
 	update_score_display()
 	update_boosts_display()
 	boost_power_label.visible = false
+
+	# Set up notification container position (bottom right)
+	if notification_container:
+		notification_container.position = Vector2(get_viewport().size.x - 250, get_viewport().size.y - 100)
 
 func setup_references(player_ref: RigidBody2D, home_ref: Area2D, planets_ref: Array[Area2D]) -> void:
 	player = player_ref
@@ -49,3 +55,9 @@ func update_boost_power_display() -> void:
 		boost_power_label.text = "Launch Power: %d%%" % power_int
 	else:
 		boost_power_label.visible = false
+
+func show_collection_notification(collectable_name: String, points: int) -> void:
+	if notification_container:
+		# Create notification at bottom right
+		var screen_pos = Vector2(0, -40 * notification_container.get_child_count())
+		CollectionNotification.create_notification(notification_container, collectable_name, points, screen_pos)
