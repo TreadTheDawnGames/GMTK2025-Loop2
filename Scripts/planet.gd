@@ -3,7 +3,7 @@ class_name BasePlanet
 
 var has_been_orbited: bool = false
 var orbits: int = 0
-static var Score_Mult: int = 0
+static var Mult: int = 0
 
 # This exports a variable to the Godot editor, allowing to change it without code.
 @export var gravity_strength: float = 6000.0
@@ -116,10 +116,10 @@ func get_angle_to_player(player: Player) -> float:
 func award_orbit_score(player: Player) -> void:
 	if has_been_orbited == false:
 		has_been_orbited = true
-		Score_Mult += 1
+		Mult += 1
 	orbits += 1
-	GameManager.add_score(orbits * Score_Mult)
+	GameManager.add_score(orbits * Mult)
 	print("New Line")
 	print(orbits)
-	print(Score_Mult)
+	print(Mult)
 	

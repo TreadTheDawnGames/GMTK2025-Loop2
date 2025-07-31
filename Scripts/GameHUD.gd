@@ -31,6 +31,7 @@ func _process(_delta: float) -> void:
 	
 	update_boost_power_display()
 	update_boosts_display()
+	update_mult_display()
 
 func _on_score_changed(_new_score: int) -> void:
 	update_score_display()
@@ -39,7 +40,7 @@ func update_score_display() -> void:
 	score_label.text = "Score: " + str(GameManager.get_score())
 
 func update_mult_display() -> void:
-	score_label.text = "Score: " + str(BasePlanet.Score_Mult)
+	mult_label.text = "Mult: " + str(BasePlanet.Mult)
 
 func update_boosts_display() -> void:
 	if player:
