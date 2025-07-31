@@ -2,10 +2,14 @@ extends Node
 
 # Singleton for managing game state and settings
 signal ship_color_changed(new_color: Color)
+signal score_changed(new_score: int)
 
 # Ship color settings
 var ship_color: Color = Color.WHITE
 var ship_color_hue: float = 0.0  # 0.0 to 1.0 for hue slider
+
+# Score system
+var current_score: int = 0
 
 # Game state
 enum GameState {
@@ -59,8 +63,21 @@ func set_game_state(new_state: GameState) -> void:
 func get_game_state() -> GameState:
 	return current_game_state
 
+# Score management functions
+func add_score(points: int) -> void:
+	current_score += points
+	score_changed.emit(current_score)
+
+func get_score() -> int:
+	return current_score
+
+func reset_score() -> void:
+	current_score = 0
+	score_changed.emit(current_score)
+
 # Restart the game
 func restart_game() -> void:
+	reset_score()  # Reset score when restarting
 	set_game_state(GameState.PLAYING)
 	get_tree().change_scene_to_file("res://Scenes/Game.tscn")
 
