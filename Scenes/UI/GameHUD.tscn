@@ -1,0 +1,45 @@
+[gd_scene load_steps=4 format=3 uid="uid://p4aoyegbc6gj"]
+
+[ext_resource type="Script" uid="uid://bcu7j1yoaeyiv" path="res://Scripts/GameHUD.gd" id="1_31s1k"]
+[ext_resource type="PackedScene" uid="uid://fcnfyre27jqd" path="res://Scenes/UI/Compass.tscn" id="2_compass"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_4y6w4"]
+font_size = 24
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[node name="GameHUD" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_31s1k")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 15.0
+offset_top = 15.0
+offset_right = 265.0
+offset_bottom = 104.0
+
+[node name="ScoreLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Score: 0"
+label_settings = SubResource("LabelSettings_4y6w4")
+
+[node name="BoostsLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Boosts: 1"
+label_settings = SubResource("LabelSettings_4y6w4")
+
+[node name="BoostPowerLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Launch Power: 0%"
+label_settings = SubResource("LabelSettings_4y6w4")
+
+[node name="Compass" parent="." instance=ExtResource("2_compass")]
+unique_name_in_owner = true
+layout_mode = 1

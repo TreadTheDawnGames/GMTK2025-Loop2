@@ -21,7 +21,7 @@ enum State {
 # This exports a variable for the maximum drag distance (100% power).
 @export var max_pull_distance: float = 200.0
 # This exports a variable for the boost impulse strength.
-@export var boost_strength: float = 1000.0
+@export var boost_strength: float = 100.0
 
 static var Position : Vector2
 # This variable will hold the player's current state from the enum above.

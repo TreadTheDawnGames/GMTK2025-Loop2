@@ -1,0 +1,69 @@
+[gd_scene load_steps=4 format=3 uid="uid://fcnfyre27jqd"]
+
+[ext_resource type="Script" uid="uid://de78j1qh32qyy" path="res://Scripts/Compass.gd" id="1_compass"]
+[ext_resource type="Texture2D" uid="uid://cttrn2nakn67e" path="res://Assets/Circle.png" id="2_circle"]
+[ext_resource type="Texture2D" uid="uid://dr3wen6gymsnu" path="res://Assets/kenney_simple-space/PNG/Default/station_A.png" id="3_station"]
+
+[node name="Compass" type="Control"]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -120.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = 120.0
+grow_horizontal = 0
+script = ExtResource("1_compass")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_circle")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CompassCenter" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -55.0
+offset_top = -55.0
+offset_right = 55.0
+offset_bottom = 55.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HomeIcon" type="TextureRect" parent="CompassCenter"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_station")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="PlanetIcons" type="Control" parent="CompassCenter"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
