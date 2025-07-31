@@ -13,7 +13,7 @@ var bodies_in_gravity_field: Array[RigidBody2D] = []
 var player_orbit_data: Dictionary = {}  # Stores orbit tracking data for each player
 
 # This function runs every physics frame.
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	# This loops through every body currently stored in the array.
 	for body in bodies_in_gravity_field:
 		# This calculates the direction from the body towards this planet.
