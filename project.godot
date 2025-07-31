@@ -12,7 +12,7 @@ config_version=5
 
 config/name="GMTK2025-LoopTake2"
 config/features=PackedStringArray("4.4", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="res://Assets/icon.svg"
 
 [rendering]
 
