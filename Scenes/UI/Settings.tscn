@@ -1,0 +1,98 @@
+[gd_scene load_steps=2 format=3 uid="uid://ce2kgb3fjtjut"]
+
+[ext_resource type="Script" uid="uid://b8dpyepks24nr" path="res://Scripts/Settings.gd" id="1_settings"]
+
+[node name="Settings" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_settings")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.1, 0.1, 0.2, 1)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -150.0
+offset_right = 150.0
+offset_bottom = 150.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SettingsTitle" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "SETTINGS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Spacer1" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="ShipColorLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Ship Color:"
+horizontal_alignment = 1
+
+[node name="ShipColorContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="RedButton" type="Button" parent="VBoxContainer/ShipColorContainer"]
+custom_minimum_size = Vector2(60, 40)
+layout_mode = 2
+text = "Red"
+
+[node name="BlueButton" type="Button" parent="VBoxContainer/ShipColorContainer"]
+custom_minimum_size = Vector2(60, 40)
+layout_mode = 2
+text = "Blue"
+
+[node name="GreenButton" type="Button" parent="VBoxContainer/ShipColorContainer"]
+custom_minimum_size = Vector2(60, 40)
+layout_mode = 2
+text = "Green"
+
+[node name="YellowButton" type="Button" parent="VBoxContainer/ShipColorContainer"]
+custom_minimum_size = Vector2(60, 40)
+layout_mode = 2
+text = "Yellow"
+
+[node name="Spacer2" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="CurrentColorLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Current Color: White"
+horizontal_alignment = 1
+
+[node name="Spacer3" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 30)
+layout_mode = 2
+
+[node name="BackButton" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+text = "BACK TO MENU"
+
+[connection signal="pressed" from="VBoxContainer/ShipColorContainer/RedButton" to="." method="_on_red_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/ShipColorContainer/BlueButton" to="." method="_on_blue_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/ShipColorContainer/GreenButton" to="." method="_on_green_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/ShipColorContainer/YellowButton" to="." method="_on_yellow_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]

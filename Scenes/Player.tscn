@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://dton838gyavdl" path="res://Scripts/player.gd" id="1_kyqiw"]
 [ext_resource type="Texture2D" uid="uid://b3yadhtuplhg2" path="res://Assets/kenney_space-shooter-extension/PNG/Sprites X2/Ships/spaceShips_001.png" id="2_kyqiw"]
-[ext_resource type="Script" uid="uid://dwottdnvtkjgy" path="res://Scenes/particle_effect.gd" id="3_gntrk"]
-[ext_resource type="Script" uid="uid://vv5wxkdlfjyc" path="res://Scripts/camera_shake.gd" id="4_dewec"]
+[ext_resource type="Script" path="res://Scenes/particle_effect.gd" id="3_gntrk"]
+[ext_resource type="Script" path="res://Scripts/camera_shake.gd" id="4_dewec"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kyqiw"]
 radius = 26.0192

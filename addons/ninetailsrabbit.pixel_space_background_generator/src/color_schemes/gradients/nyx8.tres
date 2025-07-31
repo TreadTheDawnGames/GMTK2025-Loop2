@@ -1,8 +1,0 @@
-[gd_resource type="Resource" script_class="ColorGradient" load_steps=2 format=3 uid="uid://cpgyxlmfa1ict"]
-
-[ext_resource type="Script" uid="uid://bupo4w3xfx3e8" path="res://addons/ninetailsrabbit.pixel_space_background_generator/src/color_schemes/gradients/color_gradient.gd" id="1_0aeiv"]
-
-[resource]
-script = ExtResource("1_0aeiv")
-id = &""
-name = &""
