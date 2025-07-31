@@ -10,12 +10,15 @@
 
 [node name="Planet" parent="." instance=ExtResource("1_j5yw3")]
 position = Vector2(254, 385)
+gravityCurve = null
 
 [node name="Planet2" parent="." instance=ExtResource("2_kldst")]
 position = Vector2(912, -351)
+gravityCurve = null
 
 [node name="Planet3" parent="." instance=ExtResource("3_b2bpf")]
 position = Vector2(261, -765)
+gravityCurve = null
 
 [node name="Player" parent="." instance=ExtResource("4_kldst")]
 position = Vector2(1043, 619)
@@ -23,42 +26,56 @@ launch_power = 5.0
 
 [node name="Planet4" parent="." instance=ExtResource("5_b2bpf")]
 position = Vector2(659, -1086)
+gravityCurve = null
 
 [node name="Planet5" parent="." instance=ExtResource("1_j5yw3")]
 position = Vector2(-3226, 216)
+gravityCurve = null
 
 [node name="Planet6" parent="." instance=ExtResource("5_b2bpf")]
 position = Vector2(-3022, 6248)
+gravityCurve = null
 
 [node name="Planet7" parent="." instance=ExtResource("2_kldst")]
 position = Vector2(2252, 5014)
+gravityCurve = null
 
 [node name="Planet8" parent="." instance=ExtResource("1_j5yw3")]
 position = Vector2(-6838, 3592)
+gravityCurve = null
 
 [node name="Planet9" parent="." instance=ExtResource("3_b2bpf")]
 position = Vector2(-6426, -260)
+gravityCurve = null
 
 [node name="Planet10" parent="." instance=ExtResource("3_b2bpf")]
 position = Vector2(-1900, 3592)
+gravityCurve = null
 
 [node name="Planet11" parent="." instance=ExtResource("1_j5yw3")]
 position = Vector2(-3790, 5119)
+gravityCurve = null
 
 [node name="Planet12" parent="." instance=ExtResource("2_kldst")]
 position = Vector2(-4396, 1953)
+gravityCurve = null
 
 [node name="Planet13" parent="." instance=ExtResource("3_b2bpf")]
 position = Vector2(1858, 2858)
+gravityCurve = null
 
 [node name="Planet14" parent="." instance=ExtResource("2_kldst")]
 position = Vector2(4738, 2858)
+gravityCurve = null
 
 [node name="Planet15" parent="." instance=ExtResource("3_b2bpf")]
 position = Vector2(-2462, -2367)
+gravityCurve = null
 
 [node name="Planet16" parent="." instance=ExtResource("3_b2bpf")]
 position = Vector2(3421, -2573)
+gravityCurve = null
 
 [node name="Planet17" parent="." instance=ExtResource("1_j5yw3")]
 position = Vector2(706, -4260)
+gravityCurve = null

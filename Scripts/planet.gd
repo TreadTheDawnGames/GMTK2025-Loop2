@@ -6,7 +6,8 @@ class_name BasePlanet
 
 # This creates an array to store physics bodies that enter the gravity field.
 var bodies_in_gravity_field: Array[RigidBody2D] = []
-
+@export var gravityCurve : Curve
+@onready var Sprite: Sprite2D = $CollisionShape2D/Sprite2D
 
 # This function runs every physics frame.
 func _physics_process(delta: float) -> void:
@@ -16,7 +17,7 @@ func _physics_process(delta: float) -> void:
 		var direction_to_planet = (global_position - body.global_position).normalized()
 
 		# This calculates the force vector by combining direction and strength.
-		var gravity_force = direction_to_planet * gravity_strength # * remap distance vs radius
+		var gravity_force = direction_to_planet * gravity_strength * ((Sprite.texture.get_size().x/2) / to_local(global_position).distance_to(body.to_local(global_position))) # gravityCurve.sample
 		
 		# This applies the calculated force to the center of the body.
 		body.apply_central_force(gravity_force)
