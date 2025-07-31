@@ -1,4 +1,5 @@
 extends Area2D
+class_name BasePlanet
 
 # This exports a variable to the Godot editor, allowing to change it without code.
 @export var gravity_strength: float = 6000.0

@@ -8,10 +8,10 @@
 [node name="Game" type="Node2D"]
 
 [node name="Planet" parent="." instance=ExtResource("1_j5yw3")]
-position = Vector2(-113, 18)
+position = Vector2(254, 385)
 
 [node name="Planet2" parent="." instance=ExtResource("2_kldst")]
-position = Vector2(252, 15)
+position = Vector2(673, 154)
 
 [node name="Planet3" parent="." instance=ExtResource("3_b2bpf")]
 position = Vector2(605, 12)
