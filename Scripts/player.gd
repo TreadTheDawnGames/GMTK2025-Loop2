@@ -8,6 +8,14 @@ enum State {
 	LAUNCHED
 }
 
+# The particles
+@onready var _LaunchParticles: ParticleEffect = $LaunchParticles
+@onready var _BoostParticles: ParticleEffect = $BoostParticles
+# The sprite
+@onready var Sprite: Sprite2D = $Sprite2D
+# The Camera
+@onready var camera_2d: ScreenShake = $Camera2D
+
 # This exports a variable for launch power, tunable in the Inspector.
 @export var launch_power: float = 10.0
 # This exports a variable for the maximum drag distance (100% power).
@@ -23,28 +31,40 @@ var has_boost: bool = true
 # This new variable will store the calculated pull vector while aiming.
 var _current_aim_pull_vector: Vector2 = Vector2.ZERO
 
+#stores whether a single touch is happening
+var SingleTouchDown : bool = false
+
 # This creates a reference to the Line2D node for drawing the power bar.
 @onready var line_2d: Line2D = $Line2D
 # This creates a reference to the Sprite2D node.
 @onready var sprite: Sprite2D = $Sprite2D
 
 # This function is called by Godot when an input event occurs on this object.
-func _input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+func _input(ev: InputEvent) -> void:
+	if ev is InputEventScreenDrag:
+		if ev.index == 0 and ev.is_pressed():
+			SingleTouchDown = true
+		elif ev.index == 0 and not ev.is_pressed():
+			SingleTouchDown = false
+	
+# This function is called every frame.
+func _process(delta: float) -> void:
+	#Reset whether ship can aim
+	if (Input.is_action_just_pressed("DEBUG-RESET_LAUNCH")):
+		Reset()
+	
+	
 	# This handles only the left mouse button events.
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		# This starts aiming only when pressed and only from READY_TO_AIM.
-		if event.is_pressed() and current_state == State.READY_TO_AIM:
+		if current_state == State.READY_TO_AIM:
 			current_state = State.AIMING
 			# Immediately update aim line for visual feedback.
 			update_aim_line()
 		# This launches on mouse release while AIMING.
-		elif not event.is_pressed() and current_state == State.AIMING:
-			launch()
 
-# This function is called every frame.
-func _process(delta: float) -> void:
 	# This updates the aim line only while AIMING and the mouse button is held.
-	if current_state == State.AIMING and Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+	if current_state == State.AIMING and (Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) or SingleTouchDown):
 		# This updates the aim line visuals and _current_aim_pull_vector.
 		update_aim_line()
 		
@@ -54,7 +74,7 @@ func _process(delta: float) -> void:
 	
 	# This checks if the player is aiming and spacebar is pressed to launch.
 	# Note: This is separate from mouse release to allow "set and shoot" with space.
-	if current_state == State.AIMING and not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+	if current_state == State.AIMING and not (Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) or SingleTouchDown):
 		
 		# This calls the function to launch the player using the stored aim vector.
 		launch()
@@ -87,6 +107,9 @@ func launch() -> void:
 	set_pickable(false)
 	# This clears the aiming line from the screen.
 	line_2d.clear_points()
+	
+	_LaunchParticles.Emit()
+	# TODO: Add a sound for the boost here!
 
 # This function applies the one-time boost.
 func apply_boost() -> void:
@@ -97,8 +120,11 @@ func apply_boost() -> void:
 	# This consumes the boost so it cannot be used again.
 	has_boost = false
 	# This provides visual feedback that the boost was used.
-	sprite.modulate = Color.CYAN
-	# TODO: Add a particle effect or sound for the boost here!
+	#sprite.modulate = Color.CYAN
+	_BoostParticles.Emit()
+	Sprite.frame_coords.y = 1
+	camera_2d.Shake()
+	# TODO: Add a sound for the boost here!
 
 # This function draws and updates the aiming line.
 func update_aim_line() -> void:
@@ -125,3 +151,8 @@ func update_aim_line() -> void:
 	
 	# This sets the line width based on power (thicker line = more power).
 	line_2d.width = 3.0 + power_percentage * 7.0
+
+
+func Reset():
+	Sprite.frame_coords.y = 0
+	current_state = State.READY_TO_AIM
