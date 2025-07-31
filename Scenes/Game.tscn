@@ -1,20 +1,31 @@
-[gd_scene load_steps=5 format=3 uid="uid://c0pbif8cyy7x7"]
+[gd_scene load_steps=6 format=3 uid="uid://c0pbif8cyy7x7"]
 
 [ext_resource type="PackedScene" uid="uid://cvy6qvmeierso" path="res://Scenes/large_planet.tscn" id="1_j5yw3"]
 [ext_resource type="PackedScene" uid="uid://vuorl2ga7vdk" path="res://Scenes/medium_planet.tscn" id="2_kldst"]
 [ext_resource type="PackedScene" uid="uid://d1rrwaam8e5cr" path="res://Scenes/small_planet.tscn" id="3_b2bpf"]
 [ext_resource type="PackedScene" uid="uid://big3rsi88wl76" path="res://Scenes/Player.tscn" id="4_kldst"]
+[ext_resource type="PackedScene" uid="uid://14epulnfjodl" path="res://Scenes/Home.tscn" id="5_b2bpf"]
 
 [node name="Game" type="Node2D"]
 
 [node name="Planet" parent="." instance=ExtResource("1_j5yw3")]
 position = Vector2(254, 385)
+gravity_strength = 2000.0
 
 [node name="Planet2" parent="." instance=ExtResource("2_kldst")]
-position = Vector2(673, 154)
+position = Vector2(912, -351)
+gravity_strength = 1332.0
 
 [node name="Planet3" parent="." instance=ExtResource("3_b2bpf")]
-position = Vector2(605, 12)
+position = Vector2(261, -765)
+gravity_strength = 1000.0
 
 [node name="Player" parent="." instance=ExtResource("4_kldst")]
-position = Vector2(726, 462)
+position = Vector2(1043, 619)
+launch_power = 5.0
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+zoom = Vector2(0.345, 0.345)
+
+[node name="Planet4" parent="." instance=ExtResource("5_b2bpf")]
+position = Vector2(659, -1086)

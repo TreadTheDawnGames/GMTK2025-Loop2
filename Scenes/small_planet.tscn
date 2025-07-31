@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bk7d1uwiwf5vm" path="res://Assets/kenney_planets/Planets/planet02.png" id="2_ngwap"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ngwap"]
-radius = 74.0
+radius = 236.053
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_s31nm"]
 radius = 47.0

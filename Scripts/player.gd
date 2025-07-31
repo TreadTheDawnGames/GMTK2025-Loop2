@@ -54,7 +54,8 @@ func _process(delta: float) -> void:
 	
 	# This checks if the player is aiming and spacebar is pressed to launch.
 	# Note: This is separate from mouse release to allow "set and shoot" with space.
-	if current_state == State.AIMING and Input.is_action_just_pressed("ui_select"):
+	if current_state == State.AIMING and not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+		
 		# This calls the function to launch the player using the stored aim vector.
 		launch()
 

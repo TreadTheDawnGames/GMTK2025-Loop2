@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://b6y5iuktvcwd4" path="res://Assets/kenney_planets/Planets/planet00.png" id="2_hmd8h"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hmd8h"]
-radius = 223.009
+radius = 687.036
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_njf8c"]
 radius = 165.027
