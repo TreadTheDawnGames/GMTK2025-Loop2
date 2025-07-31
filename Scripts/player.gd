@@ -1,5 +1,6 @@
 extends RigidBody2D
 class_name Player
+
 # This defines a set of named states for the player's state machine.
 enum State {
 	READY_TO_AIM,
@@ -19,6 +20,9 @@ var current_state: State = State.READY_TO_AIM
 # This boolean tracks if the one-time boost is still available.
 var has_boost: bool = true
 
+# This new variable will store the calculated pull vector while aiming.
+var _current_aim_pull_vector: Vector2 = Vector2.ZERO
+
 # This creates a reference to the Line2D node for drawing the power bar.
 @onready var line_2d: Line2D = $Line2D
 # This creates a reference to the Sprite2D node.
@@ -31,9 +35,9 @@ func _input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 		# This starts aiming only when pressed and only from READY_TO_AIM.
 		if event.is_pressed() and current_state == State.READY_TO_AIM:
 			current_state = State.AIMING
-			# This updates the aim line immediately so it appears on click.
+			# Immediately update aim line for visual feedback.
 			update_aim_line()
-		# This launches on release while AIMING.
+		# This launches on mouse release while AIMING.
 		elif not event.is_pressed() and current_state == State.AIMING:
 			launch()
 
@@ -41,7 +45,7 @@ func _input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 func _process(delta: float) -> void:
 	# This updates the aim line only while AIMING and the mouse button is held.
 	if current_state == State.AIMING and Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
-		# This updates the aim line visuals.
+		# This updates the aim line visuals and _current_aim_pull_vector.
 		update_aim_line()
 		
 		# This makes the ship face the mouse cursor while aiming.
@@ -49,14 +53,15 @@ func _process(delta: float) -> void:
 		look_at(mouse_position)
 	
 	# This checks if the player is aiming and spacebar is pressed to launch.
+	# Note: This is separate from mouse release to allow "set and shoot" with space.
 	if current_state == State.AIMING and Input.is_action_just_pressed("ui_select"):
-		# This calls the function to launch the player.
+		# This calls the function to launch the player using the stored aim vector.
 		launch()
 
 # This function runs every physics frame, ideal for physics-related code.
 func _physics_process(delta: float) -> void:
-	
-	global_position += Vector2(Input.get_axis("DEBUG-LEFT", "DEBUG-RIGHT"), Input.get_axis("DEBUG-UP", "DEBUG-DOWN")) * 50
+	# Debug movement (assuming "DEBUG-*" inputs are set up)
+	global_position += Vector2(Input.get_axis("DEBUG-LEFT", "DEBUG-RIGHT"), Input.get_axis("DEBUG-UP", "DEBUG-DOWN")) * 50 * delta
 	
 	# This checks if the player is in the air.
 	if current_state == State.LAUNCHED:
@@ -69,17 +74,11 @@ func _physics_process(delta: float) -> void:
 
 # This function handles the logic for launching the player.
 func launch() -> void:
-	# This calculates the global vector from the ship's current position to the current mouse position.
-	var pull_vector_global = get_global_mouse_position() - global_position
-	# This clamps the vector's length to the max_pull_distance.
-	pull_vector_global = pull_vector_global.limit_length(max_pull_distance)
+	# Use the pre-calculated and stored aim vector.
+	var final_pull_vector = _current_aim_pull_vector
 	
-	# This calculates the power percentage (0.0 to 1.0) based on distance.
-	var power_percentage = pull_vector_global.length() / max_pull_distance
-	
-	# This sets the player's initial velocity based on the pull vector and launch power.
-	# linear_velocity is a global property, so directly using the global pull_vector works.
-	linear_velocity = pull_vector_global * launch_power
+	# This sets the player's initial velocity based on the stored pull vector and launch power.
+	linear_velocity = final_pull_vector * launch_power
 	
 	# This changes the state to LAUNCHED.
 	current_state = State.LAUNCHED
@@ -96,27 +95,28 @@ func apply_boost() -> void:
 	apply_central_impulse(boost_direction * boost_strength)
 	# This consumes the boost so it cannot be used again.
 	has_boost = false
-	# This provides visual feedback that the boost was used TODO CHANGE.
+	# This provides visual feedback that the boost was used.
 	sprite.modulate = Color.CYAN
 	# TODO: Add a particle effect or sound for the boost here!
 
 # This function draws and updates the aiming line.
 func update_aim_line() -> void:
 	# This calculates the global vector from the player's current position to the current mouse position.
-	var pull_vector_global = get_global_mouse_position() - global_position
+	var pull_vector_from_player_to_mouse = get_global_mouse_position() - global_position
 	# This clamps the vector's length to the max_pull_distance.
-	pull_vector_global = pull_vector_global.limit_length(max_pull_distance)
+	_current_aim_pull_vector = pull_vector_from_player_to_mouse.limit_length(max_pull_distance)
 	
 	# This calculates the power percentage (0.0 to 1.0) based on distance.
-	var power_percentage = pull_vector_global.length() / max_pull_distance
+	var power_percentage = _current_aim_pull_vector.length() / max_pull_distance
 	
 	# This clears any previous points from the line.
 	line_2d.clear_points()
 	# This adds a point at the player's center (0,0 in local coordinates for the Line2D).
 	line_2d.add_point(Vector2.ZERO)
 	
-	# This adds the end point of the pull vector.
-	line_2d.add_point(global_transform.basis_xform_inv(pull_vector_global))
+	# This adds the end point of the pull vector, transformed into Line2D's local space.
+	# It ensures the line points correctly regardless of player's current rotation.
+	line_2d.add_point(global_transform.basis_xform_inv(_current_aim_pull_vector))
 	
 	# This calculates the color interpolation from white to red based on power.
 	var line_color = Color.WHITE.lerp(Color.RED, power_percentage)
