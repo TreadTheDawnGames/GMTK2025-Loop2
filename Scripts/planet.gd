@@ -1,6 +1,10 @@
 extends Area2D
 class_name BasePlanet
 
+var has_been_orbited: bool = false
+var orbits: int = 0
+static var Score_Mult: int = 0
+
 # This exports a variable to the Godot editor, allowing to change it without code.
 @export var gravity_strength: float = 6000.0
 
@@ -46,6 +50,9 @@ func _on_body_entered(body: Node2D) -> void:
 
 # This function runs when a body exits the Area2D's collision shape.
 func _on_body_exited(body: Node2D) -> void:
+	#Reset the orbit score
+	orbits = 0
+	
 	# This checks if the exiting body is in the tracking array.
 	if body in bodies_in_gravity_field:
 		# This removes the body from the array, stopping the gravity effect.
@@ -54,6 +61,8 @@ func _on_body_exited(body: Node2D) -> void:
 		# Clean up orbit tracking for players
 		if body is Player and body in player_orbit_data:
 			player_orbit_data.erase(body)
+		
+		
 
 # Initialize orbit tracking for a player
 func initialize_orbit_tracking(player: Player) -> void:
@@ -105,5 +114,12 @@ func get_angle_to_player(player: Player) -> float:
 
 # Award score for completing an orbit
 func award_orbit_score(player: Player) -> void:
-	GameManager.add_score(100)
-	print("Player completed orbit around planet! +100 points")
+	if has_been_orbited == false:
+		has_been_orbited = true
+		Score_Mult += 1
+	orbits += 1
+	GameManager.add_score(orbits * Score_Mult)
+	print("New Line")
+	print(orbits)
+	print(Score_Mult)
+	

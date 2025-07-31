@@ -1,9 +1,12 @@
-[gd_scene load_steps=10 format=3 uid="uid://big3rsi88wl76"]
+[gd_scene load_steps=11 format=3 uid="uid://big3rsi88wl76"]
 
-[ext_resource type="Script" uid="uid://dton838gyavdl" path="res://Scripts/player.gd" id="1_kyqiw"]
+[ext_resource type="Script" path="res://Scripts/player.gd" id="1_kyqiw"]
 [ext_resource type="Texture2D" uid="uid://b3yadhtuplhg2" path="res://Assets/kenney_space-shooter-extension/PNG/Sprites X2/Ships/spaceShips_001.png" id="2_kyqiw"]
-[ext_resource type="Script" uid="uid://dwottdnvtkjgy" path="res://Scenes/particle_effect.gd" id="3_gntrk"]
-[ext_resource type="Script" uid="uid://vv5wxkdlfjyc" path="res://Scripts/camera_shake.gd" id="4_dewec"]
+[ext_resource type="Script" path="res://Scenes/particle_effect.gd" id="3_gntrk"]
+[ext_resource type="Script" path="res://Scripts/camera_shake.gd" id="4_dewec"]
+
+[sub_resource type="Gradient" id="Gradient_uvysa"]
+colors = PackedColorArray(0.0588235, 0, 0.87451, 1, 1, 1, 1, 0)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kyqiw"]
 radius = 26.0192
@@ -26,6 +29,22 @@ point_count = 3
 input_pickable = true
 gravity_scale = 0.0
 script = ExtResource("1_kyqiw")
+
+[node name="ParticleEffect" type="CPUParticles2D" parent="."]
+position = Vector2(-2, 0)
+amount = 1000
+lifetime = 3.0
+randomness = 0.33
+lifetime_randomness = 0.18
+emission_shape = 1
+emission_sphere_radius = 21.19
+direction = Vector2(-1, 0)
+gravity = Vector2(0, 0)
+scale_amount_min = 10.52
+scale_amount_max = 10.52
+color = Color(0.27451, 1, 1, 1)
+color_ramp = SubResource("Gradient_uvysa")
+script = ExtResource("3_gntrk")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 rotation = 4.71239

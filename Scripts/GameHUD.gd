@@ -3,6 +3,7 @@ class_name GameHUD
 
 # UI element references
 @onready var score_label: Label = $VBoxContainer/ScoreLabel
+@onready var mult_label: Label = $VBoxContainer/MultLabel
 @onready var boosts_label: Label = $VBoxContainer/BoostsLabel
 @onready var boost_power_label: Label = $VBoxContainer/BoostPowerLabel
 @onready var compass = %Compass
@@ -14,6 +15,7 @@ func _ready() -> void:
 	GameManager.score_changed.connect(_on_score_changed)
 	
 	update_score_display()
+	#update_mult_display()
 	update_boosts_display()
 	boost_power_label.visible = false
 
@@ -35,6 +37,9 @@ func _on_score_changed(_new_score: int) -> void:
 
 func update_score_display() -> void:
 	score_label.text = "Score: " + str(GameManager.get_score())
+
+func update_mult_display() -> void:
+	score_label.text = "Score: " + str(BasePlanet.Score_Mult)
 
 func update_boosts_display() -> void:
 	if player:

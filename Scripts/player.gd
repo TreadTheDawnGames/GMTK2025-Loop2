@@ -1,6 +1,7 @@
 extends RigidBody2D
 class_name Player
 
+
 # This defines a set of named states for the player's state machine.
 enum State {
 	READY_TO_AIM,
@@ -22,7 +23,7 @@ enum State {
 @export var max_pull_distance: float = 200.0
 # This exports a variable for the boost impulse strength.
 @export var boost_strength: float = 100.0
-
+   
 static var Position : Vector2
 # This variable will hold the player's current state from the enum above.
 var current_state: State = State.READY_TO_AIM
@@ -36,7 +37,7 @@ var _current_aim_pull_vector: Vector2 = Vector2.ZERO
 var SingleTouchDown : bool = false
 
 # Lose condition variables
-var max_distance_from_origin: float = 15000.0  # Maximum distance before losing
+var max_distance_from_origin: float = 1500000000000000000000000000.0  # Maximum distance before losing
 var origin_position: Vector2 = Vector2.ZERO
 var has_lost: bool = false
 
@@ -44,6 +45,8 @@ var has_lost: bool = false
 @onready var line_2d: Line2D = $Line2D
 # This creates a reference to the Sprite2D node.
 @onready var sprite: Sprite2D = $Sprite2D
+
+
 
 func _ready() -> void:
 	# Store starting position as origin
@@ -92,6 +95,11 @@ func _process(_delta: float) -> void:
 	#Reset whether ship can aim
 	if (Input.is_action_just_pressed("DEBUG-RESET_LAUNCH")):
 		Reset()
+	
+	if (Input.is_action_pressed("Brake")):
+		brake()
+
+
 	
 	
 	# This handles only the left mouse button events.
@@ -162,13 +170,31 @@ func apply_boost() -> void:
 	# This applies an instant force (impulse) in the forward direction.
 	apply_central_impulse(boost_direction * boost_strength)
 	# This consumes the boost so it cannot be used again.
-	has_boost = false
+	#has_boost = false
 	# This provides visual feedback that the boost was used.
 	#sprite.modulate = Color.CYAN
 	_BoostParticles.Emit()
 	Sprite.frame_coords.y = 1
 	camera_2d.Shake()
 	# TODO: Add a sound for the boost here!
+
+func brake() -> void:
+	
+	if linear_velocity.length() > 70 :
+		# This gets the forward direction of the rocket.
+		var boost_direction = Vector2.RIGHT.rotated(rotation)
+		# This applies an instant force (impulse) in the forward direction.
+		apply_central_impulse(boost_direction * boost_strength * 0.2 * -1)
+		# This consumes the boost so it cannot be used again.
+		#has_boost = false
+		# This provides visual feedback that the boost was used.
+		#sprite.modulate = Color.CYAN
+		_BoostParticles.Emit()
+		Sprite.frame_coords.y = 1
+		camera_2d.Shake()
+		# TODO: Add a sound for the boost here!
+
+
 
 # This function draws and updates the aiming line.
 func update_aim_line() -> void:

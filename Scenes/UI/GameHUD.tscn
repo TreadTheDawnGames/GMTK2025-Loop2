@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://p4aoyegbc6gj"]
+[gd_scene load_steps=5 format=3 uid="uid://p4aoyegbc6gj"]
 
-[ext_resource type="Script" uid="uid://bcu7j1yoaeyiv" path="res://Scripts/GameHUD.gd" id="1_31s1k"]
+[ext_resource type="Script" path="res://Scripts/GameHUD.gd" id="1_31s1k"]
 [ext_resource type="PackedScene" uid="uid://fcnfyre27jqd" path="res://Scenes/UI/Compass.tscn" id="2_compass"]
+[ext_resource type="PackedScene" uid="uid://cvy6qvmeierso" path="res://Scenes/planet_large.tscn" id="3_pu0xe"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_4y6w4"]
 font_size = 24
@@ -30,6 +31,11 @@ layout_mode = 2
 text = "Score: 0"
 label_settings = SubResource("LabelSettings_4y6w4")
 
+[node name="MultLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Mult: 0"
+label_settings = SubResource("LabelSettings_4y6w4")
+
 [node name="BoostsLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 text = "Boosts: 1"
@@ -43,3 +49,8 @@ label_settings = SubResource("LabelSettings_4y6w4")
 [node name="Compass" parent="." instance=ExtResource("2_compass")]
 unique_name_in_owner = true
 layout_mode = 1
+
+[node name="Planet18" parent="." instance=ExtResource("3_pu0xe")]
+position = Vector2(-8913, -2331)
+scale = Vector2(3, 3)
+gravityCurve = null
