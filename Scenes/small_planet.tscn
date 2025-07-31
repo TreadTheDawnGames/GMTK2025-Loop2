@@ -6,7 +6,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_ngwap"]
 radius = 65.0692
 
-[node name="Planet" instance=ExtResource("1_xtc1m")]
+[node name="Planet2" instance=ExtResource("1_xtc1m")]
 
 [node name="Sprite" parent="." index="0"]
 scale = Vector2(0.135493, 0.135493)
