@@ -1,15 +1,13 @@
 extends Line2D
 
-var queue : Array = []
-@export var MAX_LENGTH : int
-func _process(_delta):
-	var pos = global_position
-	
-	queue.push_front(pos)
-	if queue.size() > MAX_LENGTH:
-		queue.pop_back()
-		
-	clear_points()
-	
-	for point in queue:
-		add_point(pos)
+var point
+
+func ready():
+	top_level = (true)
+
+func _physics_process(delta):
+	point = get_parent().global_position
+	add_point(point)
+
+	if points.size() > 150:
+		remove_point(0)

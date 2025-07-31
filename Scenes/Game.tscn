@@ -1,10 +1,11 @@
-[gd_scene load_steps=16 format=3 uid="uid://c0pbif8cyy7x7"]
+[gd_scene load_steps=18 format=3 uid="uid://c0pbif8cyy7x7"]
 
 [ext_resource type="PackedScene" uid="uid://cvy6qvmeierso" path="res://Scenes/planet_large.tscn" id="1_j5yw3"]
 [ext_resource type="Texture2D" uid="uid://u0nthwjjti6c" path="res://Assets/StarBackgroundTile.png" id="2_2irst"]
 [ext_resource type="PackedScene" uid="uid://vuorl2ga7vdk" path="res://Scenes/planet_medium.tscn" id="2_kldst"]
 [ext_resource type="Script" uid="uid://dx7wa3d4fr6xu" path="res://Scripts/star_background.gd" id="3_2irst"]
 [ext_resource type="PackedScene" uid="uid://d1rrwaam8e5cr" path="res://Scenes/planet_small.tscn" id="3_b2bpf"]
+[ext_resource type="Shader" uid="uid://eypjeee8ergs" path="res://Assets/Shaders/StarBackground2.gdshader" id="3_wxwew"]
 [ext_resource type="PackedScene" uid="uid://big3rsi88wl76" path="res://Scenes/Player.tscn" id="4_kldst"]
 [ext_resource type="PackedScene" uid="uid://14epulnfjodl" path="res://Scenes/Home.tscn" id="5_b2bpf"]
 [ext_resource type="PackedScene" uid="uid://p4aoyegbc6gj" path="res://Scenes/UI/GameHUD.tscn" id="8_hud"]
@@ -13,6 +14,9 @@
 [ext_resource type="PackedScene" uid="uid://bpykgsig0p7c4" path="res://Scenes/Collectables/SatelliteCollectable.tscn" id="11_satellite"]
 [ext_resource type="PackedScene" uid="uid://dkjlxh0onjytk" path="res://Scenes/Collectables/CrystalCollectable.tscn" id="12_crystal"]
 [ext_resource type="PackedScene" uid="uid://c1lsn0rglq41p" path="res://Scenes/Collectables/EnergyCoreCollectable.tscn" id="13_energy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_acvyw"]
+shader = ExtResource("3_wxwew")
 
 [sub_resource type="Shader" id="Shader_fgofq"]
 code = "shader_type canvas_item;
@@ -45,13 +49,15 @@ layer = -1
 [node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
 z_index = -1
 z_as_relative = false
+material = SubResource("ShaderMaterial_acvyw")
 offset_left = -619.0
-offset_top = -320.0
+offset_top = -324.0
 offset_right = 2811.0
-offset_bottom = 1630.0
+offset_bottom = 1626.0
 color = Color(0, 0, 0, 1)
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/ColorRect"]
+visible = false
 z_index = -1
 z_as_relative = false
 material = SubResource("ShaderMaterial_fgofq")

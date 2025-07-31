@@ -1,18 +1,13 @@
-[gd_scene load_steps=13 format=3 uid="uid://big3rsi88wl76"]
+[gd_scene load_steps=11 format=3 uid="uid://big3rsi88wl76"]
 
 [ext_resource type="Script" uid="uid://dton838gyavdl" path="res://Scripts/player.gd" id="1_kyqiw"]
 [ext_resource type="Texture2D" uid="uid://b3yadhtuplhg2" path="res://Assets/kenney_space-shooter-extension/PNG/Sprites X2/Ships/spaceShips_001.png" id="2_kyqiw"]
 [ext_resource type="Script" uid="uid://dwottdnvtkjgy" path="res://Scenes/particle_effect.gd" id="3_gntrk"]
-[ext_resource type="Texture2D" uid="uid://b86vrmxx8oexw" path="res://Assets/kenney_simple-space/PNG/Retina/effect_gray.png" id="3_nn08x"]
 [ext_resource type="Script" uid="uid://vv5wxkdlfjyc" path="res://Scripts/camera_shake.gd" id="4_dewec"]
 [ext_resource type="Script" uid="uid://dgc8vmme70xjb" path="res://addons/trail_2d/trail_2d.gd" id="5_5ixxa"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kyqiw"]
 radius = 26.0192
-
-[sub_resource type="Curve" id="Curve_52ee3"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.450932), 0.0, 0.0, 0, 0]
-point_count = 2
 
 [sub_resource type="Curve" id="Curve_kyqiw"]
 _data = [Vector2(0.503356, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -34,7 +29,7 @@ gravity_scale = 0.0
 script = ExtResource("1_kyqiw")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-rotation = -1.5708
+rotation = 4.71239
 scale = Vector2(0.453657, 0.453657)
 texture = ExtResource("2_kyqiw")
 vframes = 2
@@ -42,36 +37,9 @@ vframes = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_kyqiw")
 
-[node name="Node2D" type="Node2D" parent="CollisionShape2D"]
+[node name="Trail2D" type="Line2D" parent="CollisionShape2D"]
 position = Vector2(-39, -36)
-
-[node name="Trail2D" type="Line2D" parent="CollisionShape2D/Node2D"]
-position = Vector2(-3, 0)
-points = PackedVector2Array(5, -1, -88, -0.999996)
-width = 13.415
-width_curve = SubResource("Curve_52ee3")
-texture = ExtResource("3_nn08x")
-texture_mode = 2
-begin_cap_mode = 2
-end_cap_mode = 2
 script = ExtResource("5_5ixxa")
-length = 15
-metadata/_custom_type_script = "uid://dgc8vmme70xjb"
-
-[node name="Node2D" type="Node2D" parent="CollisionShape2D/Node2D"]
-position = Vector2(0, 72)
-
-[node name="Trail2D" type="Line2D" parent="CollisionShape2D/Node2D/Node2D"]
-position = Vector2(-3, 0)
-points = PackedVector2Array(5, -1, -88, -0.999996)
-width = 13.415
-width_curve = SubResource("Curve_52ee3")
-texture = ExtResource("3_nn08x")
-texture_mode = 2
-begin_cap_mode = 2
-end_cap_mode = 2
-script = ExtResource("5_5ixxa")
-length = 15
 metadata/_custom_type_script = "uid://dgc8vmme70xjb"
 
 [node name="Line2D" type="Line2D" parent="."]
@@ -99,7 +67,6 @@ hue_variation_max = 1.0
 script = ExtResource("3_gntrk")
 
 [node name="BoostParticles" type="CPUParticles2D" parent="."]
-visible = false
 position = Vector2(-30, 0)
 emitting = false
 amount = 25

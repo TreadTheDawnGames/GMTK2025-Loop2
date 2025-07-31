@@ -24,6 +24,10 @@ GameManager="*res://Scripts/GameManager.gd"
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/trail_2d/plugin.cfg")
+
 [input]
 
 ui_accept={

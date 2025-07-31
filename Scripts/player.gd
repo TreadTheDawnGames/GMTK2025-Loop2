@@ -59,7 +59,7 @@ func _ready() -> void:
 # Apply the current ship color from GameManager
 func apply_ship_color() -> void:
 	var ship_color = GameManager.get_ship_color()
-	Sprite.modulate = ship_color
+	#Sprite.modulate = ship_color
 
 # Called when ship color changes in GameManager
 func _on_ship_color_changed(_new_color: Color) -> void:
