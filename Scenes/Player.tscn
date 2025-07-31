@@ -99,7 +99,6 @@ hue_variation_max = 1.0
 script = ExtResource("3_gntrk")
 
 [node name="BoostParticles" type="CPUParticles2D" parent="."]
-visible = false
 position = Vector2(-30, 0)
 emitting = false
 amount = 25

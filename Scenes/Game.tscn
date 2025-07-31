@@ -17,6 +17,14 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_acvyw"]
 shader = ExtResource("3_wxwew")
+shader_parameter/bg_color = Color(0, 0, 0, 1)
+shader_parameter/offset = Vector2(0, 0)
+shader_parameter/bigStarSlow = 2.0
+shader_parameter/mediumStarSlow = 6.0
+shader_parameter/smallStarSlow = 8.0
+shader_parameter/smallStarAmount = 0.002
+shader_parameter/mediumStarAmount = 0.01
+shader_parameter/bigStarAmount = 0.02
 
 [sub_resource type="Shader" id="Shader_fgofq"]
 code = "shader_type canvas_item;
@@ -55,6 +63,7 @@ offset_top = -324.0
 offset_right = 2811.0
 offset_bottom = 1626.0
 color = Color(0, 0, 0, 1)
+script = ExtResource("3_2irst")
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/ColorRect"]
 visible = false
@@ -77,7 +86,7 @@ position = Vector2(595, -454)
 gravityCurve = null
 
 [node name="Planet3" parent="." instance=ExtResource("3_b2bpf")]
-position = Vector2(261, -765)
+position = Vector2(10, -924)
 gravityCurve = null
 
 [node name="Player" parent="." instance=ExtResource("4_kldst")]
@@ -85,7 +94,7 @@ position = Vector2(695, -24)
 launch_power = 5.0
 
 [node name="Planet4" parent="." instance=ExtResource("5_b2bpf")]
-position = Vector2(659, -1086)
+position = Vector2(1400, -1245)
 gravityCurve = null
 
 [node name="Planet5" parent="." instance=ExtResource("1_j5yw3")]
