@@ -1,5 +1,5 @@
 extends RigidBody2D
-
+class_name Player
 # This defines a set of named states for the player's state machine.
 enum State {
 	READY_TO_AIM,
