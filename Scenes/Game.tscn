@@ -5,7 +5,14 @@
 [ext_resource type="Script" uid="uid://dx7wa3d4fr6xu" path="res://Scripts/star_background.gd" id="3_2irst"]
 [ext_resource type="PackedScene" uid="uid://d1rrwaam8e5cr" path="res://Scenes/planet_small.tscn" id="3_b2bpf"]
 [ext_resource type="PackedScene" uid="uid://big3rsi88wl76" path="res://Scenes/Player.tscn" id="4_kldst"]
-[ext_resource type="PackedScene" path="res://Scenes/Home.tscn" id="5_b2bpf"]
+[ext_resource type="PackedScene" uid="uid://14epulnfjodl" path="res://Scenes/Home.tscn" id="5_b2bpf"]
+[ext_resource type="Shader" uid="uid://bwpd1r5bgng8e" path="res://Assets/Shaders/StarBackground.gdshader" id="6_fgofq"]
+[ext_resource type="Texture2D" uid="uid://xyl1ckcy423q" path="res://Assets/1020x1080Rect.png" id="7_2irst"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bf53h"]
+shader = ExtResource("6_fgofq")
+shader_parameter/bg_color = Color(0, 0, 0, 1)
+shader_parameter/positionOffset = Vector2(0, 0)
 
 [node name="Game" type="Node2D"]
 
@@ -33,7 +40,7 @@ position = Vector2(261, -765)
 gravityCurve = null
 
 [node name="Player" parent="." instance=ExtResource("4_kldst")]
-position = Vector2(1169, -1073)
+position = Vector2(1043, 619)
 launch_power = 5.0
 
 [node name="Planet4" parent="." instance=ExtResource("5_b2bpf")]
