@@ -1,12 +1,31 @@
-[gd_scene load_steps=6 format=3 uid="uid://c0pbif8cyy7x7"]
+[gd_scene load_steps=10 format=3 uid="uid://c0pbif8cyy7x7"]
 
 [ext_resource type="PackedScene" uid="uid://cvy6qvmeierso" path="res://Scenes/planet_large.tscn" id="1_j5yw3"]
 [ext_resource type="PackedScene" uid="uid://vuorl2ga7vdk" path="res://Scenes/planet_medium.tscn" id="2_kldst"]
+[ext_resource type="Script" uid="uid://dx7wa3d4fr6xu" path="res://Scripts/star_background.gd" id="3_2irst"]
 [ext_resource type="PackedScene" uid="uid://d1rrwaam8e5cr" path="res://Scenes/planet_small.tscn" id="3_b2bpf"]
 [ext_resource type="PackedScene" uid="uid://big3rsi88wl76" path="res://Scenes/Player.tscn" id="4_kldst"]
 [ext_resource type="PackedScene" uid="uid://14epulnfjodl" path="res://Scenes/Home.tscn" id="5_b2bpf"]
+[ext_resource type="Shader" uid="uid://bwpd1r5bgng8e" path="res://Assets/Shaders/StarBackground.gdshader" id="6_fgofq"]
+[ext_resource type="Texture2D" uid="uid://xyl1ckcy423q" path="res://Assets/1020x1080Rect.png" id="7_2irst"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bf53h"]
+shader = ExtResource("6_fgofq")
+shader_parameter/bg_color = Color(0, 0, 0, 1)
+shader_parameter/positionOffset = Vector2(0, 0)
 
 [node name="Game" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+material = SubResource("ShaderMaterial_bf53h")
+offset_right = 1920.0
+offset_bottom = 1080.0
+mouse_filter = 2
+texture = ExtResource("7_2irst")
+script = ExtResource("3_2irst")
 
 [node name="Planet" parent="." instance=ExtResource("1_j5yw3")]
 position = Vector2(254, 385)
