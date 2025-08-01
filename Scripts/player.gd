@@ -108,9 +108,13 @@ var clickTimer : SceneTreeTimer
 
 # This function is called every frame.
 func _process(_delta: float) -> void:
+	# Don't process input if game is paused (shop is open)
+	if get_tree().paused:
+		return
+
 	#change the offset position of the background so it looks more like you're moving
 	Position = global_position
-	
+
 	#Reset whether ship can aim
 	if (Input.is_action_just_pressed("DEBUG-RESET_LAUNCH")):
 		Reset()
@@ -154,6 +158,10 @@ func _process(_delta: float) -> void:
 
 # This function runs every physics frame, ideal for physics-related code.
 func _physics_process(delta: float) -> void:
+	# Don't process physics input if game is paused (shop is open)
+	if get_tree().paused:
+		return
+
 	# Debug movement (assuming "DEBUG-*" inputs are set up) || WASD
 	global_position += Vector2(Input.get_axis("DEBUG-LEFT", "DEBUG-RIGHT"), Input.get_axis("DEBUG-UP", "DEBUG-DOWN")) * 1000 * delta
 
@@ -262,4 +270,9 @@ func update_aim_line() -> void:
 func Reset():
 	Sprite.frame_coords.y = 0
 	current_state = State.READY_TO_AIM
-	BoostCount = 1
+
+	# Reset boost count to starting amount (including shop upgrades)
+	if has_meta("starting_boosts"):
+		BoostCount = get_meta("starting_boosts")
+	else:
+		BoostCount = 1
