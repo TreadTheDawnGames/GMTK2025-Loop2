@@ -2,7 +2,7 @@ extends Node
 class_name Sound
 
 @export var Pullback : AudioStream
-@export var Launch : AudioStream
+@export var Launch : AudioStream = preload("res://Assets/Audio/SFX/LaunchSFX.wav")
 @export var Boost : AudioStream = preload("res://Assets/Audio/SFX/BoostSFX.wav")
 @export var EngineExplode : AudioStream
 @export var CollectableGet : AudioStream = preload("res://Assets/Audio/SFX/CollectableSFX.wav")

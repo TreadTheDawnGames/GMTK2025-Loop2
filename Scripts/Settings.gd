@@ -1,16 +1,24 @@
 extends Control
-@onready var color_slider: HSlider = $Background/Panel/VBoxContainer/ColorSliderContainer/ColorSlider
-@onready var example_ship: Sprite2D = $Background/Panel/VBoxContainer/ExampleShipContainer/ExampleShip
+@onready var color_slider: HSlider = $Panel/VBoxContainer/ColorSliderContainer/ColorSlider
+@onready var example_ship: Sprite2D = $Panel/VBoxContainer/ExampleShipContainer/ExampleShip
+@onready var player_audio_handler: PlayerAudioHandler = $PlayerAudioHandler
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# Set initial slider value from GameManager
-	color_slider.value = GameManager.get_ship_color_hue()
+	#color_slider.value = GameManager.get_ship_color_hue()
 	# Update example ship color
 	update_example_ship_color()
-
+	player_audio_handler.PlaySoundAtGlobalPosition(Sounds.UpUIBeep, global_position + (get_rect().size * 0.5), false)
 	# Connect to GameManager signal for color changes
 	GameManager.ship_color_changed.connect(_on_ship_color_changed)
+
+#reddit
+func _notification(what: int) -> void:
+	match what:
+		NOTIFICATION_PREDELETE:
+			player_audio_handler.PlaySoundAtGlobalPosition(Sounds.DownUIBeep, global_position + (get_rect().size * 0.5), false)
+
 
 # Called when the color slider value changes
 func _on_color_slider_value_changed(value: float) -> void:
@@ -24,9 +32,9 @@ func _on_ship_color_changed(new_color: Color) -> void:
 # Update the example ship sprite color
 func update_example_ship_color() -> void:
 	var ship_color = GameManager.get_ship_color()
-	example_ship.modulate = ship_color
+	#example_ship.modulate = ship_color
 
 # Called when Back button is pressed
 func _on_back_button_pressed() -> void:
 	# Return to main menu
-	GameManager.go_to_main_menu()
+	queue_free()

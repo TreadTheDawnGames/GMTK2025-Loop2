@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://c1e04v6b22eli" path="res://Scenes/UI/music_manager.gd" id="1_u0apm"]
 [ext_resource type="Script" uid="uid://ehkw6w2xh2bq" path="res://addons/audio_manager/audio_manager_omni.gd" id="2_6j6m3"]
 [ext_resource type="AudioStream" uid="uid://bgpj881la2ljv" path="res://Assets/Audio/Music/GMTK Chill Track.wav" id="3_u0apm"]
-[ext_resource type="AudioStream" uid="uid://bjvtha800l3bg" path="res://Assets/Audio/SFX/UIClickSFX.wav" id="4_6j6m3"]
+[ext_resource type="AudioStream" uid="uid://l0sx6418is77" path="res://Assets/Audio/SFX/UIClickSFX.wav" id="4_6j6m3"]
 
 [sub_resource type="Resource" id="Resource_cwhqb"]
 script = ExtResource("2_6j6m3")

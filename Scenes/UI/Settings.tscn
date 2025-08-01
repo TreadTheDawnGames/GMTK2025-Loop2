@@ -1,11 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://ce2kgb3fjtjut"]
+[gd_scene load_steps=6 format=3 uid="uid://ce2kgb3fjtjut"]
 
 [ext_resource type="Theme" uid="uid://dvwgvp8u8xo0i" path="res://Scenes/UI/Themes/UI_Theme.tres" id="1_sc1bs"]
 [ext_resource type="Script" uid="uid://b8dpyepks24nr" path="res://Scripts/Settings.gd" id="1_settings"]
 [ext_resource type="Texture2D" uid="uid://b3yadhtuplhg2" path="res://Assets/kenney_space-shooter-extension/PNG/Sprites X2/Ships/spaceShips_001.png" id="2_ship_texture"]
 [ext_resource type="PackedScene" uid="uid://blig0domcdoj" path="res://Scenes/UI/volume_control.tscn" id="2_y60rh"]
-[ext_resource type="Material" uid="uid://2wo2meekggrg" path="res://Scenes/Effects/StarBackground_Menu.tres" id="3_kg15k"]
-[ext_resource type="Script" path="res://Scripts/StarBackground_Menu.gd" id="4_kg15k"]
+[ext_resource type="Script" uid="uid://deew7a1ghrogw" path="res://Scripts/PlayerAudioHandler.gd" id="5_hfiyb"]
 
 [node name="Settings" type="Control"]
 layout_mode = 3
@@ -17,18 +16,7 @@ grow_vertical = 2
 theme = ExtResource("1_sc1bs")
 script = ExtResource("1_settings")
 
-[node name="Background" type="ColorRect" parent="."]
-material = ExtResource("3_kg15k")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.41, 0.41, 0.82, 1)
-script = ExtResource("4_kg15k")
-
-[node name="SettingsTitle" type="Label" parent="Background"]
+[node name="SettingsTitle" type="Label" parent="."]
 layout_mode = 2
 offset_left = 354.5
 offset_top = 108.5
@@ -41,7 +29,7 @@ text = "SETTINGS"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Panel" type="PanelContainer" parent="Background"]
+[node name="Panel" type="PanelContainer" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -55,75 +43,79 @@ offset_bottom = 191.5
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Background/Panel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
 layout_mode = 2
 
-[node name="Spacer1" type="Control" parent="Background/Panel/VBoxContainer"]
+[node name="Spacer1" type="Control" parent="Panel/VBoxContainer"]
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="MasterVolume" parent="Background/Panel/VBoxContainer" instance=ExtResource("2_y60rh")]
+[node name="MasterVolume" parent="Panel/VBoxContainer" instance=ExtResource("2_y60rh")]
 layout_mode = 2
 busName = "Master"
 
-[node name="Music" parent="Background/Panel/VBoxContainer" instance=ExtResource("2_y60rh")]
+[node name="Music" parent="Panel/VBoxContainer" instance=ExtResource("2_y60rh")]
 layout_mode = 2
 busName = "Music"
 
-[node name="MasterVolume2" parent="Background/Panel/VBoxContainer" instance=ExtResource("2_y60rh")]
+[node name="MasterVolume2" parent="Panel/VBoxContainer" instance=ExtResource("2_y60rh")]
 layout_mode = 2
 busName = "SFX"
 
-[node name="ShipColorLabel" type="Label" parent="Background/Panel/VBoxContainer"]
+[node name="ShipColorLabel" type="Label" parent="Panel/VBoxContainer"]
 visible = false
 layout_mode = 2
 text = "Ship Color:"
 horizontal_alignment = 1
 
-[node name="Spacer2" type="Control" parent="Background/Panel/VBoxContainer"]
+[node name="Spacer2" type="Control" parent="Panel/VBoxContainer"]
 visible = false
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 
-[node name="ExampleShipContainer" type="CenterContainer" parent="Background/Panel/VBoxContainer"]
+[node name="ExampleShipContainer" type="CenterContainer" parent="Panel/VBoxContainer"]
 visible = false
 custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
 
-[node name="ExampleShip" type="Sprite2D" parent="Background/Panel/VBoxContainer/ExampleShipContainer"]
+[node name="ExampleShip" type="Sprite2D" parent="Panel/VBoxContainer/ExampleShipContainer"]
 rotation = 4.71239
 scale = Vector2(0.6, 0.6)
 texture = ExtResource("2_ship_texture")
 vframes = 2
 
-[node name="Spacer3" type="Control" parent="Background/Panel/VBoxContainer"]
+[node name="Spacer3" type="Control" parent="Panel/VBoxContainer"]
 visible = false
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 
-[node name="ColorSliderContainer" type="VBoxContainer" parent="Background/Panel/VBoxContainer"]
+[node name="ColorSliderContainer" type="VBoxContainer" parent="Panel/VBoxContainer"]
 visible = false
 layout_mode = 2
 
-[node name="ColorSliderLabel" type="Label" parent="Background/Panel/VBoxContainer/ColorSliderContainer"]
+[node name="ColorSliderLabel" type="Label" parent="Panel/VBoxContainer/ColorSliderContainer"]
 layout_mode = 2
 text = "Drag to change color:"
 horizontal_alignment = 1
 
-[node name="ColorSlider" type="HSlider" parent="Background/Panel/VBoxContainer/ColorSliderContainer"]
+[node name="ColorSlider" type="HSlider" parent="Panel/VBoxContainer/ColorSliderContainer"]
 custom_minimum_size = Vector2(300, 30)
 layout_mode = 2
 max_value = 1.0
 step = 0.01
 
-[node name="Spacer4" type="Control" parent="Background/Panel/VBoxContainer"]
+[node name="Spacer4" type="Control" parent="Panel/VBoxContainer"]
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 
-[node name="BackButton" type="Button" parent="Background/Panel/VBoxContainer"]
+[node name="BackButton" type="Button" parent="Panel/VBoxContainer"]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 text = "BACK TO MENU"
 
-[connection signal="value_changed" from="Background/Panel/VBoxContainer/ColorSliderContainer/ColorSlider" to="." method="_on_color_slider_value_changed"]
-[connection signal="pressed" from="Background/Panel/VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]
+[node name="PlayerAudioHandler" type="Node2D" parent="."]
+script = ExtResource("5_hfiyb")
+metadata/_custom_type_script = "uid://deew7a1ghrogw"
+
+[connection signal="value_changed" from="Panel/VBoxContainer/ColorSliderContainer/ColorSlider" to="." method="_on_color_slider_value_changed"]
+[connection signal="pressed" from="Panel/VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]

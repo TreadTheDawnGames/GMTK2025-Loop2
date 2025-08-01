@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://c6j8dn68rg4lw"
-path="res://.godot/imported/UpBeepUI.wav-178dfa1710661df465bb900f8c02db4a.sample"
+uid="uid://dyydnjvhwibqa"
+path="res://.godot/imported/LaunchSFX.wav-91cfd6831faa8b1a45fe73009c49a4ed.sample"
 
 [deps]
 
-source_file="res://Assets/Audio/SFX/UpBeepUI.wav"
-dest_files=["res://.godot/imported/UpBeepUI.wav-178dfa1710661df465bb900f8c02db4a.sample"]
+source_file="res://Assets/Audio/SFX/LaunchSFX.wav"
+dest_files=["res://.godot/imported/LaunchSFX.wav-91cfd6831faa8b1a45fe73009c49a4ed.sample"]
 
 [params]
 
