@@ -8,13 +8,18 @@ enum State {
 	LAUNCHED
 }
 
+# A cooldown for launching. TTDG: I use it to make sure releasing fast doesn't use a boost.
+const LAUNCH_COOLDOWN_TIME : float = 0.3
+# yeah that (half a second)
+var canBoost : bool = false
+
 # The particles
 @onready var _LaunchParticles: ParticleEffect = $LaunchParticles
 @onready var _BoostParticles: ParticleEffect = $BoostParticles
 # The sprite
 @onready var Sprite: Sprite2D = $Sprite2D
 # The Camera
-@onready var camera_2d: ScreenShake = $Camera2D
+@onready var camera_2d: ScreenShake2 = $Camera2D
 
 # This exports a variable for launch power, tunable in the Inspector.
 @export var launch_power: float = 10.0
@@ -22,6 +27,9 @@ enum State {
 @export var max_pull_distance: float = 200.0
 # This exports a variable for the boost impulse strength.
 @export var boost_strength: float = 1000.0
+
+#defines how fast a click should be. I use 0.2 in another game just fine.
+const CLICK_TIME : float = 0.2
 
 # Flag to double launch if on planet
 var onPlanet : bool = false
@@ -88,8 +96,14 @@ func _input(ev: InputEvent) -> void:
 			SingleTouchDown = true
 		elif ev.index == 0 and not ev.is_pressed():
 			SingleTouchDown = false
+	if ev is InputEventMouseButton:
+		var event = ev as InputEventMouseButton
+		if event.pressed:
+			clickTimer = get_tree().create_timer(CLICK_TIME)
 			
-	
+# a timer to check if the mouse button was down/up quick
+var clickTimer : SceneTreeTimer
+
 # This function is called every frame.
 func _process(_delta: float) -> void:
 	#change the offset position of the background so it looks more like you're moving
@@ -108,6 +122,8 @@ func _process(_delta: float) -> void:
 			# Immediately update aim line for visual feedback.
 			update_aim_line()
 			
+
+			
 		# This launches on mouse release while AIMING.
 
 	# This updates the aim line only while AIMING and the mouse button is held.
@@ -122,9 +138,13 @@ func _process(_delta: float) -> void:
 	# This checks if the player is aiming and spacebar is pressed to launch.
 	# Note: This is separate from mouse release to allow "set and shoot" with space.
 	if current_state == State.AIMING and not (Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) or SingleTouchDown):
-		
 		# This calls the function to launch the player using the stored aim vector.
 		launch()
+		
+	if(not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)):
+		if clickTimer and clickTimer.time_left > 0 and has_boost and canBoost:
+			apply_boost()
+			clickTimer = null
 
 # This function runs every physics frame, ideal for physics-related code.
 func _physics_process(delta: float) -> void:
@@ -153,8 +173,8 @@ func _physics_process(delta: float) -> void:
 			
 # This function handles the logic for launching the player.
 func launch() -> void:
-	
-	
+	get_tree().create_timer(LAUNCH_COOLDOWN_TIME).timeout.connect(func(): canBoost=true)
+	canBoost = false
 	# Use the pre-calculated and stored aim vector.
 	var final_pull_vector = _current_aim_pull_vector
 	

@@ -31,7 +31,7 @@ project/assembly_name="GMTK2025-LoopTake2"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/audio_manager/plugin.cfg", "res://addons/trail_2d/plugin.cfg")
+enabled=PackedStringArray("res://addons/trail_2d/plugin.cfg")
 
 [input]
 
