@@ -1,4 +1,5 @@
 extends Sprite2D
+class_name RandSprite2D
 @export var PlanetSprites : Array[Texture2D]
 
 
@@ -10,5 +11,5 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass

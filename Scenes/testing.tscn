@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://dpgyyv3r18v5n"]
+[gd_scene load_steps=5 format=3 uid="uid://dpgyyv3r18v5n"]
 
 [ext_resource type="PackedScene" uid="uid://big3rsi88wl76" path="res://Scenes/Player.tscn" id="1_sx6hp"]
 [ext_resource type="Material" uid="uid://bxcys6gyngoe6" path="res://Scenes/Effects/StarBackground.tres" id="2_4ppfb"]
 [ext_resource type="Script" uid="uid://dx7wa3d4fr6xu" path="res://Scripts/star_background.gd" id="3_8si1v"]
+[ext_resource type="PackedScene" uid="uid://fcdupdwq82w5" path="res://Scenes/Asteroid.tscn" id="4_4ppfb"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -22,3 +23,6 @@ offset_right = 2811.0
 offset_bottom = 1626.0
 color = Color(0, 0, 0, 1)
 script = ExtResource("3_8si1v")
+
+[node name="RigidBody2D2" parent="." instance=ExtResource("4_4ppfb")]
+position = Vector2(-2, 1818)

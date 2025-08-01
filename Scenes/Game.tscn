@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://c0pbif8cyy7x7"]
+[gd_scene load_steps=9 format=3 uid="uid://c0pbif8cyy7x7"]
 
 [ext_resource type="Script" uid="uid://dx7wa3d4fr6xu" path="res://Scripts/star_background.gd" id="3_2irst"]
 [ext_resource type="Material" uid="uid://bxcys6gyngoe6" path="res://Scenes/Effects/StarBackground.tres" id="3_fgofq"]
 [ext_resource type="PackedScene" uid="uid://big3rsi88wl76" path="res://Scenes/Player.tscn" id="4_kldst"]
 [ext_resource type="PackedScene" uid="uid://14epulnfjodl" path="res://Scenes/Home.tscn" id="5_b2bpf"]
 [ext_resource type="PackedScene" uid="uid://dmbrkrs5phqe0" path="res://Scenes/level.tscn" id="6_7lihs"]
+[ext_resource type="PackedScene" uid="uid://fcdupdwq82w5" path="res://Scenes/Asteroid.tscn" id="8_2irst"]
 [ext_resource type="PackedScene" uid="uid://p4aoyegbc6gj" path="res://Scenes/UI/GameHUD.tscn" id="8_hud"]
 [ext_resource type="Script" uid="uid://dfjdljl46khuv" path="res://Scripts/GameController.gd" id="9_controller"]
 
@@ -41,7 +42,7 @@ layer = 10
 script = null
 
 [node name="Player" parent="." instance=ExtResource("4_kldst")]
-position = Vector2(1, -346)
+position = Vector2(6017, -2365)
 rotation = -1.5708
 launch_power = 5.0
 
@@ -59,3 +60,9 @@ StationSprite = null
 [node name="Planet6" parent="." instance=ExtResource("5_b2bpf")]
 position = Vector2(-6794, -8359)
 StationSprite = null
+
+[node name="RigidBody2D" parent="." instance=ExtResource("8_2irst")]
+position = Vector2(3, -759)
+
+[node name="RigidBody2D2" parent="." instance=ExtResource("8_2irst")]
+position = Vector2(6041, 4121)

@@ -22,7 +22,7 @@ func _physics_process(_delta: float) -> void:
 	# This loops through every body currently stored in the array.
 	for body in bodies_in_gravity_field:
 		# This calculates the direction from the body towards this planet.
-		if(not body.onPlanet):
+		if(body is Player and not body.onPlanet):
 			var direction_to_planet = (global_position - body.global_position).normalized()
 
 		# This calculates the force vector by combining direction and strength.

@@ -6,7 +6,7 @@ func _ready() -> void:
 	pressed.connect(on_button_pressed)
 
 var isHovered : bool = false
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if(is_hovered() and not isHovered):
 		isHovered = true
 		on_button_hovered()

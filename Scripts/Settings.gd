@@ -19,14 +19,14 @@ func _on_color_slider_value_changed(value: float) -> void:
 	GameManager.set_ship_color_from_hue(value)
 
 # Called when GameManager ship color changes
-func _on_ship_color_changed(new_color: Color) -> void:
+func _on_ship_color_changed(_new_color: Color) -> void:
 	update_example_ship_color()
 
 # Update the example ship sprite color
 func update_example_ship_color() -> void:
-	var ship_color = GameManager.get_ship_color()
+	#var ship_color = GameManager.get_ship_color()
 	#example_ship.modulate = ship_color
-
+	pass
 # Called when Back button is pressed
 func _on_back_button_pressed() -> void:
 	# Return to main menu

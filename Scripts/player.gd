@@ -167,15 +167,15 @@ func _process(_delta: float) -> void:
 			clickTimer = null
 
 # This function runs every physics frame, ideal for physics-related code.
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	# Don't process physics input if game is paused (shop is open)
 	if get_tree().paused:
 		return
 
 	# Debug movement (assuming "DEBUG-*" inputs are set up) || WASD
-	global_position += Vector2(Input.get_axis("DEBUG-LEFT", "DEBUG-RIGHT"), Input.get_axis("DEBUG-UP", "DEBUG-DOWN")) * 1000 * delta
-	if(Input.is_action_just_pressed("DEBUG-ADD_BOOST")):
-		BoostCount +=1
+	#global_position += Vector2(Input.get_axis("DEBUG-LEFT", "DEBUG-RIGHT"), Input.get_axis("DEBUG-UP", "DEBUG-DOWN")) * 1000 * delta
+	#if(Input.is_action_just_pressed("DEBUG-ADD_BOOST")):
+		#BoostCount +=1
 	
 	
 	# Check lose condition - if player is too far from origin
