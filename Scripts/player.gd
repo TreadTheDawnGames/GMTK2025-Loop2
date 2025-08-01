@@ -166,10 +166,10 @@ func _physics_process(delta: float) -> void:
 			if collider.owner is BasePlanet:
 				if(!onPlanet):
 					print("onPlanet")
-					linear_velocity = Vector2.ZERO
-					angular_velocity = 0.0
+					#linear_velocity = Vector2.ZERO
+					#angular_velocity = 0.0
 					#set_deferred("sleeping", true)
-					Reset()
+					#Reset()
 				onPlanet = true
 
 	# This checks if the player is in the air.
@@ -219,7 +219,7 @@ func apply_boost() -> void:
 	# This applies an instant force (impulse) in the forward direction.
 	apply_central_impulse(boost_direction * boost_strength)
 	# This consumes the boost so it cannot be used again.
-	BoostCount -= 1
+	#BoostCount -= 1
 	
 	# This provides visual feedback that the boost was used.
 	#sprite.modulate = Color.CYAN

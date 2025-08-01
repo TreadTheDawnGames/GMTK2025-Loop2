@@ -16,5 +16,13 @@ scale = Vector2(0.997349, 1.00307)
 [node name="Planet3" parent="." instance=ExtResource("2_wqkje")]
 position = Vector2(196.59, 878)
 
+[node name="Planet2" parent="." instance=ExtResource("4_8c0lf")]
+position = Vector2(5393.18, -956)
+scale = Vector2(4.97353, 5.06093)
+
+[node name="Planet5" parent="." instance=ExtResource("4_8c0lf")]
+position = Vector2(2147.44, 1790)
+scale = Vector2(2, 2.022)
+
 [node name="Planet4" parent="." instance=ExtResource("5_754fn")]
 position = Vector2(854.564, -167)

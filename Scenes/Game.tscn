@@ -40,6 +40,7 @@ script = null
 position = Vector2(1, -346)
 rotation = -1.5708
 launch_power = 5.0
+boost_strength = 100.0
 
 [node name="Planet2" parent="." instance=ExtResource("5_b2bpf")]
 StationSprite = null
