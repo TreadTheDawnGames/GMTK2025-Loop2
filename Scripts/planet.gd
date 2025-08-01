@@ -28,6 +28,11 @@ func _physics_process(_delta: float) -> void:
 		# This calculates the force vector by combining direction and strength.
 			var gravity_force = direction_to_planet * gravity_strength * ((Sprite.texture.get_size().x/2) / to_local(global_position).distance_to(body.to_local(global_position))) # gravityCurve.sample
 
+			# Check if body has gravity modifier component
+			var gravity_modifier = body.get_node_or_null("GravityModifierComponent")
+			if gravity_modifier:
+				gravity_force = gravity_modifier.modify_gravity_force(gravity_force)
+
 		# This applies the calculated force to the center of the body.
 			body.apply_central_force(gravity_force)
 
