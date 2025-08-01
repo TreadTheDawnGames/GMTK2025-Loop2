@@ -1,8 +1,82 @@
-[gd_scene load_steps=4 format=3 uid="uid://del8gwsewiqo8"]
+[gd_scene load_steps=5 format=3 uid="uid://del8gwsewiqo8"]
 
 [ext_resource type="Theme" uid="uid://dvwgvp8u8xo0i" path="res://Scenes/UI/Themes/UI_Theme.tres" id="1_6xaih"]
 [ext_resource type="Script" path="res://Scripts/LoseScreen.gd" id="1_lose_screen"]
-[ext_resource type="Material" uid="uid://2wo2meekggrg" path="res://Scenes/Effects/StarBackground_Menu.tres" id="3_3abt3"]
+
+[sub_resource type="Shader" id="Shader_6xaih"]
+code = "shader_type canvas_item;
+
+uniform vec4 bg_color: source_color;
+uniform float bigStarSlow = 2.0;
+uniform float mediumStarSlow = 6.0;
+uniform float smallStarSlow = 8.0;
+
+uniform float smallStarAmount = 0.002;
+uniform float mediumStarAmount = 0.01;
+uniform float bigStarAmount = 0.02;
+
+uniform float circleRadius = 100;
+
+float rand(vec2 st) {
+    return fract(sin(dot(st.xy, vec2(12.9898,78.233))) * 43758.5453123);
+}
+
+void fragment() {
+	vec2 offset = vec2(sin(TIME), cos(TIME)) * circleRadius;
+	
+	vec2 normCoordBig = FRAGCOORD.xy+floor(offset/bigStarSlow);
+	vec2 normCoordMedium = FRAGCOORD.xy+floor(offset/mediumStarSlow);
+	vec2 normCoordSmall = FRAGCOORD.xy+floor(offset/smallStarSlow);
+	
+	float color = 0.0;
+	
+	float size = 20.0;
+	float prob = 1.0-mediumStarAmount;
+	vec2 pos = floor(1.0 / size * normCoordMedium);
+	float starValue = rand(pos);
+
+	// Draw medium Stars
+	if (starValue > prob)
+	{
+		vec2 center = size * pos + vec2(size, size) * 0.5;
+		float t = 0.9 + 0.2 * sin(TIME * 8.0 + (starValue - prob) / (1.0 - prob) * 45.0);
+		color = 1.0 - distance(normCoordMedium.xy, center) / (0.5 * size);
+		color = color * t / (abs(normCoordMedium.y - center.y)) * t / (abs(normCoordMedium.x - center.x));
+	}
+	
+	//// Draw Big stars
+	//size = 100.0;
+	//prob = 1.0-bigStarAmount;
+	//pos = floor(1.0 / size * normCoordBig);
+	//starValue = rand(pos);
+//
+	//if (starValue > prob)
+	//{
+		//vec2 center = size * pos + vec2(size, size) * 0.5;
+		//float t = 0.9 + 0.2 * sin(TIME * 8.0 + (starValue - prob) / (1.0 - prob) * 45.0);
+		//color = 1.0 - distance(normCoordBig.xy, center) / (0.5 * size);
+		//color = color * t / (abs(normCoordBig.y - center.y)) * t / (abs(normCoordBig.x - center.x));
+	//}
+	
+	// Draw Small stars
+	if (rand(normCoordSmall / 20.0) > 1.0-smallStarAmount)
+	{
+		float r = rand(normCoordSmall);
+		color = r * (0.85 * sin(TIME * (r * 5.0) + 720.0 * r) + 0.95);
+	}
+	COLOR = vec4(vec3(color),color) + bg_color;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3abt3"]
+shader = SubResource("Shader_6xaih")
+shader_parameter/bg_color = Color(0.329412, 0, 0, 1)
+shader_parameter/bigStarSlow = 2.0
+shader_parameter/mediumStarSlow = 6.0
+shader_parameter/smallStarSlow = 8.0
+shader_parameter/smallStarAmount = 0.002
+shader_parameter/mediumStarAmount = 0.01
+shader_parameter/bigStarAmount = 0.02
+shader_parameter/circleRadius = 200.0
 
 [node name="LoseScreen" type="Control"]
 layout_mode = 3
@@ -15,7 +89,7 @@ theme = ExtResource("1_6xaih")
 script = ExtResource("1_lose_screen")
 
 [node name="Background" type="ColorRect" parent="."]
-material = ExtResource("3_3abt3")
+material = SubResource("ShaderMaterial_3abt3")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -24,49 +98,69 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.2, 0.05, 0.05, 1)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="LoseTitle" type="Label" parent="Background"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -463.0
+offset_top = 120.0
+offset_right = 464.0
+offset_bottom = 201.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 72
+text = "MISSION FAILED!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LoseMessage" type="Label" parent="Background"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -150.0
-offset_top = -120.0
-offset_right = 150.0
-offset_bottom = 120.0
+offset_left = -429.0
+offset_top = -82.0
+offset_right = 429.0
+offset_bottom = -46.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="LoseTitle" type="Label" parent="VBoxContainer"]
-layout_mode = 2
-text = "MISSION FAILED"
+theme_override_font_sizes/font_size = 32
+text = "You drifted too far from home."
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Spacer1" type="Control" parent="VBoxContainer"]
-custom_minimum_size = Vector2(0, 20)
+[node name="PanelContainer2" type="PanelContainer" parent="Background"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -114.0
+offset_top = -324.0
+offset_right = 114.0
+offset_bottom = -168.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Background/PanelContainer2"]
 layout_mode = 2
 
-[node name="LoseMessage" type="Label" parent="VBoxContainer"]
-layout_mode = 2
-text = "You drifted too far from home..."
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Spacer2" type="Control" parent="VBoxContainer"]
-custom_minimum_size = Vector2(0, 40)
+[node name="Spacer2" type="Control" parent="Background/PanelContainer2/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="RestartButton" type="Button" parent="VBoxContainer"]
+[node name="RestartButton" type="Button" parent="Background/PanelContainer2/VBoxContainer"]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 text = "TRY AGAIN"
 
-[node name="MenuButton" type="Button" parent="VBoxContainer"]
+[node name="MenuButton" type="Button" parent="Background/PanelContainer2/VBoxContainer"]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 text = "MAIN MENU"
 
-[connection signal="pressed" from="VBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/MenuButton" to="." method="_on_menu_button_pressed"]
+[connection signal="pressed" from="Background/PanelContainer2/VBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="Background/PanelContainer2/VBoxContainer/MenuButton" to="." method="_on_menu_button_pressed"]
