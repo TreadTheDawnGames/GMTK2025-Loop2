@@ -1,11 +1,9 @@
 [gd_scene load_steps=8 format=3 uid="uid://bqsdfghjkl123"]
 
-
 [ext_resource type="Script" uid="uid://bdfhql41tte7y" path="res://Scripts/HomePlanet.gd" id="1_homeplanet"]
-[ext_resource type="Texture2D" uid="uid://cyut047q5pqhb" path="res://Assets/kenney_space-shooter-extension/PNG/Sprites/Station/spaceStation_020.png" id="2_station_main"]
-[ext_resource type="Texture2D" uid="uid://dwrxcriyojn1o" path="res://Assets/kenney_space-shooter-extension/PNG/Sprites/Station/spaceStation_022.png" id="3_station_top"]
-[ext_resource type="Texture2D" uid="uid://0l7e77brjgc0" path="res://Assets/kenney_space-shooter-extension/PNG/Sprites/Station/spaceStation_018.png" id="4_station_bottom"]
-
+[ext_resource type="Texture2D" uid="uid://cyut047q5pqhb" path="res://Assets/kenney_space-shooter-extension/AAA-ChosenKenneySpace/spaceStation_020.png" id="2_station_main"]
+[ext_resource type="Texture2D" uid="uid://dwrxcriyojn1o" path="res://Assets/kenney_space-shooter-extension/AAA-ChosenKenneySpace/spaceStation_022.png" id="3_station_top"]
+[ext_resource type="Texture2D" uid="uid://0l7e77brjgc0" path="res://Assets/kenney_space-shooter-extension/AAA-ChosenKenneySpace/spaceStation_018.png" id="4_station_bottom"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_base_collider"]
 size = Vector2(128, 128)

@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://delvecdvx0fim" path="res://Assets/UI/Chosen UIs/check_square_grey_square-clicked.png" id="3_wj56m"]
 [ext_resource type="Texture2D" uid="uid://bbxenjju8s5wb" path="res://Assets/UI/Chosen UIs/check_square_grey-disabled.png" id="4_04o3o"]
 [ext_resource type="Texture2D" uid="uid://iomkb3cpdrcu" path="res://Assets/UI/Chosen UIs/check_square_grey.png" id="5_kcg2t"]
-[ext_resource type="Texture2D" uid="uid://bxr2qwdomq0y6" path="res://Assets/UI/Chosen UIs/slide_hangle.png" id="5_xky8r"]
+[ext_resource type="Texture2D" uid="uid://d38kw0vkeugql" path="res://Assets/UI/Chosen UIs/slide_hangle.png" id="5_xky8r"]
 [ext_resource type="Texture2D" uid="uid://c4kmxjgwscmma" path="res://Assets/UI/Chosen UIs/SlideHangle_Disabled.png" id="6_7memj"]
 [ext_resource type="Texture2D" uid="uid://bhnvgk4rm5sc2" path="res://Assets/UI/Chosen UIs/SlideHangle_Hovered.png" id="7_wj56m"]
 [ext_resource type="Texture2D" uid="uid://oay4q1cygy7s" path="res://Assets/UI/Chosen UIs/slide_horizontal_color_section.png" id="8_kcg2t"]

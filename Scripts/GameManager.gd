@@ -43,7 +43,7 @@ func set_ship_color_from_hue(hue_value: float) -> void:
 	ship_color_hue = clamp(hue_value, 0.0, 1.0)
 	
 	# Create color from HSV (Hue, Saturation, Value)
-	ship_color = Color.from_hsv(ship_color_hue, 1.0, 1.0)
+	var _ship_color = Color.from_hsv(ship_color_hue, 1.0, 1.0)
 	
 	# Emit signal to notify other nodes
 	ship_color_changed.emit(ship_color)

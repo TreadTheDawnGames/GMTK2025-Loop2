@@ -1,9 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://c1lsn0rglq41p"]
-
+[gd_scene load_steps=3 format=3 uid="uid://e9v6w7x8y9z0a"]
 
 [ext_resource type="PackedScene" uid="uid://dngdgw86jrlna" path="res://Scenes/Collectable.tscn" id="1_energy_base"]
 [ext_resource type="Texture2D" uid="uid://b0c1d2e3f4g5h" path="res://Assets/kenney_space-shooter-extension/PNG/Sprites X2/Building/spaceBuilding_002.png" id="2_energy_tex"]
-
 
 [node name="EnergyCoreCollectable" instance=ExtResource("1_energy_base")]
 collectable_type = 3
