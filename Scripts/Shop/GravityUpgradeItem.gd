@@ -23,11 +23,13 @@ func upgrade_gravity(player: Player) -> bool:
 	if gravity_level >= 3:
 		return false
 	
-	if GameManager.get_score() < cost:
-		return false
-	
-	# Deduct cost
-	GameManager.add_score(-cost)
+	if gravity_level < 0:
+		GameManager.add_score(cost) # REFUND
+	# Otherwise, it's a purchase that costs points.
+	else:
+		if GameManager.get_score() < cost:
+			return false # Check if player can afford it
+		GameManager.add_score(-cost) # COST
 	
 	# Increase gravity level
 	gravity_level += 1
@@ -42,8 +44,13 @@ func downgrade_gravity(player: Player) -> bool:
 	if gravity_level <= -3:
 		return false
 
-	# Refund cost
-	GameManager.add_score(cost)
+	if gravity_level > 0:
+		GameManager.add_score(cost) # REFUND
+	# Otherwise, it's a purchase for weaker gravity that costs points.
+	else:
+		if GameManager.get_score() < cost:
+			return false # Check if player can afford it
+		GameManager.add_score(-cost) # COST
 
 	# Decrease gravity level
 	gravity_level -= 1
