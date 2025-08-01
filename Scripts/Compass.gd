@@ -20,11 +20,11 @@ var collectable_indicator_icons: Array[TextureRect] = []
 @export var planet_range_threshold: float = 2000.0
 
 # Textures for the different map icons
-var planet_texture: Texture2D = preload("res://Assets/kenney_simple-space/PNG/Default/meteor_small.png")
-var shop_texture: Texture2D = preload("res://Assets/kenney_space-shooter-extension/PNG/Sprites/Station/spaceStation_021.png")
+var planet_texture: Texture2D = preload("res://Assets/kenney_simple-space/meteor_small.png")
+var shop_texture: Texture2D = preload("res://Assets/kenney_space-shooter-extension/AAA-ChosenKenneySpace/spaceStation_020.png")#preload("res://Assets/kenney_space-shooter-extension/PNG/Sprites/Station/spaceStation_021.png")
 var player_texture: Texture2D = preload("res://Assets/Circle.png")
 # This texture will be used for the new indicator icon.
-var collectable_indicator_texture: Texture2D = preload("res://Assets/kenney_simple-space/PNG/Default/star_small.png")
+var collectable_indicator_texture: Texture2D = preload("res://Assets/kenney_simple-space/AAA-ChosenKenney/star_small.png")
 
 func _ready():
 	var background: TextureRect = $Background

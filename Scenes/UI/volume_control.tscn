@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://blig0domcdoj"]
 
-[ext_resource type="Script" path="res://Scripts/volume_control.gd" id="1_abcde"]
-
+[ext_resource type="Script" uid="uid://cjwv68fak8cwy" path="res://Scripts/volume_control.gd" id="1_abcde"]
+[ext_resource type="Script" uid="uid://c1e04v6b22eli" path="res://Scenes/UI/button_sounds.gd" id="2_rmt3s"]
 
 [node name="MasterVolume" type="HBoxContainer"]
 offset_right = 376.0
@@ -15,6 +15,7 @@ script = ExtResource("2_rmt3s")
 [node name="Label" type="Label" parent="."]
 custom_minimum_size = Vector2(100, 0)
 layout_mode = 2
+size_flags_horizontal = 0
 text = "- Master"
 
 [node name="HSlider2" type="HSlider" parent="."]

@@ -1,7 +1,7 @@
-[gd_scene load_steps=3 format=3 uid="uid://d8u1f2g3h4j5k"]
+[gd_scene load_steps=3 format=3 uid="uid://eg5t0jtwwoes"]
 
-[ext_resource type="PackedScene" uid="uid://dngdgw86jrlna" path="res://Scenes/Collectable.tscn" id="1_crystal_base"]
-[ext_resource type="Texture2D" uid="uid://ci1o1n2i3n4p5" path="res://Assets/kenney_simple-space/PNG/Default/meteor_detailedSmall.png" id="2_crystal_tex"]
+[ext_resource type="PackedScene" uid="uid://cxlpyct8223j8" path="res://Scenes/Collectable.tscn" id="1_crystal_base"]
+[ext_resource type="Texture2D" uid="uid://bpigwd5ie3c1p" path="res://Assets/kenney_simple-space/AAA-ChosenKenney/meteor_detailedSmall.png" id="2_crystal_tex"]
 
 [node name="CrystalCollectable" instance=ExtResource("1_crystal_base")]
 collectable_type = 2
