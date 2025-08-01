@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://c0pbif8cyy7x7"]
+[gd_scene load_steps=9 format=3 uid="uid://c0pbif8cyy7x7"]
 
 [ext_resource type="Script" uid="uid://dx7wa3d4fr6xu" path="res://Scripts/star_background.gd" id="3_2irst"]
 [ext_resource type="Shader" uid="uid://eypjeee8ergs" path="res://Assets/Shaders/StarBackground2.gdshader" id="3_wxwew"]
 [ext_resource type="PackedScene" uid="uid://big3rsi88wl76" path="res://Scenes/Player.tscn" id="4_kldst"]
+[ext_resource type="PackedScene" uid="uid://14epulnfjodl" path="res://Scenes/Home.tscn" id="5_b2bpf"]
 [ext_resource type="PackedScene" uid="uid://dmbrkrs5phqe0" path="res://Scenes/level.tscn" id="6_7lihs"]
 [ext_resource type="PackedScene" uid="uid://p4aoyegbc6gj" path="res://Scenes/UI/GameHUD.tscn" id="8_hud"]
 [ext_resource type="Script" uid="uid://dfjdljl46khuv" path="res://Scripts/GameController.gd" id="9_controller"]
@@ -50,3 +51,6 @@ script = null
 position = Vector2(1, -346)
 rotation = -1.5708
 launch_power = 5.0
+
+[node name="Planet2" parent="." instance=ExtResource("5_b2bpf")]
+StationSprite = null

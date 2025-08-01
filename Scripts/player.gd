@@ -38,7 +38,7 @@ static var Position : Vector2
 # This variable will hold the player's current state from the enum above.
 var current_state: State = State.READY_TO_AIM
 # This boolean tracks if the one-time boost is still available.
-var has_boost: bool = true
+var BoostCount: int = 1
 
 # This new variable will store the calculated pull vector while aiming.
 var _current_aim_pull_vector: Vector2 = Vector2.ZERO
@@ -57,6 +57,8 @@ var has_lost: bool = false
 @onready var sprite: Sprite2D = $Sprite2D
 
 func _ready() -> void:
+	
+	linear_damp_mode = RigidBody2D.DAMP_MODE_COMBINE
 	# Store starting position as origin
 	origin_position = global_position
 	# Apply ship color from GameManager
@@ -142,7 +144,7 @@ func _process(_delta: float) -> void:
 		launch()
 		
 	if(not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)):
-		if clickTimer and clickTimer.time_left > 0 and has_boost and canBoost:
+		if clickTimer and clickTimer.time_left > 0 and BoostCount > 0 and canBoost:
 			apply_boost()
 			clickTimer = null
 
@@ -154,11 +156,12 @@ func _physics_process(delta: float) -> void:
 	# Check lose condition - if player is too far from origin
 	check_lose_condition()
 	if is_inside_tree():
-		var collision : KinematicCollision2D = move_and_collide(Vector2.ZERO, true)
+		var collision : KinematicCollision2D = move_and_collide(linear_velocity.normalized(), true)
 		if(collision):
 			var collider = collision.get_collider()
 			if collider.owner is BasePlanet:
-				if(!onPlanet):
+				if(onPlanet):
+					print("onPlanet")
 					linear_velocity = Vector2.ZERO
 					angular_velocity = 0.0
 					Reset()
@@ -170,9 +173,12 @@ func _physics_process(delta: float) -> void:
 		if linear_velocity.length() > 0.01: # Avoid rotation issues if velocity is zero
 			rotation = linear_velocity.angle()
 		# This checks if the boost is available and the user pressed boost.
-		if has_boost and Input.is_action_just_pressed("ui_select"):
+		if BoostCount > 0 and Input.is_action_just_pressed("boost"):
 			apply_boost()
-			
+		if(Input.is_action_pressed("brake")):
+			linear_damp = 5
+		else:
+			linear_damp = 0
 # This function handles the logic for launching the player.
 func launch() -> void:
 	get_tree().create_timer(LAUNCH_COOLDOWN_TIME).timeout.connect(func(): canBoost=true)
@@ -206,11 +212,14 @@ func apply_boost() -> void:
 	# This applies an instant force (impulse) in the forward direction.
 	apply_central_impulse(boost_direction * boost_strength)
 	# This consumes the boost so it cannot be used again.
-	has_boost = false
+	BoostCount -= 1
+	
 	# This provides visual feedback that the boost was used.
 	#sprite.modulate = Color.CYAN
-	_BoostParticles.Emit()
-	Sprite.frame_coords.y = 1
+	_BoostParticles.Emit(true)
+	if(BoostCount == 0):
+		Sprite.frame_coords.y = 1
+		$"BoostParticles-Explosion".Emit(true)
 	camera_2d.Shake()
 	
 
@@ -246,4 +255,4 @@ func update_aim_line() -> void:
 func Reset():
 	Sprite.frame_coords.y = 0
 	current_state = State.READY_TO_AIM
-	has_boost = true
+	BoostCount = 1

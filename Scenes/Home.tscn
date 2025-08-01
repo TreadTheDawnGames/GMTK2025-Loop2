@@ -62,11 +62,8 @@ position = Vector2(0, 142.5)
 shape = SubResource("RectangleShape2D_bpuqj")
 
 [node name="CollisionShape2D" parent="." index="1"]
-visible = false
 position = Vector2(-2, -17)
-
-[node name="Sprite2D" parent="CollisionShape2D" index="0"]
-visible = false
+disabled = true
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="AnimatableBody2D" index="1"]
 position = Vector2(0.5, 54)

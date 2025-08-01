@@ -2,21 +2,21 @@
 
 [ext_resource type="Script" uid="uid://jdiu05rj7h3d" path="res://addons/audio_manager/audio_manager.gd" id="1_u0apm"]
 [ext_resource type="Script" uid="uid://ehkw6w2xh2bq" path="res://addons/audio_manager/audio_manager_omni.gd" id="2_6j6m3"]
-[ext_resource type="AudioStream" uid="uid://bve0tmd3datbm" path="res://Assets/Audio/GMTK V2.wav" id="3_f2cq6"]
+[ext_resource type="AudioStream" uid="uid://bgpj881la2ljv" path="res://Assets/Audio/GMTK Chill Track.wav" id="3_u0apm"]
 
 [sub_resource type="Resource" id="Resource_cwhqb"]
 script = ExtResource("2_6j6m3")
 audio_name = "background_music"
-audio_stream = ExtResource("3_f2cq6")
+audio_stream = ExtResource("3_u0apm")
 use_clipper = false
 start_time = 0.0
 end_time = 0.0
-volume_db = -17.65
+volume_db = -30.25
 pitch_scale = 1.0
 mix_target = 0
-loop = false
+loop = true
 loop_offset = 0.0
-auto_play = false
+auto_play = true
 max_polyphony = 1
 bus = &"Master"
 playback_type = 0

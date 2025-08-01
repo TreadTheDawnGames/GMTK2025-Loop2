@@ -10,7 +10,7 @@ class_name GameHUD
 @onready var notification_container: Control = $NotificationContainer
 
 # References to game objects
-var player: RigidBody2D
+var player: Player
 var game_controller: GameController
 
 func _ready() -> void:
@@ -67,7 +67,7 @@ func update_score_display() -> void:
 
 func update_boosts_display() -> void:
 	if player:
-		var boost_text = "Boosts: " + ("1" if player.has_boost else "0 (USED)")
+		var boost_text = "Boosts: " + str(player.BoostCount)#("1" if player.has_boost else "0 (USED)")
 		boosts_label.text = boost_text
 
 func update_boost_power_display() -> void:

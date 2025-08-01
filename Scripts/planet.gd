@@ -6,7 +6,7 @@ class_name BasePlanet
 
 # This creates an array to store physics bodies that enter the gravity field.
 var bodies_in_gravity_field: Array[RigidBody2D] = []
-#@export var gravityCurve : Curve
+@export var gravityCurve : Curve
 @onready var Sprite: Sprite2D = $CollisionShape2D/Sprite2D
 # Orbit detection variables
 var player_orbit_data: Dictionary = {}  # Stores orbit tracking data for each player
@@ -113,6 +113,7 @@ func get_angle_to_player(player: Player) -> float:
 	return direction.angle()
 
 # Award score for completing an orbit
-func award_orbit_score(_player: Player) -> void:
+func award_orbit_score(player: Player) -> void:
 	GameManager.add_score(100)
+	player.BoostCount += 1
 	print("Player completed orbit around planet! +100 points")
