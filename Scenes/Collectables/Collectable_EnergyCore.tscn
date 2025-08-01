@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://c1lsn0rglq41p"]
 
-[ext_resource type="Script" path="res://Scripts/Collectable.gd" id="1_collectable"]
+[ext_resource type="Script" uid="uid://dbms3atxo2hfg" path="res://Scripts/Collectable.gd" id="1_collectable"]
 [ext_resource type="Texture2D" uid="uid://mnnahy7d43xe" path="res://Assets/kenney_simple-space/PNG/Default/effect_yellow.png" id="2_energy"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1"]

@@ -1,3 +1,4 @@
+//CC0 https://godotshaders.com/shader/radial-smooth-radial-gradient/
 shader_type canvas_item;
 render_mode blend_add; //Comment this if you want another render mode.
 uniform vec2 center = vec2(0.5);

@@ -43,9 +43,11 @@ func _ready() -> void:
 		collection_particles.emitting = false
 		setup_collection_particles()
 
+	#orbit planet gets set externally now.
 	# Find the nearest planet to orbit around
-	find_orbit_planet()
-
+	#find_orbit_planet()
+	
+	
 	# Set random starting angle
 	orbit_angle = randf() * 2 * PI
 
@@ -65,7 +67,11 @@ func _physics_process(delta: float) -> void:
 	# Rotate the sprite for visual effect
 	sprite.rotation += orbit_speed * delta * 0.5
 
-func find_orbit_planet() -> void:
+func find_orbit_planet(overridePlanet : BasePlanet = null) -> void:
+	if(overridePlanet):
+		planet_reference = overridePlanet
+		orbit_center = overridePlanet.global_position
+		return
 	# Find the closest planet to orbit around
 	var planets = get_tree().get_nodes_in_group("planets")
 	if planets.is_empty():
@@ -76,7 +82,7 @@ func find_orbit_planet() -> void:
 		print("Warning: No planets found for collectable to orbit!")
 		return
 
-	var closest_planet = null
+	var closest_planet : BasePlanet = null
 	var closest_distance = INF
 
 	for planet in planets:
@@ -88,10 +94,12 @@ func find_orbit_planet() -> void:
 	if closest_planet:
 		planet_reference = closest_planet
 		orbit_center = closest_planet.global_position
+		# Removed for dynamic spawning.
+		
 		# Adjust orbit radius based on distance to planet
-		var distance_to_planet = global_position.distance_to(orbit_center)
-		if distance_to_planet > 50:  # If we're far from the planet, use that distance
-			orbit_radius = distance_to_planet
+		#var distance_to_planet = global_position.distance_to(orbit_center)
+		#if distance_to_planet > 50:  # If we're far from the planet, use that distance 
+			#orbit_radius = distance_to_planet
 
 func find_all_planets(node: Node) -> Array:
 	var planets = []

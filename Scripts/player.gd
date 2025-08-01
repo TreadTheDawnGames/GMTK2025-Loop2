@@ -19,7 +19,7 @@ var canBoost : bool = false
 # The sprite
 @onready var Sprite: Sprite2D = $Sprite2D
 # The Camera
-@onready var camera_2d: ScreenShake2 = $Camera2D
+@onready var camera_2d: ScreenShake = $Camera2D
 
 # This exports a variable for launch power, tunable in the Inspector.
 @export var launch_power: float = 10.0
@@ -98,7 +98,7 @@ func _input(ev: InputEvent) -> void:
 			SingleTouchDown = false
 	if ev is InputEventMouseButton:
 		var event = ev as InputEventMouseButton
-		if event.pressed:
+		if event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 			clickTimer = get_tree().create_timer(CLICK_TIME)
 			
 # a timer to check if the mouse button was down/up quick
@@ -148,8 +148,8 @@ func _process(_delta: float) -> void:
 
 # This function runs every physics frame, ideal for physics-related code.
 func _physics_process(delta: float) -> void:
-	# Debug movement (assuming "DEBUG-*" inputs are set up)
-	global_position += Vector2(Input.get_axis("DEBUG-LEFT", "DEBUG-RIGHT"), Input.get_axis("DEBUG-UP", "DEBUG-DOWN")) * 50 * delta
+	# Debug movement (assuming "DEBUG-*" inputs are set up) || WASD
+	global_position += Vector2(Input.get_axis("DEBUG-LEFT", "DEBUG-RIGHT"), Input.get_axis("DEBUG-UP", "DEBUG-DOWN")) * 1000 * delta
 
 	# Check lose condition - if player is too far from origin
 	check_lose_condition()
@@ -159,6 +159,8 @@ func _physics_process(delta: float) -> void:
 			var collider = collision.get_collider()
 			if collider.owner is BasePlanet:
 				if(!onPlanet):
+					linear_velocity = Vector2.ZERO
+					angular_velocity = 0.0
 					Reset()
 				onPlanet = true
 

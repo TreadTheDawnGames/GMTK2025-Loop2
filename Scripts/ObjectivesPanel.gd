@@ -46,7 +46,7 @@ func find_all_collectables(node: Node) -> Array:
 	if node is Collectable:
 		collectables.append(node)
 	
-	for child in node.get_children():
+	for child in node.get_children(true):
 		collectables.append_array(find_all_collectables(child))
 	
 	return collectables

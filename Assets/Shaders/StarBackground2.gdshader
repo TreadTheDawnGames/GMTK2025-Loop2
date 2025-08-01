@@ -35,19 +35,19 @@ void fragment() {
 		color = color * t / (abs(normCoordMedium.y - center.y)) * t / (abs(normCoordMedium.x - center.x));
 	}
 	
-	// Draw Big stars
-	size = 100.0;
-	prob = 1.0-bigStarAmount;
-	pos = floor(1.0 / size * normCoordBig);
-	starValue = rand(pos);
-
-	if (starValue > prob)
-	{
-		vec2 center = size * pos + vec2(size, size) * 0.5;
-		float t = 0.9 + 0.2 * sin(TIME * 8.0 + (starValue - prob) / (1.0 - prob) * 45.0);
-		color = 1.0 - distance(normCoordBig.xy, center) / (0.5 * size);
-		color = color * t / (abs(normCoordBig.y - center.y)) * t / (abs(normCoordBig.x - center.x));
-	}
+	//// Draw Big stars
+	//size = 100.0;
+	//prob = 1.0-bigStarAmount;
+	//pos = floor(1.0 / size * normCoordBig);
+	//starValue = rand(pos);
+//
+	//if (starValue > prob)
+	//{
+		//vec2 center = size * pos + vec2(size, size) * 0.5;
+		//float t = 0.9 + 0.2 * sin(TIME * 8.0 + (starValue - prob) / (1.0 - prob) * 45.0);
+		//color = 1.0 - distance(normCoordBig.xy, center) / (0.5 * size);
+		//color = color * t / (abs(normCoordBig.y - center.y)) * t / (abs(normCoordBig.x - center.x));
+	//}
 	
 	// Draw Small stars
 	if (rand(normCoordSmall / 20.0) > 1.0-smallStarAmount)

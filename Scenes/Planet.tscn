@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://d0j2xqgs8463m"]
+[gd_scene load_steps=10 format=3 uid="uid://d0j2xqgs8463m"]
 
 [ext_resource type="Script" uid="uid://bkgfm5k1vexr" path="res://Scripts/planet.gd" id="1_ej51v"]
 [ext_resource type="Shader" uid="uid://dttlrh3oqhy7w" path="res://Assets/Shaders/Atmosphere.gdshader" id="2_ej51v"]
 [ext_resource type="Texture2D" uid="uid://cttrn2nakn67e" path="res://Assets/Circle.png" id="2_r86au"]
 [ext_resource type="Script" uid="uid://cqvosktsb48d3" path="res://Scripts/tools/planet_atmo.gd" id="4_aogve"]
+[ext_resource type="Script" uid="uid://bwlffc33t13kl" path="res://Scenes/CollectableSpawner.gd" id="5_umgws"]
 
 [sub_resource type="Curve" id="Curve_aogve"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -51,6 +52,11 @@ script = ExtResource("4_aogve")
 [node name="AnimatableBody2D" type="AnimatableBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D"]
+
+[node name="Node2D" type="Node2D" parent="."]
+script = ExtResource("5_umgws")
+OrbitRangeMax = 0.0
+OrbitRangeMin = 0.0
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="body_exited" from="." to="." method="_on_body_exited"]
