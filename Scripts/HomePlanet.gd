@@ -3,7 +3,6 @@ class_name HomePlanet
 
 @onready var Surface: Area2D = $Sprite/HomeArea
 @export var StationSprite : Texture2D
-signal LevelComplete
 
 # Home planet is now just a regular planet for navigation
 # Win condition has been moved to collecting all collectables

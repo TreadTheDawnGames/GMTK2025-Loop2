@@ -36,6 +36,7 @@ colors = PackedColorArray(0, 0.415686, 1, 1, 1, 1, 1, 1)
 input_pickable = true
 physics_material_override = SubResource("PhysicsMaterial_nn08x")
 gravity_scale = 0.0
+freeze_mode = 1
 script = ExtResource("1_kyqiw")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

@@ -22,13 +22,14 @@ func _physics_process(_delta: float) -> void:
 	# This loops through every body currently stored in the array.
 	for body in bodies_in_gravity_field:
 		# This calculates the direction from the body towards this planet.
-		var direction_to_planet = (global_position - body.global_position).normalized()
+		if(not body.onPlanet):
+			var direction_to_planet = (global_position - body.global_position).normalized()
 
 		# This calculates the force vector by combining direction and strength.
-		var gravity_force = direction_to_planet * gravity_strength * ((Sprite.texture.get_size().x/2) / to_local(global_position).distance_to(body.to_local(global_position))) # gravityCurve.sample
+			var gravity_force = direction_to_planet * gravity_strength * ((Sprite.texture.get_size().x/2) / to_local(global_position).distance_to(body.to_local(global_position))) # gravityCurve.sample
 
 		# This applies the calculated force to the center of the body.
-		body.apply_central_force(gravity_force)
+			body.apply_central_force(gravity_force)
 
 		# Track orbit for players
 		if body is Player:

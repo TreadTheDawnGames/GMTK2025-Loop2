@@ -132,6 +132,7 @@ func _process(_delta: float) -> void:
 	if current_state == State.AIMING and (Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) or SingleTouchDown):
 		# This updates the aim line visuals and _current_aim_pull_vector.
 		update_aim_line()
+
 		
 		# This makes the ship face the mouse cursor while aiming.
 		var mouse_position = to_local(global_position) - to_local(get_global_mouse_position())
@@ -141,6 +142,9 @@ func _process(_delta: float) -> void:
 	# Note: This is separate from mouse release to allow "set and shoot" with space.
 	if current_state == State.AIMING and not (Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) or SingleTouchDown):
 		# This calls the function to launch the player using the stored aim vector.
+		#if(sleeping):
+			#set_deferred("sleeping", false)
+			#onPlanet = true
 		launch()
 		
 	if(not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)):
@@ -160,10 +164,11 @@ func _physics_process(delta: float) -> void:
 		if(collision):
 			var collider = collision.get_collider()
 			if collider.owner is BasePlanet:
-				if(onPlanet):
+				if(!onPlanet):
 					print("onPlanet")
 					linear_velocity = Vector2.ZERO
 					angular_velocity = 0.0
+					#set_deferred("sleeping", true)
 					Reset()
 				onPlanet = true
 
@@ -181,6 +186,7 @@ func _physics_process(delta: float) -> void:
 			linear_damp = 0
 # This function handles the logic for launching the player.
 func launch() -> void:
+	
 	get_tree().create_timer(LAUNCH_COOLDOWN_TIME).timeout.connect(func(): canBoost=true)
 	canBoost = false
 	# Use the pre-calculated and stored aim vector.
@@ -201,6 +207,7 @@ func launch() -> void:
 	#If you're on the planet and boost, you're getting off the planet, but it needs to happen AFTER the math is done.
 	if(onPlanet):
 		print("OffPlanet")
+		
 		onPlanet = false
 			
 	# TODO: Add a sound for the boost here!
