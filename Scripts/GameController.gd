@@ -8,6 +8,11 @@ class_name GameController
 var home_planet: HomePlanet
 var all_planets: Array[Area2D] = []
 
+# Collectable tracking for win condition
+var total_collectables: int = 0
+var collected_collectables: int = 0
+var collectable_counts_by_type: Dictionary = {}
+
 func _ready() -> void:
 	# Find all planets and the home planet in the scene
 	for child in get_children():
@@ -32,13 +37,55 @@ func _ready() -> void:
 	call_deferred("connect_collectables")
 
 func connect_collectables() -> void:
+	# Initialize tracking dictionaries
+	collectable_counts_by_type = {
+		"Star": {"collected": 0, "total": 0},
+		"Satellite": {"collected": 0, "total": 0},
+		"Crystal": {"collected": 0, "total": 0},
+		"Energy Core": {"collected": 0, "total": 0}
+	}
+
 	# Find and connect to all collectables
 	var collectables = get_tree().get_nodes_in_group("collectables")
+	total_collectables = 0
 	for collectable in collectables:
 		if collectable is Collectable:
 			collectable.collected.connect(_on_collectable_collected)
+			total_collectables += 1
+
+			# Count by type
+			var type_name = collectable.collection_name
+			if type_name in collectable_counts_by_type:
+				collectable_counts_by_type[type_name]["total"] += 1
+
+	print("Found ", total_collectables, " collectables in the scene")
+	for type_name in collectable_counts_by_type:
+		print("  ", type_name, ": ", collectable_counts_by_type[type_name]["total"])
 
 func _on_collectable_collected(collectable: Collectable) -> void:
 	# Show notification in HUD
 	var info = collectable.get_collectable_info()
 	hud.show_collection_notification(info["name"], info["points"])
+
+	# Update collection count
+	collected_collectables += 1
+
+	# Update count by type
+	var type_name = collectable.collection_name
+	if type_name in collectable_counts_by_type:
+		collectable_counts_by_type[type_name]["collected"] += 1
+
+	# Update HUD with new counts
+	hud.update_collectable_counts()
+
+	# Check win condition
+	check_win_condition()
+
+func check_win_condition() -> void:
+	if collected_collectables >= total_collectables and total_collectables > 0:
+		print("All collectables collected! You win!")
+		GameManager.show_win_screen()
+
+func get_collectable_counts() -> Dictionary:
+	# Return the accurately tracked counts
+	return collectable_counts_by_type

@@ -42,7 +42,7 @@ custom_minimum_size = Vector2(0, 20)
 
 [node name="WinMessage" type="Label" parent="VBoxContainer"]
 layout_mode = 2
-text = "You successfully reached home!"
+text = "You collected all the collectables!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
