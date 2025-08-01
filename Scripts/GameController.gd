@@ -14,29 +14,40 @@ var collected_collectables: int = 0
 var collectable_counts_by_type: Dictionary = {}
 
 func _ready() -> void:
-	# Find all planets and the home planet in the scene
-	for child in get_children():
-		if child is HomePlanet:
-			home_planet = child
-		# Check if the node is a standard planet
-		if child.get_script() == load("res://Scripts/planet.gd"):
-			all_planets.append(child)
-			
+	# This searches the entire scene to find all planet nodes.
+	find_planets_recursive(self)
+
+	# This checks if the HomePlanet was successfully found.
 	if not is_instance_valid(home_planet):
 		print("ERROR: GameController could not find the HomePlanet node!")
 		return
 		
+	# This checks if the HUD was successfully found.
 	if not is_instance_valid(hud):
 		print("ERROR: GameController could not find the HUD node!")
 		return
 
-	# Set up HUD references with all the found nodes
+	print("Found ", all_planets.size(), " planets in the scene")
+
+	# This sets up the HUD with references to the player and all found planets.
 	hud.setup_references(player, home_planet, all_planets)
 
-	# Connect to collectable collection signals
+	# This connects to the signals of all collectables in the scene.
 	call_deferred("connect_collectables")
 	
+func find_planets_recursive(node: Node):
+	# This searches recursively through all child nodes to find planets.
+	for child in node.get_children():
+		if child is HomePlanet:
+			home_planet = child
+			all_planets.append(child)  # This ensures the HomePlanet is also in the list.
+		# This checks if the node is a standard planet.
+		elif child is BasePlanet:
+			all_planets.append(child)
 
+		# This continues the search into the children of the current node.
+		find_planets_recursive(child)
+			
 func connect_collectables() -> void:
 	# Initialize tracking dictionaries
 	collectable_counts_by_type = {

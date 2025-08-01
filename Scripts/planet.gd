@@ -3,44 +3,88 @@ class_name BasePlanet
 
 # This exports a variable to the Godot editor, allowing to change it without code.
 @export var gravity_strength: float = 6000.0
-
 # This creates an array to store physics bodies that enter the gravity field.
 var bodies_in_gravity_field: Array[RigidBody2D] = []
 @export var gravityCurve : Curve
-@onready var Sprite: Sprite2D = $CollisionShape2D/Sprite2D
-# Orbit detection variables
-var player_orbit_data: Dictionary = {}  # Stores orbit tracking data for each player
 
+@onready var sprite: Sprite2D = $Sprite
+@onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
+
+# This section controls collectable spawning
+@export var can_have_collectable: bool = true
+# This sets the probability (from 0.0 to 1.0) that a collectable will spawn on this planet.
+@export_range(0.0, 1.0) var collectable_spawn_chance: float = 0.8
+@export var collectable_scenes: Array[PackedScene] = [
+	preload("res://Scenes/Collectables/Collectable_Star.tscn"),
+	preload("res://Scenes/Collectables/Collectable_Satellite.tscn"),
+	preload("res://Scenes/Collectables/Collectable_Crystal.tscn"),
+	preload("res://Scenes/Collectables/Collectable_EnergyCore.tscn")
+]
+
+# This holds a reference to the spawned collectable instance.
+var spawned_collectable: Collectable = null
 
 func _ready() -> void:
 	# Add to planets group
 	add_to_group("planets")
+	# This attempts to spawn a collectable when the planet is ready.
+	spawn_collectable_at_center()
 
+func spawn_collectable_at_center():
+	# This checks if the planet is allowed to have a collectable.
+	if not can_have_collectable or collectable_scenes.is_empty():
+		return
+		
+	# This creates a random chance for the collectable to spawn.
+	if randf() > collectable_spawn_chance:
+		return # This exits the function if the random check fails.
+
+	# This picks a random collectable scene from the array.
+	var collectable_scene = collectable_scenes.pick_random()
+	if not collectable_scene:
+		return
+
+	# This creates an instance of the chosen collectable.
+	var collectable_instance = collectable_scene.instantiate() as Collectable
+	add_child(collectable_instance)
+	
+	# This places the collectable at the center of the planet.
+	collectable_instance.position = Vector2.ZERO
+	
+	# This stores the reference for later.
+	spawned_collectable = collectable_instance
+
+# This is a new helper function for the compass.
+func has_uncollected_collectable() -> bool:
+	# This returns true if the collectable instance is still valid (has not been collected).
+	return is_instance_valid(spawned_collectable)
+
+# This is called by the Player script when a loop is completed.
+func collect_item(_player: Player):
+	# This checks if there is a valid, uncollected item to award.
+	if has_uncollected_collectable():
+		print(name + " collectable has been awarded.")
+		
+		# This tells the collectable instance to play its collection effects.
+		spawned_collectable.collect()
+		# This removes the reference so it cannot be collected again.
+		spawned_collectable = null
 
 # This function runs every physics frame.
 func _physics_process(_delta: float) -> void:
 	# This loops through every body currently stored in the array.
 	for body in bodies_in_gravity_field:
-		# This calculates the direction from the body towards this planet.
-		if(not body.onPlanet):
+		if body is Player and not body.onPlanet:
+			# This calculates the direction from the body towards this planet.
 			var direction_to_planet = (global_position - body.global_position).normalized()
+			var distance = global_position.distance_to(body.global_position)
+			var gravity_falloff = collision_shape_2d.shape.radius / distance
+			
+			# This calculates the force vector by combining direction and strength.
+			var gravity_force = direction_to_planet * gravity_strength * gravity_falloff
 
-		# This calculates the force vector by combining direction and strength.
-			var gravity_force = direction_to_planet * gravity_strength * ((Sprite.texture.get_size().x/2) / to_local(global_position).distance_to(body.to_local(global_position))) # gravityCurve.sample
-
-			# Check if body has gravity modifier component
-			var gravity_modifier = body.get_node_or_null("GravityModifierComponent")
-			if gravity_modifier:
-				gravity_force = gravity_modifier.modify_gravity_force(gravity_force)
-
-		# This applies the calculated force to the center of the body.
+			# This applies the calculated force to the center of the body.
 			body.apply_central_force(gravity_force)
-
-		# Track orbit for players
-		if body is Player:
-			track_player_orbit(body)
-		
-	
 
 # This function runs when a body enters the Area2D's collision shape.
 func _on_body_entered(body: Node2D) -> void:
@@ -50,76 +94,15 @@ func _on_body_entered(body: Node2D) -> void:
 		if not body in bodies_in_gravity_field:
 			# This adds the body to the array so gravity will affect it.
 			bodies_in_gravity_field.append(body)
-
-			# Initialize orbit tracking for players
 			if body is Player:
-				initialize_orbit_tracking(body)
+				body.start_orbiting(self)
 
 
 # This function runs when a body exits the Area2D's collision shape.
 func _on_body_exited(body: Node2D) -> void:
 	# This checks if the exiting body is in the tracking array.
-	if body is not RigidBody2D:
-		return
-		
-	if body in bodies_in_gravity_field:
+	if body is RigidBody2D and body in bodies_in_gravity_field:
 		# This removes the body from the array, stopping the gravity effect.
 		bodies_in_gravity_field.erase(body)
-
-		# Clean up orbit tracking for players
-		if body is Player and body in player_orbit_data:
-			player_orbit_data.erase(body)
-
-# Initialize orbit tracking for a player
-func initialize_orbit_tracking(player: Player) -> void:
-	var initial_angle = get_angle_to_player(player)
-	player_orbit_data[player] = {
-		"last_angle": initial_angle,
-		"total_rotation": 0.0,
-		"has_completed_orbit": false,
-		"last_orbit_time": 0.0  # Prevent rapid orbit scoring
-	}
-
-# Track player's orbit around this planet
-func track_player_orbit(player: Player) -> void:
-	if not player in player_orbit_data:
-		initialize_orbit_tracking(player)
-		return
-
-	var current_angle = get_angle_to_player(player)
-	var orbit_data = player_orbit_data[player]
-	var last_angle = orbit_data["last_angle"]
-
-	# Calculate angle difference, handling wrap-around
-	var angle_diff = current_angle - last_angle
-	if angle_diff > PI:
-		angle_diff -= 2 * PI
-	elif angle_diff < -PI:
-		angle_diff += 2 * PI
-
-	# Update total rotation
-	orbit_data["total_rotation"] += angle_diff
-	orbit_data["last_angle"] = current_angle
-
-	# Check if player completed a full orbit (360 degrees = 2π radians)
-	var current_time = Time.get_time_dict_from_system()["second"]
-	if abs(orbit_data["total_rotation"]) >= 2 * PI and not orbit_data["has_completed_orbit"]:
-		# Prevent rapid orbit scoring (minimum 2 seconds between orbits)
-		if current_time - orbit_data["last_orbit_time"] >= 2.0:
-			orbit_data["has_completed_orbit"] = true
-			orbit_data["last_orbit_time"] = current_time
-			award_orbit_score(player)
-			# Reset for potential multiple orbits
-			orbit_data["total_rotation"] = 0.0
-			orbit_data["has_completed_orbit"] = false
-
-# Get angle from planet center to player
-func get_angle_to_player(player: Player) -> float:
-	var direction = player.global_position - global_position
-	return direction.angle()
-
-# Award score for completing an orbit
-func award_orbit_score(player: Player) -> void:
-	GameManager.add_score(100)
-	player.BoostCount += 1
-	print("Player completed orbit around planet! +100 points")
+		if body is Player:
+			body.stop_orbiting(self)

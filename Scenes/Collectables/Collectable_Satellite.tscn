@@ -1,39 +1,23 @@
 [gd_scene load_steps=5 format=3 uid="uid://bpykgsig0p7c4"]
 
-[ext_resource type="Script" uid="uid://dbms3atxo2hfg" path="res://Scripts/Collectable.gd" id="1_collectable"]
-[ext_resource type="Texture2D" uid="uid://dwrxcriyojn1o" path="res://Assets/kenney_space-shooter-extension/AAA-ChosenKenneySpace/spaceStation_022.png" id="2_7ii5o"]
-[ext_resource type="Script" uid="uid://deew7a1ghrogw" path="res://Scripts/PlayerAudioHandler.gd" id="3_jq0lf"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_1"]
-radius = 101.079
+[ext_resource type="PackedScene" uid="uid://dngdgw86jrlna" path="res://Scenes/Collectable.tscn" id="1_satellite_base"]
+[ext_resource type="Texture2D" uid="uid://dyo34685k6b7n" path="res://Assets/kenney_space-shooter-extension/PNG/Sprites/Station/spaceStation_022.png" id="2_satellite_tex"]
 
-[node name="SatelliteCollectable" type="Area2D"]
-script = ExtResource("1_collectable")
+
+[node name="SatelliteCollectable" instance=ExtResource("1_satellite_base")]
 collectable_type = 1
 point_value = 25
-orbit_radius = 180.0
-orbit_speed = 0.8
 collection_name = "Satellite"
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_satellite_tex")
 modulate = Color(0.8, 1, 1, 1)
-texture = ExtResource("2_7ii5o")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_1")
-
-[node name="CollectionParticles" type="CPUParticles2D" parent="."]
-emitting = false
-amount = 20
-explosiveness = 1.0
-direction = Vector2(0, -1)
+[node name="CollectionParticles" parent="." index="2"]
 gravity = Vector2(0, 80)
 initial_velocity_min = 60.0
 initial_velocity_max = 120.0
 scale_amount_min = 0.4
 scale_amount_max = 1.2
 color = Color(0, 1, 1, 1)
-
-[node name="PlayerAudioHandler" type="Node2D" parent="."]
-script = ExtResource("3_jq0lf")
-metadata/_custom_type_script = "uid://deew7a1ghrogw"
