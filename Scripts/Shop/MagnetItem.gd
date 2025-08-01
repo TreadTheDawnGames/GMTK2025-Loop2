@@ -22,9 +22,9 @@ func apply_effect(player: Player) -> void:
 	
 	# Upgrade magnet strength and range
 	magnet_component.strength += magnet_strength
-	magnet_component.range += magnet_range
+	magnet_component.range_m += magnet_range
 	
-	print("Magnet upgraded! Strength: %d, Range: %d" % [magnet_component.strength, magnet_component.range])
+	print("Magnet upgraded! Strength: %d, Range: %d" % [magnet_component.strength, magnet_component.range_m])
 
 func get_current_cost() -> int:
 	# Increase cost with each purchase
