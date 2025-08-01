@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://cxlpyct8223j8"]
 
 [ext_resource type="Script" uid="uid://dbms3atxo2hfg" path="res://Scripts/Collectable.gd" id="1_collectable"]
-[ext_resource type="Texture2D" uid="uid://ba4pw6xs2250w" path="res://Assets/kenney_simple-space/PNG/Default/star_medium.png" id="2_star"]
-[ext_resource type="Script" path="res://Scripts/PlayerAudioHandler.gd" id="3_7pdn5"]
+[ext_resource type="Texture2D" uid="uid://ba4pw6xs2250w" path="res://Assets/kenney_simple-space/AAA-ChosenKenney/star_medium.png" id="2_star"]
+[ext_resource type="Script" uid="uid://deew7a1ghrogw" path="res://Scripts/PlayerAudioHandler.gd" id="3_7pdn5"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1"]
 radius = 20.0

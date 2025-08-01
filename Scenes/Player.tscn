@@ -1,12 +1,12 @@
 [gd_scene load_steps=14 format=3 uid="uid://big3rsi88wl76"]
 
 [ext_resource type="Script" uid="uid://dton838gyavdl" path="res://Scripts/player.gd" id="1_kyqiw"]
-[ext_resource type="Texture2D" uid="uid://b3yadhtuplhg2" path="res://Assets/kenney_space-shooter-extension/PNG/Sprites X2/Ships/spaceShips_001.png" id="2_kyqiw"]
-[ext_resource type="Texture2D" uid="uid://b86vrmxx8oexw" path="res://Assets/kenney_simple-space/PNG/Retina/effect_gray.png" id="3_nn08x"]
+[ext_resource type="Texture2D" uid="uid://b3yadhtuplhg2" path="res://Assets/kenney_space-shooter-extension/AAA-ChosenKenneySpace/spaceShips_001.png" id="2_kyqiw"]
+[ext_resource type="Texture2D" uid="uid://b86vrmxx8oexw" path="res://Assets/kenney_simple-space/AAA-ChosenKenney/effect_gray.png" id="3_nn08x"]
 [ext_resource type="Script" uid="uid://vv5wxkdlfjyc" path="res://Scripts/camera_shake.gd" id="4_dewec"]
 [ext_resource type="Script" uid="uid://dgc8vmme70xjb" path="res://addons/trail_2d/trail_2d.gd" id="5_5ixxa"]
-[ext_resource type="Script" path="res://Scripts/particle_effect.gd" id="5_52ee3"]
-[ext_resource type="Script" path="res://Scripts/PlayerAudioHandler.gd" id="7_52ee3"]
+[ext_resource type="Script" uid="uid://dwottdnvtkjgy" path="res://Scripts/particle_effect.gd" id="5_52ee3"]
+[ext_resource type="Script" uid="uid://deew7a1ghrogw" path="res://Scripts/PlayerAudioHandler.gd" id="7_52ee3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kyqiw"]
 radius = 26.0192

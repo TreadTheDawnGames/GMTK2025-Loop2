@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://c1lsn0rglq41p"]
 
 [ext_resource type="Script" uid="uid://dbms3atxo2hfg" path="res://Scripts/Collectable.gd" id="1_collectable"]
-[ext_resource type="Texture2D" uid="uid://cx06de664828k" path="res://Assets/kenney_space-shooter-extension/PNG/Sprites X2/Building/spaceBuilding_002.png" id="2_wdw6q"]
+[ext_resource type="Texture2D" uid="uid://cx06de664828k" path="res://Assets/kenney_space-shooter-extension/AAA-ChosenKenneySpace/spaceBuilding_002.png" id="2_wdw6q"]
 [ext_resource type="Script" uid="uid://deew7a1ghrogw" path="res://Scripts/PlayerAudioHandler.gd" id="3_f2h1h"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1"]

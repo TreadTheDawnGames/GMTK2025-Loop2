@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://de78j1qh32qyy" path="res://Scripts/Compass.gd" id="1_compass"]
 [ext_resource type="Texture2D" uid="uid://cttrn2nakn67e" path="res://Assets/Circle.png" id="2_circle"]
-[ext_resource type="Texture2D" uid="uid://dr3wen6gymsnu" path="res://Assets/kenney_simple-space/PNG/Default/station_A.png" id="3_station"]
+[ext_resource type="Texture2D" uid="uid://dr3wen6gymsnu" path="res://Assets/kenney_simple-space/AAA-ChosenKenney/station_A.png" id="3_station"]
 
 [node name="Compass" type="Control"]
 layout_mode = 3
