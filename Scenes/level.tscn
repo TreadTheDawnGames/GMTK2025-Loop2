@@ -24,3 +24,318 @@ position = Vector2(854.564, -167)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_81xng")
+
+[node name="@Area2D@46170" parent="." instance=ExtResource("4_8c0lf")]
+position = Vector2(-4613.66, -4009.58)
+
+[node name="@Area2D@46171" parent="." instance=ExtResource("2_wqkje")]
+position = Vector2(3445.29, -4689.66)
+
+[node name="@Area2D@46172" parent="." instance=ExtResource("2_wqkje")]
+position = Vector2(7495.49, 1971)
+
+[node name="@Area2D@46173" parent="." instance=ExtResource("2_wqkje")]
+position = Vector2(-1315.27, -2921.45)
+
+[node name="@Area2D@46399" parent="." instance=ExtResource("4_8c0lf")]
+position = Vector2(7355.74, -1969.34)
+
+[node name="@Area2D@46400" parent="." instance=ExtResource("4_8c0lf")]
+position = Vector2(5179.49, 3947.35)
+
+[node name="@Area2D@46401" parent="." instance=ExtResource("5_754fn")]
+position = Vector2(690.963, 4457.41)
+
+[node name="@Area2D@46402" parent="." instance=ExtResource("4_8c0lf")]
+position = Vector2(3241.26, 1499.06)
+
+[node name="@Area2D@46403" parent="." instance=ExtResource("4_8c0lf")]
+position = Vector2(4040.12, -2016)
+
+[node name="@Area2D@46404" parent="." instance=ExtResource("2_wqkje")]
+position = Vector2(7185.72, -4655.66)
+
+[node name="@Area2D@46405" parent="." instance=ExtResource("2_wqkje")]
+position = Vector2(-4295.89, 3641)
+
+[node name="@Area2D@46406" parent="." instance=ExtResource("2_wqkje")]
+position = Vector2(1167.02, -1969.34)
+
+[node name="@Area2D@46407" parent="." instance=ExtResource("4_8c0lf")]
+position = Vector2(-281.846, -6576)
+
+[node name="@Area2D@46766" parent="." instance=ExtResource("4_8c0lf")]
+position = Vector2(-5828.25, -572.119)
+
+[node name="@Area2D@46992" parent="." instance=ExtResource("2_wqkje")]
+position = Vector2(-10623.9, 1635)
+
+[node name="@Area2D@46993" parent="." instance=ExtResource("4_8c0lf")]
+position = Vector2(-7806.42, -6874)
+
+[node name="@Area2D@46994" parent="." instance=ExtResource("4_8c0lf")]
+position = Vector2(-1696.08, -10280.2)
+
+[node name="@Area2D@46995" parent="." instance=ExtResource("4_8c0lf")]
+position = Vector2(4278.15, -8687.11)
+
+[node name="@Area2D@46996" parent="." instance=ExtResource("2_wqkje")]
+position = Vector2(10351.9, 1568.65)
+
+[node name="@Area2D@46997" parent="." instance=ExtResource("4_8c0lf")]
+position = Vector2(6120.2, 8339.44)
+
+[node name="@Area2D@46998" parent="." instance=ExtResource("4_8c0lf")]
+position = Vector2(3630.94, 8787.5)
+
+[node name="@Area2D@46999" parent="." instance=ExtResource("2_wqkje")]
+position = Vector2(6568.27, 5700.82)
+
+[node name="@Area2D@47000" parent="." instance=ExtResource("4_8c0lf")]
+position = Vector2(5921.06, 10679.3)
+
+[node name="@Area2D@47001" parent="." instance=ExtResource("4_8c0lf")]
+position = Vector2(-6276.32, 9136)
+
+[node name="@Area2D@47002" parent="." instance=ExtResource("5_754fn")]
+position = Vector2(-3189.63, 7244.16)
+
+[node name="@Area2D@47003" parent="." instance=ExtResource("2_wqkje")]
+position = Vector2(-8298.9, 3834)
+
+[node name="@Area2D@47004" parent="." instance=ExtResource("2_wqkje")]
+position = Vector2(-6077.18, 5850.18)
+
+[node name="@Area2D@47005" parent="." instance=ExtResource("2_wqkje")]
+position = Vector2(-2940.71, 10530)
+
+[node name="@Area2D@47006" parent="." instance=ExtResource("2_wqkje")]
+position = Vector2(-10159.6, -1418.47)
+
+[node name="@Area2D@47007" parent="." instance=ExtResource("4_8c0lf")]
+position = Vector2(10999.2, -3310.31)
+
+[node name="@Area2D@47008" parent="." instance=ExtResource("5_754fn")]
+position = Vector2(892.754, 7592.66)
+
+[node name="@Area2D@47009" parent="." instance=ExtResource("5_754fn")]
+position = Vector2(96.1914, 11077.6)
+
+[node name="@Area2D@47010" parent="." instance=ExtResource("5_754fn")]
+position = Vector2(1938.25, 11376.3)
+
+[node name="@Area2D@47011" parent="." instance=ExtResource("4_8c0lf")]
+position = Vector2(-5181.04, -8338.61)
+
+[node name="@Area2D@47012" parent="." instance=ExtResource("2_wqkje")]
+position = Vector2(1251.76, 9685)
+
+[node name="@Area2D@47013" parent="." instance=ExtResource("4_8c0lf")]
+position = Vector2(-1620.86, 4952)
+
+[node name="@Area2D@47372" parent="." instance=ExtResource("4_8c0lf")]
+position = Vector2(-1075.23, 8546)
+
+[node name="@Area2D@52127" parent="." instance=ExtResource("4_8c0lf")]
+position = Vector2(-3422.53, 1512.95)
+
+[node name="@Area2D@52353" parent="." instance=ExtResource("5_754fn")]
+position = Vector2(-6919.84, 2088.97)
+
+[node name="@Area2D@52354" parent="." instance=ExtResource("4_8c0lf")]
+position = Vector2(-9347.38, 7067.5)
+
+[node name="@Area2D@52355" parent="." instance=ExtResource("2_wqkje")]
+position = Vector2(-11116.6, 4310.79)
+
+[node name="@Area2D@52356" parent="." instance=ExtResource("2_wqkje")]
+position = Vector2(-9758.83, 5545.14)
+
+[node name="@Area2D@52357" parent="." instance=ExtResource("5_754fn")]
+position = Vector2(-11898.4, -2313.52)
+
+[node name="@Area2D@52358" parent="." instance=ExtResource("4_8c0lf")]
+position = Vector2(-9059.37, -3095.27)
+
+[node name="@Area2D@52359" parent="." instance=ExtResource("5_754fn")]
+position = Vector2(-2681.92, 237.457)
+
+[node name="@Area2D@52360" parent="." instance=ExtResource("5_754fn")]
+position = Vector2(979.969, -4041.6)
+
+[node name="@Area2D@52361" parent="." instance=ExtResource("5_754fn")]
+position = Vector2(2173.17, -6839.45)
+
+[node name="@Area2D@52362" parent="." instance=ExtResource("5_754fn")]
+position = Vector2(9167.79, -6716.02)
+
+[node name="@Area2D@52363" parent="." instance=ExtResource("2_wqkje")]
+position = Vector2(5835.05, -7374.33)
+
+[node name="@Area2D@52364" parent="." instance=ExtResource("5_754fn")]
+position = Vector2(2255.45, -11406.5)
+
+[node name="@Area2D@52365" parent="." instance=ExtResource("2_wqkje")]
+position = Vector2(-1612.16, -12887.7)
+
+[node name="@Area2D@52366" parent="." instance=ExtResource("2_wqkje")]
+position = Vector2(-6919.84, -10336.8)
+
+[node name="@Area2D@52367" parent="." instance=ExtResource("5_754fn")]
+position = Vector2(-10005.7, -6716.02)
+
+[node name="@Area2D@52368" parent="." instance=ExtResource("4_8c0lf")]
+position = Vector2(-8483.35, -9513.86)
+
+[node name="@Area2D@52369" parent="." instance=ExtResource("2_wqkje")]
+position = Vector2(-3340.24, -6551.44)
+
+[node name="@Area2D@52370" parent="." instance=ExtResource("5_754fn")]
+position = Vector2(10031.8, 5503.99)
+
+[node name="@Area2D@52371" parent="." instance=ExtResource("5_754fn")]
+position = Vector2(8674.04, 8096.11)
+
+[node name="@Area2D@52372" parent="." instance=ExtResource("2_wqkje")]
+position = Vector2(10319.8, 3734.76)
+
+[node name="@Area2D@52373" parent="." instance=ExtResource("5_754fn")]
+position = Vector2(8262.6, 3940.49)
+
+[node name="@Area2D@52374" parent="." instance=ExtResource("5_754fn")]
+position = Vector2(3242.93, 5997.73)
+
+[node name="@Area2D@52375" parent="." instance=ExtResource("4_8c0lf")]
+position = Vector2(1926.3, 3323.32)
+
+[node name="@Area2D@52376" parent="." instance=ExtResource("4_8c0lf")]
+position = Vector2(5505.89, -91.7051)
+
+[node name="@Area2D@52377" parent="." instance=ExtResource("2_wqkje")]
+position = Vector2(11759.9, -379.721)
+
+[node name="@Area2D@52378" parent="." instance=ExtResource("4_8c0lf")]
+position = Vector2(6493.37, -9843.02)
+
+[node name="@Area2D@52379" parent="." instance=ExtResource("5_754fn")]
+position = Vector2(-3381.4, -1655.21)
+
+[node name="@Area2D@52380" parent="." instance=ExtResource("2_wqkje")]
+position = Vector2(-6919.85, -2889.55)
+
+[node name="@Area2D@52381" parent="." instance=ExtResource("2_wqkje")]
+position = Vector2(-5808.94, -6016.56)
+
+[node name="@Area2D@52382" parent="." instance=ExtResource("2_wqkje")]
+position = Vector2(-8647.93, 237.455)
+
+[node name="@Area2D@52623" parent="." instance=ExtResource("4_8c0lf")]
+position = Vector2(-11176.6, -4517.52)
+
+[node name="@Area2D@52849" parent="." instance=ExtResource("4_8c0lf")]
+position = Vector2(-12358, -110.266)
+
+[node name="@Area2D@52850" parent="." instance=ExtResource("4_8c0lf")]
+position = Vector2(-3855.93, 8968.63)
+
+[node name="@Area2D@52851" parent="." instance=ExtResource("2_wqkje")]
+position = Vector2(-4989.86, 11390.2)
+
+[node name="@Area2D@52852" parent="." instance=ExtResource("5_754fn")]
+position = Vector2(-1505.15, 12401.9)
+
+[node name="@Area2D@52853" parent="." instance=ExtResource("5_754fn")]
+position = Vector2(-8334.05, 9310.63)
+
+[node name="@Area2D@52854" parent="." instance=ExtResource("5_754fn")]
+position = Vector2(3443.43, 11632.9)
+
+[node name="@Area2D@52855" parent="." instance=ExtResource("4_8c0lf")]
+position = Vector2(8399.69, 6063.53)
+
+[node name="@Area2D@52856" parent="." instance=ExtResource("4_8c0lf")]
+position = Vector2(9268.31, -93.4697)
+
+[node name="@Area2D@52857" parent="." instance=ExtResource("2_wqkje")]
+position = Vector2(9115.02, -4845.34)
+
+[node name="@Area2D@52858" parent="." instance=ExtResource("5_754fn")]
+position = Vector2(8655.17, -8294.28)
+
+[node name="@Area2D@52859" parent="." instance=ExtResource("2_wqkje")]
+position = Vector2(4133.22, -11002.3)
+
+[node name="@Area2D@52860" parent="." instance=ExtResource("2_wqkje")]
+position = Vector2(377.713, -12049.8)
+
+[node name="@Area2D@52861" parent="." instance=ExtResource("2_wqkje")]
+position = Vector2(1016.41, -9162.9)
+
+[node name="@Area2D@52862" parent="." instance=ExtResource("2_wqkje")]
+position = Vector2(-4297.51, -11666.6)
+
+[node name="@Area2D@52863" parent="." instance=ExtResource("4_8c0lf")]
+position = Vector2(-3428.89, -9290.64)
+
+[node name="@Area2D@52864" parent="." instance=ExtResource("2_wqkje")]
+position = Vector2(-1844.94, -8272.31)
+
+[node name="@Area2D@52865" parent="." instance=ExtResource("4_8c0lf")]
+position = Vector2(5223.67, -5436)
+
+[node name="@Area2D@53225" parent="." instance=ExtResource("2_wqkje")]
+position = Vector2(-2966.29, 2119.89)
+
+[node name="@Area2D@53585" parent="." instance=ExtResource("4_8c0lf")]
+position = Vector2(59.9922, 3299.8)
+
+[node name="@Area2D@53586" parent="." instance=ExtResource("5_754fn")]
+position = Vector2(-3952.17, 5497.55)
+
+[node name="@Area2D@53812" parent="." instance=ExtResource("5_754fn")]
+position = Vector2(-5132.48, 7577.13)
+
+[node name="@Area2D@53813" parent="." instance=ExtResource("4_8c0lf")]
+position = Vector2(-7268.26, 7211.8)
+
+[node name="@Area2D@53814" parent="." instance=ExtResource("4_8c0lf")]
+position = Vector2(-6199.79, 3637.32)
+
+[node name="@Area2D@53815" parent="." instance=ExtResource("5_754fn")]
+position = Vector2(-8637.57, 2095.12)
+
+[node name="@Area2D@54549" parent="." instance=ExtResource("5_754fn")]
+position = Vector2(-3579.21, 1994.34)
+
+[node name="@Area2D@59092" parent="." instance=ExtResource("5_754fn")]
+position = Vector2(-7813.19, -878.345)
+
+[node name="@Area2D@60614" parent="." instance=ExtResource("2_wqkje")]
+position = Vector2(2817.27, -117.842)
+
+[node name="@Area2D@60840" parent="." instance=ExtResource("4_8c0lf")]
+position = Vector2(-456.369, 6488.86)
+
+[node name="@Area2D@60841" parent="." instance=ExtResource("4_8c0lf")]
+position = Vector2(-1784.85, 3039.93)
+
+[node name="@Area2D@60842" parent="." instance=ExtResource("5_754fn")]
+position = Vector2(-2112.67, -5034.89)
+
+[node name="@Area2D@60843" parent="." instance=ExtResource("5_754fn")]
+position = Vector2(5566.97, 1954.96)
+
+[node name="@Area2D@60844" parent="." instance=ExtResource("2_wqkje")]
+position = Vector2(-6743.03, 10676.9)
+
+[node name="@Area2D@60845" parent="." instance=ExtResource("2_wqkje")]
+position = Vector2(-11947.8, 2910.77)
+
+[node name="@Area2D@60846" parent="." instance=ExtResource("4_8c0lf")]
+position = Vector2(-7374.12, -4654)
+
+[node name="@Area2D@60847" parent="." instance=ExtResource("2_wqkje")]
+position = Vector2(-9531.12, -4608.74)
+
+[node name="@Area2D@61429" parent="." instance=ExtResource("2_wqkje")]
+position = Vector2(7431.29, -6550)
