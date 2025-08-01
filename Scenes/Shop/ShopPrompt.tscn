@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://c8k7x2n8nap1q"]
 
-[ext_resource type="Script" uid="uid://d0ha4yeyaymmj" path="res://Scripts/ShopPrompt.gd" id="1_prompt"]
+[ext_resource type="Script" uid="uid://d0ha4yeyaymmj" path="res://Scripts/Shop/ShopPrompt.gd" id="1_prompt"]
 [ext_resource type="Theme" uid="uid://dvwgvp8u8xo0i" path="res://Scenes/UI/Themes/UI_Theme.tres" id="2_theme"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1"]
@@ -45,6 +45,11 @@ _data = {
 }
 
 [node name="ShopPrompt" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_prompt")
+
+[node name="Control" type="Control" parent="."]
 modulate = Color(1, 1, 1, 0.8)
 custom_minimum_size = Vector2(40, 40)
 layout_mode = 3
@@ -52,9 +57,8 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 theme = ExtResource("2_theme")
-script = ExtResource("1_prompt")
 
-[node name="PromptLabel" type="Label" parent="."]
+[node name="PromptLabel" type="Label" parent="Control"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -68,7 +72,7 @@ text = "E"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Control"]
 libraries = {
 &"": SubResource("AnimationLibrary_1")
 }

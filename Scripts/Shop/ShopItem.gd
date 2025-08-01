@@ -12,7 +12,7 @@ class_name ShopItem
 @export var current_purchases: int = 0
 
 # Virtual function to be overridden by specific items
-func apply_effect(player: Player) -> void:
+func apply_effect(_player: Player) -> void:
 	push_error("apply_effect() must be implemented by subclass")
 
 # Check if item can be purchased

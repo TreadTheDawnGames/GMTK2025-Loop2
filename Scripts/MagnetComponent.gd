@@ -4,7 +4,7 @@ class_name MagnetComponent
 # Component that attracts collectables to the player
 
 var strength: float = 0.0
-var range: float = 0.0
+var range_m: float = 0.0
 var player: Player
 
 func _ready():
@@ -17,7 +17,7 @@ func _physics_process(_delta):
 	if not player or strength <= 0:
 		return
 
-	# Find all collectables in range
+	# Find all collectables in range_m
 	var collectables = get_tree().get_nodes_in_group("collectables")
 
 	for collectable in collectables:
@@ -26,10 +26,10 @@ func _physics_process(_delta):
 
 		var distance = player.global_position.distance_to(collectable.global_position)
 
-		if distance <= range and distance > 0:
+		if distance <= range_m and distance > 0:
 			# Calculate attraction force
 			var direction = (player.global_position - collectable.global_position).normalized()
-			var force_strength = strength * (range - distance) / range
+			var force_strength = strength * (range_m - distance) / range_m
 
 			# Apply force to collectable - try different methods
 			if collectable.has_method("apply_central_force"):

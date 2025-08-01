@@ -13,10 +13,10 @@ enum GravityType {
 
 func _init():
 	setup_item()
-	
+
 func setup_item():
 	max_purchases = 3  # Can be upgraded multiple times
-	
+
 	if gravity_type == GravityType.INCREASE:
 		item_name = "Gravity +"
 		description = "Increase gravity effects for tighter orbits"
@@ -25,7 +25,7 @@ func setup_item():
 		item_name = "Gravity -"
 		description = "Decrease gravity effects for easier navigation"
 		cost = 120
-	
+
 func apply_effect(player: Player) -> void:
 	# Add or update gravity modifier component
 	var gravity_component = player.get_node_or_null("GravityModifierComponent")
@@ -33,16 +33,16 @@ func apply_effect(player: Player) -> void:
 		gravity_component = preload("res://Scripts/GravityModifierComponent.gd").new()
 		gravity_component.name = "GravityModifierComponent"
 		player.add_child(gravity_component)
-	
+
 	# Apply gravity modification
 	if gravity_type == GravityType.INCREASE:
 		gravity_component.gravity_multiplier += gravity_modifier
 	else:
 		gravity_component.gravity_multiplier -= gravity_modifier
-	
+
 	# Ensure multiplier doesn't go below a minimum value
 	gravity_component.gravity_multiplier = max(gravity_component.gravity_multiplier, 0.1)
-	
+
 	var effect_text = "increased" if gravity_type == GravityType.INCREASE else "decreased"
 	print("Gravity %s! Multiplier: %.2f" % [effect_text, gravity_component.gravity_multiplier])
 

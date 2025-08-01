@@ -19,17 +19,17 @@ var shop_prompt: ShopPrompt = null
 func _ready() -> void:
 	Sprite.texture = StationSprite
 
-	# Connect to the Surface area signals for shop interaction
+	# This connects to the Surface area signals for shop interaction
 	if Surface:
 		Surface.body_entered.connect(_on_shop_area_entered)
 		Surface.body_exited.connect(_on_shop_area_exited)
 
-	# Add some test score for shop testing
+	# This adds some test score for shop testing
 	GameManager.add_score(500)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	# Check for E key press when player is in range
+	# This checks for E key press when player is in range
 	if player_in_shop_range and current_player and Input.is_action_just_pressed("interact"):
 		print("E key pressed, opening shop")
 		open_shop()
@@ -51,15 +51,15 @@ func _on_shop_area_exited(body: Node2D) -> void:
 
 func show_shop_prompt() -> void:
 	if not shop_prompt:
-		# Create shop prompt if it doesn't exist
-		var prompt_scene = preload("res://Scenes/UI/ShopPrompt.tscn")
+		# This creates shop prompt if it doesn't exist
+		var prompt_scene = preload("res://Scenes/Shop/ShopPrompt.tscn")
 		shop_prompt = prompt_scene.instantiate()
 		get_tree().current_scene.add_child(shop_prompt)
 
-	# Show the prompt at the home planet position
+	# This shows the prompt at the home planet position
 	if shop_prompt and current_player:
-		var camera = current_player.get_node("Camera2D")
-		shop_prompt.show_prompt(self, camera)
+		var _camera = current_player.get_node("Camera2D")
+		shop_prompt.show_prompt(self)
 
 func hide_shop_prompt() -> void:
 	if shop_prompt:
@@ -67,8 +67,8 @@ func hide_shop_prompt() -> void:
 
 func open_shop() -> void:
 	if not shop_ui:
-		# Create shop UI if it doesn't exist
-		var shop_scene = preload("res://Scenes/UI/Shop.tscn")
+		# This creates shop UI if it doesn't exist
+		var shop_scene = preload("res://Scenes/Shop/Shop.tscn")
 		shop_ui = shop_scene.instantiate()
 		get_tree().current_scene.add_child(shop_ui)
 		shop_ui.shop_closed.connect(_on_shop_closed)
@@ -82,6 +82,6 @@ func close_shop() -> void:
 		shop_ui.close_shop()
 
 func _on_shop_closed() -> void:
-	# Show prompt again when shop is closed if player is still in range
+	# This shows prompt again when shop is closed if player is still in range
 	if player_in_shop_range:
 		show_shop_prompt()
