@@ -20,7 +20,7 @@ loop = true
 loop_offset = 0.0
 auto_play = true
 max_polyphony = 1
-bus = &"Master"
+bus = &"Music"
 playback_type = 0
 metadata/_custom_type_script = "uid://ehkw6w2xh2bq"
 
@@ -38,7 +38,7 @@ loop = false
 loop_offset = 0.0
 auto_play = false
 max_polyphony = 1
-bus = &"Master"
+bus = &"SFX"
 playback_type = 0
 metadata/_custom_type_script = "uid://ehkw6w2xh2bq"
 
@@ -56,7 +56,7 @@ loop = false
 loop_offset = 0.0
 auto_play = false
 max_polyphony = 1
-bus = &"Master"
+bus = &"SFX"
 playback_type = 0
 metadata/_custom_type_script = "uid://ehkw6w2xh2bq"
 

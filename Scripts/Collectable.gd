@@ -161,8 +161,7 @@ func collect() -> void:
 	queue_free()
 
 #You can't dynamically load on a web build; you have to load at build time.
-const STAR_PARTICLES = preload("res://Assets/kenney_simple-space/PNG/Default/star_small.png")
-
+const STAR_PARTICLES = preload("res://Assets/kenney_simple-space/AAA-ChosenKenney/star_small.png")
 func setup_collection_particles() -> void:
 	if not collection_particles:
 		return

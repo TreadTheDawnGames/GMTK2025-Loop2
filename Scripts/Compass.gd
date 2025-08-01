@@ -15,7 +15,7 @@ var planet_icons: Array[TextureRect] = []
 @export var map_scale: float = 0.01
 
 # Planet icon texture
-var planet_texture: Texture2D = preload("res://Assets/kenney_simple-space/PNG/Default/meteor_small.png")
+var planet_texture: Texture2D = preload("res://Assets/kenney_simple-space/meteor_small.png")
 func _ready():
 	
 	var background: TextureRect = $Background
