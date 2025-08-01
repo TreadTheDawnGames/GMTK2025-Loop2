@@ -1,0 +1,14 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://2wo2meekggrg"]
+
+[ext_resource type="Shader" uid="uid://dcqxtflcsljhx" path="res://Assets/Shaders/StarBackground_Menu.gdshader" id="1_6oicl"]
+
+[resource]
+shader = ExtResource("1_6oicl")
+shader_parameter/bg_color = Color(0, 0, 0, 1)
+shader_parameter/bigStarSlow = 2.0
+shader_parameter/mediumStarSlow = 6.0
+shader_parameter/smallStarSlow = 8.0
+shader_parameter/smallStarAmount = 0.002
+shader_parameter/mediumStarAmount = 0.01
+shader_parameter/bigStarAmount = 0.02
+shader_parameter/circleRadius = 200.0

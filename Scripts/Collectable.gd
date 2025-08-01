@@ -157,6 +157,9 @@ func collect() -> void:
 	await get_tree().create_timer(1.0).timeout
 	queue_free()
 
+#You can't dynamically load on a web build; you have to load at build time.
+const STAR_PARTICLES = preload("res://Assets/kenney_simple-space/PNG/Default/star_small.png")
+
 func setup_collection_particles() -> void:
 	if not collection_particles:
 		return
@@ -164,7 +167,7 @@ func setup_collection_particles() -> void:
 	# Configure particles based on collectable type
 	match collectable_type:
 		CollectableType.STAR:
-			collection_particles.texture = load("res://Assets/kenney_simple-space/PNG/Default/star_small.png")
+			collection_particles.texture = STAR_PARTICLES
 			collection_particles.amount = 20
 			collection_particles.color = Color.YELLOW
 		CollectableType.SATELLITE:

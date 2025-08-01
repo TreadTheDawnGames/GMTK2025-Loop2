@@ -15,7 +15,7 @@ var collectable_counts_by_type: Dictionary = {}
 
 func _ready() -> void:
 	# Find all planets and the home planet in the scene
-	for child in get_children():
+	for child in $Level.get_children():
 		if child is HomePlanet:
 			home_planet = child
 		# Check if the node is a standard planet

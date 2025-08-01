@@ -1,7 +1,6 @@
 extends Control
-
-@onready var color_slider: HSlider = $VBoxContainer/ColorSliderContainer/ColorSlider
-@onready var example_ship: Sprite2D = $VBoxContainer/ExampleShipContainer/ExampleShip
+@onready var color_slider: HSlider = $Background/Panel/VBoxContainer/ColorSliderContainer/ColorSlider
+@onready var example_ship: Sprite2D = $Background/Panel/VBoxContainer/ExampleShipContainer/ExampleShip
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

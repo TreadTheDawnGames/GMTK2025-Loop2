@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://din50gkoucxpp"]
+[gd_scene load_steps=4 format=3 uid="uid://din50gkoucxpp"]
 
 [ext_resource type="Script" path="res://Scripts/MainMenu.gd" id="1_main_menu"]
+[ext_resource type="Theme" uid="uid://dvwgvp8u8xo0i" path="res://Scenes/UI/Themes/UI_Theme.tres" id="1_mjmdf"]
+[ext_resource type="Material" uid="uid://bxcys6gyngoe6" path="res://Scenes/Effects/StarBackground.tres" id="3_72sra"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -9,9 +11,11 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_mjmdf")
 script = ExtResource("1_main_menu")
 
 [node name="Background" type="ColorRect" parent="."]
+material = ExtResource("3_72sra")
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
