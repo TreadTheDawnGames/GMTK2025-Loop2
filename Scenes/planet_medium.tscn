@@ -1,26 +1,24 @@
-[gd_scene load_steps=5 format=3 uid="uid://vuorl2ga7vdk"]
+[gd_scene load_steps=4 format=3 uid="uid://vuorl2ga7vdk"]
 
 [ext_resource type="PackedScene" uid="uid://d0j2xqgs8463m" path="res://Scenes/Planet.tscn" id="1_si0xu"]
-[ext_resource type="Texture2D" uid="uid://cgt4c8whbpa4p" path="res://Assets/kenney_planets/Planets/planet01.png" id="2_8xqrg"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8xqrg"]
-radius = 502.482
+radius = 395.855
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hvc1f"]
 radius = 70.0071
 
 [node name="Planet3" instance=ExtResource("1_si0xu")]
-gravity_strength = 1500.0
+gravity_strength = 1000.0
 
 [node name="Sprite" parent="." index="0"]
 scale = Vector2(0.134821, 0.134821)
-texture = ExtResource("2_8xqrg")
 
 [node name="CollisionShape2D" parent="." index="1"]
 shape = SubResource("CircleShape2D_8xqrg")
 
 [node name="Sprite2D" parent="CollisionShape2D" index="0"]
-scale = Vector2(1.46283, 1.46283)
+scale = Vector2(1.15242, 1.15242)
 
 [node name="CollisionShape2D" parent="AnimatableBody2D" index="0"]
 shape = SubResource("CircleShape2D_hvc1f")

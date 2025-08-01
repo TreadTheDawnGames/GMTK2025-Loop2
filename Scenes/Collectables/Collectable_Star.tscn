@@ -13,6 +13,7 @@ orbit_speed = 1.5
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 0.8, 1)
+scale = Vector2(1.92479, 1.92479)
 texture = ExtResource("2_star")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

@@ -1,12 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://c0pbif8cyy7x7"]
+[gd_scene load_steps=8 format=3 uid="uid://c0pbif8cyy7x7"]
 
-[ext_resource type="PackedScene" uid="uid://cvy6qvmeierso" path="res://Scenes/planet_large.tscn" id="1_j5yw3"]
-[ext_resource type="PackedScene" uid="uid://vuorl2ga7vdk" path="res://Scenes/planet_medium.tscn" id="2_kldst"]
 [ext_resource type="Script" uid="uid://dx7wa3d4fr6xu" path="res://Scripts/star_background.gd" id="3_2irst"]
-[ext_resource type="PackedScene" uid="uid://d1rrwaam8e5cr" path="res://Scenes/planet_small.tscn" id="3_b2bpf"]
 [ext_resource type="Shader" uid="uid://eypjeee8ergs" path="res://Assets/Shaders/StarBackground2.gdshader" id="3_wxwew"]
 [ext_resource type="PackedScene" uid="uid://big3rsi88wl76" path="res://Scenes/Player.tscn" id="4_kldst"]
-[ext_resource type="PackedScene" uid="uid://14epulnfjodl" path="res://Scenes/Home.tscn" id="5_b2bpf"]
+[ext_resource type="PackedScene" uid="uid://dmbrkrs5phqe0" path="res://Scenes/level.tscn" id="6_7lihs"]
 [ext_resource type="PackedScene" uid="uid://p4aoyegbc6gj" path="res://Scenes/UI/GameHUD.tscn" id="8_hud"]
 [ext_resource type="Script" uid="uid://dfjdljl46khuv" path="res://Scripts/GameController.gd" id="9_controller"]
 
@@ -43,77 +40,13 @@ offset_bottom = 1626.0
 color = Color(0, 0, 0, 1)
 script = ExtResource("3_2irst")
 
-[node name="Planet" parent="." instance=ExtResource("1_j5yw3")]
-position = Vector2(-1319, 568)
-gravityCurve = null
-
-[node name="Planet2" parent="." instance=ExtResource("2_kldst")]
-position = Vector2(595, -454)
-gravityCurve = null
-
-[node name="Planet3" parent="." instance=ExtResource("3_b2bpf")]
-position = Vector2(10, -924)
-gravityCurve = null
-
-[node name="Player" parent="." instance=ExtResource("4_kldst")]
-position = Vector2(839, 280)
-launch_power = 5.0
-
-[node name="Planet4" parent="." instance=ExtResource("5_b2bpf")]
-position = Vector2(1400, -1245)
-gravityCurve = null
-
-[node name="Planet5" parent="." instance=ExtResource("1_j5yw3")]
-position = Vector2(-3226, 216)
-gravityCurve = null
-
-[node name="Planet6" parent="." instance=ExtResource("5_b2bpf")]
-position = Vector2(-3022, 6248)
-gravityCurve = null
-
-[node name="Planet7" parent="." instance=ExtResource("2_kldst")]
-position = Vector2(2252, 5014)
-gravityCurve = null
-
-[node name="Planet8" parent="." instance=ExtResource("1_j5yw3")]
-position = Vector2(-6838, 3592)
-gravityCurve = null
-
-[node name="Planet9" parent="." instance=ExtResource("3_b2bpf")]
-position = Vector2(-6426, -260)
-gravityCurve = null
-
-[node name="Planet10" parent="." instance=ExtResource("3_b2bpf")]
-position = Vector2(-1900, 3592)
-gravityCurve = null
-
-[node name="Planet11" parent="." instance=ExtResource("1_j5yw3")]
-position = Vector2(-3790, 5119)
-gravityCurve = null
-
-[node name="Planet12" parent="." instance=ExtResource("2_kldst")]
-position = Vector2(-4396, 1953)
-gravityCurve = null
-
-[node name="Planet13" parent="." instance=ExtResource("3_b2bpf")]
-position = Vector2(1858, 2858)
-gravityCurve = null
-
-[node name="Planet14" parent="." instance=ExtResource("2_kldst")]
-position = Vector2(4738, 2858)
-gravityCurve = null
-
-[node name="Planet15" parent="." instance=ExtResource("3_b2bpf")]
-position = Vector2(-2462, -2367)
-gravityCurve = null
-
-[node name="Planet16" parent="." instance=ExtResource("3_b2bpf")]
-position = Vector2(3421, -2573)
-gravityCurve = null
-
-[node name="Planet17" parent="." instance=ExtResource("1_j5yw3")]
-position = Vector2(706, -4260)
-gravityCurve = null
-
 [node name="HUDLayer2" type="CanvasLayer" parent="."]
 layer = 10
+
+[node name="Level" parent="." instance=ExtResource("6_7lihs")]
+script = null
+
+[node name="Player" parent="." instance=ExtResource("4_kldst")]
+position = Vector2(1, -346)
+rotation = -1.5708
+launch_power = 5.0

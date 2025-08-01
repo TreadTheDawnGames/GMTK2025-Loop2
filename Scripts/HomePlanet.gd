@@ -2,12 +2,13 @@ extends BasePlanet
 class_name HomePlanet
 
 @onready var Surface: Area2D = $Sprite/HomeArea
-
+@export var StationSprite : Texture2D
 signal LevelComplete
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	Surface.body_entered.connect(BodyEntered)
+	Sprite.texture = StationSprite
 	pass # Replace with function body.
 
 func BodyEntered(node : Node2D):

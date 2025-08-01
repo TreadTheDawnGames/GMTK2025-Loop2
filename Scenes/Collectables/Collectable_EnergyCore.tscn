@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://c1lsn0rglq41p"]
 
 [ext_resource type="Script" uid="uid://dbms3atxo2hfg" path="res://Scripts/Collectable.gd" id="1_collectable"]
-[ext_resource type="Texture2D" uid="uid://mnnahy7d43xe" path="res://Assets/kenney_simple-space/PNG/Default/effect_yellow.png" id="2_energy"]
+[ext_resource type="Texture2D" uid="uid://cx06de664828k" path="res://Assets/kenney_space-shooter-extension/PNG/Sprites X2/Building/spaceBuilding_002.png" id="2_wdw6q"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1"]
 radius = 98.6154
@@ -12,11 +12,10 @@ collectable_type = 3
 point_value = 100
 orbit_radius = 250.0
 orbit_speed = 0.4
-collection_name = "Energy Core"
+collection_name = "Goods"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-modulate = Color(0.5, 1, 0.5, 1)
-texture = ExtResource("2_energy")
+texture = ExtResource("2_wdw6q")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_1")

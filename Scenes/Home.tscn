@@ -24,9 +24,12 @@ size = Vector2(8, 63)
 
 [node name="Planet" instance=ExtResource("1_oauki")]
 script = ExtResource("2_vtlm0")
+StationSprite = ExtResource("3_cxprx")
+gravity_strength = 2000.0
 
 [node name="Sprite" parent="." index="0"]
 texture = ExtResource("3_cxprx")
+script = null
 
 [node name="SpaceStation022" type="Sprite2D" parent="Sprite" index="0"]
 position = Vector2(0, 84)
@@ -61,7 +64,9 @@ shape = SubResource("RectangleShape2D_bpuqj")
 [node name="CollisionShape2D" parent="." index="1"]
 visible = false
 position = Vector2(-2, -17)
-disabled = true
+
+[node name="Sprite2D" parent="CollisionShape2D" index="0"]
+visible = false
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="AnimatableBody2D" index="1"]
 position = Vector2(0.5, 54)
