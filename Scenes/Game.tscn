@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://dx7wa3d4fr6xu" path="res://Scripts/star_background.gd" id="3_2irst"]
 [ext_resource type="Material" uid="uid://bxcys6gyngoe6" path="res://Scenes/Effects/StarBackground.tres" id="3_fgofq"]
 [ext_resource type="PackedScene" uid="uid://big3rsi88wl76" path="res://Scenes/Player.tscn" id="4_kldst"]
-[ext_resource type="PackedScene" uid="uid://14epulnfjodl" path="res://Scenes/Home.tscn" id="5_b2bpf"]
+[ext_resource type="PackedScene" uid="uid://bqsdfghjkl123" path="res://Scenes/Home.tscn" id="5_b2bpf"]
 [ext_resource type="PackedScene" uid="uid://dmbrkrs5phqe0" path="res://Scenes/level.tscn" id="6_7lihs"]
 [ext_resource type="PackedScene" uid="uid://fcdupdwq82w5" path="res://Scenes/Asteroid.tscn" id="8_2irst"]
 [ext_resource type="PackedScene" uid="uid://p4aoyegbc6gj" path="res://Scenes/UI/GameHUD.tscn" id="8_hud"]
@@ -14,7 +14,6 @@ script = ExtResource("9_controller")
 
 [node name="Planet5" parent="." instance=ExtResource("5_b2bpf")]
 position = Vector2(5110, 6658)
-StationSprite = null
 
 [node name="HUDLayer" type="CanvasLayer" parent="."]
 layer = 10
@@ -47,15 +46,12 @@ rotation = -1.5708
 launch_power = 5.0
 
 [node name="Planet2" parent="." instance=ExtResource("5_b2bpf")]
-StationSprite = null
 
 [node name="Planet3" parent="." instance=ExtResource("5_b2bpf")]
 position = Vector2(-7763, 5403)
-StationSprite = null
 
 [node name="Planet4" parent="." instance=ExtResource("5_b2bpf")]
 position = Vector2(4930, -5347)
-StationSprite = null
 
 [node name="Planet6" parent="." instance=ExtResource("5_b2bpf")]
 position = Vector2(-6794, -8359)

@@ -1,23 +1,19 @@
-[gd_scene load_steps=5 format=3 uid="uid://cxlpyct8223j8"]
+[gd_scene load_steps=4 format=3 uid="uid://cxlpyct8223j8"]
 
-[ext_resource type="Script" uid="uid://dbms3atxo2hfg" path="res://Scripts/Collectable.gd" id="1_collectable"]
-[ext_resource type="Texture2D" uid="uid://ba4pw6xs2250w" path="res://Assets/kenney_simple-space/AAA-ChosenKenney/star_medium.png" id="2_star"]
-[ext_resource type="Script" uid="uid://deew7a1ghrogw" path="res://Scripts/PlayerAudioHandler.gd" id="3_7pdn5"]
+[ext_resource type="Script" uid="uid://dbms3atxo2hfg" path="res://Scripts/Collectable.gd" id="1_abcde"]
+[ext_resource type="Script" uid="uid://deew7a1ghrogw" path="res://Scripts/PlayerAudioHandler.gd" id="2_fghij"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_1"]
-radius = 20.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_base"]
+radius = 32.0
 
 [node name="Collectable" type="Area2D"]
-script = ExtResource("1_collectable")
-
-[node name="PlayerAudioHandler" type="Node2D" parent="."]
-script = ExtResource("3_7pdn5")
+script = ExtResource("1_abcde")
+collection_name = "Base Collectable"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_star")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_1")
+shape = SubResource("CircleShape2D_base")
 
 [node name="CollectionParticles" type="CPUParticles2D" parent="."]
 emitting = false
@@ -29,4 +25,6 @@ initial_velocity_min = 50.0
 initial_velocity_max = 100.0
 scale_amount_min = 0.5
 scale_amount_max = 1.5
-color = Color(1, 1, 0, 1)
+
+[node name="PlayerAudioHandler" type="Node2D" parent="."]
+script = ExtResource("2_fghij")

@@ -1,8 +1,7 @@
 extends BasePlanet
 class_name HomePlanet
 
-@onready var Surface: Area2D = $Sprite/HomeArea
-@export var StationSprite : Texture2D
+@onready var Surface: Area2D = $ShopArea
 
 # Shop interaction variables
 var player_in_shop_range: bool = false
@@ -12,14 +11,12 @@ var current_player: Player = null
 var shop_ui: ShopManager = null
 var shop_prompt: ShopPrompt = null
 
-# Home planet is now just a regular planet for navigation
-# Win condition has been moved to collecting all collectables
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	Sprite.texture = StationSprite
-
-	# This connects to the Surface area signals for shop interaction
+	# This calls the _ready function from the parent BasePlanet script.
+	super._ready()
+	
+	# This connects the signals for the shop interaction area.
 	if Surface:
 		Surface.body_entered.connect(_on_shop_area_entered)
 		Surface.body_exited.connect(_on_shop_area_exited)
@@ -29,10 +26,16 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	# This checks for E key press when player is in range
+	# This checks for the interact key press when the player is in range to open the shop.
 	if player_in_shop_range and current_player and Input.is_action_just_pressed("interact"):
 		print("E key pressed, opening shop")
 		open_shop()
+
+# This overrides the parent's spawning function to ensure home planets never have collectables.
+func spawn_collectable_at_center():
+	can_have_collectable = false
+	# This function is left empty intentionally.
+	pass
 
 # Shop interaction functions
 func _on_shop_area_entered(body: Node2D) -> void:
@@ -58,7 +61,6 @@ func show_shop_prompt() -> void:
 
 	# This shows the prompt at the home planet position
 	if shop_prompt and current_player:
-		var _camera = current_player.get_node("Camera2D")
 		shop_prompt.show_prompt(self)
 
 func hide_shop_prompt() -> void:

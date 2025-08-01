@@ -1,33 +1,17 @@
-[gd_scene load_steps=14 format=3 uid="uid://big3rsi88wl76"]
+[gd_scene load_steps=8 format=3 uid="uid://cslq0v6w7x8y9"]
 
-[ext_resource type="Script" uid="uid://dton838gyavdl" path="res://Scripts/player.gd" id="1_kyqiw"]
-[ext_resource type="Texture2D" uid="uid://b3yadhtuplhg2" path="res://Assets/kenney_space-shooter-extension/AAA-ChosenKenneySpace/spaceShips_001.png" id="2_kyqiw"]
-[ext_resource type="Texture2D" uid="uid://b86vrmxx8oexw" path="res://Assets/kenney_simple-space/AAA-ChosenKenney/effect_gray.png" id="3_nn08x"]
-[ext_resource type="Script" uid="uid://vv5wxkdlfjyc" path="res://Scripts/camera_shake.gd" id="4_dewec"]
-[ext_resource type="Script" uid="uid://dgc8vmme70xjb" path="res://addons/trail_2d/trail_2d.gd" id="5_5ixxa"]
-[ext_resource type="Script" uid="uid://dwottdnvtkjgy" path="res://Scripts/particle_effect.gd" id="5_52ee3"]
-[ext_resource type="Script" uid="uid://deew7a1ghrogw" path="res://Scripts/PlayerAudioHandler.gd" id="7_52ee3"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_kyqiw"]
-radius = 26.0192
+[ext_resource type="Script" path="res://Scripts/player.gd" id="1_player"]
+[ext_resource type="Texture2D" uid="uid://b1h2i3j4k5l6m" path="res://Assets/kenney_space-shooter-extension/PNG/Sprites X2/Ships/spaceShips_001.png" id="2_ship_tex"]
+[ext_resource type="Script" path="res://Scripts/particle_effect.gd" id="3_particles"]
+[ext_resource type="Script" path="res://Scripts/camera_shake.gd" id="4_camera"]
+[ext_resource type="Script" path="res://Scripts/PlayerAudioHandler.gd" id="5_audio"]
 
 [sub_resource type="Curve" id="Curve_52ee3"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.450932), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
-[sub_resource type="Curve" id="Curve_gntrk"]
-_data = [Vector2(0, 1), 0.0, -1.65429, 0, 0, Vector2(0.312081, 0.441337), -1.15612, -1.15612, 0, 0, Vector2(1, 0), -0.540128, 0.0, 0, 0]
-point_count = 3
-
-[sub_resource type="Gradient" id="Gradient_gntrk"]
-colors = PackedColorArray(1, 0, 0, 1, 1, 1, 0, 1)
-
-[sub_resource type="Curve" id="Curve_kyqiw"]
-_data = [Vector2(0.503356, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 2
-
-[sub_resource type="Gradient" id="Gradient_kyqiw"]
-colors = PackedColorArray(0, 0.415686, 1, 1, 1, 1, 1, 1)
+[sub_resource type="CircleShape2D" id="CircleShape2D_kyqiw"]
+radius = 40.0
 
 [node name="Player" type="RigidBody2D"]
 collision_layer = 3
@@ -35,13 +19,16 @@ collision_mask = 3
 input_pickable = true
 gravity_scale = 0.0
 freeze_mode = 1
-script = ExtResource("1_kyqiw")
+input_pickable = true
+script = ExtResource("1_player")
+launch_power = 10.0
+max_pull_distance = 200.0
+boost_strength = 1000.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, 5.68434e-14)
 rotation = -1.5708
-scale = Vector2(0.453657, 0.453657)
-texture = ExtResource("2_kyqiw")
+scale = Vector2(0.454, 0.454)
+texture = ExtResource("2_ship_tex")
 vframes = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -52,32 +39,26 @@ position = Vector2(-39, -36)
 
 [node name="Trail2D" type="Line2D" parent="CollisionShape2D/Node2D"]
 position = Vector2(-3, 0)
-points = PackedVector2Array(5, -1, -88, -0.999996)
+points = PackedVector2Array(5, -1, -88, -1)
 width = 13.415
 width_curve = SubResource("Curve_52ee3")
-texture = ExtResource("3_nn08x")
+texture = ExtResource("2_ship_tex")
 texture_mode = 2
 begin_cap_mode = 2
 end_cap_mode = 2
-script = ExtResource("5_5ixxa")
-length = 15
-metadata/_custom_type_script = "uid://dgc8vmme70xjb"
 
 [node name="Node2D2" type="Node2D" parent="CollisionShape2D"]
 position = Vector2(-39, 36)
 
 [node name="Trail2D" type="Line2D" parent="CollisionShape2D/Node2D2"]
 position = Vector2(-3, 0)
-points = PackedVector2Array(5, -1, -88, -0.999996)
+points = PackedVector2Array(5, -1, -88, -1)
 width = 13.415
 width_curve = SubResource("Curve_52ee3")
-texture = ExtResource("3_nn08x")
+texture = ExtResource("2_ship_tex")
 texture_mode = 2
 begin_cap_mode = 2
 end_cap_mode = 2
-script = ExtResource("5_5ixxa")
-length = 15
-metadata/_custom_type_script = "uid://dgc8vmme70xjb"
 
 [node name="Line2D" type="Line2D" parent="."]
 
@@ -87,25 +68,18 @@ emitting = false
 amount = 50
 lifetime = 0.6
 one_shot = true
-preprocess = 0.1
 explosiveness = 1.0
 local_coords = true
-emission_shape = 1
-emission_sphere_radius = 10.0
 direction = Vector2(0, 0)
 spread = 180.0
 gravity = Vector2(0, 0)
 initial_velocity_max = 100.0
 radial_accel_max = 100.0
-angle_min = -360.0
-angle_max = 360.0
 scale_amount_min = 5.0
 scale_amount_max = 16.0
-scale_amount_curve = SubResource("Curve_gntrk")
-color_ramp = SubResource("Gradient_gntrk")
 hue_variation_min = -1.0
 hue_variation_max = 1.0
-script = ExtResource("5_52ee3")
+script = ExtResource("3_particles")
 
 [node name="LaunchParticles" type="CPUParticles2D" parent="."]
 position = Vector2(-45, 0)
@@ -113,21 +87,16 @@ emitting = false
 amount = 25
 lifetime = 0.4
 one_shot = true
-preprocess = 0.1
 local_coords = true
 emission_shape = 3
 emission_rect_extents = Vector2(1, 2.955)
 direction = Vector2(0, 0)
+spread = 360.0
 gravity = Vector2(-980, 0)
-angle_min = -360.0
-angle_max = 360.0
-scale_amount_min = 0.0
 scale_amount_max = 10.0
-scale_amount_curve = SubResource("Curve_kyqiw")
-color_ramp = SubResource("Gradient_gntrk")
 hue_variation_min = -1.0
 hue_variation_max = 1.0
-script = ExtResource("5_52ee3")
+script = ExtResource("3_particles")
 
 [node name="BoostParticles" type="CPUParticles2D" parent="."]
 position = Vector2(-30, 0)
@@ -135,27 +104,25 @@ emitting = false
 amount = 25
 lifetime = 0.5
 one_shot = true
-preprocess = 0.1
 local_coords = true
 emission_shape = 3
 emission_rect_extents = Vector2(1, 2.955)
 direction = Vector2(0, 0)
+spread = 360.0
 gravity = Vector2(-980, 0)
-angle_min = -360.0
-angle_max = 360.0
-scale_amount_min = 2.0
-scale_amount_max = 15.0
-scale_amount_curve = SubResource("Curve_kyqiw")
-color_ramp = SubResource("Gradient_kyqiw")
+initial_velocity_min = 2.0
+initial_velocity_max = 15.0
 hue_variation_min = -1.0
 hue_variation_max = 1.0
-script = ExtResource("5_52ee3")
+script = ExtResource("3_particles")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(0.345, 0.345)
-script = ExtResource("4_dewec")
+script = ExtResource("4_camera")
+randomStrength = 10.0
+shakeFade = 10.0
 
 [node name="AudioHandler" type="Node2D" parent="."]
-script = ExtResource("7_52ee3")
+script = ExtResource("5_audio")
 
 [node name="AudioListener2D" type="AudioListener2D" parent="."]

@@ -1,86 +1,43 @@
-[gd_scene load_steps=11 format=3 uid="uid://14epulnfjodl"]
+[gd_scene load_steps=8 format=3 uid="uid://bqsdfghjkl123"]
 
-[ext_resource type="PackedScene" uid="uid://d0j2xqgs8463m" path="res://Scenes/Planet.tscn" id="1_oauki"]
-[ext_resource type="Script" uid="uid://bdfhql41tte7y" path="res://Scripts/HomePlanet.gd" id="2_vtlm0"]
-[ext_resource type="Texture2D" uid="uid://cyut047q5pqhb" path="res://Assets/kenney_space-shooter-extension/AAA-ChosenKenneySpace/spaceStation_020.png" id="3_cxprx"]
-[ext_resource type="Texture2D" uid="uid://dwrxcriyojn1o" path="res://Assets/kenney_space-shooter-extension/AAA-ChosenKenneySpace/spaceStation_022.png" id="4_bpuqj"]
-[ext_resource type="Texture2D" uid="uid://0l7e77brjgc0" path="res://Assets/kenney_space-shooter-extension/AAA-ChosenKenneySpace/spaceStation_018.png" id="5_xlxvy"]
+[ext_resource type="Script" uid="uid://bdfhql41tte7y" path="res://Scripts/HomePlanet.gd" id="1_homeplanet"]
+[ext_resource type="Texture2D" uid="uid://cyut047q5pqhb" path="res://Assets/kenney_space-shooter-extension/AAA-ChosenKenneySpace/spaceStation_020.png" id="2_station_main"]
+[ext_resource type="Texture2D" uid="uid://dwrxcriyojn1o" path="res://Assets/kenney_space-shooter-extension/AAA-ChosenKenneySpace/spaceStation_022.png" id="3_station_top"]
+[ext_resource type="Texture2D" uid="uid://0l7e77brjgc0" path="res://Assets/kenney_space-shooter-extension/AAA-ChosenKenneySpace/spaceStation_018.png" id="4_station_bottom"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_rh52w"]
-size = Vector2(43, 118)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_base_collider"]
+size = Vector2(128, 128)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_dgjnp"]
-size = Vector2(170, 51)
+[sub_resource type="CircleShape2D" id="CircleShape2D_gravity"]
+radius = 400.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_yx0ix"]
-size = Vector2(171, 26)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_shop_area"]
+size = Vector2(150, 250)
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_cxprx"]
-radius = 53.0
-height = 174.0
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_bpuqj"]
-size = Vector2(8, 63)
-
-[node name="Planet" instance=ExtResource("1_oauki")]
-script = ExtResource("2_vtlm0")
-StationSprite = ExtResource("3_cxprx")
+[node name="HomePlanet" type="Area2D"]
+script = ExtResource("1_homeplanet")
 gravity_strength = 2000.0
 
-[node name="Sprite" parent="." index="0"]
-texture = ExtResource("3_cxprx")
-script = null
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("2_station_main")
 
-[node name="SpaceStation022" type="Sprite2D" parent="Sprite" index="0"]
-position = Vector2(0, 84)
-texture = ExtResource("4_bpuqj")
+[node name="SpaceStation022" type="Sprite2D" parent="Sprite"]
+position = Vector2(0, -84)
+texture = ExtResource("3_station_top")
 
-[node name="SpaceStation018" type="Sprite2D" parent="Sprite" index="1"]
-position = Vector2(0, -59.5)
-texture = ExtResource("5_xlxvy")
+[node name="SpaceStation018" type="Sprite2D" parent="Sprite"]
+position = Vector2(0, 59.5)
+texture = ExtResource("4_station_bottom")
 
-[node name="HomeArea" type="Area2D" parent="Sprite" index="2"]
+[node name="AnimatableBody2D" type="AnimatableBody2D" parent="."]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite/HomeArea" index="0"]
-position = Vector2(0.5, 54)
-shape = SubResource("RectangleShape2D_rh52w")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D"]
+shape = SubResource("RectangleShape2D_base_collider")
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Sprite/HomeArea" index="1"]
-position = Vector2(0, -59.5)
-shape = SubResource("RectangleShape2D_dgjnp")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_gravity")
 
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="Sprite/HomeArea" index="2"]
-position = Vector2(0.5, 84)
-shape = SubResource("RectangleShape2D_yx0ix")
+[node name="ShopArea" type="Area2D" parent="."]
 
-[node name="CollisionShape2D4" type="CollisionShape2D" parent="Sprite/HomeArea" index="3"]
-position = Vector2(0, -88)
-shape = SubResource("CapsuleShape2D_cxprx")
-
-[node name="CollisionShape2D5" type="CollisionShape2D" parent="Sprite/HomeArea" index="4"]
-position = Vector2(0, 142.5)
-shape = SubResource("RectangleShape2D_bpuqj")
-
-[node name="CollisionShape2D" parent="." index="1"]
-position = Vector2(-2, -17)
-disabled = true
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="AnimatableBody2D" index="1"]
-position = Vector2(0.5, 54)
-shape = SubResource("RectangleShape2D_rh52w")
-
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="AnimatableBody2D" index="2"]
-position = Vector2(0, -59.5)
-shape = SubResource("RectangleShape2D_dgjnp")
-
-[node name="CollisionShape2D4" type="CollisionShape2D" parent="AnimatableBody2D" index="3"]
-position = Vector2(0.5, 84)
-shape = SubResource("RectangleShape2D_yx0ix")
-
-[node name="CollisionShape2D5" type="CollisionShape2D" parent="AnimatableBody2D" index="4"]
-position = Vector2(0, -88)
-shape = SubResource("CapsuleShape2D_cxprx")
-
-[node name="CollisionShape2D6" type="CollisionShape2D" parent="AnimatableBody2D" index="5"]
-position = Vector2(0, 142.5)
-shape = SubResource("RectangleShape2D_bpuqj")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShopArea"]
+shape = SubResource("RectangleShape2D_shop_area")

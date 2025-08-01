@@ -66,8 +66,12 @@ var has_lost: bool = false
 # This creates a reference to the Sprite2D node.
 @onready var sprite: Sprite2D = $Sprite2D
 
+# This section is for the new orbit tracking logic.
+var current_orbiting_planet: BasePlanet = null
+var last_angle_to_planet: float = 0.0
+var accumulated_orbit_angle: float = 0.0
+
 func _ready() -> void:
-	
 	linear_damp_mode = RigidBody2D.DAMP_MODE_COMBINE
 	# Store starting position as origin
 	origin_position = global_position
@@ -112,7 +116,7 @@ func _input(ev: InputEvent) -> void:
 		var event = ev as InputEventMouseButton
 		if event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 			clickTimer = get_tree().create_timer(CLICK_TIME)
-			
+
 # a timer to check if the mouse button was down/up quick
 var clickTimer : SceneTreeTimer
 
@@ -129,7 +133,6 @@ func _process(_delta: float) -> void:
 	if (Input.is_action_just_pressed("DEBUG-RESET_LAUNCH")):
 		Reset()
 	
-	
 	# This handles only the left mouse button events.
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		# This starts aiming only when pressed and only from READY_TO_AIM.
@@ -137,28 +140,19 @@ func _process(_delta: float) -> void:
 			current_state = State.AIMING
 			# Immediately update aim line for visual feedback.
 			update_aim_line()
-			
-
-			
-		# This launches on mouse release while AIMING.
 
 	# This updates the aim line only while AIMING and the mouse button is held.
 	if current_state == State.AIMING and (Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) or SingleTouchDown):
 		# This updates the aim line visuals and _current_aim_pull_vector.
 		update_aim_line()
-
 		
 		# This makes the ship face the mouse cursor while aiming.
 		var mouse_position = to_local(global_position) - to_local(get_global_mouse_position())
 		look_at(to_global(mouse_position))
 	
-	# This checks if the player is aiming and spacebar is pressed to launch.
-	# Note: This is separate from mouse release to allow "set and shoot" with space.
+	# This launches on mouse release while AIMING.
 	if current_state == State.AIMING and not (Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) or SingleTouchDown):
 		# This calls the function to launch the player using the stored aim vector.
-		#if(sleeping):
-			#set_deferred("sleeping", false)
-			#onPlanet = true
 		launch()
 		
 	if(not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)):
@@ -176,7 +170,6 @@ func _physics_process(_delta: float) -> void:
 	#global_position += Vector2(Input.get_axis("DEBUG-LEFT", "DEBUG-RIGHT"), Input.get_axis("DEBUG-UP", "DEBUG-DOWN")) * 1000 * delta
 	#if(Input.is_action_just_pressed("DEBUG-ADD_BOOST")):
 		#BoostCount +=1
-	
 	
 	# Check lose condition - if player is too far from origin
 	check_lose_condition()
@@ -206,9 +199,54 @@ func _physics_process(_delta: float) -> void:
 			linear_damp = 5
 		else:
 			linear_damp = 0
+			
+	# This calls the function to handle orbit progress tracking.
+	handle_orbit_tracking()
+
+# This is a new function to track the orbital loop.
+func handle_orbit_tracking():
+	if not is_instance_valid(current_orbiting_planet):
+		return
+
+	# This calculates the angle from the planet to the player.
+	var current_angle = (global_position - current_orbiting_planet.global_position).angle()
+	# This calculates the change in angle since the last frame, handling angle wrapping.
+	var delta_angle = angle_difference(last_angle_to_planet, current_angle)
+	# This adds the change to our total.
+	accumulated_orbit_angle += delta_angle
+	# This updates the angle for the next frame.
+	last_angle_to_planet = current_angle
+	
+	# This checks if we completed a full circle (2 * PI radians).
+	if abs(accumulated_orbit_angle) >= 2 * PI:
+		print("Loop complete!")
+		# This tells the planet to give its collectable.
+		current_orbiting_planet.collect_item(self)
+		# This resets the angle so we don't collect again immediately.
+		accumulated_orbit_angle = 0.0
+
+# This is a helper function to correctly calculate the difference between two angles.
+func angle_difference(from, to):
+	var diff = fmod(to - from + PI, 2 * PI) - PI
+	return diff if diff < -PI else fmod(to - from - PI, 2 * PI) + PI
+
+# This function is called by a planet when the player enters its gravity.
+func start_orbiting(planet: BasePlanet):
+	current_orbiting_planet = planet
+	accumulated_orbit_angle = 0.0
+	last_angle_to_planet = (global_position - planet.global_position).angle()
+	print("Started orbiting: ", planet.name)
+
+# This function is called by a planet when the player leaves its gravity.
+func stop_orbiting(planet: BasePlanet):
+	# This ensures we only stop orbiting the correct planet.
+	if planet == current_orbiting_planet:
+		current_orbiting_planet = null
+		accumulated_orbit_angle = 0.0
+		print("Stopped orbiting: ", planet.name)
+
 # This function handles the logic for launching the player.
 func launch() -> void:
-	
 	get_tree().create_timer(LAUNCH_COOLDOWN_TIME).timeout.connect(func(): canBoost=true)
 	canBoost = false
 	# Use the pre-calculated and stored aim vector.
@@ -229,7 +267,6 @@ func launch() -> void:
 	#If you're on the planet and boost, you're getting off the planet, but it needs to happen AFTER the math is done.
 	if(onPlanet):
 		print("OffPlanet")
-		
 		onPlanet = false
 			
 	audioHandler.PlaySoundAtGlobalPosition(Sounds.Launch, global_position)
