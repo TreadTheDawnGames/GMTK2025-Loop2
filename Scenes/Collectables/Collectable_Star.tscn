@@ -1,37 +1,21 @@
 [gd_scene load_steps=5 format=3 uid="uid://c8x7y2qm8qrst"]
 
-[ext_resource type="Script" uid="uid://dbms3atxo2hfg" path="res://Scripts/Collectable.gd" id="1_collectable"]
-[ext_resource type="Texture2D" uid="uid://ba4pw6xs2250w" path="res://Assets/kenney_simple-space/PNG/Default/star_medium.png" id="2_star"]
-[ext_resource type="Script" uid="uid://deew7a1ghrogw" path="res://Scripts/PlayerAudioHandler.gd" id="3_t83yo"]
+[ext_resource type="PackedScene" uid="uid://dngdgw86jrlna" path="res://Scenes/Collectable.tscn" id="1_starbase"]
+[ext_resource type="Texture2D" uid="uid://bl14rql34x32c" path="res://Assets/kenney_simple-space/PNG/Default/star_medium.png" id="2_startex"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_1"]
-radius = 97.0052
+[node name="StarCollectable" instance=ExtResource("1_starbase")]
+point_value = 10
+collection_name = "Star"
 
-[node name="StarCollectable" type="Area2D"]
-script = ExtResource("1_collectable")
-orbit_radius = 120.0
-orbit_speed = 1.5
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_startex")
+scale = Vector2(1.925, 1.925)
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-modulate = Color(1, 1, 0.8, 1)
-scale = Vector2(1.92479, 1.92479)
-texture = ExtResource("2_star")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_1")
-
-[node name="CollectionParticles" type="CPUParticles2D" parent="."]
-emitting = false
+[node name="CollectionParticles" parent="." index="2"]
 amount = 15
 lifetime = 0.8
-explosiveness = 1.0
-direction = Vector2(0, -1)
 gravity = Vector2(0, 50)
 initial_velocity_min = 40.0
 initial_velocity_max = 80.0
 scale_amount_min = 0.3
 color = Color(1, 1, 0, 1)
-
-[node name="PlayerAudioHandler" type="Node2D" parent="."]
-script = ExtResource("3_t83yo")
-metadata/_custom_type_script = "uid://deew7a1ghrogw"

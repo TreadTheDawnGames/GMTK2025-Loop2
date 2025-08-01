@@ -1,39 +1,21 @@
 [gd_scene load_steps=5 format=3 uid="uid://c1lsn0rglq41p"]
 
-[ext_resource type="Script" uid="uid://dbms3atxo2hfg" path="res://Scripts/Collectable.gd" id="1_collectable"]
-[ext_resource type="Texture2D" uid="uid://cx06de664828k" path="res://Assets/kenney_space-shooter-extension/PNG/Sprites X2/Building/spaceBuilding_002.png" id="2_wdw6q"]
-[ext_resource type="Script" uid="uid://deew7a1ghrogw" path="res://Scripts/PlayerAudioHandler.gd" id="3_f2h1h"]
+[ext_resource type="PackedScene" uid="uid://dngdgw86jrlna" path="res://Scenes/Collectable.tscn" id="1_energy_base"]
+[ext_resource type="Texture2D" uid="uid://b0c1d2e3f4g5h" path="res://Assets/kenney_space-shooter-extension/PNG/Sprites X2/Building/spaceBuilding_002.png" id="2_energy_tex"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_1"]
-radius = 98.6154
-
-[node name="EnergyCoreCollectable" type="Area2D"]
-script = ExtResource("1_collectable")
+[node name="EnergyCoreCollectable" instance=ExtResource("1_energy_base")]
 collectable_type = 3
-point_value = 100
-orbit_radius = 250.0
-orbit_speed = 0.4
-collection_name = "Goods"
+collection_name = "Energy Core"
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_wdw6q")
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_energy_tex")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_1")
-
-[node name="CollectionParticles" type="CPUParticles2D" parent="."]
-emitting = false
+[node name="CollectionParticles" parent="." index="2"]
 amount = 30
 lifetime = 1.5
-explosiveness = 1.0
-direction = Vector2(0, -1)
 gravity = Vector2(0, 40)
 initial_velocity_min = 80.0
 initial_velocity_max = 160.0
 scale_amount_min = 0.6
 scale_amount_max = 2.0
 color = Color(0, 1, 0, 1)
-
-[node name="PlayerAudioHandler" type="Node2D" parent="."]
-script = ExtResource("3_f2h1h")
-metadata/_custom_type_script = "uid://deew7a1ghrogw"

@@ -1,41 +1,22 @@
 [gd_scene load_steps=5 format=3 uid="uid://dkjlxh0onjytk"]
 
-[ext_resource type="Script" uid="uid://dbms3atxo2hfg" path="res://Scripts/Collectable.gd" id="1_collectable"]
-[ext_resource type="Texture2D" uid="uid://bpigwd5ie3c1p" path="res://Assets/kenney_simple-space/PNG/Default/meteor_detailedSmall.png" id="2_crystal"]
-[ext_resource type="Script" uid="uid://deew7a1ghrogw" path="res://Scripts/PlayerAudioHandler.gd" id="3_xvimr"]
+[ext_resource type="PackedScene" uid="uid://dngdgw86jrlna" path="res://Scenes/Collectable.tscn" id="1_crystal_base"]
+[ext_resource type="Texture2D" uid="uid://ci1o1n2i3n4p5" path="res://Assets/kenney_simple-space/PNG/Default/meteor_detailedSmall.png" id="2_crystal_tex"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_1"]
-radius = 73.0616
-
-[node name="CrystalCollectable" type="Area2D"]
-script = ExtResource("1_collectable")
+[node name="CrystalCollectable" instance=ExtResource("1_crystal_base")]
 collectable_type = 2
 point_value = 50
-orbit_radius = 200.0
-orbit_speed = 0.6
 collection_name = "Crystal"
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" parent="." index="0"]
+texture = ExtResource("2_crystal_tex")
 modulate = Color(1, 0.5, 1, 1)
-scale = Vector2(1.7653, 1.7653)
-texture = ExtResource("2_crystal")
+scale = Vector2(1.765, 1.765)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_1")
-
-[node name="CollectionParticles" type="CPUParticles2D" parent="."]
-emitting = false
+[node name="CollectionParticles" parent="." index="2"]
 amount = 25
 lifetime = 1.2
-explosiveness = 1.0
-direction = Vector2(0, -1)
 gravity = Vector2(0, 60)
 initial_velocity_min = 70.0
 initial_velocity_max = 140.0
-scale_amount_min = 0.5
-scale_amount_max = 1.5
 color = Color(1, 0, 1, 1)
-
-[node name="PlayerAudioHandler" type="Node2D" parent="."]
-script = ExtResource("3_xvimr")
-metadata/_custom_type_script = "uid://deew7a1ghrogw"

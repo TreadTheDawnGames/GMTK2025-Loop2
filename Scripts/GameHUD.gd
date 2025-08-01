@@ -11,7 +11,7 @@ class_name GameHUD
 
 # References to game objects
 var player: Player
-var game_controller: GameController
+var game_controller
 
 func _ready() -> void:
 	GameManager.score_changed.connect(_on_score_changed)
