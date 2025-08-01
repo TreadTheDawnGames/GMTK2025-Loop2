@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://din50gkoucxpp"]
+[gd_scene load_steps=5 format=3 uid="uid://din50gkoucxpp"]
 
 [ext_resource type="Script" uid="uid://ew10v6pbwxv6" path="res://Scripts/MainMenu.gd" id="1_main_menu"]
 [ext_resource type="Theme" uid="uid://dvwgvp8u8xo0i" path="res://Scenes/UI/Themes/UI_Theme.tres" id="1_mjmdf"]
 [ext_resource type="Material" uid="uid://2wo2meekggrg" path="res://Scenes/Effects/StarBackground_Menu.tres" id="3_72sra"]
+[ext_resource type="Script" uid="uid://c1e04v6b22eli" path="res://Scenes/UI/button_sounds.gd" id="4_t6w0q"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -52,20 +53,23 @@ size_flags_horizontal = 4
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="StartButton" type="Button" parent="PanelContainer/VBoxContainer"]
+[node name="StartButton" type="Button" parent="PanelContainer/VBoxContainer" groups=["Button"]]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 text = "START GAME"
+script = ExtResource("4_t6w0q")
 
-[node name="SettingsButton" type="Button" parent="PanelContainer/VBoxContainer"]
+[node name="SettingsButton" type="Button" parent="PanelContainer/VBoxContainer" groups=["Button"]]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 text = "SETTINGS"
+script = ExtResource("4_t6w0q")
 
-[node name="ExitButton" type="Button" parent="PanelContainer/VBoxContainer"]
+[node name="ExitButton" type="Button" parent="PanelContainer/VBoxContainer" groups=["Button"]]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 text = "EXIT"
+script = ExtResource("4_t6w0q")
 
 [connection signal="pressed" from="PanelContainer/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]

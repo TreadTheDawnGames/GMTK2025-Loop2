@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://c483p85jd82im"]
+[gd_scene load_steps=6 format=3 uid="uid://c483p85jd82im"]
 
 [ext_resource type="Theme" uid="uid://dvwgvp8u8xo0i" path="res://Scenes/UI/Themes/UI_Theme.tres" id="1_femvg"]
 [ext_resource type="Script" uid="uid://p432xwmpien4" path="res://Scripts/WinScreen.gd" id="1_win_screen"]
+[ext_resource type="Script" uid="uid://c1e04v6b22eli" path="res://Scenes/UI/button_sounds.gd" id="3_pj8m8"]
 
 [sub_resource type="Shader" id="Shader_femvg"]
 code = "shader_type canvas_item;
@@ -154,15 +155,17 @@ layout_mode = 2
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="RestartButton" type="Button" parent="PanelContainer/VBoxContainer"]
+[node name="RestartButton" type="Button" parent="PanelContainer/VBoxContainer" groups=["Button"]]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 text = "PLAY AGAIN"
+script = ExtResource("3_pj8m8")
 
-[node name="MenuButton" type="Button" parent="PanelContainer/VBoxContainer"]
+[node name="MenuButton" type="Button" parent="PanelContainer/VBoxContainer" groups=["Button"]]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 text = "MAIN MENU"
+script = ExtResource("3_pj8m8")
 
 [connection signal="pressed" from="PanelContainer/VBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MenuButton" to="." method="_on_menu_button_pressed"]

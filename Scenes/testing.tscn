@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://dpgyyv3r18v5n"]
+
+[ext_resource type="PackedScene" uid="uid://big3rsi88wl76" path="res://Scenes/Player.tscn" id="1_sx6hp"]
+[ext_resource type="Material" uid="uid://bxcys6gyngoe6" path="res://Scenes/Effects/StarBackground.tres" id="2_4ppfb"]
+[ext_resource type="Script" uid="uid://dx7wa3d4fr6xu" path="res://Scripts/star_background.gd" id="3_8si1v"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_sx6hp")]
+DEBUG_DoLoseCondition = false
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+z_index = -1
+z_as_relative = false
+material = ExtResource("2_4ppfb")
+offset_left = -619.0
+offset_top = -324.0
+offset_right = 2811.0
+offset_bottom = 1626.0
+color = Color(0, 0, 0, 1)
+script = ExtResource("3_8si1v")

@@ -1,7 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://bpykgsig0p7c4"]
 
+
 [ext_resource type="PackedScene" uid="uid://dngdgw86jrlna" path="res://Scenes/Collectable.tscn" id="1_satellite_base"]
 [ext_resource type="Texture2D" uid="uid://dyo34685k6b7n" path="res://Assets/kenney_space-shooter-extension/PNG/Sprites/Station/spaceStation_022.png" id="2_satellite_tex"]
+
 
 [node name="SatelliteCollectable" instance=ExtResource("1_satellite_base")]
 collectable_type = 1

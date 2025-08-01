@@ -11,8 +11,9 @@ func _ready() -> void:
 	if(not busName):
 		printerr(name + " LabelSlider does not have a busName")
 		return
-	slider.value = AudioServer.get_bus_volume_linear(AudioServer.get_bus_index(busName))
 	var busIndex = AudioServer.get_bus_index(busName)
+	slider.value = AudioServer.get_bus_volume_linear(busIndex)
+	check_box.button_pressed = AudioServer.is_bus_mute(busIndex)
 	label.text = "- " + busName
 	slider.value_changed.connect(func(wantedVolume): 
 		AudioServer.set_bus_volume_linear(busIndex, wantedVolume))

@@ -14,6 +14,7 @@ const LAUNCH_COOLDOWN_TIME : float = 0.3
 # yeah that (half a second)
 var canBoost : bool = false
 
+@export var DEBUG_DoLoseCondition : bool = true
 # The particles
 @onready var _LaunchParticles: ParticleEffect = $LaunchParticles
 @onready var _BoostParticles: ParticleEffect = $BoostParticles
@@ -39,7 +40,15 @@ static var Position : Vector2
 # This variable will hold the player's current state from the enum above.
 var current_state: State = State.READY_TO_AIM
 # This boolean tracks if the one-time boost is still available.
-var BoostCount: int = 1
+var BoostCount: int = 1:
+	get: return BoostCount
+	set(value):
+		BoostCount = value
+		if(BoostCount == 0):
+			Sprite.frame_coords.y = 1
+			$"BoostParticles-Explosion".Emit(true)
+		else:
+			sprite.frame_coords.y = 0
 
 # This new variable will store the calculated pull vector while aiming.
 var _current_aim_pull_vector: Vector2 = Vector2.ZERO
@@ -83,7 +92,7 @@ func _on_ship_color_changed(_new_color: Color) -> void:
 
 # Check if player has gone too far and should lose
 func check_lose_condition() -> void:
-	if has_lost:
+	if has_lost or not DEBUG_DoLoseCondition:
 		return
 
 	var distance_from_origin = global_position.distance_to(origin_position)
@@ -274,9 +283,7 @@ func apply_boost() -> void:
 	# This provides visual feedback that the boost was used.
 	#sprite.modulate = Color.CYAN
 	_BoostParticles.Emit(true)
-	if(BoostCount == 0):
-		Sprite.frame_coords.y = 1
-		$"BoostParticles-Explosion".Emit(true)
+	
 	camera_2d.Shake()
 	audioHandler.PlaySoundAtGlobalPosition(Sounds.Boost, global_position)
 

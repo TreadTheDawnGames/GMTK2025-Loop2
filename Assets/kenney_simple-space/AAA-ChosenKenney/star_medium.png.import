@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d38kw0vkeugql"
-path="res://.godot/imported/slide_hangle.png-1747be28a70e62c9d798b54eedcfa158.ctex"
+uid="uid://ba4pw6xs2250w"
+path="res://.godot/imported/star_medium.png-81caecffec60e8c4e83f62509a8a88c7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/UI/Chosen UIs/slide_hangle.png"
-dest_files=["res://.godot/imported/slide_hangle.png-1747be28a70e62c9d798b54eedcfa158.ctex"]
+source_file="res://Assets/kenney_simple-space/AAA-ChosenKenney/star_medium.png"
+dest_files=["res://.godot/imported/star_medium.png-81caecffec60e8c4e83f62509a8a88c7.ctex"]
 
 [params]
 

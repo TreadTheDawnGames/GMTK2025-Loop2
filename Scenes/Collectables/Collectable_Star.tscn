@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://dngdgw86jrlna" path="res://Scenes/Collectable.tscn" id="1_starbase"]
 [ext_resource type="Texture2D" uid="uid://bl14rql34x32c" path="res://Assets/kenney_simple-space/PNG/Default/star_medium.png" id="2_startex"]
 
+
 [node name="StarCollectable" instance=ExtResource("1_starbase")]
 point_value = 10
 collection_name = "Star"

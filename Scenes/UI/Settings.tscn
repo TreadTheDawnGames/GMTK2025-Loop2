@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://ce2kgb3fjtjut"]
+[gd_scene load_steps=7 format=3 uid="uid://ce2kgb3fjtjut"]
 
 [ext_resource type="Theme" uid="uid://dvwgvp8u8xo0i" path="res://Scenes/UI/Themes/UI_Theme.tres" id="1_sc1bs"]
 [ext_resource type="Script" uid="uid://b8dpyepks24nr" path="res://Scripts/Settings.gd" id="1_settings"]
-[ext_resource type="Texture2D" uid="uid://b3yadhtuplhg2" path="res://Assets/kenney_space-shooter-extension/PNG/Sprites X2/Ships/spaceShips_001.png" id="2_ship_texture"]
+[ext_resource type="Texture2D" uid="uid://b3yadhtuplhg2" path="res://Assets/kenney_space-shooter-extension/AAA-ChosenKenneySpace/spaceShips_001.png" id="2_ship_texture"]
 [ext_resource type="PackedScene" uid="uid://blig0domcdoj" path="res://Scenes/UI/volume_control.tscn" id="2_y60rh"]
 [ext_resource type="Script" uid="uid://deew7a1ghrogw" path="res://Scripts/PlayerAudioHandler.gd" id="5_hfiyb"]
+[ext_resource type="Script" uid="uid://c1e04v6b22eli" path="res://Scenes/UI/button_sounds.gd" id="5_kg15k"]
 
 [node name="Settings" type="Control"]
 layout_mode = 3
@@ -104,10 +105,11 @@ step = 0.01
 custom_minimum_size = Vector2(0, 10)
 layout_mode = 2
 
-[node name="BackButton" type="Button" parent="Panel/VBoxContainer"]
+[node name="BackButton" type="Button" parent="Panel/VBoxContainer" groups=["Button"]]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 text = "BACK TO MENU"
+script = ExtResource("5_kg15k")
 
 [node name="PlayerAudioHandler" type="Node2D" parent="."]
 script = ExtResource("5_hfiyb")

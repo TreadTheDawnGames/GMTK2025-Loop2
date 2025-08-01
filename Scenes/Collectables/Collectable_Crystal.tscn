@@ -1,7 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://dkjlxh0onjytk"]
 
+
 [ext_resource type="PackedScene" uid="uid://dngdgw86jrlna" path="res://Scenes/Collectable.tscn" id="1_crystal_base"]
 [ext_resource type="Texture2D" uid="uid://ci1o1n2i3n4p5" path="res://Assets/kenney_simple-space/PNG/Default/meteor_detailedSmall.png" id="2_crystal_tex"]
+
 
 [node name="CrystalCollectable" instance=ExtResource("1_crystal_base")]
 collectable_type = 2
