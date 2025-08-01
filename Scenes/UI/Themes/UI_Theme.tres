@@ -1,5 +1,6 @@
-[gd_resource type="Theme" load_steps=28 format=3 uid="uid://dvwgvp8u8xo0i"]
+[gd_resource type="Theme" load_steps=30 format=3 uid="uid://dvwgvp8u8xo0i"]
 
+[ext_resource type="Texture2D" uid="uid://c3newpudfr2ym" path="res://Assets/UI/Chosen UIs/button_square-disabled.png" id="1_eejyr"]
 [ext_resource type="Texture2D" uid="uid://e46mp4fov066" path="res://Assets/UI/Chosen UIs/check_square_grey_square.png" id="1_f6jyn"]
 [ext_resource type="Texture2D" uid="uid://b76cbu5cjfx6g" path="res://Assets/UI/Chosen UIs/button_square.png" id="1_fbw4s"]
 [ext_resource type="Texture2D" uid="uid://mchwof6kq82w" path="res://Assets/UI/Chosen UIs/check_square_grey_cross.png" id="1_xky8r"]
@@ -18,6 +19,13 @@
 [ext_resource type="FontFile" uid="uid://bt7d07ityf5rq" path="res://Assets/UI/Fonts/Kenney Future.ttf" id="15_wj56m"]
 [ext_resource type="Texture2D" uid="uid://c7b4gtc0v86kl" path="res://Assets/UI/Chosen UIs/button_square_header_blade_rectangle_screws.png" id="16_x151o"]
 [ext_resource type="Texture2D" uid="uid://20mtgpjf1vus" path="res://Assets/UI/Chosen UIs/button_square_header_blade_square_screws.png" id="17_xuqoi"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_er6q0"]
+texture = ExtResource("1_eejyr")
+texture_margin_left = 12.0
+texture_margin_top = 12.0
+texture_margin_right = 12.0
+texture_margin_bottom = 12.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xuqoi"]
 texture = ExtResource("1_fbw4s")
@@ -105,7 +113,7 @@ texture_margin_bottom = 16.0
 default_font = ExtResource("15_wj56m")
 default_font_size = 15
 Button/colors/font_color = Color(0, 0, 0, 1)
-Button/colors/font_disabled_color = Color(0, 0, 0, 0.501961)
+Button/colors/font_disabled_color = Color(1, 1, 1, 0.501961)
 Button/colors/font_focus_color = Color(0, 0, 0, 1)
 Button/colors/font_hover_color = Color(0, 0, 0, 1)
 Button/colors/font_hover_pressed_color = Color(0, 0, 0, 1)
@@ -123,16 +131,17 @@ Button/constants/icon_max_width = 0
 Button/constants/line_spacing = 0
 Button/constants/outline_size = 0
 Button/font_sizes/font_size = 13
+Button/styles/disabled = SubResource("StyleBoxTexture_er6q0")
 Button/styles/hover = SubResource("StyleBoxTexture_xuqoi")
 Button/styles/normal = SubResource("StyleBoxTexture_fbw4s")
 Button/styles/pressed = SubResource("StyleBoxTexture_eejyr")
-CheckBox/colors/font_color = Color(0.875, 0.875, 0.875, 1)
-CheckBox/colors/font_disabled_color = Color(0.875, 0.875, 0.875, 0.5)
-CheckBox/colors/font_focus_color = Color(0.95, 0.95, 0.95, 1)
-CheckBox/colors/font_hover_color = Color(0.95, 0.95, 0.95, 1)
-CheckBox/colors/font_hover_pressed_color = Color(1, 1, 1, 1)
-CheckBox/colors/font_outline_color = Color(0, 0, 0, 1)
-CheckBox/colors/font_pressed_color = Color(1, 1, 1, 1)
+CheckBox/colors/font_color = Color(0, 0, 0, 1)
+CheckBox/colors/font_disabled_color = Color(0, 0, 0, 0.5)
+CheckBox/colors/font_focus_color = Color(0, 0, 0, 1)
+CheckBox/colors/font_hover_color = Color(0, 0, 0, 1)
+CheckBox/colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+CheckBox/colors/font_outline_color = Color(1, 1, 1, 1)
+CheckBox/colors/font_pressed_color = Color(0, 0, 0, 1)
 CheckBox/constants/check_v_offset = 0
 CheckBox/constants/h_separation = 4
 CheckBox/constants/outline_size = 0

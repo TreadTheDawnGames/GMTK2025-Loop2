@@ -35,6 +35,7 @@ func _ready() -> void:
 
 	# Connect to collectable collection signals
 	call_deferred("connect_collectables")
+	
 
 func connect_collectables() -> void:
 	# Initialize tracking dictionaries
