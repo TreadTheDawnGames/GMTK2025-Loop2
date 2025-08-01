@@ -9,15 +9,8 @@ func _ready() -> void:
 	#color_slider.value = GameManager.get_ship_color_hue()
 	# Update example ship color
 	update_example_ship_color()
-	player_audio_handler.PlaySoundAtGlobalPosition(Sounds.UpUIBeep, global_position + (get_rect().size * 0.5), false)
 	# Connect to GameManager signal for color changes
 	GameManager.ship_color_changed.connect(_on_ship_color_changed)
-
-#reddit
-func _notification(what: int) -> void:
-	match what:
-		NOTIFICATION_PREDELETE:
-			player_audio_handler.PlaySoundAtGlobalPosition(Sounds.DownUIBeep, global_position + (get_rect().size * 0.5), false)
 
 
 # Called when the color slider value changes

@@ -1,0 +1,66 @@
+[gd_scene load_steps=9 format=3 uid="uid://b5vfoako1gnde"]
+
+[ext_resource type="Script" uid="uid://jdiu05rj7h3d" path="res://addons/audio_manager/audio_manager.gd" id="1_cj4tn"]
+[ext_resource type="Script" uid="uid://ehkw6w2xh2bq" path="res://addons/audio_manager/audio_manager_omni.gd" id="2_8ycmr"]
+[ext_resource type="AudioStream" uid="uid://bgpj881la2ljv" path="res://Assets/Audio/Music/GMTK Chill Track.wav" id="3_31cx6"]
+[ext_resource type="AudioStream" uid="uid://l0sx6418is77" path="res://Assets/Audio/SFX/UIClickSFX.wav" id="4_hjcxj"]
+[ext_resource type="AudioStream" uid="uid://cwi35irhxlnsp" path="res://Assets/Audio/SFX/UIHoverSFX.wav" id="5_8ycmr"]
+
+[sub_resource type="Resource" id="Resource_b7n4u"]
+script = ExtResource("2_8ycmr")
+audio_name = "background_music"
+audio_stream = ExtResource("3_31cx6")
+use_clipper = false
+start_time = 0.0
+end_time = 0.0
+volume_db = -30.25
+pitch_scale = 1.0
+mix_target = 0
+loop = true
+loop_offset = 0.0
+auto_play = true
+max_polyphony = 1
+bus = &"Master"
+playback_type = 0
+metadata/_custom_type_script = "uid://ehkw6w2xh2bq"
+
+[sub_resource type="Resource" id="Resource_rf0fm"]
+script = ExtResource("2_8ycmr")
+audio_name = "button_click"
+audio_stream = ExtResource("4_hjcxj")
+use_clipper = false
+start_time = 0.0
+end_time = 0.0
+volume_db = 0.0
+pitch_scale = 1.0
+mix_target = 0
+loop = false
+loop_offset = 0.0
+auto_play = false
+max_polyphony = 1
+bus = &"Master"
+playback_type = 0
+metadata/_custom_type_script = "uid://ehkw6w2xh2bq"
+
+[sub_resource type="Resource" id="Resource_31cx6"]
+script = ExtResource("2_8ycmr")
+audio_name = "button_hover"
+audio_stream = ExtResource("5_8ycmr")
+use_clipper = false
+start_time = 0.0
+end_time = 0.0
+volume_db = 0.0
+pitch_scale = 1.0
+mix_target = 0
+loop = false
+loop_offset = 0.0
+auto_play = false
+max_polyphony = 1
+bus = &"Master"
+playback_type = 0
+metadata/_custom_type_script = "uid://ehkw6w2xh2bq"
+
+[node name="AudioManager" type="Node"]
+script = ExtResource("1_cj4tn")
+audios_omni = Array[ExtResource("2_8ycmr")]([SubResource("Resource_b7n4u"), SubResource("Resource_rf0fm"), SubResource("Resource_31cx6")])
+metadata/_custom_type_script = "uid://jdiu05rj7h3d"

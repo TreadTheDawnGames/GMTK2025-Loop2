@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://del8gwsewiqo8"]
+[gd_scene load_steps=6 format=3 uid="uid://del8gwsewiqo8"]
 
 [ext_resource type="Theme" uid="uid://dvwgvp8u8xo0i" path="res://Scenes/UI/Themes/UI_Theme.tres" id="1_6xaih"]
 [ext_resource type="Script" uid="uid://b58h6psnc56vf" path="res://Scripts/LoseScreen.gd" id="1_lose_screen"]
+[ext_resource type="Script" uid="uid://c1e04v6b22eli" path="res://Scenes/UI/button_sounds.gd" id="3_3abt3"]
 
 [sub_resource type="Shader" id="Shader_6xaih"]
 code = "shader_type canvas_item;
@@ -152,15 +153,17 @@ layout_mode = 2
 custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 
-[node name="RestartButton" type="Button" parent="Background/PanelContainer2/VBoxContainer"]
+[node name="RestartButton" type="Button" parent="Background/PanelContainer2/VBoxContainer" groups=["Button"]]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 text = "TRY AGAIN"
+script = ExtResource("3_3abt3")
 
-[node name="MenuButton" type="Button" parent="Background/PanelContainer2/VBoxContainer"]
+[node name="MenuButton" type="Button" parent="Background/PanelContainer2/VBoxContainer" groups=["Button"]]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 text = "MAIN MENU"
+script = ExtResource("3_3abt3")
 
 [connection signal="pressed" from="Background/PanelContainer2/VBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
 [connection signal="pressed" from="Background/PanelContainer2/VBoxContainer/MenuButton" to="." method="_on_menu_button_pressed"]
