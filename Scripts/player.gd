@@ -221,6 +221,8 @@ func handle_orbit_tracking():
 	if abs(accumulated_orbit_angle) >= 2 * PI:
 		print("Loop complete!")
 		# This tells the planet to give its collectable.
+		BoostCount += 1
+		audioHandler.PlaySoundAtGlobalPosition(Sounds.CollectableGet, global_position)
 		current_orbiting_planet.collect_item(self)
 		# This resets the angle so we don't collect again immediately.
 		accumulated_orbit_angle = 0.0

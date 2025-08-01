@@ -95,7 +95,7 @@ func create_item_ui(item: ShopItem) -> Control:
 		var button_row = HBoxContainer.new()
 
 		# Minus button
-		var minus_button = Button.new()
+		var minus_button = SoundButton.new()
 		minus_button.text = "-"
 		minus_button.custom_minimum_size = Vector2(50, 40)
 		minus_button.disabled = not gravity_item.can_downgrade()
@@ -103,7 +103,7 @@ func create_item_ui(item: ShopItem) -> Control:
 		button_row.add_child(minus_button)
 
 		# Plus button
-		var plus_button = Button.new()
+		var plus_button = SoundButton.new()
 		plus_button.text = "+"
 		plus_button.custom_minimum_size = Vector2(50, 40)
 		plus_button.disabled = not gravity_item.can_upgrade()
@@ -129,7 +129,7 @@ func create_item_ui(item: ShopItem) -> Control:
 		info_container.add_child(cost_label)
 
 		# Purchase button
-		var purchase_button = Button.new()
+		var purchase_button = SoundButton.new()
 		purchase_button.text = item.get_purchase_text()
 		purchase_button.custom_minimum_size = Vector2(120, 50)
 		purchase_button.disabled = not item.can_purchase()
@@ -152,7 +152,7 @@ func close_shop():
 	get_tree().paused = false
 	shop_closed.emit()
 
-func purchase_item(item: ShopItem, button: Button, cost_label: Label):
+func purchase_item(item: ShopItem, button: SoundButton, cost_label: Label):
 	if not current_player:
 		return
 
@@ -169,7 +169,7 @@ func purchase_item(item: ShopItem, button: Button, cost_label: Label):
 	else:
 		print("Cannot purchase: %s" % item.item_name)
 
-func upgrade_gravity(gravity_item: GravityUpgradeItem, plus_button: Button, level_label: Label):
+func upgrade_gravity(gravity_item: GravityUpgradeItem, plus_button: SoundButton, level_label: Label):
 	if not current_player:
 		return
 
@@ -180,14 +180,14 @@ func upgrade_gravity(gravity_item: GravityUpgradeItem, plus_button: Button, leve
 
 		# Update minus button (find it as sibling)
 		var button_row = plus_button.get_parent()
-		var minus_button = button_row.get_child(0) as Button
+		var minus_button = button_row.get_child(0) as SoundButton
 		if minus_button:
 			minus_button.disabled = not gravity_item.can_downgrade()
 
 		# Update score display
 		update_score_display()
 
-func downgrade_gravity(gravity_item: GravityUpgradeItem, minus_button: Button, level_label: Label):
+func downgrade_gravity(gravity_item: GravityUpgradeItem, minus_button: SoundButton, level_label: Label):
 	if not current_player:
 		return
 
@@ -198,7 +198,7 @@ func downgrade_gravity(gravity_item: GravityUpgradeItem, minus_button: Button, l
 
 		# Update plus button (find it as sibling)
 		var button_row = minus_button.get_parent()
-		var plus_button = button_row.get_child(1) as Button
+		var plus_button = button_row.get_child(1) as SoundButton
 		if plus_button:
 			plus_button.disabled = not gravity_item.can_upgrade()
 
@@ -220,8 +220,8 @@ func update_shop_display():
 			var button_container = item_ui.get_child(1)
 			var level_label = button_container.get_child(0) as Label
 			var button_row = button_container.get_child(1)
-			var minus_button = button_row.get_child(0) as Button
-			var plus_button = button_row.get_child(1) as Button
+			var minus_button = button_row.get_child(0) as SoundButton
+			var plus_button = button_row.get_child(1) as SoundButton
 
 			if level_label:
 				level_label.text = "Level: %d (-3 to 3)" % gravity_item.get_current_level()
@@ -231,7 +231,7 @@ func update_shop_display():
 				plus_button.disabled = not gravity_item.can_upgrade()
 		else:
 			# Handle regular items
-			var button = item_ui.get_child(1) as Button
+			var button = item_ui.get_child(1) as SoundButton
 			if button:
 				button.text = item.get_purchase_text()
 				button.disabled = not item.can_purchase()
@@ -260,8 +260,8 @@ func _on_score_changed(_new_score: int):
 			var gravity_item = item as GravityUpgradeItem
 			var button_container = item_ui.get_child(1)
 			var button_row = button_container.get_child(1)
-			var minus_button = button_row.get_child(0) as Button
-			var plus_button = button_row.get_child(1) as Button
+			var minus_button = button_row.get_child(0) as SoundButton
+			var plus_button = button_row.get_child(1) as SoundButton
 
 			if minus_button:
 				minus_button.disabled = not gravity_item.can_downgrade()
@@ -269,7 +269,7 @@ func _on_score_changed(_new_score: int):
 				plus_button.disabled = not gravity_item.can_upgrade()
 		else:
 			# Handle regular items
-			var button = item_ui.get_child(1) as Button
+			var button = item_ui.get_child(1) as SoundButton
 			if button:
 				button.disabled = not item.can_purchase()
 

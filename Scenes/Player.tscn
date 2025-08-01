@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cslq0v6w7x80a"]
+[gd_scene load_steps=15 format=3 uid="uid://cslq0v6w7x80a"]
 
 [ext_resource type="Script" uid="uid://dton838gyavdl" path="res://Scripts/player.gd" id="1_player"]
 [ext_resource type="Texture2D" uid="uid://b3yadhtuplhg2" path="res://Assets/kenney_space-shooter-extension/AAA-ChosenKenneySpace/spaceShips_001.png" id="2_ship_tex"]
@@ -12,6 +12,24 @@
 radius = 40.0
 
 [sub_resource type="Curve" id="Curve_52ee3"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_bhhdu"]
+_data = [Vector2(0, 0.502859), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_yoq75"]
+colors = PackedColorArray(0, 0.643137, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="Curve" id="Curve_yoq75"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_52ee3"]
+colors = PackedColorArray(1, 0, 0, 1, 1, 1, 0, 1)
+
+[sub_resource type="Curve" id="Curve_megsn"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
 
@@ -63,47 +81,60 @@ script = ExtResource("4_52ee3")
 [node name="Line2D" type="Line2D" parent="."]
 
 [node name="BoostParticles-Explosion" type="CPUParticles2D" parent="."]
-position = Vector2(-33, 0)
+position = Vector2(-43, 0)
 emitting = false
 amount = 50
 lifetime = 0.6
 one_shot = true
+preprocess = 0.1
 explosiveness = 1.0
 local_coords = true
+emission_shape = 1
+emission_sphere_radius = 10.0
 direction = Vector2(0, 0)
 spread = 180.0
 gravity = Vector2(0, 0)
 initial_velocity_max = 100.0
 radial_accel_max = 100.0
+angle_min = -360.0
+angle_max = 360.0
 scale_amount_min = 5.0
 scale_amount_max = 16.0
+scale_amount_curve = SubResource("Curve_bhhdu")
+color_ramp = SubResource("Gradient_yoq75")
 hue_variation_min = -1.0
 hue_variation_max = 1.0
 script = ExtResource("3_particles")
 
 [node name="LaunchParticles" type="CPUParticles2D" parent="."]
-position = Vector2(-45, 0)
+position = Vector2(-34, 0)
 emitting = false
 amount = 25
 lifetime = 0.4
 one_shot = true
+preprocess = 0.1
 local_coords = true
 emission_shape = 3
 emission_rect_extents = Vector2(1, 2.955)
 direction = Vector2(0, 0)
 spread = 360.0
 gravity = Vector2(-980, 0)
+angle_min = -360.0
+angle_max = 360.0
 scale_amount_max = 10.0
+scale_amount_curve = SubResource("Curve_yoq75")
+color_ramp = SubResource("Gradient_52ee3")
 hue_variation_min = -1.0
 hue_variation_max = 1.0
 script = ExtResource("3_particles")
 
 [node name="BoostParticles" type="CPUParticles2D" parent="."]
-position = Vector2(-30, 0)
+position = Vector2(-43, 0)
 emitting = false
 amount = 25
 lifetime = 0.5
 one_shot = true
+preprocess = 0.1
 local_coords = true
 emission_shape = 3
 emission_rect_extents = Vector2(1, 2.955)
@@ -112,6 +143,12 @@ spread = 360.0
 gravity = Vector2(-980, 0)
 initial_velocity_min = 2.0
 initial_velocity_max = 15.0
+angle_min = -360.0
+angle_max = 360.0
+scale_amount_min = 2.0
+scale_amount_max = 15.0
+scale_amount_curve = SubResource("Curve_megsn")
+color_ramp = SubResource("Gradient_yoq75")
 hue_variation_min = -1.0
 hue_variation_max = 1.0
 script = ExtResource("3_particles")
