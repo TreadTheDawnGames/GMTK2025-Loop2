@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://jdiu05rj7h3d" path="res://addons/audio_manager/audio_manager.gd" id="1_u0apm"]
 [ext_resource type="Script" uid="uid://ehkw6w2xh2bq" path="res://addons/audio_manager/audio_manager_omni.gd" id="2_6j6m3"]
-[ext_resource type="AudioStream" uid="uid://bgpj881la2ljv" path="res://Assets/Audio/GMTK Chill Track.wav" id="3_u0apm"]
+[ext_resource type="AudioStream" uid="uid://bgpj881la2ljv" path="res://Assets/Audio/Music/GMTK Chill Track.wav" id="3_u0apm"]
 
 [sub_resource type="Resource" id="Resource_cwhqb"]
 script = ExtResource("2_6j6m3")

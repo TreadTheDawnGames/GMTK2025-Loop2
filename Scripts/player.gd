@@ -1,5 +1,6 @@
 extends RigidBody2D
 class_name Player
+@onready var audioHandler: PlayerAudioHandler = $AudioHandler
 
 # This defines a set of named states for the player's state machine.
 enum State {
@@ -164,7 +165,10 @@ func _physics_process(delta: float) -> void:
 
 	# Debug movement (assuming "DEBUG-*" inputs are set up) || WASD
 	global_position += Vector2(Input.get_axis("DEBUG-LEFT", "DEBUG-RIGHT"), Input.get_axis("DEBUG-UP", "DEBUG-DOWN")) * 1000 * delta
-
+	if(Input.is_action_just_pressed("DEBUG-ADD_BOOST")):
+		BoostCount +=1
+	
+	
 	# Check lose condition - if player is too far from origin
 	check_lose_condition()
 	if is_inside_tree():
@@ -176,6 +180,7 @@ func _physics_process(delta: float) -> void:
 					print("onPlanet")
 					linear_velocity = Vector2.ZERO
 					angular_velocity = 0.0
+					audioHandler.PlaySoundAtGlobalPosition(Sounds.ShipCollide, global_position)
 					#set_deferred("sleeping", true)
 					Reset()
 				onPlanet = true
@@ -218,7 +223,7 @@ func launch() -> void:
 		
 		onPlanet = false
 			
-	# TODO: Add a sound for the boost here!
+	audioHandler.PlaySoundAtGlobalPosition(Sounds.Launch, global_position)
 
 # This function applies the one-time boost.
 func apply_boost() -> void:
@@ -236,9 +241,7 @@ func apply_boost() -> void:
 		Sprite.frame_coords.y = 1
 		$"BoostParticles-Explosion".Emit(true)
 	camera_2d.Shake()
-	
-
-	# TODO: Add a sound for the boost here!
+	audioHandler.PlaySoundAtGlobalPosition(Sounds.Boost, global_position)
 
 # This function draws and updates the aiming line.
 func update_aim_line() -> void:

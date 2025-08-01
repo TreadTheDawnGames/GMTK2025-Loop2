@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://bve0tmd3datbm"
-path="res://.godot/imported/GMTK V2.wav-693c307651f4a305b9345042f0d7f4e6.sample"
+path="res://.godot/imported/GMTK V2.wav-dfae021b10e588b19a03b2fb9ecfda8a.sample"
 
 [deps]
 
-source_file="res://Assets/Audio/GMTK V2.wav"
-dest_files=["res://.godot/imported/GMTK V2.wav-693c307651f4a305b9345042f0d7f4e6.sample"]
+source_file="res://Assets/Audio/Music/GMTK V2.wav"
+dest_files=["res://.godot/imported/GMTK V2.wav-dfae021b10e588b19a03b2fb9ecfda8a.sample"]
 
 [params]
 

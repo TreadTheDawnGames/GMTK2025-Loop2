@@ -25,6 +25,9 @@ signal collected(collectable: Collectable)
 @export var value_degradation_amount: int = 1  # Amount to reduce value by each interval
 @export var minimum_value: int = 1  # Minimum value the collectable can have
 
+# sound handler
+@onready var audioHandler: PlayerAudioHandler = $PlayerAudioHandler
+
 # Internal variables
 var orbit_center: Vector2
 var orbit_angle: float = 0.0
@@ -138,7 +141,7 @@ func collect() -> void:
 		return
 		
 	is_collected = true
-	
+	audioHandler.PlaySoundAtGlobalPosition(Sounds.CollectableGet, global_position)
 	# Play collection particles
 	if collection_particles:
 		collection_particles.emitting = true
