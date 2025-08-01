@@ -8,14 +8,14 @@
 [ext_resource type="Script" uid="uid://cqvosktsb48d3" path="res://Scripts/tools/planet_atmo.gd" id="4_aogve"]
 [ext_resource type="Texture2D" uid="uid://bk7d1uwiwf5vm" path="res://Assets/kenney_planets/Planets/planet02.png" id="4_pgxtg"]
 [ext_resource type="Texture2D" uid="uid://b3dfuop6n5fr2" path="res://Assets/kenney_planets/Planets/planet03.png" id="5_ueupv"]
-[ext_resource type="Script" uid="uid://bwlffc33t13kl" path="res://Scripts/CollectableSpawner.gd" id="5_umgws"]
 [ext_resource type="Texture2D" uid="uid://ef8vjx463bnj" path="res://Assets/kenney_planets/Planets/planet04.png" id="6_vwein"]
 [ext_resource type="Texture2D" uid="uid://bcmnm1avyhgv8" path="res://Assets/kenney_planets/Planets/planet05.png" id="7_gebx1"]
 [ext_resource type="Texture2D" uid="uid://x45e1e0ufjlm" path="res://Assets/kenney_planets/Planets/planet06.png" id="8_04ox6"]
 [ext_resource type="Texture2D" uid="uid://dgy0qlfsppkme" path="res://Assets/kenney_planets/Planets/planet07.png" id="9_roqmg"]
 [ext_resource type="Texture2D" uid="uid://fhqpobm2xyfy" path="res://Assets/kenney_planets/Planets/planet08.png" id="10_qbjmh"]
 [ext_resource type="Texture2D" uid="uid://d2lxucwpeaiew" path="res://Assets/kenney_planets/Planets/planet09.png" id="11_eci5g"]
-[ext_resource type="Script" uid="uid://d14jugjffoiv7" path="res://Scripts/rand_sprite.gd" id="12_q5dxo"]
+[ext_resource type="Script" path="res://Scripts/rand_sprite.gd" id="12_q5dxo"]
+[ext_resource type="Script" path="res://Scripts/CollectableSpawner.gd" id="16_q5dxo"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_aogve"]
 
@@ -62,7 +62,7 @@ script = ExtResource("4_aogve")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D"]
 
 [node name="Node2D" type="Node2D" parent="."]
-script = ExtResource("5_umgws")
+script = ExtResource("16_q5dxo")
 OrbitRangeMax = 0.0
 OrbitRangeMin = 0.0
 
