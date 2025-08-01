@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://p4aoyegbc6gj"]
+[gd_scene load_steps=6 format=3 uid="uid://p4aoyegbc6gj"]
 
 [ext_resource type="Script" uid="uid://bcu7j1yoaeyiv" path="res://Scripts/GameHUD.gd" id="1_31s1k"]
+[ext_resource type="Theme" uid="uid://dvwgvp8u8xo0i" path="res://Scenes/UI/Themes/UI_Theme.tres" id="1_663bt"]
 [ext_resource type="PackedScene" uid="uid://fcnfyre27jqd" path="res://Scenes/UI/Compass.tscn" id="2_compass"]
 [ext_resource type="PackedScene" uid="uid://djb632ayh6gg0" path="res://Scenes/UI/ObjectivesPanel.tscn" id="3_objectives"]
 
@@ -17,6 +18,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+theme = ExtResource("1_663bt")
 script = ExtResource("1_31s1k")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
