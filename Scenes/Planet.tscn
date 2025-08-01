@@ -8,7 +8,7 @@
 [ext_resource type="Script" uid="uid://cqvosktsb48d3" path="res://Scripts/tools/planet_atmo.gd" id="4_aogve"]
 [ext_resource type="Texture2D" uid="uid://bk7d1uwiwf5vm" path="res://Assets/kenney_planets/Planets/planet02.png" id="4_pgxtg"]
 [ext_resource type="Texture2D" uid="uid://b3dfuop6n5fr2" path="res://Assets/kenney_planets/Planets/planet03.png" id="5_ueupv"]
-[ext_resource type="Script" uid="uid://bwlffc33t13kl" path="res://Scenes/CollectableSpawner.gd" id="5_umgws"]
+[ext_resource type="Script" uid="uid://bwlffc33t13kl" path="res://Scripts/CollectableSpawner.gd" id="5_umgws"]
 [ext_resource type="Texture2D" uid="uid://ef8vjx463bnj" path="res://Assets/kenney_planets/Planets/planet04.png" id="6_vwein"]
 [ext_resource type="Texture2D" uid="uid://bcmnm1avyhgv8" path="res://Assets/kenney_planets/Planets/planet05.png" id="7_gebx1"]
 [ext_resource type="Texture2D" uid="uid://x45e1e0ufjlm" path="res://Assets/kenney_planets/Planets/planet06.png" id="8_04ox6"]

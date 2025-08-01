@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://blig0domcdoj"]
 
-[ext_resource type="Script" uid="uid://cjwv68fak8cwy" path="res://Scenes/UI/volume_control.gd" id="1_waa1x"]
+[ext_resource type="Script" uid="uid://cjwv68fak8cwy" path="res://Scripts/volume_control.gd" id="1_waa1x"]
 
 [node name="MasterVolume" type="HBoxContainer"]
 offset_right = 376.0
