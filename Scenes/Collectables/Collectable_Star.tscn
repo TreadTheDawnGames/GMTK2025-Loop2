@@ -8,8 +8,11 @@ radius = 97.0052
 
 [node name="StarCollectable" type="Area2D"]
 script = ExtResource("1_collectable")
+collectable_type = 0
+point_value = 10
 orbit_radius = 120.0
 orbit_speed = 1.5
+collection_name = "Star"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 0.8, 1)

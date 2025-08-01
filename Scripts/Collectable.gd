@@ -20,11 +20,20 @@ signal collected(collectable: Collectable)
 @export var orbit_speed: float = 1.0
 @export var collection_name: String = "Star"
 
+# Value degradation system
+@export var value_degradation_interval: float = 1.0  # Time in seconds between value reductions
+@export var value_degradation_amount: int = 1  # Amount to reduce value by each interval
+@export var minimum_value: int = 1  # Minimum value the collectable can have
+
 # Internal variables
 var orbit_center: Vector2
 var orbit_angle: float = 0.0
 var is_collected: bool = false
 var planet_reference: Area2D
+
+# Value degradation variables
+var original_point_value: int
+var degradation_timer: float = 0.0
 
 # Node references
 @onready var sprite: Sprite2D = $Sprite2D
@@ -46,24 +55,32 @@ func _ready() -> void:
 	#orbit planet gets set externally now.
 	# Find the nearest planet to orbit around
 	#find_orbit_planet()
-	
-	
+
+	# Store original point value for degradation system
+	original_point_value = point_value
+
 	# Set random starting angle
 	orbit_angle = randf() * 2 * PI
 
 func _physics_process(delta: float) -> void:
 	if is_collected or not planet_reference:
 		return
-		
+
+	# Update value degradation timer
+	degradation_timer += delta
+	if degradation_timer >= value_degradation_interval:
+		degradation_timer = 0.0
+		degrade_value()
+
 	# Update orbit position
 	orbit_angle += orbit_speed * delta
 	if orbit_angle > 2 * PI:
 		orbit_angle -= 2 * PI
-		
+
 	# Calculate new position based on orbit
 	var orbit_offset = Vector2(cos(orbit_angle), sin(orbit_angle)) * orbit_radius
 	global_position = orbit_center + orbit_offset
-	
+
 	# Rotate the sprite for visual effect
 	sprite.rotation += orbit_speed * delta * 0.5
 
@@ -172,6 +189,11 @@ func setup_collection_particles() -> void:
 	collection_particles.gravity = Vector2(0, 98)
 	collection_particles.scale_amount_min = 0.5
 	collection_particles.scale_amount_max = 1.5
+
+func degrade_value() -> void:
+	# Reduce the point value over time, but don't go below minimum
+	if point_value > minimum_value:
+		point_value = max(point_value - value_degradation_amount, minimum_value)
 
 func get_collectable_info() -> Dictionary:
 	return {

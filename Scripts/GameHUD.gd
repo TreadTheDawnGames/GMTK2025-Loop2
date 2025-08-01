@@ -11,6 +11,7 @@ class_name GameHUD
 
 # References to game objects
 var player: RigidBody2D
+var game_controller: GameController
 
 func _ready() -> void:
 	GameManager.score_changed.connect(_on_score_changed)
@@ -25,7 +26,10 @@ func _ready() -> void:
 
 func setup_references(player_ref: RigidBody2D, home_ref: Area2D, planets_ref: Array[Area2D]) -> void:
 	player = player_ref
-	
+
+	# Get reference to game controller
+	game_controller = get_node("../../") as GameController
+
 	if compass:
 		compass.setup_compass(player, home_ref, planets_ref)
 
@@ -40,7 +44,26 @@ func _on_score_changed(_new_score: int) -> void:
 	update_score_display()
 
 func update_score_display() -> void:
-	score_label.text = "Score: " + str(GameManager.get_score())
+	var score_text = "Score: " + str(GameManager.get_score())
+
+	# Add collectable counts if game controller is available
+	if game_controller:
+		var collectable_parts = []
+		var counts = game_controller.get_collectable_counts()
+		var collectable_order = ["Star", "Satellite", "Crystal", "Energy Core"]
+
+		for type_name in collectable_order:
+			# Only display collectables that actually exist in the level
+			if type_name in counts and counts[type_name]["total"] > 0:
+				var collected = counts[type_name]["collected"]
+				var total = counts[type_name]["total"]
+				collectable_parts.append("%s %d/%d" % [type_name, collected, total])
+		
+		# If there are any collectables to display, join them with commas and add to the score text
+		if not collectable_parts.is_empty():
+			score_text += "      " + "    ".join(collectable_parts)
+
+	score_label.text = score_text
 
 func update_boosts_display() -> void:
 	if player:
@@ -55,6 +78,10 @@ func update_boost_power_display() -> void:
 		boost_power_label.text = "Launch Power: %d%%" % power_int
 	else:
 		boost_power_label.visible = false
+
+func update_collectable_counts() -> void:
+	# Update the score display which now includes collectable counts
+	update_score_display()
 
 func show_collection_notification(collectable_name: String, points: int) -> void:
 	if notification_container:
