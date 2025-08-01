@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" uid="uid://dton838gyavdl" path="res://Scripts/player.gd" id="1_kyqiw"]
 [ext_resource type="Texture2D" uid="uid://b3yadhtuplhg2" path="res://Assets/kenney_space-shooter-extension/PNG/Sprites X2/Ships/spaceShips_001.png" id="2_kyqiw"]
-[ext_resource type="Script" uid="uid://dwottdnvtkjgy" path="res://Scripts/particle_effect.gd" id="3_gntrk"]
 [ext_resource type="Texture2D" uid="uid://b86vrmxx8oexw" path="res://Assets/kenney_simple-space/PNG/Retina/effect_gray.png" id="3_nn08x"]
 [ext_resource type="Script" uid="uid://vv5wxkdlfjyc" path="res://Scripts/camera_shake.gd" id="4_dewec"]
 [ext_resource type="Script" uid="uid://dgc8vmme70xjb" path="res://addons/trail_2d/trail_2d.gd" id="5_5ixxa"]
-[ext_resource type="Script" uid="uid://deew7a1ghrogw" path="res://Scripts/PlayerAudioHandler.gd" id="7_52ee3"]
+[ext_resource type="Script" path="res://Scripts/particle_effect.gd" id="5_52ee3"]
+[ext_resource type="Script" path="res://Scripts/PlayerAudioHandler.gd" id="7_52ee3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kyqiw"]
 radius = 26.0192
@@ -103,7 +103,7 @@ scale_amount_curve = SubResource("Curve_gntrk")
 color_ramp = SubResource("Gradient_gntrk")
 hue_variation_min = -1.0
 hue_variation_max = 1.0
-script = ExtResource("3_gntrk")
+script = ExtResource("5_52ee3")
 
 [node name="LaunchParticles" type="CPUParticles2D" parent="."]
 position = Vector2(-45, 0)
@@ -125,7 +125,7 @@ scale_amount_curve = SubResource("Curve_kyqiw")
 color_ramp = SubResource("Gradient_gntrk")
 hue_variation_min = -1.0
 hue_variation_max = 1.0
-script = ExtResource("3_gntrk")
+script = ExtResource("5_52ee3")
 
 [node name="BoostParticles" type="CPUParticles2D" parent="."]
 position = Vector2(-30, 0)
@@ -147,7 +147,7 @@ scale_amount_curve = SubResource("Curve_kyqiw")
 color_ramp = SubResource("Gradient_kyqiw")
 hue_variation_min = -1.0
 hue_variation_max = 1.0
-script = ExtResource("3_gntrk")
+script = ExtResource("5_52ee3")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(0.345, 0.345)

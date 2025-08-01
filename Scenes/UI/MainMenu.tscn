@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://din50gkoucxpp"]
 
-[ext_resource type="Script" path="res://Scripts/MainMenu.gd" id="1_main_menu"]
+[ext_resource type="Script" uid="uid://ew10v6pbwxv6" path="res://Scripts/MainMenu.gd" id="1_main_menu"]
 [ext_resource type="Theme" uid="uid://dvwgvp8u8xo0i" path="res://Scenes/UI/Themes/UI_Theme.tres" id="1_mjmdf"]
 [ext_resource type="Material" uid="uid://2wo2meekggrg" path="res://Scenes/Effects/StarBackground_Menu.tres" id="3_72sra"]
 

@@ -4,7 +4,7 @@
 [ext_resource type="Material" uid="uid://bxcys6gyngoe6" path="res://Scenes/Effects/StarBackground.tres" id="3_fgofq"]
 [ext_resource type="PackedScene" uid="uid://big3rsi88wl76" path="res://Scenes/Player.tscn" id="4_kldst"]
 [ext_resource type="PackedScene" uid="uid://14epulnfjodl" path="res://Scenes/Home.tscn" id="5_b2bpf"]
-[ext_resource type="PackedScene" uid="uid://dmbrkrs5phqe0" path="res://Scenes/level.tscn" id="6_7lihs"]
+[ext_resource type="PackedScene" path="res://Scenes/level.tscn" id="6_7lihs"]
 [ext_resource type="PackedScene" uid="uid://p4aoyegbc6gj" path="res://Scenes/UI/GameHUD.tscn" id="8_hud"]
 [ext_resource type="Script" uid="uid://dfjdljl46khuv" path="res://Scripts/GameController.gd" id="9_controller"]
 
