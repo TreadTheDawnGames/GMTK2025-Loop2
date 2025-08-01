@@ -16,19 +16,6 @@ grow_vertical = 2
 theme = ExtResource("1_sc1bs")
 script = ExtResource("1_settings")
 
-[node name="SettingsTitle" type="Label" parent="."]
-layout_mode = 2
-offset_left = 354.5
-offset_top = 108.5
-offset_right = 797.5
-offset_bottom = 189.5
-size_flags_horizontal = 0
-size_flags_vertical = 0
-theme_override_font_sizes/font_size = 72
-text = "SETTINGS"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="Panel" type="PanelContainer" parent="."]
 layout_mode = 1
 anchors_preset = 8
@@ -42,6 +29,15 @@ offset_right = 219.0
 offset_bottom = 191.5
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="SettingsTitle" type="Label" parent="Panel"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = " SETTINGS"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
 layout_mode = 2
