@@ -7,7 +7,7 @@ class_name Sound
 @export var EngineExplode : AudioStream
 @export var CollectableGet : AudioStream = preload("res://Assets/Audio/SFX/CollectableSFX.wav")
 @export var ShipCollide : AudioStream = preload("res://Assets/Audio/SFX/CrashSFX.wav")
-@export var ShipVwoom : AudioStream
+@export var ShipVwoom : AudioStream = preload("res://Assets/Audio/SFX/EngineSFX.wav")
 @export var OpenShop : AudioStream = preload("res://Assets/Audio/SFX/OpenShopSFX.wav")
 @export var UIClick : AudioStream
 @export var UIHover : AudioStream

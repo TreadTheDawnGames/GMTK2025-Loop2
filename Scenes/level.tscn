@@ -1,9 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://dmbrkrs5phqe0"]
+[gd_scene load_steps=6 format=3 uid="uid://dmbrkrs5phqe0"]
 
 [ext_resource type="Script" uid="uid://by6pk8ix075tr" path="res://Scripts/tools/level.gd" id="1_tumq0"]
 [ext_resource type="PackedScene" uid="uid://vuorl2ga7vdk" path="res://Scenes/planet_medium.tscn" id="2_wqkje"]
 [ext_resource type="PackedScene" uid="uid://cvy6qvmeierso" path="res://Scenes/planet_large.tscn" id="4_8c0lf"]
 [ext_resource type="PackedScene" uid="uid://d1rrwaam8e5cr" path="res://Scenes/planet_small.tscn" id="5_754fn"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_81xng"]
+radius = 13500.0
 
 [node name="Level" type="Node2D"]
 scale = Vector2(0.997, 1)
@@ -18,3 +21,6 @@ position = Vector2(196.59, 878)
 
 [node name="Planet4" parent="." instance=ExtResource("5_754fn")]
 position = Vector2(854.564, -167)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_81xng")
