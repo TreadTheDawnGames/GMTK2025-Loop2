@@ -1,6 +1,8 @@
 extends Control
 class_name TutorialNotification
 
+signal tutorial_finished
+
 # Node references
 @onready var tutorial_label: Label = $PanelContainer/VBoxContainer/TutorialLabel
 @onready var fade_timer: Timer = $FadeTimer
@@ -34,10 +36,12 @@ func show_tutorial(message: String) -> void:
 	fade_timer.start()
 
 func _on_fade_timer_timeout() -> void:
-	# This fades out and removes
+	# This fades out and removes the tutorial.
 	var fade_out_tween = create_tween()
 	fade_out_tween.tween_property(self, "modulate:a", 0.0, fade_duration)
 	fade_out_tween.tween_callback(queue_free)
+	# This emits the signal so the TutorialManager knows it can show the next one.
+	fade_out_tween.tween_callback(tutorial_finished.emit)
 
 # This creates and shows a tutorial notification
 static func create_tutorial(parent: Node, message: String, position_override: Vector2 = Vector2.ZERO) -> TutorialNotification:
@@ -56,3 +60,4 @@ static func create_tutorial(parent: Node, message: String, position_override: Ve
 	tutorial_instance.show_tutorial(message)
 	
 	return tutorial_instance
+	

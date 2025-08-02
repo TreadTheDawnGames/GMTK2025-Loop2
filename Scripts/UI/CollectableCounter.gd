@@ -18,9 +18,9 @@ func _ready():
 	# This sets up the initial appearance of the UI.
 	setup_ui_appearance()
 	
-	# This connects to the game manager's signal for score updates.
+	# This connects to the game manager's signal for collectable collection.
 	if GameManager:
-		GameManager.score_changed.connect(_on_score_changed)
+		GameManager.collectable_collected.connect(_on_collectable_collected)
 
 func setup_ui_appearance():
 	# This sets the collectable icon texture and color.
@@ -98,6 +98,6 @@ func flash_collection():
 		icon_tween.tween_property(icon_texture, "modulate", Color.WHITE, 0.1)
 		icon_tween.tween_property(icon_texture, "modulate", Color.GOLD, 0.3)
 
-func _on_score_changed(_new_score: int):
-	# This triggers the collection flash when the score changes.
+func _on_collectable_collected():
+	# This triggers the collection flash when a collectable is collected.
 	flash_collection()

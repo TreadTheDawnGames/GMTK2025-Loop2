@@ -95,7 +95,7 @@ func create_shop_icons():
 		shop_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		shop_icon.size = Vector2(12, 12)
 		shop_icon.pivot_offset = shop_icon.size / 2
-		shop_icon.modulate = Color.ORANGE
+		shop_icon.modulate = Color.CYAN
 		shop_icon.visible = planet is HomePlanet
 		planet_icons_container.add_child(shop_icon)
 		shop_icons.append(shop_icon)
@@ -113,20 +113,27 @@ func update_map():
 		if is_instance_valid(planets[i]) and is_instance_valid(planet_icons[i]):
 			var planet = planets[i]
 			var planet_icon = planet_icons[i]
-			update_icon_position(planet_icon, planet.global_position, player_pos)
+
+			# Hide regular planet icons - only show home planets and collectables
+			planet_icon.visible = false
 
 			# This updates the shop icon position.
 			if i < shop_icons.size() and is_instance_valid(shop_icons[i]):
 				update_shop_icon_position(shop_icons[i], planet, player_pos)
-			
+
 			# This is the logic for the collectable indicator.
 			if i < collectable_indicator_icons.size() and is_instance_valid(collectable_indicator_icons[i]):
 				var indicator_icon = collectable_indicator_icons[i]
 				# This checks the planet to see if it has a collectable.
 				if planet.has_uncollected_collectable():
 					indicator_icon.visible = true
-					# This places the indicator icon at the same position as the planet icon.
-					indicator_icon.position = planet_icon.position
+					# Position the indicator relative to the planet's world position
+					var planet_world_pos = planet.global_position
+					var relative_pos = planet_world_pos - player_pos
+					var map_pos = relative_pos * map_scale
+					if map_pos.length() > map_radius:
+						map_pos = map_pos.normalized() * map_radius
+					indicator_icon.position = map_pos + $CompassCenter.size / 2.0
 				else:
 					indicator_icon.visible = false
 
