@@ -16,6 +16,8 @@ const LAUNCH_COOLDOWN_TIME : float = 0.3
 # yeah that (half a second)
 var canBoost : bool = false
 
+var canSkip : bool = true
+
 @export var SoftlockTime : float = 5
 @export var DEBUG_DoLoseCondition : bool = true
 # The particles
@@ -207,13 +209,18 @@ func _physics_process(_delta: float) -> void:
 			var collider = collision.get_collider()
 			if collider.owner is BasePlanet:
 				if(!onPlanet):
-					print("onPlanet")
-					linear_velocity = Vector2.ZERO
-					angular_velocity = 0.0
-					audioHandler.PlaySoundAtGlobalPosition(Sounds.ShipCollide, global_position)
-					#set_deferred("sleeping", true)
-					Reset()
-				onPlanet = true
+					if(canSkip == true) and collider.owner is not HomePlanet:
+						print("Skip")
+						canSkip = false
+						audioHandler.PlaySoundAtGlobalPosition(Sounds.ShipCollide, global_position)
+					else:
+						print("onPlanet")
+						linear_velocity = Vector2.ZERO
+						angular_velocity = 0.0
+						audioHandler.PlaySoundAtGlobalPosition(Sounds.ShipCollide, global_position)
+						#set_deferred("sleeping", true)
+						Reset()
+						onPlanet = true
 			elif collider is Asteroid:
 				audioHandler.PlaySoundAtGlobalPosition(Sounds.ShipCollide, global_position)
 				softlockTimer = null
@@ -241,7 +248,6 @@ func _physics_process(_delta: float) -> void:
 func handle_orbit_tracking():
 	if not is_instance_valid(current_orbiting_planet):
 		return
-
 	# This calculates the angle from the planet to the player.
 	var current_angle = (global_position - current_orbiting_planet.global_position).angle()
 	# This calculates the change in angle since the last frame, handling angle wrapping.
@@ -282,9 +288,11 @@ func stop_orbiting(planet: BasePlanet):
 		current_orbiting_planet = null
 		accumulated_orbit_angle = 0.0
 		print("Stopped orbiting: ", planet.name)
+		canSkip = true
 
 # This function handles the logic for launching the player.
 func launch() -> void:
+	canSkip = true
 	get_tree().create_timer(LAUNCH_COOLDOWN_TIME).timeout.connect(func(): canBoost=true)
 	canBoost = false
 	# Use the pre-calculated and stored aim vector.
