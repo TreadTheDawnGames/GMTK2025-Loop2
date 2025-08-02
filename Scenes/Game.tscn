@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c0pbif8cyy7x7"]
+[gd_scene load_steps=10 format=3 uid="uid://c0pbif8cyy7x7"]
 
 [ext_resource type="Script" uid="uid://dx7wa3d4fr6xu" path="res://Scripts/star_background.gd" id="3_2irst"]
 [ext_resource type="Material" uid="uid://bxcys6gyngoe6" path="res://Scenes/Effects/StarBackground.tres" id="3_fgofq"]
@@ -8,6 +8,9 @@
 [ext_resource type="PackedScene" uid="uid://fcdupdwq82w5" path="res://Scenes/Asteroid.tscn" id="8_2irst"]
 [ext_resource type="PackedScene" uid="uid://p4aoyegbc6gj" path="res://Scenes/UI/GameHUD.tscn" id="8_hud"]
 [ext_resource type="Script" uid="uid://dfjdljl46khuv" path="res://Scripts/GameController.gd" id="9_controller"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2irst"]
+bounce = 0.3
 
 [node name="Game" type="Node2D"]
 script = ExtResource("9_controller")
@@ -40,6 +43,7 @@ script = null
 [node name="Player" parent="." instance=ExtResource("4_kldst")]
 position = Vector2(-1, -320)
 rotation = -1.5708
+physics_material_override = SubResource("PhysicsMaterial_2irst")
 launch_power = 5.0
 
 [node name="Planet7" parent="." instance=ExtResource("5_b2bpf")]
