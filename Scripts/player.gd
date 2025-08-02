@@ -234,11 +234,11 @@ func _physics_process(_delta: float) -> void:
 						print("Skip")
 						canSkip = false
 						BoostCount += 1
-						points += 3
-						PointNumbers.display_number(points, point_numbers_origin.global_position, 0)
+						#points += 3
+						#PointNumbers.display_number(points, point_numbers_origin.global_position, 0)
 						
-						#mult *= 2
-						#PointNumbers.display_number(mult, point_numbers_origin.global_position, 1)
+						mult *= 2
+						PointNumbers.display_number(mult, point_numbers_origin.global_position, 1)
 
 						# Add mult *2 every time a skip is performed
 						#mult *= 2
@@ -331,10 +331,11 @@ func start_orbiting(planet: BasePlanet):
 	accumulated_orbit_angle = 0.0
 	last_angle_to_planet = (global_position - planet.global_position).angle()
 	print("Started orbiting: ", planet.name)
+	mult += 1
 	PointNumbers.display_number(mult, point_numbers_origin.global_position, 1)
 
 	# Add +1 to mult every time entering a gravity field
-	mult += 1
+	
 	print("Entered gravity field! Mult: ", mult)
 
 # This function is called by a planet when the player leaves its gravity.
