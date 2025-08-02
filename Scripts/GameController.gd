@@ -63,8 +63,6 @@ func connect_collectables() -> void:
 	# This finds all nodes in the "collectables" group.
 	var collectables = get_tree().get_nodes_in_group("collectables")
 	
-	print("GameController found this many collectables: ", collectables.size())
-	
 	for collectable in collectables:
 		if collectable is Collectable:
 			# This connects this script to the 'collected' signal of each collectable.

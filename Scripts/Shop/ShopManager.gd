@@ -42,8 +42,9 @@ func initialize_shop_items():
 	var magnet_item = MagnetItem.new()
 	var boosts_item = StartingBoostsItem.new()
 	var gravity_upgrade_item = GravityUpgradeItem.new()
+	var trajectory_item = TrajectoryPredictionItem.new()
 
-	shop_items = [magnet_item, boosts_item, gravity_upgrade_item]
+	shop_items = [magnet_item, boosts_item, gravity_upgrade_item, trajectory_item]
 
 	# This creates UI for each item
 	create_shop_ui()

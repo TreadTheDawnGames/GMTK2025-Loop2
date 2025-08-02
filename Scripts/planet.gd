@@ -9,6 +9,8 @@ var bodies_in_gravity_field: Array[RigidBody2D] = []
 
 @onready var sprite: Sprite2D = $Sprite
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
+# This uses the % syntax to ensure reliable node finding.
+# This variable will be 'null' for planets that do not have this node.
 @onready var orbit_progress_indicator: Line2D = $OrbitProgressIndicator
 
 # Orbital progress tracking
@@ -30,11 +32,10 @@ var orbit_radius: float = 0.0
 var spawned_collectable: Collectable = null
 
 func _ready() -> void:
-	# Add to planets group
+	# This adds the planet to a group for tracking.
 	add_to_group("planets")
 	# This attempts to spawn a collectable when the planet is ready.
 	spawn_collectable_at_center()
-	# NOTE: We do NOT connect signals here because they are already connected in the scene file via the editor.
 
 func spawn_collectable_at_center():
 	# This checks if the planet is allowed to have a collectable.
@@ -117,6 +118,10 @@ func _on_body_exited(body: Node2D) -> void:
 
 # This starts showing orbital progress for a player
 func start_orbit_progress_display(player: Player):
+	# This ensures the orbit progress indicator exists before trying to use it.
+	if not is_instance_valid(orbit_progress_indicator):
+		return # This skips the display logic if the node is not present.
+
 	current_orbiting_player = player
 	# This calculates orbit radius based on collision shape
 	if collision_shape_2d and collision_shape_2d.shape is CircleShape2D:
@@ -131,12 +136,15 @@ func start_orbit_progress_display(player: Player):
 # This stops showing orbital progress
 func stop_orbit_progress_display():
 	current_orbiting_player = null
-	orbit_progress_indicator.visible = false
-	orbit_progress_indicator.clear_points()
+	# This ensures the orbit progress indicator exists before trying to use it.
+	if is_instance_valid(orbit_progress_indicator):
+		orbit_progress_indicator.visible = false
+		orbit_progress_indicator.clear_points()
 
 # This updates the orbital progress arc based on player's accumulated angle
-func update_orbit_progress(accumulated_angle: float, completion_percentage: float):
-	if not orbit_progress_indicator.visible:
+func update_orbit_progress(accumulated_angle: float, completion_percentage: float, start_angle: float = 0.0):
+	# This ensures the orbit progress indicator exists and is visible before drawing.
+	if not is_instance_valid(orbit_progress_indicator) or not orbit_progress_indicator.visible:
 		return
 
 	orbit_progress_indicator.clear_points()
@@ -145,19 +153,21 @@ func update_orbit_progress(accumulated_angle: float, completion_percentage: floa
 	var progress = abs(accumulated_angle) / (2 * PI * completion_percentage)
 	progress = clamp(progress, 0.0, 1.0)
 
-	# This creates arc points
+	# This creates arc points starting from the initial angle
 	var num_points = int(progress * 64) # Up to 64 points for smooth arc
 	if num_points < 2:
 		return
 
 	for i in range(num_points + 1):
-		var angle = (float(i) / num_points) * progress * 2 * PI * completion_percentage
+		# Start the arc from the initial angle where orbit began
+		var angle = start_angle + (float(i) / num_points) * progress * 2 * PI * completion_percentage
 		var point = Vector2(cos(angle), sin(angle)) * orbit_radius
 		orbit_progress_indicator.add_point(point)
 
 # This creates completion flash effect
 func flash_orbit_completion():
-	if not orbit_progress_indicator:
+	# This ensures the orbit progress indicator exists before flashing.
+	if not is_instance_valid(orbit_progress_indicator):
 		return
 
 	# This plays completion sound
