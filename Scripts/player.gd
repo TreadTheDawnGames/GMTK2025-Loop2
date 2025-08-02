@@ -76,7 +76,11 @@ var current_orbiting_planet: BasePlanet = null
 var last_angle_to_planet: float = 0.0
 var accumulated_orbit_angle: float = 0.0
 
+#Whether the game is running on a mobile OS
+var isMobile : bool = false
+
 func _ready() -> void:
+	isMobile = OS.has_feature("web_android") or OS.has_feature("web_ios")
 	linear_damp_mode = RigidBody2D.DAMP_MODE_COMBINE
 	# Store starting position as origin
 	origin_position = global_position
@@ -110,18 +114,9 @@ func check_lose_condition() -> void:
 		#Actually don't lol
 		GameManager.show_lose_screen()
 
+var mobilePosition : Vector2
 # This function is called by Godot when an input event occurs on this object.
 func _input(ev: InputEvent) -> void:
-	if ev is InputEventScreenDrag:
-		if ev.index == 0 and ev.is_pressed():
-			SingleTouchDown = true
-		elif ev.index == 0 and not ev.is_pressed():
-			SingleTouchDown = false
-		elif ev.index == 1:
-			mobileBrake = true
-		elif ev.index == 1:
-			mobileBrake = false
-			
 	if ev is InputEventMouseButton:
 		var event = ev as InputEventMouseButton
 		if event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
@@ -130,8 +125,33 @@ func _input(ev: InputEvent) -> void:
 # a timer to check if the mouse button was down/up quick
 var clickTimer : SceneTreeTimer
 
+var singleTouchProcessed : bool = false
 # This function is called every frame.
 func _process(_delta: float) -> void:
+	#for fingieIndex in TouchHelper.state.keys()
+	if(isMobile):
+		match TouchHelper.state.size():
+			0:
+				mobileBrake = false
+				SingleTouchDown = false
+				singleTouchProcessed = false
+			
+			1:
+				if(not singleTouchProcessed):
+					SingleTouchDown = true
+					singleTouchProcessed = true
+				clickTimer = get_tree().create_timer(CLICK_TIME)
+				
+				#godot forums
+				var screen_position = TouchHelper.state.values()[0]
+				var canvas_transform = get_viewport().get_canvas_transform()
+				var world_position = canvas_transform.affine_inverse() * screen_position
+				mobilePosition = world_position
+				
+			2:
+				singleTouchProcessed = false
+				mobileBrake = true
+	
 	# Don't process input if game is paused (shop is open)
 	if get_tree().paused:
 		return
@@ -144,7 +164,7 @@ func _process(_delta: float) -> void:
 		Reset()
 	
 	# This handles only the left mouse button events.
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) or SingleTouchDown:
 		# This starts aiming only when pressed and only from READY_TO_AIM.
 		if current_state == State.READY_TO_AIM:
 			current_state = State.AIMING
@@ -157,29 +177,28 @@ func _process(_delta: float) -> void:
 		update_aim_line()
 		
 		# This makes the ship face the mouse cursor while aiming.
-		var mouse_position = to_local(global_position) - to_local(get_global_mouse_position())
+		var mouse_position = to_local(global_position) - to_local(GetGlobalClickPosition())
 		look_at(to_global(mouse_position))
 	
 	# This launches on mouse release while AIMING.
-	if current_state == State.AIMING and not (Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) or SingleTouchDown):
+	if current_state == State.AIMING and not ((Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) or SingleTouchDown)):
 		# This calls the function to launch the player using the stored aim vector.
 		launch()
 		
-	if(not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)):
+	if(not (Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)or SingleTouchDown)):
 		if clickTimer and clickTimer.time_left > 0 and BoostCount > 0 and canBoost:
 			apply_boost()
 			clickTimer = null
 
 var softlockTimer : SceneTreeTimer
 var isBeingSaved : bool = false
-
+@export var softlockTime : float = 3.0
 var doNotSave = false
 # This function runs every physics frame, ideal for physics-related code.
 func _physics_process(_delta: float) -> void:
 	# Don't process physics input if game is paused (shop is open)
 	if get_tree().paused:
 		return
-
 	# Debug movement (assuming "DEBUG-*" inputs are set up) || WASD
 	#global_position += Vector2(Input.get_axis("DEBUG-LEFT", "DEBUG-RIGHT"), Input.get_axis("DEBUG-UP", "DEBUG-DOWN")) * 1000 * delta
 	#if(Input.is_action_just_pressed("DEBUG-ADD_BOOST")):
@@ -193,12 +212,13 @@ func _physics_process(_delta: float) -> void:
 			isBeingSaved = true
 			if(not softlockTimer):
 				print("Summoning saving asteroid")
-				softlockTimer = get_tree().create_timer(4.0)
+				softlockTimer = get_tree().create_timer(SoftlockTime)
 				softlockTimer.timeout.connect(func(): 
 					SoftlockFixer.FixSoftlock(global_position)
 				)
 		else:
 			doNotSave = false
+		
 
 	
 	# Check lose condition - if player is too far from origin
@@ -335,8 +355,9 @@ func apply_boost() -> void:
 
 # This function draws and updates the aiming line.
 func update_aim_line() -> void:
+
 	# This calculates the global vector from the player's current position to the current mouse position.
-	var pull_vector_from_player_to_mouse = global_position - get_global_mouse_position()
+	var pull_vector_from_player_to_mouse = global_position - GetGlobalClickPosition()
 	# This clamps the vector's length to the max_pull_distance.
 	_current_aim_pull_vector = pull_vector_from_player_to_mouse.limit_length(max_pull_distance)
 	
@@ -371,3 +392,9 @@ func Reset():
 		BoostCount = get_meta("starting_boosts")
 	else:
 		BoostCount = 1
+
+func GetGlobalClickPosition() -> Vector2:
+	if isMobile and TouchHelper.state.values()[0] :
+		return mobilePosition
+	else:
+		return get_global_mouse_position()
