@@ -46,9 +46,6 @@ rotation = -1.5708
 physics_material_override = SubResource("PhysicsMaterial_2irst")
 launch_power = 5.0
 
-[node name="Planet7" parent="." instance=ExtResource("5_b2bpf")]
-position = Vector2(-23361, -24221)
-
 [node name="Planet5" parent="." instance=ExtResource("5_b2bpf")]
 position = Vector2(346, 13708)
 
