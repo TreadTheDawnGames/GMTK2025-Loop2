@@ -2,7 +2,7 @@ extends RigidBody2D
 class_name Player
 @onready var audioHandler: PlayerAudioHandler = $AudioHandler
 # The trail effects
-@onready var trail_2d_2d_1: Line2D = $CollisionShape2D/Node2D/Trail2D
+@onready var trail_2d_1: Line2D = $CollisionShape2D/Node2D/Trail2D
 @onready var trail_2d_2: Line2D = $CollisionShape2D/Node2D2/Trail2D
 
 @onready var point_numbers_origin: Node2D = $PointNumbersOrigin
@@ -296,8 +296,8 @@ func _physics_process(_delta: float) -> void:
 						#reset loop counter
 						loopCounter = 0
 						#Reset Trail
-						trail_2d_2d_1.clear_points()
-						trail_2d_2d_2.clear_points()
+						trail_2d_1.clear_points()
+						trail_2d_2.clear_points()
 
 						# Calculate final score when crashing into planet
 						calculate_final_score()
@@ -333,7 +333,7 @@ func _physics_process(_delta: float) -> void:
 		else:
 			linear_damp = 0
 			# This resets trail effects when not braking
-			if trail_effect_tween and trail_2d_2d_1.default_color == braking_trail_color:
+			if trail_effect_tween and trail_2d_1.default_color == braking_trail_color:
 				reset_trail_effects()
 			
 	# This calls the function to handle orbit progress tracking.
@@ -490,7 +490,7 @@ func Reset():
 	# This resets trail effects
 	reset_trail_effects()
 
-	func GetGlobalClickPosition() -> Vector2:
+func GetGlobalClickPosition() -> Vector2:
 	if isMobile and TouchHelper.state.values()[0] :
 		return mobilePosition
 	else:
@@ -605,14 +605,14 @@ func simulate_trajectory(start_pos: Vector2, initial_velocity: Vector2) -> Array
 
 # This initializes trail properties
 func _ready_trail_setup():
-	if trail_2d_2d_1 and trail_2d_2:
+	if trail_2d_1 and trail_2d_2:
 		# This stores original trail properties
-		original_trail_length = trail_2d_2d_1.length if trail_2d_2d_1.has_method("length") else 10
-		original_trail_color = trail_2d_2d_1.default_color
+		original_trail_length = trail_2d_1.length if trail_2d_1.has_method("length") else 10
+		original_trail_color = trail_2d_1.default_color
 
 # This resets trails to normal appearance
 func reset_trail_effects():
-	if not trail_2d_2d_1 or not trail_2d_2:
+	if not trail_2d_1 or not trail_2d_2:
 		return
 
 	# This stops any ongoing trail animation
@@ -620,17 +620,17 @@ func reset_trail_effects():
 		trail_effect_tween.kill()
 
 	# This resets trail properties to normal
-	if trail_2d_2d_1.has_method("set_length"):
-		trail_2d_2d_1.length = original_trail_length
+	if trail_2d_1.has_method("set_length"):
+		trail_2d_1.length = original_trail_length
 	if trail_2d_2.has_method("set_length"):
 		trail_2d_2.length = original_trail_length
 
-	trail_2d_2d_1.default_color = original_trail_color
+	trail_2d_1.default_color = original_trail_color
 	trail_2d_2.default_color = original_trail_color
 
 # This applies braking trail effect
 func apply_braking_trail_effect():
-	if not trail_2d_2d_1 or not trail_2d_2:
+	if not trail_2d_1 or not trail_2d_2:
 		return
 
 	# This stops any ongoing animation
@@ -639,18 +639,18 @@ func apply_braking_trail_effect():
 
 	# This creates braking effect - shorter, red trails
 	trail_effect_tween = create_tween()
-	trail_effect_tween.parallel().tween_property(trail_2d_2d_1, "default_color", braking_trail_color, 0.2)
+	trail_effect_tween.parallel().tween_property(trail_2d_1, "default_color", braking_trail_color, 0.2)
 	trail_effect_tween.parallel().tween_property(trail_2d_2, "default_color", braking_trail_color, 0.2)
 
 	# This shortens trails if possible
-	if trail_2d_2d_1.has_method("set_length"):
-		trail_effect_tween.parallel().tween_method(func(length): trail_2d_2d_1.length = length, original_trail_length, original_trail_length * 0.5, 0.2)
+	if trail_2d_1.has_method("set_length"):
+		trail_effect_tween.parallel().tween_method(func(length): trail_2d_1.length = length, original_trail_length, original_trail_length * 0.5, 0.2)
 	if trail_2d_2.has_method("set_length"):
 		trail_effect_tween.parallel().tween_method(func(length): trail_2d_2.length = length, original_trail_length, original_trail_length * 0.5, 0.2)
 
 # This applies boost trail effect
 func apply_boost_trail_effect():
-	if not trail_2d_2d_1 or not trail_2d_2:
+	if not trail_2d_1 or not trail_2d_2:
 		return
 
 	# This stops any ongoing animation
@@ -659,21 +659,21 @@ func apply_boost_trail_effect():
 
 	# This creates boost effect - longer, bright cyan trails
 	trail_effect_tween = create_tween()
-	trail_effect_tween.parallel().tween_property(trail_2d_2d_1, "default_color", boost_trail_color, 0.1)
+	trail_effect_tween.parallel().tween_property(trail_2d_1, "default_color", boost_trail_color, 0.1)
 	trail_effect_tween.parallel().tween_property(trail_2d_2, "default_color", boost_trail_color, 0.1)
 
 	# This lengthens trails if possible
-	if trail_2d_2d_1.has_method("set_length"):
-		trail_effect_tween.parallel().tween_method(func(length): trail_2d_2d_1.length = length, original_trail_length, original_trail_length * 2.0, 0.1)
+	if trail_2d_1.has_method("set_length"):
+		trail_effect_tween.parallel().tween_method(func(length): trail_2d_1.length = length, original_trail_length, original_trail_length * 2.0, 0.1)
 	if trail_2d_2.has_method("set_length"):
 		trail_effect_tween.parallel().tween_method(func(length): trail_2d_2.length = length, original_trail_length, original_trail_length * 2.0, 0.1)
 
 	# This fades back to normal after 1 second
 	trail_effect_tween.tween_interval(1.0)
-	trail_effect_tween.parallel().tween_property(trail_2d_2d_1, "default_color", original_trail_color, 0.5)
+	trail_effect_tween.parallel().tween_property(trail_2d_1, "default_color", original_trail_color, 0.5)
 	trail_effect_tween.parallel().tween_property(trail_2d_2, "default_color", original_trail_color, 0.5)
 
-	if trail_2d_2d_1.has_method("set_length"):
-		trail_effect_tween.parallel().tween_method(func(length): trail_2d_2d_1.length = length, original_trail_length * 2.0, original_trail_length, 0.5)
+	if trail_2d_1.has_method("set_length"):
+		trail_effect_tween.parallel().tween_method(func(length): trail_2d_1.length = length, original_trail_length * 2.0, original_trail_length, 0.5)
 	if trail_2d_2.has_method("set_length"):
 		trail_effect_tween.parallel().tween_method(func(length): trail_2d_2.length = length, original_trail_length * 2.0, original_trail_length, 0.5)

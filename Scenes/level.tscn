@@ -34,33 +34,33 @@ collectable_spawn_chance = 0.665
 
 [node name="@Area2D@36070" parent="." instance=ExtResource("5_wqkje")]
 position = Vector2(6784.35, -5506)
-gravity_strength = 2800.0
 collectable_spawn_chance = 0.665
+gravity_strength = 2800.0
 
 [node name="@Area2D@36442" parent="." instance=ExtResource("5_wqkje")]
 position = Vector2(3565.49, 3874.62)
-gravity_strength = 2800.0
 collectable_spawn_chance = 0.665
+gravity_strength = 2800.0
 
 [node name="@Area2D@36443" parent="." instance=ExtResource("5_wqkje")]
 position = Vector2(-6579, -3918.25)
-gravity_strength = 2800.0
 collectable_spawn_chance = 0.665
+gravity_strength = 2800.0
 
 [node name="@Area2D@36677" parent="." instance=ExtResource("5_wqkje")]
 position = Vector2(13712.1, 660)
-gravity_strength = 2800.0
 collectable_spawn_chance = 0.665
+gravity_strength = 2800.0
 
 [node name="@Area2D@23229" parent="." instance=ExtResource("5_wqkje")]
 position = Vector2(10588.8, 8030)
-gravity_strength = 2800.0
 collectable_spawn_chance = 0.665
+gravity_strength = 2800.0
 
 [node name="@Area2D@23230" parent="." instance=ExtResource("5_wqkje")]
 position = Vector2(2329.84, -6636.69)
-gravity_strength = 2800.0
 collectable_spawn_chance = 0.665
+gravity_strength = 2800.0
 
 [node name="_Area2D_23230" parent="." instance=ExtResource("5_wqkje")]
 position = Vector2(6757.3, -9673.6)
@@ -112,45 +112,36 @@ collectable_spawn_chance = 0.665
 
 [node name="@Area2D@28717" parent="." instance=ExtResource("5_wqkje")]
 position = Vector2(5919.38, -11699.8)
-gravity_strength = 1500.0
 collectable_spawn_chance = 0.665
+gravity_strength = 1500.0
 
 [node name="@Area2D@28718" parent="." instance=ExtResource("5_8c0lf")]
 position = Vector2(-9693, -6418.74)
-
-gravity_strength = 2400.0
 collectable_spawn_chance = 0.5
 
 [node name="@Area2D@29462" parent="." instance=ExtResource("5_8c0lf")]
 position = Vector2(9545, -7306.08)
-gravity_strength = 2400.0
 collectable_spawn_chance = 0.5
 
 [node name="@Area2D@29834" parent="." instance=ExtResource("5_8c0lf")]
 position = Vector2(5456.72, 9018.44)
-gravity_strength = 2400.0
 collectable_spawn_chance = 0.5
 
 [node name="@Area2D@30206" parent="." instance=ExtResource("5_8c0lf")]
 position = Vector2(8521.79, -1794.89)
-gravity_strength = 2400.0
 collectable_spawn_chance = 0.5
 
 [node name="@Area2D@54369" parent="." instance=ExtResource("5_8c0lf")]
 position = Vector2(2152, -11409.8)
-gravity_strength = 2400.0
 collectable_spawn_chance = 0.5
 
 [node name="@Area2D@54745" parent="." instance=ExtResource("5_8c0lf")]
 position = Vector2(-8243, 9.97009)
-gravity_strength = 2400.0
 collectable_spawn_chance = 0.5
 
 [node name="@Area2D@55351" parent="." instance=ExtResource("5_8c0lf")]
 position = Vector2(-940, 4324.03)
-gravity_strength = 2400.0
 collectable_spawn_chance = 0.5
-
 
 [node name="@Area2D@83806" parent="." instance=ExtResource("2_wqkje")]
 position = Vector2(-2274.79, -1351.39)
@@ -162,8 +153,8 @@ collectable_spawn_chance = 0.665
 
 [node name="@Area2D@84404" parent="." instance=ExtResource("2_wqkje")]
 position = Vector2(3585.38, -3894.73)
-gravity_strength = 1000.0
 collectable_spawn_chance = 0.665
+gravity_strength = 1000.0
 
 [node name="@Area2D@84405" parent="." instance=ExtResource("2_wqkje")]
 position = Vector2(-2348.02, -8793.64)
