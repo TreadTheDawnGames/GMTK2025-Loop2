@@ -429,6 +429,10 @@ func start_orbiting(planet: BasePlanet):
 	last_angle_to_planet = (global_position - planet.global_position).angle()
 	orbit_start_angle = last_angle_to_planet  # Remember where we started
 	print("Started orbiting: ", planet.name)
+	
+	mult += 1
+	PointNumbers.display_number(mult, point_numbers_origin.global_position, 1)
+
 
 	# This shows first orbit tutorial
 	var hud = get_tree().root.get_node("Game/HUDLayer/GameHUD")
@@ -439,12 +443,18 @@ func start_orbiting(planet: BasePlanet):
 
 # This function is called by a planet when the player leaves its gravity.
 func stop_orbiting(planet: BasePlanet):
+	
 	# This ensures we only stop orbiting the correct planet.
 	if planet == current_orbiting_planet:
+		
+		#gives points if you escape a black hole
+		
+		
 		current_orbiting_planet = null
 		accumulated_orbit_angle = 0.0
 		print("Stopped orbiting: ", planet.name)
 		canSkip = true
+
 
 # This function handles the logic for launching the player.
 func launch() -> void:
