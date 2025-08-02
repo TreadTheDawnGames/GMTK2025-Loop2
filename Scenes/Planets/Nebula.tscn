@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://c6nutn3avrvok"]
+
+[ext_resource type="Texture2D" uid="uid://8gm05crdf41f" path="res://Assets/Nebula.png" id="1_lmaob"]
+[ext_resource type="Script" uid="uid://byol7mxtjxc6y" path="res://Scripts/Planets/Nebula.gd" id="1_rn2es"]
+
+[node name="Nebula" type="Node2D"]
+script = ExtResource("1_rn2es")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_lmaob")

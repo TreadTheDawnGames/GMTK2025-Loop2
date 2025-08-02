@@ -3,10 +3,13 @@ class_name GameController
 
 @onready var player: Player = $Player
 @onready var hud: GameHUD = $HUDLayer/GameHUD
+# Placeholder nodes where generated objects will be placed
+@onready var generated_planets_node = $GeneratedPlanets
+@onready var generated_nebulas_node = $GeneratedNebulas
 
 # This holds a reference to the home planet.
 var home_planet: HomePlanet
-# This holds references to all planets in the scene.
+# This holds references to all planets in the scene (static and generated).
 var all_planets: Array[Area2D] = []
 
 # This tracks collectables for the win condition.
@@ -18,7 +21,32 @@ var collectable_counts_by_type: Dictionary = {}
 var victory_stats: Dictionary = {}
 var victory_sequence_active: bool = false
 
+# --- Procedural Generation Settings ---
+@export_category("Level Generation")
+# The scenes for planets that can be randomly spawned.
+@export var planet_scenes: Array[PackedScene] = [
+	preload("res://Scenes/planet_small.tscn"),
+	preload("res://Scenes/planet_medium.tscn"),
+	preload("res://Scenes/planet_large.tscn")
+]
+# The scene for the nebula visual effect.
+@export var nebula_scene: PackedScene = preload("res://Scenes/Planets/Nebula.tscn")
+# The maximum radius from the center (0,0) where planets can spawn.
+@export var spawn_radius: float = 10000.0
+# The number of nebulas to spawn.
+@export var num_nebulas: int = 4
+# The number of planets to spawn.
+@export var num_planets: int = 15
+# The minimum empty space to leave between the edges of two planets' gravity fields.
+@export var min_distance_between_planets: float = 500.0
+# How many planets should be clustered inside nebulas.
+@export var planets_in_nebulas: int = 8
+
+
 func _ready() -> void:
+	# This generates the random level layout.
+	_generate_level()
+	
 	# This searches the entire scene to find all planet nodes.
 	find_planets_recursive(self)
 
@@ -39,7 +67,80 @@ func _ready() -> void:
 
 	# This connects to the signals of all collectables in the scene after a short delay.
 	call_deferred("connect_collectables")
+
+# This is the main function for procedural generation.
+func _generate_level():
+	# This holds a list of planets that have been successfully placed.
+	var spawned_planets = []
+	# This holds a list of nebulas that have been placed.
+	var spawned_nebulas = []
+
+	# --- Step 1: Spawn Nebulas (visuals for clusters) ---
+	if is_instance_valid(nebula_scene) and is_instance_valid(generated_nebulas_node):
+		for i in range(num_nebulas):
+			var nebula = nebula_scene.instantiate()
+			# Place the nebula at a random position within 75% of the spawn radius
+			var nebula_pos = Vector2.from_angle(randf() * TAU) * randf_range(0, spawn_radius * 0.75)
+			nebula.global_position = nebula_pos
+			generated_nebulas_node.add_child(nebula)
+			spawned_nebulas.append(nebula)
 	
+	# --- Step 2: Spawn Planets ---
+	if planet_scenes.is_empty() or not is_instance_valid(generated_planets_node):
+		push_warning("Planet scenes array is empty or GeneratedPlanets node is missing. Cannot generate level.")
+		return
+		
+	# This loop tries to place the specified number of planets.
+	var planets_to_spawn = num_planets
+	for i in range(planets_to_spawn):
+		# We'll try to place each planet a few times before giving up.
+		var placement_success = false
+		for attempt in range(20): # Try up to 20 times to find a valid spot.
+			# Pick a random planet scene from the list.
+			var planet_scene = planet_scenes.pick_random()
+			var planet_instance = planet_scene.instantiate()
+			
+			# Determine the spawn center point. Some planets will cluster in nebulas.
+			var spawn_center = Vector2.ZERO
+			if i < planets_in_nebulas and not spawned_nebulas.is_empty():
+				# Pick a random nebula to spawn inside of.
+				var target_nebula = spawned_nebulas.pick_random()
+				spawn_center = target_nebula.global_position
+			
+			# Get a random position for the planet.
+			# It's a random direction (angle) multiplied by a random distance.
+			var pos = spawn_center + Vector2.from_angle(randf() * TAU) * randf_range(0, spawn_radius / 2 if spawn_center != Vector2.ZERO else spawn_radius)
+
+			# Get the radius of the new planet's gravity field.
+			var new_planet_radius = planet_instance.get_node("CollisionShape2D").shape.radius
+			
+			# Check for collisions with already spawned planets.
+			var overlaps = false
+			for existing_planet in spawned_planets:
+				var existing_radius = existing_planet.get_node("CollisionShape2D").shape.radius
+				var distance = pos.distance_to(existing_planet.global_position)
+				
+				# If the distance is less than the sum of both radii plus a minimum gap, it overlaps.
+				if distance < new_planet_radius + existing_radius + min_distance_between_planets:
+					overlaps = true
+					break # No need to check other planets, we already found a collision.
+			
+			# If the position is valid (no overlaps), place the planet.
+			if not overlaps:
+				planet_instance.global_position = pos
+				generated_planets_node.add_child(planet_instance)
+				spawned_planets.append(planet_instance)
+				placement_success = true
+				break # Move on to the next planet.
+			else:
+				# If the position was invalid, free the unused instance to save memory.
+				planet_instance.queue_free()
+		
+		# If we couldn't place a planet after many tries, print a warning.
+		if not placement_success:
+			print("Could not place planet %d after 20 attempts. The level might be too crowded." % i)
+
+
 func find_planets_recursive(node: Node):
 	# This searches recursively through all child nodes to find planets.
 	for child in node.get_children():
