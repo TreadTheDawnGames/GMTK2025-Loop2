@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cslq0v6w7x80a"]
+[gd_scene load_steps=16 format=3 uid="uid://cslq0v6w7x80a"]
 
 [ext_resource type="Script" uid="uid://dton838gyavdl" path="res://Scripts/player.gd" id="1_player"]
 [ext_resource type="Texture2D" uid="uid://b3yadhtuplhg2" path="res://Assets/kenney_space-shooter-extension/AAA-ChosenKenneySpace/spaceShips_001.png" id="2_ship_tex"]
@@ -7,6 +7,9 @@
 [ext_resource type="Script" uid="uid://dgc8vmme70xjb" path="res://addons/trail_2d/trail_2d.gd" id="4_52ee3"]
 [ext_resource type="Script" uid="uid://vv5wxkdlfjyc" path="res://Scripts/camera_shake.gd" id="4_camera"]
 [ext_resource type="Script" uid="uid://deew7a1ghrogw" path="res://Scripts/PlayerAudioHandler.gd" id="5_audio"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_52ee3"]
+bounce = 43.4
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kyqiw"]
 radius = 40.0
@@ -37,6 +40,7 @@ point_count = 2
 collision_layer = 3
 collision_mask = 3
 input_pickable = true
+physics_material_override = SubResource("PhysicsMaterial_52ee3")
 gravity_scale = 0.0
 freeze_mode = 1
 script = ExtResource("1_player")
