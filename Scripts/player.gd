@@ -88,7 +88,7 @@ var has_lost: bool = false
 
 # Trajectory prediction settings
 @export var trajectory_prediction_enabled: bool = false # DEBUG Turn on True if wanting to test
-@export var trajectory_steps: int = 50
+@export var trajectory_steps: int = 50 #original 50
 @export var trajectory_step_time: float = 0.1
 # This creates a reference to the Sprite2D node.
 @onready var sprite: Sprite2D = $Sprite2D

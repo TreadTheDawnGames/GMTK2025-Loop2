@@ -4,7 +4,7 @@
 [ext_resource type="Theme" uid="uid://dvwgvp8u8xo0i" path="res://Scenes/UI/Themes/UI_Theme.tres" id="1_mjmdf"]
 [ext_resource type="Material" uid="uid://2wo2meekggrg" path="res://Scenes/Effects/StarBackground_Menu.tres" id="3_72sra"]
 [ext_resource type="Texture2D" uid="uid://bk7d1uwiwf5vm" path="res://Assets/kenney_planets/Planets/planet02.png" id="4_jex3y"]
-[ext_resource type="Script" uid="uid://c1e04v6b22eli" path="res://Scenes/UI/button_sounds.gd" id="4_t6w0q"]
+[ext_resource type="Script" uid="uid://c1e04v6b22eli" path="res://Scripts/Shop/button_sounds.gd" id="4_t6w0q"]
 
 [sub_resource type="Animation" id="Animation_jex3y"]
 length = 0.001
@@ -132,9 +132,9 @@ script = ExtResource("4_t6w0q")
 [node name="HowToPlayPanel" type="PanelContainer" parent="."]
 layout_mode = 2
 offset_left = 50.0
-offset_top = 538.0
+offset_top = 530.0
 offset_right = 1100.0
-offset_bottom = 647.0
+offset_bottom = 639.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="HowToPlayPanel"]
 layout_mode = 2
@@ -146,11 +146,13 @@ text = "HOW TO PLAY:"
 
 [node name="ControlsLabel" type="Label" parent="HowToPlayPanel/VBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 16
 text = "• CONTROLS: Click/Tap and Drag to launch. Right-Click/Space to Brake."
 
 [node name="GoalLabel" type="Label" parent="HowToPlayPanel/VBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 16
 text = "• GOAL: Orbit planets to collect all the data and earn boosts."
 
