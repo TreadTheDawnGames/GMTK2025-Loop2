@@ -1,8 +1,8 @@
 extends Control
 
-@onready var home_icon: TextureRect = %HomeIcon
+#@onready var home_icon: TextureRect = %HomeIcon
 @onready var planet_icons_container: Control = %PlanetIcons
-@onready var player_dot: TextureRect = %PlayerDot
+#@onready var player_dot: TextureRect = %PlayerDot
 
 var player: RigidBody2D
 var home_planet: Area2D
@@ -21,7 +21,7 @@ var collectable_indicator_icons: Array[TextureRect] = []
 
 # Textures for the different map icons
 var planet_texture: Texture2D = preload("res://Assets/kenney_simple-space/meteor_small.png")
-var shop_texture: Texture2D = preload("res://Assets/kenney_space-shooter-extension/AAA-ChosenKenneySpace/spaceStation_020.png")#preload("res://Assets/kenney_space-shooter-extension/PNG/Sprites/Station/spaceStation_021.png")
+var shop_texture: Texture2D = preload("res://Assets/kenney_simple-space/AAA-ChosenKenney/station_A.png")#preload("res://Assets/kenney_space-shooter-extension/AAA-ChosenKenneySpace/spaceStation_020.png")#preload("res://Assets/kenney_space-shooter-extension/PNG/Sprites/Station/spaceStation_021.png")
 var player_texture: Texture2D = preload("res://Assets/Circle.png")
 # This texture will be used for the new indicator icon.
 var collectable_indicator_texture: Texture2D = preload("res://Assets/kenney_simple-space/AAA-ChosenKenney/star_small.png")
@@ -29,7 +29,7 @@ var collectable_indicator_texture: Texture2D = preload("res://Assets/kenney_simp
 func _ready():
 	var background: TextureRect = $Background
 	background.modulate = Color(0.1, 0.1, 0.2, 0.8)
-	setup_player_dot()
+	#setup_player_dot()
 
 func setup_compass(player_ref: RigidBody2D, home_ref: Area2D, planets_ref: Array[Area2D]):
 	player = player_ref
@@ -38,17 +38,17 @@ func setup_compass(player_ref: RigidBody2D, home_ref: Area2D, planets_ref: Array
 	create_planet_and_indicator_icons()
 	create_shop_icons()
 
-func setup_player_dot():
-	if not player_dot:
-		return
-	player_dot.texture = player_texture
-	player_dot.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
-	player_dot.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	player_dot.size = Vector2(8, 8)
-	player_dot.pivot_offset = player_dot.size / 2
-	player_dot.modulate = Color.WHITE
-	var compass_center = $CompassCenter
-	player_dot.position = compass_center.size / 2.0 - player_dot.size / 2.0
+#func setup_player_dot():
+	#if not player_dot:
+		#return
+	#player_dot.texture = player_texture
+	#player_dot.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
+	#player_dot.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	#player_dot.size = Vector2(8, 8)
+	#player_dot.pivot_offset = player_dot.size / 2
+	#player_dot.modulate = Color.WHITE
+	#var compass_center = $CompassCenter
+	#player_dot.position = compass_center.size / 2.0 - player_dot.size / 2.0
 
 func create_planet_and_indicator_icons():
 	# This clears existing icons.
@@ -107,13 +107,13 @@ func _process(_delta):
 
 func update_map():
 	var player_pos = player.global_position
-	update_icon_position(home_icon, home_planet.global_position, player_pos)
+	#update_icon_position(home_icon, home_planet.global_position, player_pos)
 
 	for i in range(min(planets.size(), planet_icons.size())):
 		if is_instance_valid(planets[i]) and is_instance_valid(planet_icons[i]):
 			var planet = planets[i]
 			var planet_icon = planet_icons[i]
-
+			
 			# Hide regular planet icons - only show home planets and collectables
 			planet_icon.visible = false
 
@@ -124,6 +124,7 @@ func update_map():
 			# This is the logic for the collectable indicator.
 			if i < collectable_indicator_icons.size() and is_instance_valid(collectable_indicator_icons[i]):
 				var indicator_icon = collectable_indicator_icons[i]
+				indicator_icon.scale = Vector2(3,3)
 				# This checks the planet to see if it has a collectable.
 				if planet.has_uncollected_collectable():
 					indicator_icon.visible = true
@@ -155,18 +156,18 @@ func update_icon_position(icon: TextureRect, world_pos: Vector2, player_pos: Vec
 	var distance = player_pos.distance_to(world_pos)
 	var scale_factor = clamp(2000.0 / distance, 0.6, 1.5)
 	icon.scale = Vector2(scale_factor, scale_factor)
-
-	if icon == home_icon:
-		icon.modulate = Color.CYAN
-		var pulse = sin(Time.get_ticks_msec() / 200.0) * 0.1 + 1.0
-		icon.scale *= pulse
-	else:
-		if distance < planet_range_threshold:
-			icon.modulate = Color.GREEN
-		elif distance < planet_range_threshold * 2:
-			icon.modulate = Color.YELLOW
-		else:
-			icon.modulate = Color.RED
+#
+	#if icon == home_icon:
+		#icon.modulate = Color.CYAN
+		#var pulse = sin(Time.get_ticks_msec() / 200.0) * 0.1 + 1.0
+		#icon.scale *= pulse
+	#else:
+	#if distance < planet_range_threshold:
+		#icon.modulate = Color.GREEN
+	#elif distance < planet_range_threshold * 2:
+		#icon.modulate = Color.YELLOW
+	#else:
+		#icon.modulate = Color.RED
 
 func update_shop_icon_position(shop_icon: TextureRect, planet: Area2D, player_pos: Vector2):
 	if not planet is HomePlanet:
@@ -182,6 +183,6 @@ func update_shop_icon_position(shop_icon: TextureRect, planet: Area2D, player_po
 	shop_icon.position = map_pos + $CompassCenter.size / 2.0 + offset
 	var distance = player_pos.distance_to(planet_world_pos)
 	if distance < planet_range_threshold:
-		shop_icon.modulate = Color.ORANGE
+		shop_icon.modulate = Color.CYAN #Color(0.8, 0.4, 0.0, 0.7)
 	else:
-		shop_icon.modulate = Color(0.8, 0.4, 0.0, 0.7)
+		shop_icon.modulate = Color.DARK_CYAN
