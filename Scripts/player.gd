@@ -251,6 +251,8 @@ func handle_orbit_tracking():
 		BoostCount += 1
 		audioHandler.PlaySoundAtGlobalPosition(Sounds.CollectableGet, global_position)
 		current_orbiting_planet.collect_item(self)
+		GameManager.add_score(50)
+		
 		# This resets the angle so we don't collect again immediately.
 		accumulated_orbit_angle = 0.0
 
