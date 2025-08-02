@@ -66,10 +66,14 @@ gravity_strength = 10000.0
 
 [node name="CollisionShape2D" parent="." index="0"]
 shape = SubResource("CircleShape2D_hmd8h")
+disabled = true
 
 [node name="Sprite2D" parent="CollisionShape2D" index="0"]
 material = SubResource("ShaderMaterial_k6nrp")
 scale = Vector2(1.74329, 1.74329)
+
+[node name="Sprite2D2" parent="CollisionShape2D/Sprite2D" index="0"]
+visible = true
 
 [node name="Sprite" parent="." index="1"]
 scale = Vector2(0.433019, 0.433018)

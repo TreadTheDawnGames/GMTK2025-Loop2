@@ -12,6 +12,10 @@ var bodies_in_gravity_field: Array[RigidBody2D] = []
 # This uses the % syntax to ensure reliable node finding.
 # This variable will be 'null' for planets that do not have this node.
 @onready var orbit_progress_indicator: Line2D
+@onready var AtmoSprite: Sprite2D
+@onready var AtmoSpriteOrbited: Sprite2D
+
+
 
 # Orbital progress tracking
 var current_orbiting_player: Player = null
@@ -34,6 +38,8 @@ var spawned_collectable: Collectable = null
 
 func _ready() -> void:
 	orbit_progress_indicator = get_node_or_null("OrbitProgressIndicator")
+	AtmoSprite = get_node_or_null("CollisionShape2D/Sprite2D")
+	AtmoSpriteOrbited = get_node_or_null("CollisionShape2D/Sprite2D/Sprite2D2")
 	# This adds the planet to a group for tracking.
 	add_to_group("planets")
 	# This attempts to spawn a collectable when the planet is ready.
@@ -180,3 +186,7 @@ func flash_orbit_completion():
 	flash_tween.tween_property(orbit_progress_indicator, "default_color", Color.WHITE, 0.1)
 	flash_tween.tween_property(orbit_progress_indicator, "default_color", Color(0, 1, 1, 0.8), 0.2)
 	flash_tween.tween_callback(stop_orbit_progress_display)
+
+func SetShowOrbited(orbited : bool):
+	AtmoSpriteOrbited.visible = orbited
+	return

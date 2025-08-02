@@ -1,3 +1,4 @@
+//CC0 https://godotshaders.com/shader/improved-fireball/
 shader_type canvas_item;
 
 uniform float brightness = 1.5;

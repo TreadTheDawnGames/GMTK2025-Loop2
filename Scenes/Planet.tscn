@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://d0j2xqgs8463m"]
+[gd_scene load_steps=21 format=3 uid="uid://d0j2xqgs8463m"]
 
 [ext_resource type="Script" uid="uid://bkgfm5k1vexr" path="res://Scripts/planet.gd" id="1_ej51v"]
 [ext_resource type="Shader" uid="uid://dttlrh3oqhy7w" path="res://Assets/Shaders/Atmosphere.gdshader" id="2_ej51v"]
@@ -39,6 +39,59 @@ shader_parameter/step4 = 0.264
 shader_parameter/step5 = 0.265
 shader_parameter/step6 = 0.266
 
+[sub_resource type="Shader" id="Shader_m5833"]
+code = "//CC0 https://godotshaders.com/shader/radial-smooth-radial-gradient/
+shader_type canvas_item;
+render_mode blend_add; //Comment this if you want another render mode.
+uniform vec2 center = vec2(0.5);
+uniform float size: hint_range(0.0,5.0) = 1.0; //change size to well, change the size of your gradient
+uniform vec2 squishness = vec2(1.0); // how squashed your gradient is
+
+//choose colors in the inspector
+uniform vec4 color1 : source_color;
+uniform vec4 color2 : source_color;
+uniform vec4 color3 : source_color;
+uniform vec4 color4 : source_color;
+uniform vec4 color5 : source_color;
+uniform vec4 color6 : source_color;
+
+//choose how far the colors are from each other in the inspector
+uniform float step1 : hint_range(0.0,1.0) = 0.159;
+uniform float step2 : hint_range(0.0,1.0) = 0.182;
+uniform float step3 : hint_range(0.0,1.0) = 0.233;
+uniform float step4 : hint_range(0.0,1.0) = 0.264;
+uniform float step5 : hint_range(0.0,1.0) = 0.265;
+uniform float step6 : hint_range(0.0,1.0) = 0.266;
+
+void fragment() {
+	
+	float dist = distance(center*squishness,UV*squishness);
+	vec4 color = mix(color1, color2, smoothstep((step1 )*size, step2*size, dist));
+	color = mix(color, color3, smoothstep(step2*size, step3*size, dist));
+	color = mix(color, color4, smoothstep(step3*size, step4*size, dist));
+	color = mix(color, color5, smoothstep(step4*size, step5*size, dist));
+	color = mix(color, color6, smoothstep(step5*size, step6*size, dist));
+	COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_q5dxo"]
+shader = SubResource("Shader_m5833")
+shader_parameter/center = Vector2(0.5, 0.5)
+shader_parameter/size = 1.0
+shader_parameter/squishness = Vector2(1, 1)
+shader_parameter/color1 = Color(0, 1, 0, 0)
+shader_parameter/color2 = Color(0, 0, 0, 1)
+shader_parameter/color3 = Color(0, 1, 0, 0.0313726)
+shader_parameter/color4 = Color(0, 0, 0, 1)
+shader_parameter/color5 = Color(1, 1, 1, 0.243137)
+shader_parameter/color6 = Color(0, 0, 0, 1)
+shader_parameter/step1 = 0.159
+shader_parameter/step2 = 0.182
+shader_parameter/step3 = 0.233
+shader_parameter/step4 = 0.264
+shader_parameter/step5 = 0.265
+shader_parameter/step6 = 0.266
+
 [node name="Planet2" type="Area2D"]
 script = ExtResource("1_ej51v")
 collectable_spawn_chance = 0.2
@@ -52,6 +105,11 @@ material = SubResource("ShaderMaterial_umgws")
 scale = Vector2(0.557429, 0.557429)
 texture = ExtResource("2_r86au")
 script = ExtResource("4_aogve")
+
+[node name="Sprite2D2" type="Sprite2D" parent="CollisionShape2D/Sprite2D"]
+visible = false
+material = SubResource("ShaderMaterial_q5dxo")
+texture = ExtResource("2_r86au")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 script = ExtResource("12_q5dxo")

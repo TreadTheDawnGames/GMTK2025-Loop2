@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://d1rrwaam8e5cr"]
+[gd_scene load_steps=9 format=3 uid="uid://d1rrwaam8e5cr"]
 
 [ext_resource type="PackedScene" uid="uid://d0j2xqgs8463m" path="res://Scenes/Planet.tscn" id="1_rk3qr"]
 [ext_resource type="Texture2D" uid="uid://b6y5iuktvcwd4" path="res://Assets/kenney_planets/Planets/planet00.png" id="2_hmd8h"]
@@ -40,7 +40,7 @@ void fragment() {
 	COLOR = color;
 }"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_k6nrp"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ect5g"]
 shader = SubResource("Shader_s0sgh")
 shader_parameter/center = Vector2(0.5, 0.5)
 shader_parameter/size = 1.0
@@ -58,22 +58,78 @@ shader_parameter/step4 = 0.264
 shader_parameter/step5 = 0.265
 shader_parameter/step6 = 0.266
 
+[sub_resource type="Shader" id="Shader_lno35"]
+code = "//CC0 https://godotshaders.com/shader/radial-smooth-radial-gradient/
+shader_type canvas_item;
+render_mode blend_add; //Comment this if you want another render mode.
+uniform vec2 center = vec2(0.5);
+uniform float size: hint_range(0.0,5.0) = 1.0; //change size to well, change the size of your gradient
+uniform vec2 squishness = vec2(1.0); // how squashed your gradient is
+
+//choose colors in the inspector
+uniform vec4 color1 : source_color;
+uniform vec4 color2 : source_color;
+uniform vec4 color3 : source_color;
+uniform vec4 color4 : source_color;
+uniform vec4 color5 : source_color;
+uniform vec4 color6 : source_color;
+
+//choose how far the colors are from each other in the inspector
+uniform float step1 : hint_range(0.0,1.0) = 0.159;
+uniform float step2 : hint_range(0.0,1.0) = 0.182;
+uniform float step3 : hint_range(0.0,1.0) = 0.233;
+uniform float step4 : hint_range(0.0,1.0) = 0.264;
+uniform float step5 : hint_range(0.0,1.0) = 0.265;
+uniform float step6 : hint_range(0.0,1.0) = 0.266;
+
+void fragment() {
+	
+	float dist = distance(center*squishness,UV*squishness);
+	vec4 color = mix(color1, color2, smoothstep((step1 )*size, step2*size, dist));
+	color = mix(color, color3, smoothstep(step2*size, step3*size, dist));
+	color = mix(color, color4, smoothstep(step3*size, step4*size, dist));
+	color = mix(color, color5, smoothstep(step4*size, step5*size, dist));
+	color = mix(color, color6, smoothstep(step5*size, step6*size, dist));
+	COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_351o8"]
+shader = SubResource("Shader_lno35")
+shader_parameter/center = Vector2(0.5, 0.5)
+shader_parameter/size = 1.0
+shader_parameter/squishness = Vector2(1, 1)
+shader_parameter/color1 = Color(1, 0, 0, 0)
+shader_parameter/color2 = Color(0, 0, 0, 1)
+shader_parameter/color3 = Color(1, 0, 0, 0.0313726)
+shader_parameter/color4 = Color(0, 0, 0, 1)
+shader_parameter/color5 = Color(1, 1, 1, 1)
+shader_parameter/color6 = Color(0, 0, 0, 1)
+shader_parameter/step1 = 0.159
+shader_parameter/step2 = 0.182
+shader_parameter/step3 = 0.233
+shader_parameter/step4 = 0.264
+shader_parameter/step5 = 0.265
+shader_parameter/step6 = 0.266
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_njf8c"]
 radius = 162.0
 
 [node name="Planet" instance=ExtResource("1_rk3qr")]
 gravity_strength = 1200.0
 
-[node name="Sprite" parent="." index="0"]
-scale = Vector2(0.433019, 0.433018)
-texture = ExtResource("2_hmd8h")
-
-[node name="CollisionShape2D" parent="." index="1"]
+[node name="CollisionShape2D" parent="." index="0"]
 shape = SubResource("CircleShape2D_hmd8h")
 
 [node name="Sprite2D" parent="CollisionShape2D" index="0"]
-material = SubResource("ShaderMaterial_k6nrp")
+material = SubResource("ShaderMaterial_ect5g")
 scale = Vector2(2.71673, 2.71673)
+
+[node name="Sprite2D2" parent="CollisionShape2D/Sprite2D" index="0"]
+material = SubResource("ShaderMaterial_351o8")
+
+[node name="Sprite" parent="." index="1"]
+scale = Vector2(0.433019, 0.433018)
+texture = ExtResource("2_hmd8h")
 
 [node name="CollisionShape2D" parent="AnimatableBody2D" index="0"]
 scale = Vector2(1.36, 1.36)
