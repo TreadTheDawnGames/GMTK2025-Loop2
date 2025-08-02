@@ -339,6 +339,8 @@ func update_aim_line() -> void:
 func Reset():
 	Sprite.frame_coords.y = 0
 	current_state = State.READY_TO_AIM
+	
+	accumulated_orbit_angle = 0.0
 
 	# Reset boost count to starting amount (including shop upgrades)
 	if has_meta("starting_boosts"):
