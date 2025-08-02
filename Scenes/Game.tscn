@@ -1,11 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://c0pbif8cyy7x7"]
+[gd_scene load_steps=9 format=3 uid="uid://c0pbif8cyy7x7"]
 
 [ext_resource type="Script" uid="uid://dx7wa3d4fr6xu" path="res://Scripts/star_background.gd" id="3_2irst"]
 [ext_resource type="Material" uid="uid://bxcys6gyngoe6" path="res://Scenes/Effects/StarBackground.tres" id="3_fgofq"]
 [ext_resource type="PackedScene" uid="uid://cslq0v6w7x80a" path="res://Scenes/Player.tscn" id="4_kldst"]
 [ext_resource type="PackedScene" uid="uid://14epulnfjodl" path="res://Scenes/Home.tscn" id="5_b2bpf"]
-[ext_resource type="PackedScene" uid="uid://dmbrkrs5phqe0" path="res://Scenes/level.tscn" id="6_7lihs"]
-[ext_resource type="PackedScene" uid="uid://fcdupdwq82w5" path="res://Scenes/Asteroid.tscn" id="8_2irst"]
+[ext_resource type="PackedScene" uid="uid://w1hy76n1gkow" path="res://Scenes/planet_Sol.tscn" id="8_2irst"]
 [ext_resource type="PackedScene" uid="uid://p4aoyegbc6gj" path="res://Scenes/UI/GameHUD.tscn" id="8_hud"]
 [ext_resource type="Script" uid="uid://dfjdljl46khuv" path="res://Scripts/GameController.gd" id="9_controller"]
 
@@ -38,14 +37,19 @@ script = ExtResource("3_2irst")
 [node name="HUDLayer2" type="CanvasLayer" parent="."]
 layer = 10
 
-[node name="Level" parent="." instance=ExtResource("6_7lihs")]
-script = null
-
 [node name="Player" parent="." instance=ExtResource("4_kldst")]
 position = Vector2(-1, -320)
 rotation = -1.5708
 physics_material_override = SubResource("PhysicsMaterial_2irst")
+orbit_completion_percentage = 0.95
+SoftlockTime = 3.0
+DEBUG_DoLoseCondition = true
 launch_power = 5.0
+boost_strength = 1000.0
+trajectory_prediction_enabled = false
+trajectory_steps = 50
+trajectory_step_time = 0.1
+softlockTime = 3.0
 
 [node name="Planet5" parent="." instance=ExtResource("5_b2bpf")]
 position = Vector2(346, 13708)
@@ -62,9 +66,9 @@ position = Vector2(13705, 2806)
 [node name="Planet6" parent="." instance=ExtResource("5_b2bpf")]
 position = Vector2(-2012, -12206)
 
-[node name="RigidBody2D2" parent="." instance=ExtResource("8_2irst")]
-position = Vector2(6041, 4121)
-
 [node name="GeneratedNebulas" type="Node2D" parent="."]
 
 [node name="GeneratedPlanets" type="Node2D" parent="."]
+
+[node name="Planet7" parent="." instance=ExtResource("8_2irst")]
+position = Vector2(6261, -1426)

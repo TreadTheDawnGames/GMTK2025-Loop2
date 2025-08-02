@@ -45,7 +45,7 @@ var victory_sequence_active: bool = false
 
 func _ready() -> void:
 	# This generates the random level layout.
-	_generate_level()
+	#_generate_level()
 	
 	# This searches the entire scene to find all planet nodes.
 	find_planets_recursive(self)

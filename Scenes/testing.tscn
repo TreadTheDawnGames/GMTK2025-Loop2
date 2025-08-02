@@ -8,7 +8,15 @@
 [node name="Node2D" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource("1_sx6hp")]
-launch_power = 10.0
+orbit_completion_percentage = 0.95
+SoftlockTime = 3.0
+DEBUG_DoLoseCondition = true
+launch_power = 5.0
+boost_strength = 1000.0
+trajectory_prediction_enabled = false
+trajectory_steps = 50
+trajectory_step_time = 0.1
+softlockTime = 3.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = -1

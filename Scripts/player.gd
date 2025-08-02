@@ -39,6 +39,7 @@ var canSkip : bool = true
 # The particles
 @onready var _LaunchParticles: ParticleEffect = $LaunchParticles
 @onready var _BoostParticles: ParticleEffect = $BoostParticles
+@onready var ExplosionParticles: ParticleEffect = $ExplosionParticles
 # The sprite
 @onready var Sprite: Sprite2D = $Sprite2D
 # The Camera
@@ -735,3 +736,10 @@ func apply_boost_trail_effect():
 		trail_effect_tween.parallel().tween_method(func(length): trail_2d_1.length = length, original_trail_length * 2.0, original_trail_length, 0.5)
 	if trail_2d_2.has_method("set_length"):
 		trail_effect_tween.parallel().tween_method(func(length): trail_2d_2.length = length, original_trail_length * 2.0, original_trail_length, 0.5)
+
+func Explode(_position : Vector2):
+	Sprite.hide()
+	set_deferred("freeze", true)
+	ExplosionParticles.Emit()
+	ExplosionParticles.finished.connect(GameManager.show_lose_screen)
+	pass
