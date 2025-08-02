@@ -5,6 +5,8 @@ class_name Player
 @onready var trail_2d_1: Line2D = $CollisionShape2D/Node2D/Trail2D
 @onready var trail_2d_2: Line2D = $CollisionShape2D/Node2D2/Trail2D
 
+@onready var point_numbers_origin: Node2D = $PointNumbersOrigin
+
 
 # This defines a set of named states for the player's state machine.
 enum State {
@@ -42,6 +44,10 @@ const CLICK_TIME : float = 0.2
 
 # Flag to double launch if on planet
 var onPlanet : bool = false
+
+#the variable that counts your loop streak
+var loopCounter : int = 0
+var highScore : int = 0
 
 static var Position : Vector2
 # This variable will hold the player's current state from the enum above.
@@ -213,7 +219,8 @@ func _physics_process(_delta: float) -> void:
 						BoostCount += 1
 						audioHandler.PlaySoundAtGlobalPosition(Sounds.ShipCollide, global_position)
 					else:
-						
+						#reset loop counter
+						loopCounter = 0
 						#Reset Trail
 						trail_2d_1.clear_points()
 						trail_2d_2.clear_points()
@@ -264,6 +271,16 @@ func handle_orbit_tracking():
 	# This checks if we completed a full circle (2 * PI radians).
 	if abs(accumulated_orbit_angle) >= 2 * PI:
 		print("Loop complete!")
+		
+		#Display the number of loops you've done
+		loopCounter += 1
+		if loopCounter >= highScore:
+			highScore += 1
+		
+		if loopCounter >= highScore:
+			PointNumbers.display_number(loopCounter, point_numbers_origin.global_position, true)
+		else:
+			PointNumbers.display_number(loopCounter, point_numbers_origin.global_position, false)
 		# This tells the planet to give its collectable.
 		BoostCount += 1
 		audioHandler.PlaySoundAtGlobalPosition(Sounds.CollectableGet, global_position)

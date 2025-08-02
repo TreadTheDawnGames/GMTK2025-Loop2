@@ -94,24 +94,31 @@ gravity_strength = 1500.0
 
 [node name="@Area2D@28718" parent="." instance=ExtResource("5_8c0lf")]
 position = Vector2(-9693, -6418.74)
+gravity_strength = 2200.0
 
 [node name="@Area2D@29462" parent="." instance=ExtResource("5_8c0lf")]
 position = Vector2(9545, -7306.08)
+gravity_strength = 2200.0
 
 [node name="@Area2D@29834" parent="." instance=ExtResource("5_8c0lf")]
 position = Vector2(5456.72, 9018.44)
+gravity_strength = 2200.0
 
 [node name="@Area2D@30206" parent="." instance=ExtResource("5_8c0lf")]
 position = Vector2(8521.79, -1794.89)
+gravity_strength = 2200.0
 
 [node name="@Area2D@54369" parent="." instance=ExtResource("5_8c0lf")]
 position = Vector2(2152, -11409.8)
+gravity_strength = 2200.0
 
 [node name="@Area2D@54745" parent="." instance=ExtResource("5_8c0lf")]
 position = Vector2(-8243, 9.97009)
+gravity_strength = 2200.0
 
 [node name="@Area2D@55351" parent="." instance=ExtResource("5_8c0lf")]
 position = Vector2(-940, 4324.03)
+gravity_strength = 2200.0
 
 [node name="@Area2D@83806" parent="." instance=ExtResource("2_wqkje")]
 position = Vector2(-2274.79, -1351.39)

@@ -44,9 +44,8 @@ physics_material_override = SubResource("PhysicsMaterial_52ee3")
 gravity_scale = 0.0
 freeze_mode = 1
 script = ExtResource("1_player")
-launch_power = 300.0
+launch_power = 400.0
 max_pull_distance = 300.0
-boost_strength = 1500.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 rotation = -1.5708
@@ -170,3 +169,5 @@ script = ExtResource("4_camera")
 script = ExtResource("5_audio")
 
 [node name="AudioListener2D" type="AudioListener2D" parent="."]
+
+[node name="PointNumbersOrigin" type="Node2D" parent="."]
