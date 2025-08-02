@@ -4,9 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://b6y5iuktvcwd4" path="res://Assets/kenney_planets/Planets/planet00.png" id="2_7paaq"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hmd8h"]
-radius = 1008.86
+radius = 647.374
 
-[sub_resource type="Shader" id="Shader_vus2y"]
+[sub_resource type="Shader" id="Shader_s0sgh"]
 code = "//CC0 https://godotshaders.com/shader/radial-smooth-radial-gradient/
 shader_type canvas_item;
 render_mode blend_add; //Comment this if you want another render mode.
@@ -41,7 +41,7 @@ void fragment() {
 }"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_k6nrp"]
-shader = SubResource("Shader_vus2y")
+shader = SubResource("Shader_s0sgh")
 shader_parameter/center = Vector2(0.5, 0.5)
 shader_parameter/size = 1.0
 shader_parameter/squishness = Vector2(1, 1)
@@ -59,22 +59,21 @@ shader_parameter/step5 = 0.265
 shader_parameter/step6 = 0.266
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_njf8c"]
-radius = 75.0
+radius = 162.0
 
-[node name="Planet5" instance=ExtResource("1_bgxmv")]
-gravity_strength = 2000.0
+[node name="Planet" instance=ExtResource("1_bgxmv")]
+gravity_strength = 10000.0
 
 [node name="Sprite" parent="." index="0"]
-scale = Vector2(0.2, 0.2)
+scale = Vector2(0.433019, 0.433018)
 texture = ExtResource("2_7paaq")
 
 [node name="CollisionShape2D" parent="." index="1"]
-scale = Vector2(3, 3)
 shape = SubResource("CircleShape2D_hmd8h")
 
 [node name="Sprite2D" parent="CollisionShape2D" index="0"]
 material = SubResource("ShaderMaterial_k6nrp")
-scale = Vector2(2.71673, 2.71673)
+scale = Vector2(1.74329, 1.74329)
 
 [node name="CollisionShape2D" parent="AnimatableBody2D" index="0"]
 scale = Vector2(1.36, 1.36)

@@ -1,0 +1,2 @@
+extends BasePlanet
+class_name Planet_Sol

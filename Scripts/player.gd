@@ -95,8 +95,8 @@ var _current_aim_pull_vector: Vector2 = Vector2.ZERO
 #stores whether a single touch is happening
 var SingleTouchDown : bool = false
 
-# Lose condition variables
-static var max_distance_from_origin: float = 15000.0  # Maximum distance before losing
+# Lose condition variables	
+static var max_distance_from_origin: float = 30000.0  # Maximum distance before losing
 static var origin_position: Vector2 = Vector2.ZERO
 var has_lost: bool = false
 
@@ -308,14 +308,15 @@ func _physics_process(_delta: float) -> void:
 						# This resets the player's state to be ready for another launch.
 						Reset()
 						onPlanet = true
-
 						# This shows a tutorial about landing to regain boosts.
 						var hud = get_tree().root.get_node("Game/HUDLayer/GameHUD")
 						if hud:
 							TutorialManager.show_land_for_boost_tutorial(hud)
 					else:
 						# This is the logic for colliding with a regular planet.
-						if(canSkip == true) and collider.owner is not Asteroid:
+						if collider.owner is Planet_Sol:
+							GameManager.show_lose_screen()
+						else: if(canSkip == true) and collider.owner is not Asteroid:
 							print("Skip")
 							canSkip = false
 							BoostCount += 1
