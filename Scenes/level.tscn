@@ -21,146 +21,192 @@ disabled = true
 [node name="Planet" parent="." instance=ExtResource("5_wqkje")]
 position = Vector2(-4707, -1697.91)
 scale = Vector2(0.997349, 1.00307)
+collectable_spawn_chance = 0.5
 
 [node name="Planet3" parent="." instance=ExtResource("2_wqkje")]
 position = Vector2(-6499.5, 4366)
+collectable_spawn_chance = 0.5
 
 [node name="Planet4" parent="." instance=ExtResource("5_wqkje")]
 position = Vector2(1947, -1904.29)
+collectable_spawn_chance = 0.5
 
 [node name="@Area2D@36070" parent="." instance=ExtResource("5_wqkje")]
 position = Vector2(6784.35, -5506)
 gravity_strength = 2800.0
+collectable_spawn_chance = 0.5
 
 [node name="@Area2D@36442" parent="." instance=ExtResource("5_wqkje")]
 position = Vector2(3565.49, 3874.62)
 gravity_strength = 2800.0
+collectable_spawn_chance = 0.5
 
 [node name="@Area2D@36443" parent="." instance=ExtResource("5_wqkje")]
 position = Vector2(-6579, -3918.25)
 gravity_strength = 2800.0
+collectable_spawn_chance = 0.5
 
 [node name="@Area2D@36677" parent="." instance=ExtResource("5_wqkje")]
 position = Vector2(13712.1, 660)
 gravity_strength = 2800.0
+collectable_spawn_chance = 0.5
 
 [node name="@Area2D@23229" parent="." instance=ExtResource("5_wqkje")]
 position = Vector2(10588.8, 8030)
 gravity_strength = 2800.0
+collectable_spawn_chance = 0.5
 
 [node name="@Area2D@23230" parent="." instance=ExtResource("5_wqkje")]
 position = Vector2(2329.84, -6636.69)
 gravity_strength = 2800.0
+collectable_spawn_chance = 0.5
 
 [node name="_Area2D_23230" parent="." instance=ExtResource("5_wqkje")]
 position = Vector2(6757.3, -9673.6)
+collectable_spawn_chance = 0.5
 
 [node name="@Area2D@24965" parent="." instance=ExtResource("2_wqkje")]
 position = Vector2(-4786, 9115.65)
+collectable_spawn_chance = 0.5
 
 [node name="@Area2D@30180" parent="." instance=ExtResource("2_wqkje")]
 position = Vector2(-12521, -2109.36)
+collectable_spawn_chance = 0.5
 
 [node name="@Area2D@32041" parent="." instance=ExtResource("2_wqkje")]
 position = Vector2(-573.281, 11048.3)
+collectable_spawn_chance = 0.5
 
 [node name="@Area2D@41955" parent="." instance=ExtResource("5_wqkje")]
 position = Vector2(216, -7696.99)
+collectable_spawn_chance = 0.5
 
 [node name="@Area2D@47770" parent="." instance=ExtResource("5_wqkje")]
 position = Vector2(-9641, 6929.08)
+collectable_spawn_chance = 0.5
 
 [node name="@Area2D@50374" parent="." instance=ExtResource("5_wqkje")]
 position = Vector2(-6312, -8336.99)
+collectable_spawn_chance = 0.5
 
 [node name="@Area2D@59443" parent="." instance=ExtResource("2_wqkje")]
 position = Vector2(-764, -4586.24)
+collectable_spawn_chance = 0.5
 
 [node name="@Area2D@59815" parent="." instance=ExtResource("2_wqkje")]
 position = Vector2(8448.29, 3648.97)
+collectable_spawn_chance = 0.5
 
 [node name="@Area2D@60187" parent="." instance=ExtResource("2_wqkje")]
 position = Vector2(-4732, -11312.1)
+collectable_spawn_chance = 0.5
 
 [node name="@Area2D@60559" parent="." instance=ExtResource("2_wqkje")]
 position = Vector2(-12408, 3547.36)
+collectable_spawn_chance = 0.5
 
 [node name="@Area2D@99910" parent="." instance=ExtResource("5_wqkje")]
 position = Vector2(-148353, -43567.7)
+collectable_spawn_chance = 0.5
 
 [node name="@Area2D@28717" parent="." instance=ExtResource("5_wqkje")]
 position = Vector2(5919.38, -11699.8)
 gravity_strength = 1500.0
+collectable_spawn_chance = 0.5
 
 [node name="@Area2D@28718" parent="." instance=ExtResource("5_8c0lf")]
 position = Vector2(-9693, -6418.74)
+collectable_spawn_chance = 0.5
 
 [node name="@Area2D@29462" parent="." instance=ExtResource("5_8c0lf")]
 position = Vector2(9545, -7306.08)
+collectable_spawn_chance = 0.5
 
 [node name="@Area2D@29834" parent="." instance=ExtResource("5_8c0lf")]
 position = Vector2(5456.72, 9018.44)
+collectable_spawn_chance = 0.5
 
 [node name="@Area2D@30206" parent="." instance=ExtResource("5_8c0lf")]
 position = Vector2(8521.79, -1794.89)
+collectable_spawn_chance = 0.5
 
 [node name="@Area2D@54369" parent="." instance=ExtResource("5_8c0lf")]
 position = Vector2(2152, -11409.8)
+collectable_spawn_chance = 0.5
 
 [node name="@Area2D@54745" parent="." instance=ExtResource("5_8c0lf")]
 position = Vector2(-8243, 9.97009)
+collectable_spawn_chance = 0.5
 
 [node name="@Area2D@55351" parent="." instance=ExtResource("5_8c0lf")]
 position = Vector2(-940, 4324.03)
+collectable_spawn_chance = 0.5
 
 [node name="@Area2D@83806" parent="." instance=ExtResource("2_wqkje")]
 position = Vector2(-2274.79, -1351.39)
+collectable_spawn_chance = 0.5
 
 [node name="@Area2D@84178" parent="." instance=ExtResource("2_wqkje")]
 position = Vector2(4450.64, 1218.17)
+collectable_spawn_chance = 0.5
 
 [node name="@Area2D@84404" parent="." instance=ExtResource("2_wqkje")]
 position = Vector2(3585.38, -3894.73)
 gravity_strength = 1000.0
+collectable_spawn_chance = 0.5
 
 [node name="@Area2D@84405" parent="." instance=ExtResource("2_wqkje")]
 position = Vector2(-2348.02, -8793.64)
+collectable_spawn_chance = 0.5
 
 [node name="@Area2D@84406" parent="." instance=ExtResource("2_wqkje")]
 position = Vector2(-4586.08, -6196.64)
+collectable_spawn_chance = 0.5
 
 [node name="@Area2D@84407" parent="." instance=ExtResource("2_wqkje")]
 position = Vector2(734.605, 8224.08)
+collectable_spawn_chance = 0.5
 
 [node name="@Area2D@85014" parent="." instance=ExtResource("5_wqkje")]
 position = Vector2(-4311.6, 6344.95)
+collectable_spawn_chance = 0.5
 
 [node name="@Area2D@85386" parent="." instance=ExtResource("5_wqkje")]
 position = Vector2(-4607.19, 1636.57)
+collectable_spawn_chance = 0.5
 
 [node name="@Area2D@85387" parent="." instance=ExtResource("5_wqkje")]
 position = Vector2(1945.46, 1600.79)
+collectable_spawn_chance = 0.5
 
 [node name="@Area2D@85759" parent="." instance=ExtResource("5_wqkje")]
 position = Vector2(-2057.8, 8428.41)
+collectable_spawn_chance = 0.5
 
 [node name="@Area2D@86131" parent="." instance=ExtResource("5_wqkje")]
 position = Vector2(2192.4, 11540.6)
+collectable_spawn_chance = 0.5
 
 [node name="@Area2D@86503" parent="." instance=ExtResource("5_wqkje")]
 position = Vector2(-4554.51, 12390.6)
+collectable_spawn_chance = 0.5
 
 [node name="@Area2D@86729" parent="." instance=ExtResource("5_wqkje")]
 position = Vector2(-8872.07, 9682.57)
+collectable_spawn_chance = 0.5
 
 [node name="@Area2D@86730" parent="." instance=ExtResource("5_wqkje")]
 position = Vector2(-13136.6, 602.997)
+collectable_spawn_chance = 0.5
 
 [node name="@Area2D@87102" parent="." instance=ExtResource("5_wqkje")]
 position = Vector2(-1813.29, -13746.7)
+collectable_spawn_chance = 0.5
 
 [node name="@Area2D@87474" parent="." instance=ExtResource("5_wqkje")]
 position = Vector2(12298.3, 4105.41)
+collectable_spawn_chance = 0.5
 
 [node name="@Area2D@88759" parent="." instance=ExtResource("5_wqkje")]
 position = Vector2(37325.3, -7047.9)
+collectable_spawn_chance = 0.5
