@@ -22,9 +22,9 @@ MusicManager="*res://Assets/Audio/Music/MusicManager.tscn"
 Sounds="*res://Assets/Audio/SFX/sounds.gd"
 SlideTransition="*res://Scenes/SlideTransition.tscn"
 SoftlockFixer="*res://Scripts/tools/globals/softlock_fixer.gd"
+TutorialManager="*res://Scripts/TutorialManager.gd"
 PointNumbers="*res://Scripts/PointNumbers.gd"
 TouchHelper="*res://Scripts/UI/touch_helper.gd"
-TutorialManager="*res://Scripts/TutorialManager.gd"
 
 [display]
 

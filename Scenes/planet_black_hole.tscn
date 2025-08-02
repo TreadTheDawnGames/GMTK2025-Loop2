@@ -26,7 +26,7 @@ shader_parameter/step5 = 0.265
 shader_parameter/step6 = 0.266
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_s31nm"]
-radius = 25.1794
+radius = 2680.39
 
 [node name="Planet3" instance=ExtResource("1_hjqa0")]
 scale = Vector2(0.5, 0.5)

@@ -308,14 +308,15 @@ func _physics_process(_delta: float) -> void:
 						# This resets the player's state to be ready for another launch.
 						Reset()
 						onPlanet = true
-
 						# This shows a tutorial about landing to regain boosts.
 						var hud = get_tree().root.get_node("Game/HUDLayer/GameHUD")
 						if hud:
 							TutorialManager.show_land_for_boost_tutorial(hud)
 					else:
 						# This is the logic for colliding with a regular planet.
-						if(canSkip == true) and collider.owner is not Asteroid:
+						if collider.owner is Planet_Sol:
+							GameManager.show_lose_screen()
+						else: if(canSkip == true) and collider.owner is not Asteroid:
 							print("Skip")
 							canSkip = false
 							BoostCount += 1
