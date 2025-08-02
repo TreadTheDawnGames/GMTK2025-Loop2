@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://b3yadhtuplhg2" path="res://Assets/kenney_space-shooter-extension/AAA-ChosenKenneySpace/spaceShips_001.png" id="2_ship_texture"]
 [ext_resource type="PackedScene" uid="uid://blig0domcdoj" path="res://Scenes/UI/volume_control.tscn" id="2_y60rh"]
 [ext_resource type="Script" uid="uid://deew7a1ghrogw" path="res://Scripts/PlayerAudioHandler.gd" id="5_hfiyb"]
-[ext_resource type="Script" uid="uid://c1e04v6b22eli" path="res://Scenes/UI/button_sounds.gd" id="5_kg15k"]
+[ext_resource type="Script" uid="uid://c1e04v6b22eli" path="res://Scripts/Shop/button_sounds.gd" id="5_kg15k"]
 
 [node name="Settings" type="Control"]
 layout_mode = 3
