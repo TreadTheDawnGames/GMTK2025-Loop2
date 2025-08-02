@@ -13,6 +13,10 @@ var total_collectables: int = 0
 var collected_collectables: int = 0
 var collectable_counts_by_type: Dictionary = {}
 
+# Victory sequence tracking
+var victory_stats: Dictionary = {}
+var victory_sequence_active: bool = false
+
 func _ready() -> void:
 	# This searches the entire scene to find all planet nodes.
 	find_planets_recursive(self)
@@ -96,8 +100,76 @@ func _on_collectable_collected(collectable: Collectable) -> void:
 func check_win_condition() -> void:
 	if collected_collectables >= total_collectables and total_collectables > 0:
 		print("All collectables collected! You win!")
-		GameManager.show_win_screen()
+		start_victory_sequence()
 
 func get_collectable_counts() -> Dictionary:
 	# Return the accurately tracked counts
 	return collectable_counts_by_type
+
+# This starts the victory sequence with slow motion and enhanced effects
+func start_victory_sequence():
+	if victory_sequence_active:
+		return
+
+	victory_sequence_active = true
+
+	# This plays victory sound
+	MusicManager.play_audio_omni("UpUIBeep")
+
+	# This calculates victory stats
+	calculate_victory_stats()
+
+	# This starts slow motion effect
+	Engine.time_scale = 0.2
+
+	# This enhances player trail effects for victory lap
+	if player:
+		player.apply_boost_trail_effect()
+
+	# This shows victory message
+	if hud:
+		TutorialManager.show_tutorial_once("victory_lap", "🎉 VICTORY LAP! All collectables found!", hud)
+
+	# This waits for victory lap duration then shows win screen
+	await get_tree().create_timer(3.0).timeout
+
+	# This restores normal time
+	Engine.time_scale = 1.0
+
+	# This shows enhanced win screen with stats
+	GameManager.show_win_screen_with_stats(victory_stats)
+
+# This calculates final victory statistics
+func calculate_victory_stats():
+	victory_stats = {
+		"final_score": GameManager.get_score(),
+		"total_collectables": total_collectables,
+		"planets_visited": count_visited_planets(),
+		"boosts_used": calculate_boosts_used(),
+		"completion_time": get_completion_time()
+	}
+
+# This counts how many planets the player visited
+func count_visited_planets() -> int:
+	var visited_count = 0
+	for planet in all_planets:
+		if planet.has_method("was_visited") and planet.was_visited():
+			visited_count += 1
+	return visited_count
+
+# This calculates total boosts used during the game
+func calculate_boosts_used() -> int:
+	# This estimates based on starting boosts vs current boosts
+	var starting_boosts = 1
+	if player and player.has_meta("starting_boosts"):
+		starting_boosts = player.get_meta("starting_boosts")
+
+	var current_boosts = player.BoostCount if player else 0
+	var boosts_earned = collected_collectables # Each collectable gives 1 boost
+
+	return starting_boosts + boosts_earned - current_boosts
+
+# This gets approximate completion time (placeholder for now)
+func get_completion_time() -> String:
+	# This could be enhanced with actual time tracking
+	return "Unknown"
