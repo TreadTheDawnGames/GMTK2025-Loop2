@@ -2,7 +2,7 @@ extends Control
 @onready var color_slider: HSlider = $Panel/VBoxContainer/ColorSliderContainer/ColorSlider
 @onready var example_ship: Sprite2D = $Panel/VBoxContainer/ExampleShipContainer/ExampleShip
 @onready var player_audio_handler: PlayerAudioHandler = $PlayerAudioHandler
-
+const CREDITS = preload("res://Scenes/UI/credits.tscn")
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# Set initial slider value from GameManager
@@ -31,3 +31,8 @@ func update_example_ship_color() -> void:
 func _on_back_button_pressed() -> void:
 	# Return to main menu
 	queue_free()
+
+
+func _on_credits_button_pressed() -> void:
+	get_tree().root.add_child(CREDITS.instantiate())
+	pass # Replace with function body.
