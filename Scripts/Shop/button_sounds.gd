@@ -50,4 +50,3 @@ func on_button_unhovered()->void:
 		hover_tween.kill()
 	hover_tween = create_tween()
 	hover_tween.tween_property(self, "scale", original_scale, 0.1)
-

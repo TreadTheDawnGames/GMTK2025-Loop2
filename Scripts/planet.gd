@@ -11,7 +11,7 @@ var bodies_in_gravity_field: Array[RigidBody2D] = []
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
 # This uses the % syntax to ensure reliable node finding.
 # This variable will be 'null' for planets that do not have this node.
-@onready var orbit_progress_indicator: Line2D = $OrbitProgressIndicator
+@onready var orbit_progress_indicator: Line2D
 
 # Orbital progress tracking
 var current_orbiting_player: Player = null
@@ -32,6 +32,7 @@ var orbit_radius: float = 0.0
 var spawned_collectable: Collectable = null
 
 func _ready() -> void:
+	orbit_progress_indicator = get_node_or_null("OrbitProgressIndicator")
 	# This adds the planet to a group for tracking.
 	add_to_group("planets")
 	# This attempts to spawn a collectable when the planet is ready.

@@ -70,7 +70,6 @@ texture = ExtResource("2_hmd8h")
 
 [node name="CollisionShape2D" parent="." index="1"]
 shape = SubResource("CircleShape2D_hmd8h")
-disabled = true
 
 [node name="Sprite2D" parent="CollisionShape2D" index="0"]
 material = SubResource("ShaderMaterial_k6nrp")

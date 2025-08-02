@@ -244,7 +244,6 @@ static var isBeingSaved : bool = false
 static var doNotSave : bool = false
 # This function runs every physics frame, ideal for physics-related code.
 func _physics_process(_delta: float) -> void:
-	print("IsBeingSaved:" + str(isBeingSaved))
 	# Don't process physics input if game is paused (shop is open)
 	if get_tree().paused:
 		return
@@ -255,9 +254,6 @@ func _physics_process(_delta: float) -> void:
 		#linear_velocity = Vector2.ZERO
 	#if(Input.is_action_just_pressed("DEBUG-ADD_BOOST")):
 		#BoostCount +=1
-	
-	#print("Velocity" + str(linear_velocity.length()))
-	#print("IsBeingSaved: " + str(isBeingSaved))
 	
 	if(not onPlanet and BoostCount == 0 and current_state == State.LAUNCHED and (linear_velocity.length() < 5) and not isBeingSaved):
 		if(not doNotSave):
