@@ -116,7 +116,6 @@ collectable_spawn_chance = 0.5
 
 [node name="@Area2D@28718" parent="." instance=ExtResource("5_8c0lf")]
 position = Vector2(-9693, -6418.74)
-
 collectable_spawn_chance = 0.5
 
 [node name="@Area2D@29462" parent="." instance=ExtResource("5_8c0lf")]
@@ -142,7 +141,6 @@ collectable_spawn_chance = 0.5
 [node name="@Area2D@55351" parent="." instance=ExtResource("5_8c0lf")]
 position = Vector2(-940, 4324.03)
 collectable_spawn_chance = 0.5
-
 
 [node name="@Area2D@83806" parent="." instance=ExtResource("2_wqkje")]
 position = Vector2(-2274.79, -1351.39)

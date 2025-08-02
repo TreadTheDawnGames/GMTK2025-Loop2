@@ -54,7 +54,7 @@ var highScore : int = 0
 
 # Scoring system variables
 var points : int = 0  # points earned from orbiting planets
-var mult : int = 1    # multiplier from entering gravity fields and skips
+var mult : int = 0    # multiplier from entering gravity fields and skips
 var final_score : int = 0  # calculated when crashing
 
 static var Position : Vector2
@@ -116,7 +116,7 @@ func calculate_final_score() -> void:
 	final_score = points * mult
 	print("Final Score Calculation: ", points, " points * ", mult, " mult = ", final_score)
 	GameManager.add_score(final_score)
-	PointNumbers.display_number(final_score, point_numbers_origin.global_position, true)
+	PointNumbers.display_number(final_score, point_numbers_origin.global_position, 2, -2)
 
 # Check if player has gone too far and should lose
 func check_lose_condition() -> void:
@@ -234,8 +234,8 @@ func _physics_process(_delta: float) -> void:
 						print("Skip")
 						canSkip = false
 						BoostCount += 1
-						PointNumbers.display_number(mult, point_numbers_origin.global_position, true)
 						mult += mult
+						PointNumbers.display_number(mult, point_numbers_origin.global_position, 1)
 
 						# Add mult *2 every time a skip is performed
 						mult *= 2
@@ -311,7 +311,7 @@ func handle_orbit_tracking():
 		points += 1
 		print("Orbited planet! Points: ", points)
 
-		PointNumbers.display_number(loopCounter, point_numbers_origin.global_position, false)
+		PointNumbers.display_number(loopCounter, point_numbers_origin.global_position, 0)
 		# This tells the planet to give its collectable.
 		BoostCount += 1
 		audioHandler.PlaySoundAtGlobalPosition(Sounds.CollectableGet, global_position)
@@ -332,7 +332,7 @@ func start_orbiting(planet: BasePlanet):
 	accumulated_orbit_angle = 0.0
 	last_angle_to_planet = (global_position - planet.global_position).angle()
 	print("Started orbiting: ", planet.name)
-	PointNumbers.display_number(mult, point_numbers_origin.global_position, true)
+	PointNumbers.display_number(mult, point_numbers_origin.global_position, 1)
 
 	# Add +1 to mult every time entering a gravity field
 	mult += 1
