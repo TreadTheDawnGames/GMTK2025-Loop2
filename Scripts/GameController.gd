@@ -1,3 +1,4 @@
+# res://Scripts/GameController.gd
 extends Node2D
 class_name GameController
 
@@ -6,6 +7,8 @@ class_name GameController
 # Placeholder nodes where generated objects will be placed
 @onready var generated_planets_node = $GeneratedPlanets
 @onready var generated_nebulas_node = $GeneratedNebulas
+# Reference to the static, starting HomeBase.
+@onready var home_base_node: HomePlanet = $HomeBase
 
 # This holds a reference to the home planet.
 var home_planet: HomePlanet
@@ -32,121 +35,145 @@ var victory_sequence_active: bool = false
 # The scene for the nebula visual effect.
 @export var nebula_scene: PackedScene = preload("res://Scenes/Planets/Nebula.tscn")
 # The maximum radius from the center (0,0) where planets can spawn.
-@export var spawn_radius: float = 10000.0
+@export var spawn_radius: float = 30000.0
 # The number of nebulas to spawn.
-@export var num_nebulas: int = 4
+@export var num_nebulas: int = 8
 # The number of planets to spawn.
-@export var num_planets: int = 15
+@export var num_planets: int = 500
 # The minimum empty space to leave between the edges of two planets' gravity fields.
-@export var min_distance_between_planets: float = 500.0
+@export var min_distance_between_planets: float = 2200.0
 # How many planets should be clustered inside nebulas.
 @export var planets_in_nebulas: int = 8
 
+# --- NEW: Special Celestial Body Settings ---
+@export_category("Special Objects")
+# The scene for the Sun, which will be placed at the center.
+@export var sun_scene: PackedScene = preload("res://Scenes/planet_Sol.tscn")
+# The scene for the Black Hole, placed randomly.
+@export var black_hole_scene: PackedScene = preload("res://Scenes/planet_black_hole.tscn")
+# The scene for additional Home Stations/Shops.
+@export var station_scene: PackedScene = preload("res://Scenes/Home.tscn")
+# The number of ADDITIONAL random stations to spawn (on top of the main HomeBase).
+@export var num_additional_stations: int = 2
+
 
 func _ready() -> void:
-	# This generates the random level layout.
+	# Generate the random level layout.
 	_generate_level()
 	
-	# This searches the entire scene to find all planet nodes.
+	# Search the entire scene to find all planet nodes (including newly spawned ones).
 	find_planets_recursive(self)
 
-	# This checks if the HomePlanet was successfully found.
+	# Check if the HomePlanet was successfully found.
 	if not is_instance_valid(home_planet):
 		print("ERROR: GameController could not find the HomePlanet node!")
 		return
 		
-	# This checks if the HUD was successfully found.
+	# Check if the HUD was successfully found.
 	if not is_instance_valid(hud):
 		print("ERROR: GameController could not find the HUD node!")
 		return
 
 	print("Found ", all_planets.size(), " planets in the scene")
 
-	# This sets up the HUD with references to the player and all found planets.
+	# Set up the HUD with references to the player and all found planets.
 	hud.setup_references(player, home_planet, all_planets)
 
-	# This connects to the signals of all collectables in the scene after a short delay.
+	# Connect to the signals of all collectables in the scene after a short delay.
 	call_deferred("connect_collectables")
 
-# This is the main function for procedural generation.
+# REWORKED FUNCTION: This now places special objects first, then fills in the rest.
 func _generate_level():
-	# This holds a list of planets that have been successfully placed.
-	var spawned_planets = []
-	# This holds a list of nebulas that have been placed.
-	var spawned_nebulas = []
+	# This array will keep track of all placed objects to check for overlaps.
+	var placed_celestial_bodies = [home_base_node]
+	
+	# This helper function will handle the placement logic for any given object.
+	# It tries to find a valid spot and adds the object to the scene and tracking array.
+	var place_object = func(scene: PackedScene, tracking_array: Array, spawn_center: Vector2 = Vector2.ZERO, radius: float = spawn_radius):
+		if not is_instance_valid(scene):
+			push_warning("Cannot place object: PackedScene is not valid.")
+			return
 
-	# --- Step 1: Spawn Nebulas (visuals for clusters) ---
+		for attempt in range(50): # Try up to 50 times to find a valid spot.
+			var instance = scene.instantiate()
+			
+			# Get a random position for the object within the specified radius.
+			var pos = spawn_center + Vector2.from_angle(randf() * TAU) * randf_range(radius * 0.1, radius)
+
+			# Get the final, scaled radius of the new object's gravity field.
+			var new_radius = instance.get_gravity_radius()
+			
+			# Check for overlaps with all previously placed bodies.
+			var overlaps = false
+			for existing_body in tracking_array:
+				if not is_instance_valid(existing_body): continue
+				var existing_radius = existing_body.get_gravity_radius()
+				var distance = pos.distance_to(existing_body.global_position)
+				
+				# If the distance is less than the sum of both radii plus our minimum gap, it overlaps.
+				if distance < new_radius + existing_radius + min_distance_between_planets:
+					overlaps = true
+					break
+			
+			# If the position is valid (no overlaps), place the object.
+			if not overlaps:
+				instance.global_position = pos
+				generated_planets_node.add_child(instance)
+				tracking_array.append(instance)
+				return # Successfully placed, exit the function.
+			else:
+				# If the position was invalid, free the unused instance.
+				instance.queue_free()
+		
+		push_warning("Could not place a %s after 50 attempts." % scene.resource_path)
+
+	# --- Step 1: Place the Sun at the Center ---
+	if is_instance_valid(sun_scene):
+		var sun = sun_scene.instantiate()
+		sun.global_position = Vector2.ZERO # Place it exactly at the center.
+		generated_planets_node.add_child(sun)
+		placed_celestial_bodies.append(sun)
+
+	# --- Step 2: Place the Black Hole Randomly ---
+	if is_instance_valid(black_hole_scene):
+		place_object.call(black_hole_scene, placed_celestial_bodies, Vector2.ZERO, spawn_radius)
+
+	# --- Step 3: Place Additional Home Stations ---
+	if is_instance_valid(station_scene):
+		for i in range(num_additional_stations):
+			place_object.call(station_scene, placed_celestial_bodies, Vector2.ZERO, spawn_radius)
+
+	# --- Step 4: Spawn Nebulas (visuals for clusters) ---
+	var spawned_nebulas = []
 	if is_instance_valid(nebula_scene) and is_instance_valid(generated_nebulas_node):
 		for i in range(num_nebulas):
 			var nebula = nebula_scene.instantiate()
-			# Place the nebula at a random position within 75% of the spawn radius
 			var nebula_pos = Vector2.from_angle(randf() * TAU) * randf_range(0, spawn_radius * 0.75)
 			nebula.global_position = nebula_pos
 			generated_nebulas_node.add_child(nebula)
 			spawned_nebulas.append(nebula)
 	
-	# --- Step 2: Spawn Planets ---
-	if planet_scenes.is_empty() or not is_instance_valid(generated_planets_node):
-		push_warning("Planet scenes array is empty or GeneratedPlanets node is missing. Cannot generate level.")
-		return
-		
-	# This loop tries to place the specified number of planets.
-	var planets_to_spawn = num_planets
-	for i in range(planets_to_spawn):
-		# We'll try to place each planet a few times before giving up.
-		var placement_success = false
-		for attempt in range(20): # Try up to 20 times to find a valid spot.
-			# Pick a random planet scene from the list.
+	# --- Step 5: Fill the rest of the space with Regular Planets ---
+	if not planet_scenes.is_empty():
+		var planets_to_spawn = num_planets
+		for i in range(planets_to_spawn):
 			var planet_scene = planet_scenes.pick_random()
-			var planet_instance = planet_scene.instantiate()
-			
-			# Determine the spawn center point. Some planets will cluster in nebulas.
+			# Determine if this planet should be in a nebula.
 			var spawn_center = Vector2.ZERO
 			if i < planets_in_nebulas and not spawned_nebulas.is_empty():
-				# Pick a random nebula to spawn inside of.
-				var target_nebula = spawned_nebulas.pick_random()
-				spawn_center = target_nebula.global_position
+				spawn_center = spawned_nebulas.pick_random().global_position
 			
-			# Get a random position for the planet.
-			# It's a random direction (angle) multiplied by a random distance.
-			var pos = spawn_center + Vector2.from_angle(randf() * TAU) * randf_range(0, spawn_radius / 2 if spawn_center != Vector2.ZERO else spawn_radius)
-
-			# Get the radius of the new planet's gravity field.
-			var new_planet_radius = planet_instance.get_node("CollisionShape2D").shape.radius
-			
-			# Check for collisions with already spawned planets.
-			var overlaps = false
-			for existing_planet in spawned_planets:
-				var existing_radius = existing_planet.get_node("CollisionShape2D").shape.radius
-				var distance = pos.distance_to(existing_planet.global_position)
-				
-				# If the distance is less than the sum of both radii plus a minimum gap, it overlaps.
-				if distance < new_planet_radius + existing_radius + min_distance_between_planets:
-					overlaps = true
-					break # No need to check other planets, we already found a collision.
-			
-			# If the position is valid (no overlaps), place the planet.
-			if not overlaps:
-				planet_instance.global_position = pos
-				generated_planets_node.add_child(planet_instance)
-				spawned_planets.append(planet_instance)
-				placement_success = true
-				break # Move on to the next planet.
-			else:
-				# If the position was invalid, free the unused instance to save memory.
-				planet_instance.queue_free()
-		
-		# If we couldn't place a planet after many tries, print a warning.
-		if not placement_success:
-			print("Could not place planet %d after 20 attempts. The level might be too crowded." % i)
+			place_object.call(planet_scene, placed_celestial_bodies, spawn_center, spawn_radius / 2 if spawn_center != Vector2.ZERO else spawn_radius)
 
 
 func find_planets_recursive(node: Node):
 	# This searches recursively through all child nodes to find planets.
 	for child in node.get_children():
 		if child is HomePlanet:
-			home_planet = child
-			# This ensures the HomePlanet is also in the main planets list.
+			# The first HomePlanet found will be set as the main one for the HUD.
+			if not is_instance_valid(home_planet):
+				home_planet = child
+			# This ensures all HomePlanets are in the main planets list for the compass.
 			all_planets.append(child)
 		# This checks if the node is a standard planet.
 		elif child is BasePlanet:
@@ -155,7 +182,9 @@ func find_planets_recursive(node: Node):
 		# This continues the search into the children of the current node.
 		if child.get_child_count() > 0:
 			find_planets_recursive(child)
-			
+
+# ... (The rest of the script remains the same) ...
+
 func connect_collectables() -> void:
 	# This initializes the dictionary to store counts for each collectable type.
 	collectable_counts_by_type.clear()

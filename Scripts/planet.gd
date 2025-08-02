@@ -193,3 +193,24 @@ func flash_orbit_completion():
 	flash_tween.tween_property(orbit_progress_indicator, "default_color", Color(0, 1, 1, 0.8), 0.2)
 	# This calls a function to hide the line after the flash is complete.
 	flash_tween.tween_callback(stop_orbit_progress_display)
+
+func get_gravity_radius() -> float:
+	# This ensures the CollisionShape2D node exists before we try to access it.
+	if not is_instance_valid(collision_shape_2d):
+		return 200.0 # Return a default radius if the node isn't ready.
+
+	# This checks if the shape assigned to the collider is a circle.
+	if collision_shape_2d.shape is CircleShape2D:
+		# First, get the base radius from the shape resource itself.
+		var local_radius = collision_shape_2d.shape.radius
+		
+		# Next, get the scale of the parent Area2D node (this planet).
+		var planet_scale = self.scale
+		
+		# The true radius is the local radius multiplied by the largest scale component.
+		# We use max() to be safe in case the scaling is not uniform (e.g., stretched).
+		return local_radius * max(planet_scale.x, planet_scale.y)
+	else:
+		# If it's not a circle, we print a warning and return a default value.
+		push_warning("Planet %s does not have a CircleShape2D for its gravity field." % name)
+		return 200.0
