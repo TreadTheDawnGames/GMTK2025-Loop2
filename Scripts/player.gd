@@ -163,6 +163,8 @@ func _process(_delta: float) -> void:
 
 var softlockTimer : SceneTreeTimer
 var isBeingSaved : bool = false
+
+var doNotSave = false
 # This function runs every physics frame, ideal for physics-related code.
 func _physics_process(_delta: float) -> void:
 	# Don't process physics input if game is paused (shop is open)
@@ -178,13 +180,16 @@ func _physics_process(_delta: float) -> void:
 	#print("IsBeingSaved: " + str(isBeingSaved))
 	
 	if(not onPlanet and BoostCount == 0 and current_state == State.LAUNCHED and (linear_velocity.length() < 5) and not isBeingSaved):
-		isBeingSaved = true
-		if(not softlockTimer):
-			print("Summoning saving asteroid")
-			softlockTimer = get_tree().create_timer(5)
-			softlockTimer.timeout.connect(func(): 
-				SoftlockFixer.FixSoftlock(global_position)
-			)
+		if(not doNotSave):
+			isBeingSaved = true
+			if(not softlockTimer):
+				print("Summoning saving asteroid")
+				softlockTimer = get_tree().create_timer(4.0)
+				softlockTimer.timeout.connect(func(): 
+					SoftlockFixer.FixSoftlock(global_position)
+				)
+		else:
+			doNotSave = false
 
 	
 	# Check lose condition - if player is too far from origin
@@ -203,8 +208,10 @@ func _physics_process(_delta: float) -> void:
 					Reset()
 				onPlanet = true
 			elif collider is Asteroid:
+				audioHandler.PlaySoundAtGlobalPosition(Sounds.ShipCollide, global_position)
 				softlockTimer = null
 				isBeingSaved = false
+				doNotSave = true
 				
 		
 	# This checks if the player is in the air.

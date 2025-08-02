@@ -53,7 +53,7 @@ func collect() -> void:
 		var particle_lifetime = particles.lifetime + 0.5
 		get_tree().create_timer(particle_lifetime).timeout.connect(particles.queue_free)
 
-	audioHandler.PlaySoundAtGlobalPosition(Sounds.CollectableGet, global_position)
+	#audioHandler.PlaySoundAtGlobalPosition(Sounds.CollectableGet, global_position)
 	
 	# Add score
 	GameManager.add_score(point_value)
