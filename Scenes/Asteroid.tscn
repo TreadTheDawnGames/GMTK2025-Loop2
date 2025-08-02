@@ -26,3 +26,6 @@ metadata/_custom_type_script = "uid://d14jugjffoiv7"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_3euil")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+scale = Vector2(6.9939, 6.9939)
