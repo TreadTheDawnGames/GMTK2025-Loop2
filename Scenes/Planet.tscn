@@ -41,6 +41,7 @@ shader_parameter/step6 = 0.266
 
 [node name="Planet2" type="Area2D"]
 script = ExtResource("1_ej51v")
+collectable_spawn_chance = 0.2
 
 [node name="Sprite" type="Sprite2D" parent="."]
 script = ExtResource("12_q5dxo")
@@ -52,7 +53,7 @@ shape = SubResource("CircleShape2D_effgs")
 
 [node name="Sprite2D" type="Sprite2D" parent="CollisionShape2D"]
 material = SubResource("ShaderMaterial_umgws")
-scale = Vector2(0.602626, 0.602626)
+scale = Vector2(0.557429, 0.557429)
 texture = ExtResource("2_r86au")
 script = ExtResource("4_aogve")
 
