@@ -9,7 +9,7 @@ radius = 2200.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_s31nm"]
 radius = 871.001
 
-[node name="Planet3" instance=ExtResource("1_xtc1m")]
+[node name="Planet4" instance=ExtResource("1_xtc1m")]
 gravity_strength = 2400.0
 can_have_collectable = null
 collectable_scenes = null

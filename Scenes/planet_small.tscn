@@ -6,7 +6,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_hmd8h"]
 radius = 1008.86
 
-[sub_resource type="Shader" id="Shader_vus2y"]
+[sub_resource type="Shader" id="Shader_s0sgh"]
 code = "//CC0 https://godotshaders.com/shader/radial-smooth-radial-gradient/
 shader_type canvas_item;
 render_mode blend_add; //Comment this if you want another render mode.
@@ -41,7 +41,7 @@ void fragment() {
 }"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_k6nrp"]
-shader = SubResource("Shader_vus2y")
+shader = SubResource("Shader_s0sgh")
 shader_parameter/center = Vector2(0.5, 0.5)
 shader_parameter/size = 1.0
 shader_parameter/squishness = Vector2(1, 1)
@@ -70,6 +70,7 @@ texture = ExtResource("2_hmd8h")
 
 [node name="CollisionShape2D" parent="." index="1"]
 shape = SubResource("CircleShape2D_hmd8h")
+disabled = true
 
 [node name="Sprite2D" parent="CollisionShape2D" index="0"]
 material = SubResource("ShaderMaterial_k6nrp")
