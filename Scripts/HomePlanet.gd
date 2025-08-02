@@ -55,6 +55,10 @@ func show_shop_prompt() -> void:
 		# This creates shop prompt if it doesn't exist
 		var prompt_scene = preload("res://Scenes/Shop/ShopPrompt.tscn")
 		shop_prompt = prompt_scene.instantiate()
+		
+		shop_prompt.shop_requested.connect(open_shop)
+		
+		# Add the newly created prompt to the main game scene.
 		get_tree().current_scene.add_child(shop_prompt)
 
 	# Check if the node is already in the tree before adding it.
@@ -62,8 +66,6 @@ func show_shop_prompt() -> void:
 		print("Adding shop_prompt to the scene tree.")
 		get_tree().current_scene.add_child(shop_prompt)
 	else:
-		# This will print if you are trying to add an already-added node.
-		# This helps confirm the source of the error loop.
 		print("Attempted to add shop_prompt, but it's already in the tree!")
 
 	if shop_prompt and current_player:
