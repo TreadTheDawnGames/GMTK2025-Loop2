@@ -227,11 +227,12 @@ func _physics_process(_delta: float) -> void:
 			var collider = collision.get_collider()
 			if collider.owner is BasePlanet:
 				if(!onPlanet):
-					if(canSkip == true) and collider.owner is not HomePlanet:
-
+					if(canSkip == true) and collider.owner is not HomePlanet and collider.owner is not Asteroid:
 						print("Skip")
 						canSkip = false
 						BoostCount += 1
+						PointNumbers.display_number(mult, point_numbers_origin.global_position, true)
+						mult += mult
 
 						# Add mult *2 every time a skip is performed
 						mult *= 2
