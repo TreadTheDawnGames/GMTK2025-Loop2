@@ -121,6 +121,7 @@ position = Vector2(4450.64, 1218.17)
 
 [node name="@Area2D@84404" parent="." instance=ExtResource("2_wqkje")]
 position = Vector2(3585.38, -3894.73)
+gravity_strength = 1000.0
 
 [node name="@Area2D@84405" parent="." instance=ExtResource("2_wqkje")]
 position = Vector2(-2348.02, -8793.64)

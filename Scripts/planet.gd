@@ -2,7 +2,7 @@ extends Area2D
 class_name BasePlanet
 
 # This exports a variable to the Godot editor, allowing to change it without code.
-@export var gravity_strength: float = 6000.0
+@export var gravity_strength: float = 4000.0
 # This creates an array to store physics bodies that enter the gravity field.
 var bodies_in_gravity_field: Array[RigidBody2D] = []
 @export var gravityCurve : Curve
