@@ -29,6 +29,7 @@ func _ready() -> void:
 	add_to_group("planets")
 	# This attempts to spawn a collectable when the planet is ready.
 	spawn_collectable_at_center()
+	# NOTE: We do NOT connect signals here because they are already connected in the scene file via the editor.
 
 func spawn_collectable_at_center():
 	# This checks if the planet is allowed to have a collectable.

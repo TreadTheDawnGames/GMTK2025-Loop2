@@ -59,7 +59,15 @@ func show_shop_prompt() -> void:
 		shop_prompt = prompt_scene.instantiate()
 		get_tree().current_scene.add_child(shop_prompt)
 
-	# This shows the prompt at the home planet position
+	# Check if the node is already in the tree before adding it.
+	if not shop_prompt.is_inside_tree():
+		print("Adding shop_prompt to the scene tree.")
+		get_tree().current_scene.add_child(shop_prompt)
+	else:
+		# This will print if you are trying to add an already-added node.
+		# This helps confirm the source of the error loop.
+		print("Attempted to add shop_prompt, but it's already in the tree!")
+
 	if shop_prompt and current_player:
 		shop_prompt.show_prompt(self)
 

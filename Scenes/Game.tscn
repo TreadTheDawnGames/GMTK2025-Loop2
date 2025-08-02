@@ -12,9 +12,6 @@
 [node name="Game" type="Node2D"]
 script = ExtResource("9_controller")
 
-[node name="Planet5" parent="." instance=ExtResource("5_b2bpf")]
-position = Vector2(5110, 6658)
-
 [node name="HUDLayer" type="CanvasLayer" parent="."]
 layer = 10
 
@@ -45,16 +42,23 @@ position = Vector2(-1, -320)
 rotation = -1.5708
 launch_power = 5.0
 
+[node name="Planet7" parent="." instance=ExtResource("5_b2bpf")]
+position = Vector2(-23361, -24221)
+
+[node name="Planet5" parent="." instance=ExtResource("5_b2bpf")]
+position = Vector2(2221, 12489)
+
 [node name="Planet2" parent="." instance=ExtResource("5_b2bpf")]
+position = Vector2(-608, 173)
 
 [node name="Planet3" parent="." instance=ExtResource("5_b2bpf")]
-position = Vector2(-7763, 5403)
+position = Vector2(-10159, 5119)
 
 [node name="Planet4" parent="." instance=ExtResource("5_b2bpf")]
-position = Vector2(4930, -5347)
+position = Vector2(11659, 1743)
 
 [node name="Planet6" parent="." instance=ExtResource("5_b2bpf")]
-position = Vector2(-6794, -8359)
+position = Vector2(-2012, -12206)
 
 [node name="RigidBody2D2" parent="." instance=ExtResource("8_2irst")]
 position = Vector2(6041, 4121)

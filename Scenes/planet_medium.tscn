@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://b6y5iuktvcwd4" path="res://Assets/kenney_planets/Planets/planet00.png" id="2_wffiv"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8xqrg"]
-radius = 673.39
+radius = 1400.0
 
 [sub_resource type="Shader" id="Shader_30pap"]
 code = "//CC0 https://godotshaders.com/shader/radial-smooth-radial-gradient/
@@ -59,13 +59,13 @@ shader_parameter/step5 = 0.265
 shader_parameter/step6 = 0.266
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_hvc1f"]
-radius = 226.0
+radius = 450.0
 
 [node name="Planet3" instance=ExtResource("1_si0xu")]
-gravity_strength = 1800.0
+gravity_strength = 2000.0
 
 [node name="Sprite" parent="." index="0"]
-scale = Vector2(0.44, 0.438)
+scale = Vector2(0.88, 0.878001)
 texture = ExtResource("2_wffiv")
 
 [node name="CollisionShape2D" parent="." index="1"]
@@ -73,7 +73,7 @@ shape = SubResource("CircleShape2D_8xqrg")
 
 [node name="Sprite2D" parent="CollisionShape2D" index="0"]
 material = SubResource("ShaderMaterial_i68xm")
-scale = Vector2(1.96038, 1.96038)
+scale = Vector2(4.07569, 4.07569)
 
 [node name="CollisionShape2D" parent="AnimatableBody2D" index="0"]
 shape = SubResource("CircleShape2D_hvc1f")
