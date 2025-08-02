@@ -103,6 +103,9 @@ func _on_collectable_collected(collectable: Collectable) -> void:
 	# This tells the HUD to refresh its display with the new numbers.
 	hud.update_collectable_counts()
 
+	# This notifies the GameManager that a collectable was collected for UI effects.
+	GameManager.notify_collectable_collected()
+
 	# This checks if all collectables have been found to trigger the win condition.
 	check_win_condition()
 

@@ -1,0 +1,59 @@
+[gd_scene load_steps=9 format=3 uid="uid://ku0et6l6vqic"]
+
+[ext_resource type="PackedScene" uid="uid://d0j2xqgs8463m" path="res://Scenes/Planet.tscn" id="1_qo6fj"]
+[ext_resource type="Shader" uid="uid://d2afeeep8niyx" path="res://Assets/Shaders/planet_fireball.gdshader" id="2_ic6og"]
+[ext_resource type="Texture2D" uid="uid://cttrn2nakn67e" path="res://Assets/Circle.png" id="3_vrufb"]
+[ext_resource type="Shader" uid="uid://dttlrh3oqhy7w" path="res://Assets/Shaders/Atmosphere.gdshader" id="4_vrufb"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ouapx"]
+shader = ExtResource("2_ic6og")
+shader_parameter/time = 0.0
+shader_parameter/frame_scope = 2.444
+shader_parameter/use_system_time = true
+shader_parameter/time_accel = 0.5
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ngwap"]
+radius = 1843.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wkqme"]
+shader = ExtResource("4_vrufb")
+shader_parameter/center = Vector2(0.5, 0.5)
+shader_parameter/size = 1.0
+shader_parameter/squishness = Vector2(1, 1)
+shader_parameter/color1 = Color(1, 0.623529, 0, 0)
+shader_parameter/color2 = Color(0, 0, 0, 1)
+shader_parameter/color3 = Color(0.784314, 0.494118, 0, 0.0313726)
+shader_parameter/color4 = Color(0, 0, 0, 1)
+shader_parameter/color5 = Color(0.674434, 0.541275, 0.128692, 0.301961)
+shader_parameter/color6 = Color(0, 0, 0, 1)
+shader_parameter/step1 = 0.159
+shader_parameter/step2 = 0.182
+shader_parameter/step3 = 0.233
+shader_parameter/step4 = 0.264
+shader_parameter/step5 = 0.265
+shader_parameter/step6 = 0.266
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_s31nm"]
+radius = 871.001
+
+[node name="Planet4" instance=ExtResource("1_qo6fj")]
+scale = Vector2(4, 4)
+gravity_strength = 2400.0
+can_have_collectable = null
+collectable_scenes = null
+
+[node name="Sprite" parent="." index="0"]
+material = SubResource("ShaderMaterial_ouapx")
+scale = Vector2(3.32, 3.36)
+texture = ExtResource("3_vrufb")
+script = null
+
+[node name="CollisionShape2D" parent="." index="1"]
+shape = SubResource("CircleShape2D_ngwap")
+
+[node name="Sprite2D" parent="CollisionShape2D" index="0"]
+material = SubResource("ShaderMaterial_wkqme")
+scale = Vector2(4.96295, 4.96295)
+
+[node name="CollisionShape2D" parent="AnimatableBody2D" index="0"]
+shape = SubResource("CircleShape2D_s31nm")

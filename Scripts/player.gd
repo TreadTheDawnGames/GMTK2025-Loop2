@@ -66,6 +66,9 @@ var points : int = 0  # points earned from orbiting planets
 var mult : int = 0    # multiplier from entering gravity fields and skips
 var final_score : int = 0  # calculated when crashing
 
+# Track planets that have been orbited for first-time bonus
+var orbited_planets: Array[BasePlanet] = []
+
 static var Position : Vector2
 # This variable will hold the player's current state from the enum above.
 var current_state: State = State.READY_TO_AIM
@@ -254,7 +257,15 @@ func _physics_process(_delta: float) -> void:
 		#linear_velocity = Vector2.ZERO
 	#if(Input.is_action_just_pressed("DEBUG-ADD_BOOST")):
 		#BoostCount +=1
+	Position = global_position
+	#print("Velocity" + str(linear_velocity.length()))
+	#print("IsBeingSaved: " + str(isBeingSaved))
 	
+	# This is a debug input to reset the player's launch state.
+	if (Input.is_action_just_pressed("DEBUG-RESET_LAUNCH")):
+		Reset()
+	
+	# This logic detects if the player is stuck at a very low velocity and summons a "saving" asteroid.
 	if(not onPlanet and BoostCount == 0 and current_state == State.LAUNCHED and (linear_velocity.length() < 5) and not isBeingSaved):
 		if(not doNotSave):
 			isBeingSaved = true
@@ -266,52 +277,69 @@ func _physics_process(_delta: float) -> void:
 				)
 		else:
 			doNotSave = false
-		
-
+			
 	
-	# Check lose condition - if player is too far from origin
+	# This checks if the player has drifted too far from the starting origin.
 	check_lose_condition()
 	if is_inside_tree():
+		# This moves the player and checks for collisions.
 		var collision : KinematicCollision2D = move_and_collide(linear_velocity.normalized(), true)
 		if(collision):
 			var collider = collision.get_collider()
+			# This checks if the collided object's owner is a planet.
 			if collider.owner is BasePlanet:
 				if(!onPlanet):
-					if(canSkip == true) and collider.owner is not HomePlanet and collider.owner is not Asteroid:
-						print("Skip")
-						canSkip = false
-						BoostCount += 1
-						#points += 3
-						#PointNumbers.display_number(points, point_numbers_origin.global_position, 0)
-						
-						mult *= 2
-						PointNumbers.display_number(mult, point_numbers_origin.global_position, 1)
-
-						# Add mult *2 every time a skip is performed
-						#mult *= 2
-						#print("Skip performed! Mult: ", mult)
-
-						audioHandler.PlaySoundAtGlobalPosition(Sounds.ShipCollide, global_position)
-					else:
-						#reset loop counter
+					if collider.owner is HomePlanet:
+						# This handles collision with a home planet.
+						# It resets the loop counter and clears the trails.
 						loopCounter = 0
-						#Reset Trail
 						trail_2d_1.clear_points()
 						trail_2d_2.clear_points()
 
-						# Calculate final score when crashing into planet
+						# This calculates the final score upon returning home.
 						calculate_final_score()
 
 						print("onPlanet")
+						# This stops the player's movement.
 						linear_velocity = Vector2.ZERO
 						angular_velocity = 0.0
 						audioHandler.PlaySoundAtGlobalPosition(Sounds.ShipCollide, global_position)
-						#set_deferred("sleeping", true)
+						
+						# This resets the player's state to be ready for another launch.
 						Reset()
 						onPlanet = true
+
+						# This shows a tutorial about landing to regain boosts.
+						var hud = get_tree().root.get_node("Game/HUDLayer/GameHUD")
+						if hud:
+							TutorialManager.show_land_for_boost_tutorial(hud)
+					else:
+						# This is the logic for colliding with a regular planet.
+						if(canSkip == true) and collider.owner is not Asteroid:
+							print("Skip")
+							canSkip = false
+							BoostCount += 1
+							mult *= 2
+							PointNumbers.display_number(mult, point_numbers_origin.global_position, 1)
+							audioHandler.PlaySoundAtGlobalPosition(Sounds.ShipCollide, global_position)
+						else:
+							# This handles crashing into a regular planet.
+							loopCounter = 0
+							trail_2d_1.clear_points()
+							trail_2d_2.clear_points()
+							calculate_final_score()
+							print("onPlanet")
+							linear_velocity = Vector2.ZERO
+							angular_velocity = 0.0
+							audioHandler.PlaySoundAtGlobalPosition(Sounds.ShipCollide, global_position)
+							Reset()
+							onPlanet = true
+			# This checks if the collided object is an asteroid.
 			elif collider is Asteroid:
-				# Calculate final score when crashing into asteroid
-				#calculate_final_score()
+
+				# This calculates the final score when crashing into an asteroid.
+				calculate_final_score()
+
 
 				audioHandler.PlaySoundAtGlobalPosition(Sounds.ShipCollide, global_position)
 				softlockTimer = null
@@ -320,20 +348,21 @@ func _physics_process(_delta: float) -> void:
 				
 				
 		
-	# This checks if the player is in the air.
+	# This block runs only when the player has been launched and is in motion.
 	if current_state == State.LAUNCHED:
 		# This makes the rocket point in the direction it's moving.
-		if linear_velocity.length() > 0.01: # Avoid rotation issues if velocity is zero
+		if linear_velocity.length() > 0.01: # This avoids rotation issues if velocity is zero.
 			rotation = linear_velocity.angle()
-		# This checks if the boost is available and the user pressed boost.
+		# This checks if the boost is available and the user pressed the boost action.
 		if BoostCount > 0 and Input.is_action_just_pressed("boost"):
 			apply_boost()
+		# This checks for the brake action (keyboard, right mouse, or mobile).
 		if(Input.is_action_pressed("brake") or Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT) or mobileBrake):
 			linear_damp = 5
 			apply_braking_trail_effect()
 		else:
 			linear_damp = 0
-			# This resets trail effects when not braking
+			# This resets trail effects when not braking.
 			if trail_effect_tween and trail_2d_1.default_color == braking_trail_color:
 				reset_trail_effects()
 			
@@ -360,12 +389,21 @@ func handle_orbit_tracking():
 	if abs(accumulated_orbit_angle) >= (2 * PI) * orbit_completion_percentage:
 		print("Loop complete!")
 
+		# This checks if this is the first time orbiting this planet for a score bonus.
+		var is_first_orbit = current_orbiting_planet not in orbited_planets
+		if is_first_orbit:
+			orbited_planets.append(current_orbiting_planet)
+			# This adds a +5 score bonus for the first orbit.
+			GameManager.add_score(5)
+			print("First orbit bonus! +5 score")
+			PointNumbers.display_number(5, point_numbers_origin.global_position, 2)  # Green color for bonus
+
 		# Add +1 to points every time orbiting a planet
 		points += 1
 		print("Orbited planet! Points: ", points)
 		#display points
 		PointNumbers.display_number(points, point_numbers_origin.global_position, 0)
-		
+
 		# This creates flash effect on planet
 		current_orbiting_planet.flash_orbit_completion()
 		# This tells the planet to give its collectable.
@@ -395,6 +433,8 @@ func start_orbiting(planet: BasePlanet):
 	var hud = get_tree().root.get_node("Game/HUDLayer/GameHUD")
 	if hud:
 		TutorialManager.show_first_orbit_tutorial(hud)
+		# Also show the orbit for extra boost tutorial
+		TutorialManager.show_orbit_for_extra_boost_tutorial(hud)
 
 # This function is called by a planet when the player leaves its gravity.
 func stop_orbiting(planet: BasePlanet):

@@ -3,6 +3,8 @@ extends Node
 # Singleton for managing game state and settings
 signal ship_color_changed(new_color: Color)
 signal score_changed(new_score: int)
+# This new signal is emitted only when a collectable is picked up.
+signal collectable_collected()
 
 # Ship color settings
 var ship_color: Color = Color.WHITE
@@ -10,6 +12,9 @@ var ship_color_hue: float = 0.0  # 0.0 to 1.0 for hue slider
 
 # Score system
 var current_score: int = 0
+
+# Tutorial settings
+var tutorials_enabled: bool = true
 
 # Game state
 enum GameState {
@@ -102,3 +107,14 @@ func show_win_screen_with_stats(stats: Dictionary) -> void:
 func show_lose_screen() -> void:
 	set_game_state(GameState.LOSE)
 	get_tree().change_scene_to_file("res://Scenes/UI/LoseScreen.tscn")
+
+# Tutorial settings functions
+func set_tutorials_enabled(enabled: bool) -> void:
+	tutorials_enabled = enabled
+
+func get_tutorials_enabled() -> bool:
+	return tutorials_enabled
+
+# Collectable collection notification
+func notify_collectable_collected() -> void:
+	collectable_collected.emit()

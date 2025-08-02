@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bdnjtwxu3rtvy"]
+[gd_scene load_steps=7 format=3 uid="uid://dxtc51thgwmwk"]
 
 [ext_resource type="PackedScene" uid="uid://d0j2xqgs8463m" path="res://Scenes/Planet.tscn" id="1_bgxmv"]
 [ext_resource type="Texture2D" uid="uid://b6y5iuktvcwd4" path="res://Assets/kenney_planets/Planets/planet00.png" id="2_7paaq"]
@@ -61,7 +61,7 @@ shader_parameter/step6 = 0.266
 [sub_resource type="CircleShape2D" id="CircleShape2D_njf8c"]
 radius = 75.0
 
-[node name="Planet" instance=ExtResource("1_bgxmv")]
+[node name="Planet5" instance=ExtResource("1_bgxmv")]
 gravity_strength = 2000.0
 
 [node name="Sprite" parent="." index="0"]
