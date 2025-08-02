@@ -10,7 +10,7 @@
 [ext_resource type="Script" uid="uid://dfjdljl46khuv" path="res://Scripts/GameController.gd" id="9_controller"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_2irst"]
-bounce = 0.3
+bounce = 0.5
 
 [node name="Game" type="Node2D"]
 script = ExtResource("9_controller")

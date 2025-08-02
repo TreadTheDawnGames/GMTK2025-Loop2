@@ -2,6 +2,10 @@ extends RigidBody2D
 class_name Player
 @onready var audioHandler: PlayerAudioHandler = $AudioHandler
 
+@onready var trail_2d_1: Line2D = $CollisionShape2D/Node2D/Trail2D
+@onready var trail_2d_2: Line2D = $CollisionShape2D/Node2D2/Trail2D
+
+
 # This defines a set of named states for the player's state machine.
 enum State {
 	READY_TO_AIM,
@@ -206,8 +210,14 @@ func _physics_process(_delta: float) -> void:
 
 						print("Skip")
 						canSkip = false
+						BoostCount += 1
 						audioHandler.PlaySoundAtGlobalPosition(Sounds.ShipCollide, global_position)
 					else:
+						
+						#Reset Trail
+						trail_2d_1.clear_points()
+						trail_2d_2.clear_points()
+						
 						print("onPlanet")
 						linear_velocity = Vector2.ZERO
 						angular_velocity = 0.0
