@@ -116,6 +116,7 @@ func calculate_final_score() -> void:
 	final_score = points * mult
 	print("Final Score Calculation: ", points, " points * ", mult, " mult = ", final_score)
 	GameManager.add_score(final_score)
+	PointNumbers.display_number(final_score, point_numbers_origin.global_position, true)
 
 # Check if player has gone too far and should lose
 func check_lose_condition() -> void:
@@ -309,10 +310,7 @@ func handle_orbit_tracking():
 		points += 1
 		print("Orbited planet! Points: ", points)
 
-		if loopCounter >= highScore:
-			PointNumbers.display_number(loopCounter, point_numbers_origin.global_position, true)
-		else:
-			PointNumbers.display_number(loopCounter, point_numbers_origin.global_position, false)
+		PointNumbers.display_number(loopCounter, point_numbers_origin.global_position, false)
 		# This tells the planet to give its collectable.
 		BoostCount += 1
 		audioHandler.PlaySoundAtGlobalPosition(Sounds.CollectableGet, global_position)
@@ -333,6 +331,7 @@ func start_orbiting(planet: BasePlanet):
 	accumulated_orbit_angle = 0.0
 	last_angle_to_planet = (global_position - planet.global_position).angle()
 	print("Started orbiting: ", planet.name)
+	PointNumbers.display_number(mult, point_numbers_origin.global_position, true)
 
 	# Add +1 to mult every time entering a gravity field
 	mult += 1
