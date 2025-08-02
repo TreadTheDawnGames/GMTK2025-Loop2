@@ -1,6 +1,16 @@
 extends RigidBody2D
 class_name Player
 @onready var audioHandler: PlayerAudioHandler = $AudioHandler
+# The trail effects
+@onready var trail_1: Line2D = $CollisionShape2D/Node2D/Trail2D
+@onready var trail_2: Line2D = $CollisionShape2D/Node2D2/Trail2D
+
+# Trail effect properties
+var original_trail_length: int = 10
+var original_trail_color: Color = Color.WHITE
+var braking_trail_color: Color = Color(0.8, 0.2, 0.2, 0.8) # Dull red
+var boost_trail_color: Color = Color(0, 1, 1, 1) # Bright cyan
+var trail_effect_tween: Tween
 
 # This defines a set of named states for the player's state machine.
 enum State {
@@ -49,10 +59,16 @@ var current_state: State = State.READY_TO_AIM
 var BoostCount: int = 1:
 	get: return BoostCount
 	set(value):
+		var old_value = BoostCount
 		BoostCount = value
 		if(BoostCount == 0):
 			Sprite.frame_coords.y = 1
 			$"BoostParticles-Explosion".Emit(true)
+			# This shows out of boosts tutorial (only when transitioning from >0 to 0)
+			if old_value > 0:
+				var hud = get_tree().root.get_node("Game/HUDLayer/GameHUD")
+				if hud:
+					TutorialManager.show_out_of_boosts_tutorial(hud)
 		else:
 			sprite.frame_coords.y = 0
 
@@ -235,8 +251,12 @@ func _physics_process(_delta: float) -> void:
 			apply_boost()
 		if(Input.is_action_pressed("brake") or Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT)):
 			linear_damp = 5
+			apply_braking_trail_effect()
 		else:
 			linear_damp = 0
+			# This resets trail effects when not braking
+			if trail_effect_tween and trail_1.default_color == braking_trail_color:
+				reset_trail_effects()
 			
 	# This calls the function to handle orbit progress tracking.
 	handle_orbit_tracking()
@@ -253,16 +273,21 @@ func handle_orbit_tracking():
 	accumulated_orbit_angle += delta_angle
 	# This updates the angle for the next frame.
 	last_angle_to_planet = current_angle
-	
+
+	# This updates the orbital progress indicator on the planet
+	current_orbiting_planet.update_orbit_progress(accumulated_orbit_angle, orbit_completion_percentage)
+
 	# This checks if we completed a full circle (2 * PI radians).
 	if abs(accumulated_orbit_angle) >= (2 * PI) * orbit_completion_percentage:
 		print("Loop complete!")
+		# This creates flash effect on planet
+		current_orbiting_planet.flash_orbit_completion()
 		# This tells the planet to give its collectable.
 		BoostCount += 1
 		audioHandler.PlaySoundAtGlobalPosition(Sounds.CollectableGet, global_position)
 		current_orbiting_planet.collect_item(self)
 		GameManager.add_score(50)
-		
+
 		# This resets the angle so we don't collect again immediately.
 		accumulated_orbit_angle = 0.0
 
@@ -277,6 +302,11 @@ func start_orbiting(planet: BasePlanet):
 	accumulated_orbit_angle = 0.0
 	last_angle_to_planet = (global_position - planet.global_position).angle()
 	print("Started orbiting: ", planet.name)
+
+	# This shows first orbit tutorial
+	var hud = get_tree().root.get_node("Game/HUDLayer/GameHUD")
+	if hud:
+		TutorialManager.show_first_orbit_tutorial(hud)
 
 # This function is called by a planet when the player leaves its gravity.
 func stop_orbiting(planet: BasePlanet):
@@ -322,11 +352,12 @@ func apply_boost() -> void:
 	apply_central_impulse(boost_direction * boost_strength)
 	# This consumes the boost so it cannot be used again.
 	BoostCount -= 1
-	
+
 	# This provides visual feedback that the boost was used.
 	#sprite.modulate = Color.CYAN
 	_BoostParticles.Emit(true)
-	
+	apply_boost_trail_effect()
+
 	camera_2d.Shake()
 	audioHandler.PlaySoundAtGlobalPosition(Sounds.Boost, global_position)
 
@@ -368,3 +399,81 @@ func Reset():
 		BoostCount = get_meta("starting_boosts")
 	else:
 		BoostCount = 1
+
+	# This resets trail effects
+	reset_trail_effects()
+
+# This initializes trail properties
+func _ready_trail_setup():
+	if trail_1 and trail_2:
+		# This stores original trail properties
+		original_trail_length = trail_1.length if trail_1.has_method("length") else 10
+		original_trail_color = trail_1.default_color
+
+# This resets trails to normal appearance
+func reset_trail_effects():
+	if not trail_1 or not trail_2:
+		return
+
+	# This stops any ongoing trail animation
+	if trail_effect_tween:
+		trail_effect_tween.kill()
+
+	# This resets trail properties to normal
+	if trail_1.has_method("set_length"):
+		trail_1.length = original_trail_length
+	if trail_2.has_method("set_length"):
+		trail_2.length = original_trail_length
+
+	trail_1.default_color = original_trail_color
+	trail_2.default_color = original_trail_color
+
+# This applies braking trail effect
+func apply_braking_trail_effect():
+	if not trail_1 or not trail_2:
+		return
+
+	# This stops any ongoing animation
+	if trail_effect_tween:
+		trail_effect_tween.kill()
+
+	# This creates braking effect - shorter, red trails
+	trail_effect_tween = create_tween()
+	trail_effect_tween.parallel().tween_property(trail_1, "default_color", braking_trail_color, 0.2)
+	trail_effect_tween.parallel().tween_property(trail_2, "default_color", braking_trail_color, 0.2)
+
+	# This shortens trails if possible
+	if trail_1.has_method("set_length"):
+		trail_effect_tween.parallel().tween_method(func(length): trail_1.length = length, original_trail_length, original_trail_length * 0.5, 0.2)
+	if trail_2.has_method("set_length"):
+		trail_effect_tween.parallel().tween_method(func(length): trail_2.length = length, original_trail_length, original_trail_length * 0.5, 0.2)
+
+# This applies boost trail effect
+func apply_boost_trail_effect():
+	if not trail_1 or not trail_2:
+		return
+
+	# This stops any ongoing animation
+	if trail_effect_tween:
+		trail_effect_tween.kill()
+
+	# This creates boost effect - longer, bright cyan trails
+	trail_effect_tween = create_tween()
+	trail_effect_tween.parallel().tween_property(trail_1, "default_color", boost_trail_color, 0.1)
+	trail_effect_tween.parallel().tween_property(trail_2, "default_color", boost_trail_color, 0.1)
+
+	# This lengthens trails if possible
+	if trail_1.has_method("set_length"):
+		trail_effect_tween.parallel().tween_method(func(length): trail_1.length = length, original_trail_length, original_trail_length * 2.0, 0.1)
+	if trail_2.has_method("set_length"):
+		trail_effect_tween.parallel().tween_method(func(length): trail_2.length = length, original_trail_length, original_trail_length * 2.0, 0.1)
+
+	# This fades back to normal after 1 second
+	trail_effect_tween.tween_interval(1.0)
+	trail_effect_tween.parallel().tween_property(trail_1, "default_color", original_trail_color, 0.5)
+	trail_effect_tween.parallel().tween_property(trail_2, "default_color", original_trail_color, 0.5)
+
+	if trail_1.has_method("set_length"):
+		trail_effect_tween.parallel().tween_method(func(length): trail_1.length = length, original_trail_length * 2.0, original_trail_length, 0.5)
+	if trail_2.has_method("set_length"):
+		trail_effect_tween.parallel().tween_method(func(length): trail_2.length = length, original_trail_length * 2.0, original_trail_length, 0.5)

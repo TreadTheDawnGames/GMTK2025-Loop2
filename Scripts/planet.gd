@@ -9,6 +9,11 @@ var bodies_in_gravity_field: Array[RigidBody2D] = []
 
 @onready var sprite: Sprite2D = $Sprite
 @onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
+@onready var orbit_progress_indicator: Line2D = $OrbitProgressIndicator
+
+# Orbital progress tracking
+var current_orbiting_player: Player = null
+var orbit_radius: float = 0.0
 
 # This section controls collectable spawning
 @export var can_have_collectable: bool = true
@@ -97,6 +102,7 @@ func _on_body_entered(body: Node2D) -> void:
 			bodies_in_gravity_field.append(body)
 			if body is Player:
 				body.start_orbiting(self)
+				start_orbit_progress_display(body)
 
 
 # This function runs when a body exits the Area2D's collision shape.
@@ -107,3 +113,58 @@ func _on_body_exited(body: Node2D) -> void:
 		bodies_in_gravity_field.erase(body)
 		if body is Player:
 			body.stop_orbiting(self)
+			stop_orbit_progress_display()
+
+# This starts showing orbital progress for a player
+func start_orbit_progress_display(player: Player):
+	current_orbiting_player = player
+	# This calculates orbit radius based on collision shape
+	if collision_shape_2d and collision_shape_2d.shape is CircleShape2D:
+		var circle_shape = collision_shape_2d.shape as CircleShape2D
+		orbit_radius = circle_shape.radius * 1.2 # Slightly larger than planet
+	else:
+		orbit_radius = 100.0 # Default radius
+
+	orbit_progress_indicator.visible = true
+	orbit_progress_indicator.clear_points()
+
+# This stops showing orbital progress
+func stop_orbit_progress_display():
+	current_orbiting_player = null
+	orbit_progress_indicator.visible = false
+	orbit_progress_indicator.clear_points()
+
+# This updates the orbital progress arc based on player's accumulated angle
+func update_orbit_progress(accumulated_angle: float, completion_percentage: float):
+	if not orbit_progress_indicator.visible:
+		return
+
+	orbit_progress_indicator.clear_points()
+
+	# This calculates how much of the orbit to show
+	var progress = abs(accumulated_angle) / (2 * PI * completion_percentage)
+	progress = clamp(progress, 0.0, 1.0)
+
+	# This creates arc points
+	var num_points = int(progress * 64) # Up to 64 points for smooth arc
+	if num_points < 2:
+		return
+
+	for i in range(num_points + 1):
+		var angle = (float(i) / num_points) * progress * 2 * PI * completion_percentage
+		var point = Vector2(cos(angle), sin(angle)) * orbit_radius
+		orbit_progress_indicator.add_point(point)
+
+# This creates completion flash effect
+func flash_orbit_completion():
+	if not orbit_progress_indicator:
+		return
+
+	# This plays completion sound
+	MusicManager.play_audio_omni("UpUIBeep")
+
+	# This creates flash animation
+	var flash_tween = create_tween()
+	flash_tween.tween_property(orbit_progress_indicator, "default_color", Color.WHITE, 0.1)
+	flash_tween.tween_property(orbit_progress_indicator, "default_color", Color(0, 1, 1, 0.8), 0.2)
+	flash_tween.tween_callback(stop_orbit_progress_display)
