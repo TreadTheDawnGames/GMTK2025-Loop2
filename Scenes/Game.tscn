@@ -30,7 +30,8 @@ material = ExtResource("3_fgofq")
 offset_left = -619.0
 offset_top = -324.0
 offset_right = 2811.0
-offset_bottom = 1626.0
+offset_bottom = 3132.0
+mouse_filter = 2
 color = Color(0, 0, 0, 1)
 script = ExtResource("3_2irst")
 

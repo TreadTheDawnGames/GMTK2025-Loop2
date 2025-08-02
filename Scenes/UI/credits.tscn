@@ -2,7 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://dvwgvp8u8xo0i" path="res://Scenes/UI/Themes/UI_Theme.tres" id="1_1g7ho"]
 [ext_resource type="Script" uid="uid://d4ao5goma2tgt" path="res://Scripts/credits.gd" id="2_lm48m"]
-[ext_resource type="Script" uid="uid://c1e04v6b22eli" path="res://Scenes/UI/button_sounds.gd" id="5_sb5xt"]
+[ext_resource type="Script" uid="uid://c1e04v6b22eli" path="res://Scripts/Shop/button_sounds.gd" id="5_sb5xt"]
 
 [node name="Credits" type="Control"]
 layout_mode = 3
