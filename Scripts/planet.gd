@@ -143,26 +143,36 @@ func stop_orbit_progress_display():
 		orbit_progress_indicator.clear_points()
 
 # This updates the orbital progress arc based on player's accumulated angle
-func update_orbit_progress(accumulated_angle: float, completion_percentage: float, start_angle: float = 0.0):
-	# This ensures the orbit progress indicator exists and is visible before drawing.
-	if not is_instance_valid(orbit_progress_indicator) or not orbit_progress_indicator.visible:
+func update_orbit_progress(accumulated_angle: float, completion_percentage: float, start_angle: float, direction: float = 1.0):
+	
+	# This ensures the orbit progress indicator exists before drawing.
+	if not is_instance_valid(orbit_progress_indicator):
 		return
 
+	# This makes sure the line is visible before we add points to it.
+	orbit_progress_indicator.visible = true
+	# This removes all previous points from the line to redraw it from scratch.
 	orbit_progress_indicator.clear_points()
 
-	# This calculates how much of the orbit to show
-	var progress = abs(accumulated_angle) / (2 * PI * completion_percentage)
+	# This calculates how much of the orbit to show based on the player's progress.
+	var progress = accumulated_angle / (2 * PI * completion_percentage)
+	# This clamps the progress value between 0 (start) and 1 (full loop).
 	progress = clamp(progress, 0.0, 1.0)
 
-	# This creates arc points starting from the initial angle
-	var num_points = int(progress * 64) # Up to 64 points for smooth arc
+	# This determines how many points to draw for a smooth arc.
+	var num_points = int(progress * 64)
+	# This exits if there aren't enough points to draw a line.
 	if num_points < 2:
 		return
 
+	# This loop creates the points for the visual arc.
 	for i in range(num_points + 1):
-		# Start the arc from the initial angle where orbit began
-		var angle = start_angle + (float(i) / num_points) * progress * 2 * PI * completion_percentage
+		# MODIFICATION: The angle calculation now multiplies by the 'direction' parameter.
+		# This makes the line draw clockwise or counter-clockwise from the starting point.
+		var angle = start_angle + (float(i) / num_points) * progress * 2 * PI * completion_percentage * direction
+		# This converts the angle and radius into a 2D position.
 		var point = Vector2(cos(angle), sin(angle)) * orbit_radius
+		# This adds the calculated point to the line.
 		orbit_progress_indicator.add_point(point)
 
 # This creates completion flash effect
@@ -176,6 +186,9 @@ func flash_orbit_completion():
 
 	# This creates flash animation
 	var flash_tween = create_tween()
+	# This animates the line's color to bright white over 0.1 seconds.
 	flash_tween.tween_property(orbit_progress_indicator, "default_color", Color.WHITE, 0.1)
+	# This animates the line's color back to its normal cyan color.
 	flash_tween.tween_property(orbit_progress_indicator, "default_color", Color(0, 1, 1, 0.8), 0.2)
+	# This calls a function to hide the line after the flash is complete.
 	flash_tween.tween_callback(stop_orbit_progress_display)
