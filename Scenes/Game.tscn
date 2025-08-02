@@ -41,15 +41,7 @@ layer = 10
 position = Vector2(-1, -320)
 rotation = -1.5708
 physics_material_override = SubResource("PhysicsMaterial_2irst")
-orbit_completion_percentage = 0.95
-SoftlockTime = 3.0
-DEBUG_DoLoseCondition = true
 launch_power = 5.0
-boost_strength = 1000.0
-trajectory_prediction_enabled = false
-trajectory_steps = 50
-trajectory_step_time = 0.1
-softlockTime = 3.0
 
 [node name="Planet5" parent="." instance=ExtResource("5_b2bpf")]
 position = Vector2(346, 13708)
