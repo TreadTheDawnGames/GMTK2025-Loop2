@@ -23,17 +23,19 @@ func display_number(value: int, position: Vector2, is_critical: bool = false):
 	await number.resized
 	number.pivot_offset = Vector2(number.size / 2)
 	
+	var display_duration = 2.5 # Change this value to control how long it stays
+	
 	var tween = get_tree().create_tween()
 	tween.set_parallel(true)
 	tween.tween_property(
-		number, "position:y", number.position.y - 24, 1
-	)#.set_ease(Tween.EASE_OUT)
+		number, "position:y", number.position.y - 24, display_duration
+	)
 	tween.tween_property(
-		number, "position.y", number.position.y, 1
-	)#.set_ease(Tween.EASE_IN).set_delay(0.25)
+		number, "position.y", number.position.y, display_duration
+	)
 	tween.tween_property(
 			number, "scale", Vector2.ZERO, 0.25
-	)#.set_ease(Tween.EASE_IN).set_delay(0.5)
+	).set_delay(display_duration - 0.25) # Delay the scaling down effect
 	
 	await tween.finished
 	number.queue_free()
