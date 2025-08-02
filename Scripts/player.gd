@@ -124,6 +124,7 @@ func _input(ev: InputEvent) -> void:
 		var event = ev as InputEventMouseButton
 		if event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 			clickTimer = get_tree().create_timer(CLICK_TIME)
+			get_viewport().set_input_as_handled()
 
 # a timer to check if the mouse button was down/up quick
 var clickTimer : SceneTreeTimer
