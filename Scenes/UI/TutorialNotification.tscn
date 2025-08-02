@@ -1,11 +1,12 @@
 [gd_scene load_steps=3 format=3 uid="uid://d1q4c8m6wbfb8"]
 
-[ext_resource type="Script" path="res://Scripts/TutorialNotification.gd" id="1_tutorial"]
+[ext_resource type="Script" uid="uid://cb8wipuuls1ju" path="res://Scripts/TutorialNotification.gd" id="1_tutorial"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_tutorial"]
 font_size = 24
 font_color = Color(0, 0, 0, 1)
 outline_size = 1
+outline_color = Color(0, 0, 0, 1)
 
 [node name="TutorialNotification" type="Control"]
 layout_mode = 3
