@@ -5,6 +5,8 @@ class_name GameHUD
 @onready var score_label: Label = $VBoxContainer/ScoreLabel
 @onready var boosts_label: Label = $VBoxContainer/BoostsLabel
 @onready var boost_power_label: Label = $VBoxContainer/BoostPowerLabel
+@onready var points_label: Label = $VBoxContainer/PointsLabel
+@onready var mult_label: Label = $VBoxContainer/MultLabel
 @onready var compass = %Compass
 @onready var objectives_panel: ObjectivesPanel = $ObjectivesPanel
 @onready var notification_container: Control = $NotificationContainer
@@ -36,9 +38,11 @@ func setup_references(player_ref: RigidBody2D, home_ref: Area2D, planets_ref: Ar
 func _process(_delta: float) -> void:
 	if not is_instance_valid(player):
 		return
-	
+
 	update_boost_power_display()
 	update_boosts_display()
+	update_points_display()
+	update_mult_display()
 
 func _on_score_changed(_new_score: int) -> void:
 	update_score_display()
@@ -78,6 +82,16 @@ func update_boost_power_display() -> void:
 		boost_power_label.text = "Launch Power: %d%%" % power_int
 	else:
 		boost_power_label.visible = false
+
+func update_points_display() -> void:
+	if player:
+		var points_text = "Points: " + str(player.points)
+		points_label.text = points_text
+
+func update_mult_display() -> void:
+	if player:
+		var mult_text = "Mult: x" + str(player.mult)
+		mult_label.text = mult_text
 
 func update_collectable_counts() -> void:
 	# Update the score display which now includes collectable counts

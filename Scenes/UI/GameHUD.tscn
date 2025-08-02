@@ -43,6 +43,16 @@ layout_mode = 2
 text = "Launch Power: 0%"
 label_settings = SubResource("LabelSettings_4y6w4")
 
+[node name="PointsLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Points: 0"
+label_settings = SubResource("LabelSettings_4y6w4")
+
+[node name="MultLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Mult: x1"
+label_settings = SubResource("LabelSettings_4y6w4")
+
 [node name="Compass" parent="." instance=ExtResource("2_compass")]
 unique_name_in_owner = true
 layout_mode = 1
