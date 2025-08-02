@@ -21,8 +21,6 @@ func _ready() -> void:
 		Surface.body_entered.connect(_on_shop_area_entered)
 		Surface.body_exited.connect(_on_shop_area_exited)
 
-	# This adds some test score for shop testing
-	GameManager.add_score(500)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:

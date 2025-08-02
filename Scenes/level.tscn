@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://by6pk8ix075tr" path="res://Scripts/tools/level.gd" id="1_tumq0"]
 [ext_resource type="PackedScene" uid="uid://vuorl2ga7vdk" path="res://Scenes/planet_medium.tscn" id="2_wqkje"]
-
 [ext_resource type="PackedScene" uid="uid://h0vfnklanw5d" path="res://Scenes/planet_large.tscn" id="5_8c0lf"]
 [ext_resource type="PackedScene" uid="uid://d1rrwaam8e5cr" path="res://Scenes/planet_small.tscn" id="5_wqkje"]
 
