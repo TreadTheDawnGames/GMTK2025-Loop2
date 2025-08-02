@@ -2,9 +2,6 @@ extends Control
 
 const SETTINGS = preload("res://Scenes/UI/Settings.tscn")
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass
 
 # Called when Start Game button is pressed
 func _on_start_button_pressed() -> void:

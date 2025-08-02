@@ -92,6 +92,12 @@ func show_win_screen() -> void:
 	set_game_state(GameState.WIN)
 	get_tree().change_scene_to_file.call_deferred("res://Scenes/UI/WinScreen.tscn")
 
+# Show win screen with victory stats
+func show_win_screen_with_stats(stats: Dictionary) -> void:
+	# This stores stats for the win screen to access
+	set_meta("victory_stats", stats)
+	show_win_screen()
+
 # Show lose screen
 func show_lose_screen() -> void:
 	set_game_state(GameState.LOSE)
