@@ -64,16 +64,16 @@ radius = 450.0
 [node name="Planet4" instance=ExtResource("1_si0xu")]
 gravity_strength = 2000.0
 
-[node name="Sprite" parent="." index="0"]
-scale = Vector2(0.88, 0.878001)
-texture = ExtResource("2_wffiv")
-
-[node name="CollisionShape2D" parent="." index="1"]
+[node name="CollisionShape2D" parent="." index="0"]
 shape = SubResource("CircleShape2D_8xqrg")
 
 [node name="Sprite2D" parent="CollisionShape2D" index="0"]
 material = SubResource("ShaderMaterial_i68xm")
 scale = Vector2(3.77001, 3.77001)
+
+[node name="Sprite" parent="." index="1"]
+scale = Vector2(0.88, 0.878001)
+texture = ExtResource("2_wffiv")
 
 [node name="CollisionShape2D" parent="AnimatableBody2D" index="0"]
 shape = SubResource("CircleShape2D_hvc1f")

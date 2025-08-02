@@ -43,10 +43,6 @@ shader_parameter/step6 = 0.266
 script = ExtResource("1_ej51v")
 collectable_spawn_chance = 0.2
 
-[node name="Sprite" type="Sprite2D" parent="."]
-script = ExtResource("12_q5dxo")
-PlanetSprites = Array[Texture2D]([ExtResource("2_m5833"), ExtResource("3_q5dxo"), ExtResource("4_pgxtg"), ExtResource("5_ueupv"), ExtResource("6_vwein"), ExtResource("7_gebx1"), ExtResource("8_04ox6"), ExtResource("9_roqmg"), ExtResource("10_qbjmh"), ExtResource("11_eci5g")])
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 material = SubResource("ShaderMaterial_aogve")
 shape = SubResource("CircleShape2D_effgs")
@@ -56,6 +52,10 @@ material = SubResource("ShaderMaterial_umgws")
 scale = Vector2(0.557429, 0.557429)
 texture = ExtResource("2_r86au")
 script = ExtResource("4_aogve")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+script = ExtResource("12_q5dxo")
+PlanetSprites = Array[Texture2D]([ExtResource("2_m5833"), ExtResource("3_q5dxo"), ExtResource("4_pgxtg"), ExtResource("5_ueupv"), ExtResource("6_vwein"), ExtResource("7_gebx1"), ExtResource("8_04ox6"), ExtResource("9_roqmg"), ExtResource("10_qbjmh"), ExtResource("11_eci5g")])
 
 [node name="AnimatableBody2D" type="AnimatableBody2D" parent="."]
 

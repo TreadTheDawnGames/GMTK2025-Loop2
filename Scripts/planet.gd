@@ -28,6 +28,7 @@ var orbit_radius: float = 0.0
 	preload("res://Scenes/Collectables/Collectable_EnergyCore.tscn")
 ]
 
+
 # This holds a reference to the spawned collectable instance.
 var spawned_collectable: Collectable = null
 

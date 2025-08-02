@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dxtc51thgwmwk"]
+[gd_scene load_steps=7 format=3 uid="uid://bdnjtwxu3rtvy"]
 
 [ext_resource type="PackedScene" uid="uid://d0j2xqgs8463m" path="res://Scenes/Planet.tscn" id="1_bgxmv"]
 [ext_resource type="Texture2D" uid="uid://b6y5iuktvcwd4" path="res://Assets/kenney_planets/Planets/planet00.png" id="2_7paaq"]

@@ -393,6 +393,7 @@ func handle_orbit_tracking():
 		var is_first_orbit = current_orbiting_planet not in orbited_planets
 		if is_first_orbit:
 			orbited_planets.append(current_orbiting_planet)
+			
 			# This adds a +5 score bonus for the first orbit.
 			GameManager.add_score(5)
 			print("First orbit bonus! +5 score")
