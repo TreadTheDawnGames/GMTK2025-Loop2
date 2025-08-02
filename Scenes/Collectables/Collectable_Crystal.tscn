@@ -10,7 +10,7 @@ collection_name = "Crystal"
 
 [node name="Sprite2D" parent="." index="0"]
 modulate = Color(1, 0.5, 1, 1)
-scale = Vector2(1.765, 1.765)
+scale = Vector2(9.23804, 9.23804)
 texture = ExtResource("2_crystal_tex")
 
 [node name="CollectionParticles" parent="." index="2"]

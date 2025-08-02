@@ -9,8 +9,9 @@ point_value = 25
 collection_name = "Satellite"
 
 [node name="Sprite2D" parent="." index="0"]
-texture = ExtResource("2_satellite_tex")
 modulate = Color(0.8, 1, 1, 1)
+scale = Vector2(2.0622, 2.0622)
+texture = ExtResource("2_satellite_tex")
 
 [node name="CollectionParticles" parent="." index="2"]
 gravity = Vector2(0, 80)

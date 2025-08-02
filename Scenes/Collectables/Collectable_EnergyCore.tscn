@@ -8,6 +8,7 @@ collectable_type = 3
 collection_name = "Energy Core"
 
 [node name="Sprite2D" parent="." index="0"]
+scale = Vector2(1.91159, 1.91159)
 texture = ExtResource("2_energy_tex")
 
 [node name="CollectionParticles" parent="." index="2"]

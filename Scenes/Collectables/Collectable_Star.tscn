@@ -8,7 +8,7 @@ point_value = 10
 collection_name = "Star"
 
 [node name="Sprite2D" parent="." index="0"]
-scale = Vector2(1.925, 1.925)
+scale = Vector2(8.15578, 8.15578)
 texture = ExtResource("2_startex")
 
 [node name="CollectionParticles" parent="." index="2"]
