@@ -14,6 +14,7 @@ const LAUNCH_COOLDOWN_TIME : float = 0.3
 # yeah that (half a second)
 var canBoost : bool = false
 
+@export var SoftlockTime : float = 5
 @export var DEBUG_DoLoseCondition : bool = true
 # The particles
 @onready var _LaunchParticles: ParticleEffect = $LaunchParticles
@@ -160,6 +161,8 @@ func _process(_delta: float) -> void:
 			apply_boost()
 			clickTimer = null
 
+var softlockTimer : SceneTreeTimer
+var isBeingSaved : bool = false
 # This function runs every physics frame, ideal for physics-related code.
 func _physics_process(_delta: float) -> void:
 	# Don't process physics input if game is paused (shop is open)
@@ -170,6 +173,19 @@ func _physics_process(_delta: float) -> void:
 	#global_position += Vector2(Input.get_axis("DEBUG-LEFT", "DEBUG-RIGHT"), Input.get_axis("DEBUG-UP", "DEBUG-DOWN")) * 1000 * delta
 	#if(Input.is_action_just_pressed("DEBUG-ADD_BOOST")):
 		#BoostCount +=1
+	
+	#print("Velocity" + str(linear_velocity.length()))
+	#print("IsBeingSaved: " + str(isBeingSaved))
+	
+	if(not onPlanet and BoostCount == 0 and current_state == State.LAUNCHED and (linear_velocity.length() < 5) and not isBeingSaved):
+		isBeingSaved = true
+		if(not softlockTimer):
+			print("Summoning saving asteroid")
+			softlockTimer = get_tree().create_timer(5)
+			softlockTimer.timeout.connect(func(): 
+				SoftlockFixer.FixSoftlock(global_position)
+			)
+
 	
 	# Check lose condition - if player is too far from origin
 	check_lose_condition()
@@ -186,7 +202,11 @@ func _physics_process(_delta: float) -> void:
 					#set_deferred("sleeping", true)
 					Reset()
 				onPlanet = true
-
+			elif collider is Asteroid:
+				softlockTimer = null
+				isBeingSaved = false
+				
+		
 	# This checks if the player is in the air.
 	if current_state == State.LAUNCHED:
 		# This makes the rocket point in the direction it's moving.
