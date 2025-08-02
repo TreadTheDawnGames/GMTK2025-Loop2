@@ -44,7 +44,7 @@ physics_material_override = SubResource("PhysicsMaterial_52ee3")
 gravity_scale = 0.0
 freeze_mode = 1
 script = ExtResource("1_player")
-launch_power = 300.0
+launch_power = 400.0
 max_pull_distance = 300.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -69,6 +69,7 @@ texture_mode = 2
 begin_cap_mode = 2
 end_cap_mode = 2
 script = ExtResource("4_52ee3")
+length = 100
 
 [node name="Node2D2" type="Node2D" parent="CollisionShape2D"]
 position = Vector2(-39, 36)
@@ -83,6 +84,7 @@ texture_mode = 2
 begin_cap_mode = 2
 end_cap_mode = 2
 script = ExtResource("4_52ee3")
+length = 100
 
 [node name="Line2D" type="Line2D" parent="."]
 
@@ -167,3 +169,5 @@ script = ExtResource("4_camera")
 script = ExtResource("5_audio")
 
 [node name="AudioListener2D" type="AudioListener2D" parent="."]
+
+[node name="PointNumbersOrigin" type="Node2D" parent="."]

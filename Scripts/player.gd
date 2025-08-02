@@ -2,6 +2,12 @@ extends RigidBody2D
 class_name Player
 @onready var audioHandler: PlayerAudioHandler = $AudioHandler
 
+@onready var trail_2d_1: Line2D = $CollisionShape2D/Node2D/Trail2D
+@onready var trail_2d_2: Line2D = $CollisionShape2D/Node2D2/Trail2D
+
+@onready var point_numbers_origin: Node2D = $PointNumbersOrigin
+
+
 # This defines a set of named states for the player's state machine.
 enum State {
 	READY_TO_AIM,
@@ -43,6 +49,15 @@ const CLICK_TIME : float = 0.2
 
 # Flag to double launch if on planet
 var onPlanet : bool = false
+
+#the variable that counts your loop streak
+var loopCounter : int = 0
+var highScore : int = 0
+
+# Scoring system variables
+var points : int = 0  # points earned from orbiting planets
+var mult : int = 0    # multiplier from entering gravity fields and skips
+var final_score : int = 0  # calculated when crashing
 
 static var Position : Vector2
 # This variable will hold the player's current state from the enum above.
@@ -102,6 +117,13 @@ func apply_ship_color() -> void:
 func _on_ship_color_changed(_new_color: Color) -> void:
 	apply_ship_color()
 
+# Calculate final score when crashing
+func calculate_final_score() -> void:
+	final_score = points * mult
+	print("Final Score Calculation: ", points, " points * ", mult, " mult = ", final_score)
+	GameManager.add_score(final_score)
+	PointNumbers.display_number(final_score, point_numbers_origin.global_position, 2, -2)
+
 # Check if player has gone too far and should lose
 func check_lose_condition() -> void:
 	if has_lost or not DEBUG_DoLoseCondition:
@@ -111,7 +133,10 @@ func check_lose_condition() -> void:
 	if distance_from_origin > max_distance_from_origin:
 		has_lost = true
 		print("Player went too far! Distance: ", distance_from_origin)
-		
+
+		# Calculate and add final score before showing lose screen
+		calculate_final_score()
+
 		# Show lose screen after a short delay
 		#await get_tree().create_timer(1.0).timeout
 		#Actually don't lol
@@ -233,12 +258,31 @@ func _physics_process(_delta: float) -> void:
 			var collider = collision.get_collider()
 			if collider.owner is BasePlanet:
 				if(!onPlanet):
-					if(canSkip == true) and collider.owner is not HomePlanet:
-
+					if(canSkip == true) and collider.owner is not HomePlanet and collider.owner is not Asteroid:
 						print("Skip")
 						canSkip = false
+						BoostCount += 1
+						points += 3
+						PointNumbers.display_number(points, point_numbers_origin.global_position, 0)
+						
+						#mult *= 2
+						#PointNumbers.display_number(mult, point_numbers_origin.global_position, 1)
+
+						# Add mult *2 every time a skip is performed
+						#mult *= 2
+						#print("Skip performed! Mult: ", mult)
+
 						audioHandler.PlaySoundAtGlobalPosition(Sounds.ShipCollide, global_position)
 					else:
+						#reset loop counter
+						loopCounter = 0
+						#Reset Trail
+						trail_2d_1.clear_points()
+						trail_2d_2.clear_points()
+
+						# Calculate final score when crashing into planet
+						calculate_final_score()
+
 						print("onPlanet")
 						linear_velocity = Vector2.ZERO
 						angular_velocity = 0.0
@@ -247,6 +291,9 @@ func _physics_process(_delta: float) -> void:
 						Reset()
 						onPlanet = true
 			elif collider is Asteroid:
+				# Calculate final score when crashing into asteroid
+				calculate_final_score()
+
 				audioHandler.PlaySoundAtGlobalPosition(Sounds.ShipCollide, global_position)
 				softlockTimer = null
 				isBeingSaved = false
@@ -285,12 +332,19 @@ func handle_orbit_tracking():
 	# This checks if we completed a full circle (2 * PI radians).
 	if abs(accumulated_orbit_angle) >= (2 * PI) * orbit_completion_percentage:
 		print("Loop complete!")
+
+		# Add +1 to points every time orbiting a planet
+		points += 1
+		print("Orbited planet! Points: ", points)
+		#display points
+		PointNumbers.display_number(points, point_numbers_origin.global_position, 0)
+		
 		# This tells the planet to give its collectable.
 		BoostCount += 1
 		audioHandler.PlaySoundAtGlobalPosition(Sounds.CollectableGet, global_position)
 		current_orbiting_planet.collect_item(self)
 		GameManager.add_score(50)
-		
+
 		# This resets the angle so we don't collect again immediately.
 		accumulated_orbit_angle = 0.0
 
@@ -305,6 +359,11 @@ func start_orbiting(planet: BasePlanet):
 	accumulated_orbit_angle = 0.0
 	last_angle_to_planet = (global_position - planet.global_position).angle()
 	print("Started orbiting: ", planet.name)
+	PointNumbers.display_number(mult, point_numbers_origin.global_position, 1)
+
+	# Add +1 to mult every time entering a gravity field
+	mult += 1
+	print("Entered gravity field! Mult: ", mult)
 
 # This function is called by a planet when the player leaves its gravity.
 func stop_orbiting(planet: BasePlanet):
@@ -389,8 +448,13 @@ func update_aim_line() -> void:
 func Reset():
 	Sprite.frame_coords.y = 0
 	current_state = State.READY_TO_AIM
-	
+
 	accumulated_orbit_angle = 0.0
+
+	# Reset scoring variables for new attempt
+	points = 0
+	mult = 1
+	final_score = 0
 
 	# Reset boost count to starting amount (including shop upgrades)
 	if has_meta("starting_boosts"):
