@@ -27,7 +27,7 @@ var canSkip : bool = true
 @export_category("Orbit Settings")
 @export_range(0.0, 1.0) var orbit_completion_percentage: float = 0.85 # 85%
 
-@export var SoftlockTime : float = 5
+@export var SoftlockTime : float = 3
 @export var DEBUG_DoLoseCondition : bool = true
 # The particles
 @onready var _LaunchParticles: ParticleEffect = $LaunchParticles
@@ -219,17 +219,21 @@ func _process(_delta: float) -> void:
 			apply_boost()
 			clickTimer = null
 
-var softlockTimer : SceneTreeTimer
-var isBeingSaved : bool = false
+static var softlockTimer : SceneTreeTimer
+static var isBeingSaved : bool = false
 @export var softlockTime : float = 3.0
-var doNotSave = false
+static var doNotSave : bool = false
 # This function runs every physics frame, ideal for physics-related code.
 func _physics_process(_delta: float) -> void:
+	print("IsBeingSaved:" + str(isBeingSaved))
 	# Don't process physics input if game is paused (shop is open)
 	if get_tree().paused:
 		return
 	# Debug movement (assuming "DEBUG-*" inputs are set up) || WASD
-	#global_position += Vector2(Input.get_axis("DEBUG-LEFT", "DEBUG-RIGHT"), Input.get_axis("DEBUG-UP", "DEBUG-DOWN")) * 1000 * delta
+	
+	#linear_velocity += Vector2(Input.get_axis("DEBUG-LEFT", "DEBUG-RIGHT"), Input.get_axis("DEBUG-UP", "DEBUG-DOWN")) * 500
+	#if(Input.is_action_just_released("DEBUG-LEFT") or Input.is_action_just_released("DEBUG-RIGHT") or Input.is_action_just_released("DEBUG-UP") or Input.is_action_just_released("DEBUG-DOWN")):
+		#linear_velocity = Vector2.ZERO
 	#if(Input.is_action_just_pressed("DEBUG-ADD_BOOST")):
 		#BoostCount +=1
 	
@@ -292,12 +296,13 @@ func _physics_process(_delta: float) -> void:
 						onPlanet = true
 			elif collider is Asteroid:
 				# Calculate final score when crashing into asteroid
-				calculate_final_score()
+				#calculate_final_score()
 
 				audioHandler.PlaySoundAtGlobalPosition(Sounds.ShipCollide, global_position)
 				softlockTimer = null
 				isBeingSaved = false
 				doNotSave = true
+				
 				
 		
 	# This checks if the player is in the air.

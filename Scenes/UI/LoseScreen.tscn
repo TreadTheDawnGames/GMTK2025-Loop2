@@ -2,7 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://dvwgvp8u8xo0i" path="res://Scenes/UI/Themes/UI_Theme.tres" id="1_6xaih"]
 [ext_resource type="Script" uid="uid://b58h6psnc56vf" path="res://Scripts/LoseScreen.gd" id="1_lose_screen"]
-[ext_resource type="Script" path="res://Scripts/Shop/button_sounds.gd" id="3_3abt3"]
+[ext_resource type="Script" uid="uid://c1e04v6b22eli" path="res://Scripts/Shop/button_sounds.gd" id="3_3abt3"]
 
 [sub_resource type="Shader" id="Shader_6xaih"]
 code = "shader_type canvas_item;
