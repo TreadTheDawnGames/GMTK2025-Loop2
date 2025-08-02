@@ -7,7 +7,6 @@ class_name GameHUD
 @onready var compass = %Compass
 @onready var objectives_panel: ObjectivesPanel = $ObjectivesPanel
 @onready var notification_container: Control = $NotificationContainer
-@onready var mult_label: Label = $VBoxContainer/MultLabel
 @onready var points_label: RichTextLabel = $PointsLabel
 @onready var boosts_label: Label = $BoostsLabel
 

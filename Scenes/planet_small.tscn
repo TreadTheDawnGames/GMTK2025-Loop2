@@ -73,7 +73,7 @@ shape = SubResource("CircleShape2D_hmd8h")
 
 [node name="Sprite2D" parent="CollisionShape2D" index="0"]
 material = SubResource("ShaderMaterial_k6nrp")
-scale = Vector2(2.79015, 2.79015)
+scale = Vector2(2.71673, 2.71673)
 
 [node name="CollisionShape2D" parent="AnimatableBody2D" index="0"]
 scale = Vector2(1.36, 1.36)

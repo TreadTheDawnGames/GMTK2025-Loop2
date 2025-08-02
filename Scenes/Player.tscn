@@ -162,7 +162,7 @@ hue_variation_max = 1.0
 script = ExtResource("3_particles")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(0.345, 0.345)
+zoom = Vector2(0.22, 0.22)
 script = ExtResource("4_camera")
 
 [node name="AudioHandler" type="Node2D" parent="."]

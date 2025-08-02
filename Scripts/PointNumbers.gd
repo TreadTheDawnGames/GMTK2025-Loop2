@@ -35,7 +35,7 @@ func display_number(value: int, position: Vector2, is_critical: int = 0, display
 		number, "position:y", number.position.y - 200, display_duration
 	)
 	tween.tween_property(
-		number, "position.y", number.position.y, display_duration
+		number, "position:y", number.position.y, display_duration
 	)
 	tween.tween_property(
 			number, "scale", Vector2.ZERO, 0.25

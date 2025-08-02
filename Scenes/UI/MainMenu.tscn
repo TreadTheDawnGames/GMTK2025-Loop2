@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://ew10v6pbwxv6" path="res://Scripts/MainMenu.gd" id="1_main_menu"]
 [ext_resource type="Theme" uid="uid://dvwgvp8u8xo0i" path="res://Scenes/UI/Themes/UI_Theme.tres" id="1_mjmdf"]
 [ext_resource type="Material" uid="uid://2wo2meekggrg" path="res://Scenes/Effects/StarBackground_Menu.tres" id="3_72sra"]
-[ext_resource type="Script" uid="uid://c1e04v6b22eli" path="res://Scripts/Shop/button_sounds.gd" id="4_t6w0q"]
+[ext_resource type="Script" path="res://Scripts/Shop/button_sounds.gd" id="4_t6w0q"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
