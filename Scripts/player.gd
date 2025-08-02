@@ -222,7 +222,7 @@ func _physics_process(_delta: float) -> void:
 		# This checks if the boost is available and the user pressed boost.
 		if BoostCount > 0 and Input.is_action_just_pressed("boost"):
 			apply_boost()
-		if(Input.is_action_pressed("brake")):
+		if(Input.is_action_pressed("brake") or Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT)):
 			linear_damp = 5
 		else:
 			linear_damp = 0
