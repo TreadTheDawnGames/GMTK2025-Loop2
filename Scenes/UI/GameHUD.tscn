@@ -21,6 +21,26 @@ mouse_filter = 2
 theme = ExtResource("1_663bt")
 script = ExtResource("1_31s1k")
 
+[node name="PointsLabel" type="RichTextLabel" parent="."]
+layout_mode = 2
+offset_left = 33.0
+offset_top = 596.0
+offset_right = 802.0
+offset_bottom = 738.0
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "10 * 10"
+
+[node name="BoostsLabel" type="Label" parent="."]
+layout_mode = 2
+offset_left = 964.0
+offset_top = 601.0
+offset_right = 1249.0
+offset_bottom = 693.0
+theme_override_font_sizes/font_size = 30
+text = "Boosts: 1"
+label_settings = SubResource("LabelSettings_4y6w4")
+
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 0
 offset_left = 15.0
@@ -33,24 +53,9 @@ layout_mode = 2
 text = "Score: 0"
 label_settings = SubResource("LabelSettings_4y6w4")
 
-[node name="BoostsLabel" type="Label" parent="VBoxContainer"]
-layout_mode = 2
-text = "Boosts: 1"
-label_settings = SubResource("LabelSettings_4y6w4")
-
 [node name="BoostPowerLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 text = "Launch Power: 0%"
-label_settings = SubResource("LabelSettings_4y6w4")
-
-[node name="PointsLabel" type="Label" parent="VBoxContainer"]
-layout_mode = 2
-text = "Points: 0"
-label_settings = SubResource("LabelSettings_4y6w4")
-
-[node name="MultLabel" type="Label" parent="VBoxContainer"]
-layout_mode = 2
-text = "Mult: x1"
 label_settings = SubResource("LabelSettings_4y6w4")
 
 [node name="Compass" parent="." instance=ExtResource("2_compass")]
@@ -72,7 +77,9 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -250.0
-offset_top = -100.0
+offset_left = -683.0
+offset_top = -544.0
+offset_right = -433.0
+offset_bottom = -444.0
 grow_horizontal = 0
 grow_vertical = 0

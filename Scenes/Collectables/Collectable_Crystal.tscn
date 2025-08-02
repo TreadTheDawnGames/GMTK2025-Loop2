@@ -9,9 +9,9 @@ point_value = 50
 collection_name = "Crystal"
 
 [node name="Sprite2D" parent="." index="0"]
-texture = ExtResource("2_crystal_tex")
 modulate = Color(1, 0.5, 1, 1)
 scale = Vector2(1.765, 1.765)
+texture = ExtResource("2_crystal_tex")
 
 [node name="CollectionParticles" parent="." index="2"]
 amount = 25

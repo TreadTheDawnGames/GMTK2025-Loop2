@@ -1,4 +1,5 @@
 extends Node
+const UI_THEME = preload("res://Scenes/UI/Themes/UI_Theme.tres")
 
 func display_number(value: int, position: Vector2, is_critical: int = 0, display_time: float = 0.20):
 	var number = Label.new()
@@ -6,6 +7,7 @@ func display_number(value: int, position: Vector2, is_critical: int = 0, display
 	number.text = str(value)
 	number.z_index = 5
 	number.label_settings = LabelSettings.new()
+	number.theme = UI_THEME
 	
 	var color = "#FFF"
 	if is_critical == 1:

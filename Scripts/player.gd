@@ -234,12 +234,15 @@ func _physics_process(_delta: float) -> void:
 						print("Skip")
 						canSkip = false
 						BoostCount += 1
-						mult += mult
-						PointNumbers.display_number(mult, point_numbers_origin.global_position, 1)
+						points += 3
+						PointNumbers.display_number(points, point_numbers_origin.global_position, 0)
+						
+						#mult *= 2
+						#PointNumbers.display_number(mult, point_numbers_origin.global_position, 1)
 
 						# Add mult *2 every time a skip is performed
-						mult *= 2
-						print("Skip performed! Mult: ", mult)
+						#mult *= 2
+						#print("Skip performed! Mult: ", mult)
 
 						audioHandler.PlaySoundAtGlobalPosition(Sounds.ShipCollide, global_position)
 					else:
@@ -302,16 +305,12 @@ func handle_orbit_tracking():
 	if abs(accumulated_orbit_angle) >= (2 * PI) * orbit_completion_percentage:
 		print("Loop complete!")
 
-		#Display the number of loops you've done
-		loopCounter += 1
-		if loopCounter >= highScore:
-			highScore += 1
-
 		# Add +1 to points every time orbiting a planet
 		points += 1
 		print("Orbited planet! Points: ", points)
-
-		PointNumbers.display_number(loopCounter, point_numbers_origin.global_position, 0)
+		#display points
+		PointNumbers.display_number(points, point_numbers_origin.global_position, 0)
+		
 		# This tells the planet to give its collectable.
 		BoostCount += 1
 		audioHandler.PlaySoundAtGlobalPosition(Sounds.CollectableGet, global_position)
