@@ -102,13 +102,25 @@ max_value = 1.0
 step = 0.01
 
 [node name="Spacer4" type="Control" parent="Panel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 10)
+custom_minimum_size = Vector2(0, 19.5)
 layout_mode = 2
 
-[node name="BackButton" type="Button" parent="Panel/VBoxContainer" groups=["Button"]]
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="CreditsButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
+modulate = Color(0.9, 0.9, 0.9, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+text = "CREDITS"
+script = ExtResource("5_kg15k")
+metadata/_custom_type_script = "uid://c1e04v6b22eli"
+
+[node name="BackButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer" groups=["Button"]]
+modulate = Color(1, 0.9, 0.9, 1)
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
-text = "BACK TO MENU"
+text = "CLOSE"
 script = ExtResource("5_kg15k")
 
 [node name="PlayerAudioHandler" type="Node2D" parent="."]
@@ -116,4 +128,5 @@ script = ExtResource("5_hfiyb")
 metadata/_custom_type_script = "uid://deew7a1ghrogw"
 
 [connection signal="value_changed" from="Panel/VBoxContainer/ColorSliderContainer/ColorSlider" to="." method="_on_color_slider_value_changed"]
-[connection signal="pressed" from="Panel/VBoxContainer/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/CreditsButton" to="." method="_on_credits_button_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/BackButton" to="." method="_on_back_button_pressed"]
