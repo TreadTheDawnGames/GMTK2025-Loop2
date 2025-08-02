@@ -9,6 +9,8 @@ enum State {
 	LAUNCHED
 }
 
+var mobileBrake : bool = false
+
 # A cooldown for launching. TTDG: I use it to make sure releasing fast doesn't use a boost.
 const LAUNCH_COOLDOWN_TIME : float = 0.3
 # yeah that (half a second)
@@ -113,6 +115,11 @@ func _input(ev: InputEvent) -> void:
 			SingleTouchDown = true
 		elif ev.index == 0 and not ev.is_pressed():
 			SingleTouchDown = false
+		elif ev.index == 1:
+			mobileBrake = true
+		elif ev.index == 1:
+			mobileBrake = false
+			
 	if ev is InputEventMouseButton:
 		var event = ev as InputEventMouseButton
 		if event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
@@ -222,7 +229,7 @@ func _physics_process(_delta: float) -> void:
 		# This checks if the boost is available and the user pressed boost.
 		if BoostCount > 0 and Input.is_action_just_pressed("boost"):
 			apply_boost()
-		if(Input.is_action_pressed("brake") or Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT)):
+		if(Input.is_action_pressed("brake") or Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT) or mobileBrake):
 			linear_damp = 5
 		else:
 			linear_damp = 0
