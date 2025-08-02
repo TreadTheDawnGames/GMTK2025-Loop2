@@ -10,7 +10,7 @@ radius = 2200.0
 radius = 871.001
 
 [node name="Planet3" instance=ExtResource("1_xtc1m")]
-gravity_strength = 1800.0
+gravity_strength = 2400.0
 
 [node name="Sprite" parent="." index="0"]
 scale = Vector2(1.7, 1.72)
@@ -20,7 +20,7 @@ texture = ExtResource("2_qlmj2")
 shape = SubResource("CircleShape2D_ngwap")
 
 [node name="Sprite2D" parent="CollisionShape2D" index="0"]
-scale = Vector2(6.08442, 6.08442)
+scale = Vector2(5.92431, 5.92431)
 
 [node name="CollisionShape2D" parent="AnimatableBody2D" index="0"]
 shape = SubResource("CircleShape2D_s31nm")

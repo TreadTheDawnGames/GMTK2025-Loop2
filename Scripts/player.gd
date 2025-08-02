@@ -16,6 +16,9 @@ var canBoost : bool = false
 
 var canSkip : bool = true
 
+@export_category("Orbit Settings")
+@export_range(0.0, 1.0) var orbit_completion_percentage: float = 0.85 # 85%
+
 @export var SoftlockTime : float = 5
 @export var DEBUG_DoLoseCondition : bool = true
 # The particles
@@ -252,7 +255,7 @@ func handle_orbit_tracking():
 	last_angle_to_planet = current_angle
 	
 	# This checks if we completed a full circle (2 * PI radians).
-	if abs(accumulated_orbit_angle) >= 2 * PI:
+	if abs(accumulated_orbit_angle) >= (2 * PI) * orbit_completion_percentage:
 		print("Loop complete!")
 		# This tells the planet to give its collectable.
 		BoostCount += 1

@@ -52,7 +52,7 @@ shape = SubResource("CircleShape2D_effgs")
 
 [node name="Sprite2D" type="Sprite2D" parent="CollisionShape2D"]
 material = SubResource("ShaderMaterial_umgws")
-scale = Vector2(0.572495, 0.572495)
+scale = Vector2(0.557429, 0.557429)
 texture = ExtResource("2_r86au")
 script = ExtResource("4_aogve")
 
