@@ -41,6 +41,7 @@ shader_parameter/step6 = 0.266
 
 [node name="Planet2" type="Area2D"]
 script = ExtResource("1_ej51v")
+collectable_spawn_chance = 0.2
 
 [node name="Sprite" type="Sprite2D" parent="."]
 script = ExtResource("12_q5dxo")
