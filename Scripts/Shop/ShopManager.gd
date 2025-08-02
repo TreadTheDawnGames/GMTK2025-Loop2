@@ -16,6 +16,10 @@ var current_player: Player = null
 # Signals
 signal shop_closed
 
+# Purchase feedback properties
+var score_flash_tween: Tween
+var success_message_scene = preload("res://Scenes/UI/TutorialNotification.tscn")
+
 func _ready():
 	# This tells the node to keep running even when the game is paused.
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -162,8 +166,12 @@ func purchase_item(item: ShopItem, button: SoundButton, cost_label: Label):
 		button.disabled = not item.can_purchase()
 		cost_label.text = "Cost: %d pts" % item.get_current_cost()
 
-		# Update score display
+		# Update score display with flash effect
 		update_score_display()
+		flash_score_label()
+
+		# This shows success message
+		show_purchase_success_message(item.item_name)
 
 		print("Purchased: %s" % item.item_name)
 	else:
@@ -184,8 +192,12 @@ func upgrade_gravity(gravity_item: GravityUpgradeItem, plus_button: SoundButton,
 		if minus_button:
 			minus_button.disabled = not gravity_item.can_downgrade()
 
-		# Update score display
+		# Update score display with flash effect
 		update_score_display()
+		flash_score_label()
+
+		# This shows success message
+		show_purchase_success_message("Gravity Upgraded!")
 
 func downgrade_gravity(gravity_item: GravityUpgradeItem, minus_button: SoundButton, level_label: Label):
 	if not current_player:
@@ -202,8 +214,12 @@ func downgrade_gravity(gravity_item: GravityUpgradeItem, minus_button: SoundButt
 		if plus_button:
 			plus_button.disabled = not gravity_item.can_upgrade()
 
-		# Update score display
+		# Update score display with flash effect
 		update_score_display()
+		flash_score_label()
+
+		# This shows success message
+		show_purchase_success_message("Gravity Downgraded!")
 
 func update_shop_display():
 	update_score_display()
@@ -276,3 +292,35 @@ func _on_score_changed(_new_score: int):
 func _input(event):
 	if visible and (event.is_action_pressed("ui_cancel") or event.is_action_pressed("interact")):
 		close_shop()
+
+# This creates score flash effect
+func flash_score_label():
+	if not score_label:
+		return
+
+	# This stops any ongoing flash
+	if score_flash_tween:
+		score_flash_tween.kill()
+
+	# This creates flash animation
+	score_flash_tween = create_tween()
+	score_flash_tween.tween_property(score_label, "modulate", Color.GREEN, 0.1)
+	score_flash_tween.tween_property(score_label, "modulate", Color.WHITE, 0.3)
+
+# This shows purchase success message
+func show_purchase_success_message(item_name: String):
+	# This plays purchase success sound
+	MusicManager.play_audio_omni("UpUIBeep")
+
+	var success_message = success_message_scene.instantiate()
+	add_child(success_message)
+
+	# This positions the message near the top of the shop
+	success_message.position = Vector2(0, -100)
+
+	# This shows the success message (without playing sound again since we already played it)
+	success_message.tutorial_label.text = "✓ " + item_name + " purchased!"
+	success_message.modulate.a = 0.0
+	var fade_in_tween = success_message.create_tween()
+	fade_in_tween.tween_property(success_message, "modulate:a", 1.0, success_message.fade_duration)
+	success_message.fade_timer.start()
