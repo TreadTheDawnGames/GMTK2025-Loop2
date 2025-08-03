@@ -101,9 +101,13 @@ layout_mode = 2
 max_value = 1.0
 step = 0.01
 
-[node name="Spacer4" type="Control" parent="Panel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 19.5)
+[node name="HBoxContainer2" type="HBoxContainer" parent="Panel/VBoxContainer"]
 layout_mode = 2
+
+[node name="CheckBox" type="CheckBox" parent="Panel/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "banger music"
+script = ExtResource("5_kg15k")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
 layout_mode = 2
@@ -128,5 +132,6 @@ script = ExtResource("5_hfiyb")
 metadata/_custom_type_script = "uid://deew7a1ghrogw"
 
 [connection signal="value_changed" from="Panel/VBoxContainer/ColorSliderContainer/ColorSlider" to="." method="_on_color_slider_value_changed"]
+[connection signal="toggled" from="Panel/VBoxContainer/HBoxContainer2/CheckBox" to="." method="toggle_banger_music"]
 [connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/CreditsButton" to="." method="_on_credits_button_pressed"]
 [connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/BackButton" to="." method="_on_back_button_pressed"]

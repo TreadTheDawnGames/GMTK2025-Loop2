@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b5vfoako1gnde"]
+[gd_scene load_steps=13 format=3 uid="uid://b5vfoako1gnde"]
 
 [ext_resource type="Script" uid="uid://jdiu05rj7h3d" path="res://addons/audio_manager/audio_manager.gd" id="1_cj4tn"]
 [ext_resource type="Script" uid="uid://ehkw6w2xh2bq" path="res://addons/audio_manager/audio_manager_omni.gd" id="2_8ycmr"]
@@ -6,6 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://l0sx6418is77" path="res://Assets/Audio/SFX/UIClickSFX.wav" id="4_hjcxj"]
 [ext_resource type="AudioStream" uid="uid://cwi35irhxlnsp" path="res://Assets/Audio/SFX/UIHoverSFX.wav" id="5_8ycmr"]
 [ext_resource type="AudioStream" uid="uid://c6j8dn68rg4lw" path="res://Assets/Audio/SFX/UpBeepUI.wav" id="6_31cx6"]
+[ext_resource type="AudioStream" uid="uid://bve0tmd3datbm" path="res://Assets/Audio/Music/GMTK V2.wav" id="7_hjcxj"]
 
 [sub_resource type="Resource" id="Resource_b7n4u"]
 script = ExtResource("2_8ycmr")
@@ -79,7 +80,25 @@ bus = &"SFX"
 playback_type = 0
 metadata/_custom_type_script = "uid://ehkw6w2xh2bq"
 
+[sub_resource type="Resource" id="Resource_rse6j"]
+script = ExtResource("2_8ycmr")
+audio_name = "banger_music"
+audio_stream = ExtResource("7_hjcxj")
+use_clipper = false
+start_time = 0.0
+end_time = 0.0
+volume_db = -15.0
+pitch_scale = 1.0
+mix_target = 0
+loop = true
+loop_offset = 0.0
+auto_play = false
+max_polyphony = 1
+bus = &"Music"
+playback_type = 0
+metadata/_custom_type_script = "uid://ehkw6w2xh2bq"
+
 [node name="AudioManager" type="Node"]
 script = ExtResource("1_cj4tn")
-audios_omni = Array[ExtResource("2_8ycmr")]([SubResource("Resource_b7n4u"), SubResource("Resource_rf0fm"), SubResource("Resource_31cx6"), SubResource("Resource_hjcxj")])
+audios_omni = Array[ExtResource("2_8ycmr")]([SubResource("Resource_b7n4u"), SubResource("Resource_rf0fm"), SubResource("Resource_31cx6"), SubResource("Resource_hjcxj"), SubResource("Resource_rse6j")])
 metadata/_custom_type_script = "uid://jdiu05rj7h3d"

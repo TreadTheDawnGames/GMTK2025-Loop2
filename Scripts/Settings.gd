@@ -32,7 +32,14 @@ func _on_back_button_pressed() -> void:
 	# Return to main menu
 	queue_free()
 
-
+func toggle_banger_music(ticked : bool):
+	if ticked:
+		MusicManager.stop_audio_omni("background_music")
+		MusicManager.play_audio_omni("banger_music")
+	else:
+		MusicManager.stop_audio_omni("banger_music")
+		MusicManager.play_audio_omni("background_music")
+	return
 
 func _on_credits_button_pressed() -> void:
 	get_tree().root.add_child(CREDITS.instantiate())

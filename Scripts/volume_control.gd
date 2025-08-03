@@ -13,13 +13,13 @@ func _ready() -> void:
 		return
 	var busIndex = AudioServer.get_bus_index(busName)
 	slider.value = AudioServer.get_bus_volume_linear(busIndex)
-	check_box.button_pressed = AudioServer.is_bus_mute(busIndex)
+	check_box.button_pressed = not AudioServer.is_bus_mute(busIndex)
 	label.text = "- " + busName
 	slider.value_changed.connect(func(wantedVolume): 
 		AudioServer.set_bus_volume_linear(busIndex, wantedVolume))
 	
 	check_box.pressed.connect(func(): 
-		AudioServer.set_bus_mute(busIndex, check_box.button_pressed)
+		AudioServer.set_bus_mute(busIndex, not check_box.button_pressed)
 		)
 	
 	pass # Replace with function body.
