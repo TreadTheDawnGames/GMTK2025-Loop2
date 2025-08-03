@@ -152,10 +152,10 @@ func _generate_level():
 				if not is_instance_valid(self.home_planet):
 					self.home_planet = station_instance
 					# Move the player to start next to this newly placed station.
-					player.global_position = home_planet.global_position + Vector2(0, -250)
+					player.global_position = home_planet.global_position + Vector2(200,0)
 					# This tells the player that this station is its new "home" for the lose condition.
 					player.set_origin_point(home_planet.global_position)
-				
+					print("setting home planet")
 				station_placed = true
 				break # Move to the next sector.
 		

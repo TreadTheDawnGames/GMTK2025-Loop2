@@ -6,11 +6,12 @@ class_name HomePlanet
 # Shop interaction variables
 var player_in_shop_range: bool = false
 var current_player: Player = null
+@onready var animatable_body_2d: AnimatableBody2D = $AnimatableBody2D
 
 # Shop UI references
 var shop_ui: ShopManager = null
 var shop_prompt: ShopPrompt = null
-
+var mouseOverShop = false
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# This calls the _ready function from the parent BasePlanet script.
@@ -20,7 +21,9 @@ func _ready() -> void:
 	if Surface:
 		Surface.body_entered.connect(_on_shop_area_entered)
 		Surface.body_exited.connect(_on_shop_area_exited)
-
+		
+		Surface.mouse_entered.connect(func(): mouseOverShop = true)
+		Surface.mouse_exited.connect(func(): mouseOverShop = false)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -28,6 +31,10 @@ func _process(_delta: float) -> void:
 	if player_in_shop_range and current_player and Input.is_action_just_pressed("interact"):
 		print("E key pressed, opening shop")
 		open_shop()
+	if(mouseOverShop and Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)):
+		open_shop()
+		current_player.current_state = current_player.State.READY_TO_AIM
+		mouseOverShop = false
 
 # This overrides the parent's spawning function to ensure home planets never have collectables.
 func spawn_collectable_at_center():
@@ -75,10 +82,10 @@ func hide_shop_prompt() -> void:
 	if shop_prompt:
 		shop_prompt.hide_prompt()
 
+var shop_scene = preload("res://Scenes/Shop/Shop.tscn")
 func open_shop() -> void:
 	if not shop_ui:
 		# This creates shop UI if it doesn't exist
-		var shop_scene = preload("res://Scenes/Shop/Shop.tscn")
 		shop_ui = shop_scene.instantiate()
 		get_tree().current_scene.add_child(shop_ui)
 		shop_ui.shop_closed.connect(_on_shop_closed)

@@ -26,7 +26,7 @@ size = Vector2(133, 448)
 size = Vector2(8, 60)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_gravity"]
-radius = 400.0
+radius = 600.101
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_shop_area"]
 size = Vector2(172, 347)
@@ -68,11 +68,9 @@ scale = Vector2(3, 3)
 shape = SubResource("RectangleShape2D_xlxvy")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 shape = SubResource("CircleShape2D_gravity")
 
 [node name="ShopArea" type="Area2D" parent="."]
-visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ShopArea"]
 position = Vector2(-1, -0.5)
@@ -83,13 +81,4 @@ shape = SubResource("RectangleShape2D_shop_area")
 position = Vector2(-1, -79)
 shape = SubResource("RectangleShape2D_vtlm0")
 
-[node name="Button" type="Button" parent="."]
-modulate = Color(1, 1, 1, 0)
-self_modulate = Color(1, 1, 1, 0)
-offset_left = -259.0
-offset_top = -507.0
-offset_right = 257.0
-offset_bottom = 349.0
-
 [connection signal="pressed" from="TouchScreenButton" to="." method="open_shop"]
-[connection signal="pressed" from="Button" to="." method="open_shop"]

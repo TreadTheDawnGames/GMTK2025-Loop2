@@ -15,7 +15,8 @@ const ORBIT_FOR_EXTRA_BOOST_MESSAGE = "You can also bounce on a planet to get an
 const HOW_TO_PLAY_1 = "Welcome to Sol! Drag the screen to launch your ship!"
 const HOW_TO_PLAY_2 = "Left click, spacebar, or tap to boost."
 const HOW_TO_PLAY_3 = "Right click, shift, or hold with two fingers to brake."
-const HOW_TO_PLAY_4 = "Try to loop as many unique planets as you can to maximize your score!"
+const HOW_TO_PLAY_4 = "Click, e, or tap the stations to open the shop."
+const HOW_TO_PLAY_5 = "Try to loop as many unique planets as you can to maximize your score!"
 
 
 # This shows a tutorial if it hasn't been shown before.
@@ -82,6 +83,7 @@ func show_how_to_play(parent: Node):
 	show_tutorial_once("how_to_play_2", HOW_TO_PLAY_2, parent)
 	show_tutorial_once("how_to_play_3", HOW_TO_PLAY_3, parent)
 	show_tutorial_once("how_to_play_4", HOW_TO_PLAY_4, parent)
+	show_tutorial_once("how_to_play_5", HOW_TO_PLAY_5, parent)
 
 # This resets all tutorials (for testing or new game)
 func reset_tutorials() -> void:
