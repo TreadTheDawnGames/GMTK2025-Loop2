@@ -40,6 +40,10 @@ func _on_tutorial_toggle_toggled(button_pressed: bool) -> void:
 	# Update GameManager with new tutorial setting
 	GameManager.set_tutorials_enabled(button_pressed)
 
+func _on_toggled(toggled : bool) -> void:
+	GameManager.set_tutorials_enabled(toggled)
+	pass # Replace with function body.
+
 
 func _on_touch_screen_tutorial_button_pressed() -> void:
 	if tutorial_toggle:

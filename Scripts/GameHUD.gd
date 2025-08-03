@@ -152,7 +152,7 @@ func update_score_display() -> void:
 
 func update_high_score_display() -> void:
 	# This updates the high score display.
-	var high_score_text = "Best: " + str(GameManager.get_high_score())
+	var high_score_text = "Best: " + str(GameManager.get_best_combo())
 	high_score_label.text = high_score_text
 
 func update_level_goal_display() -> void:

@@ -212,5 +212,5 @@ theme_override_font_sizes/font_size = 16
 [connection signal="pressed" from="PanelContainer/VBoxContainer/StartButton/TouchScreenButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
 [connection signal="released" from="PanelContainer/VBoxContainer/SettingsButton/TouchScreenButton" to="." method="_on_settings_button_pressed"]
-[connection signal="toggled" from="PanelContainer/VBoxContainer/TutorialToggleContainer/TutorialToggle" to="PanelContainer/VBoxContainer/TutorialToggleContainer/TutorialToggle" method="_on_toggled"]
+[connection signal="toggled" from="PanelContainer/VBoxContainer/TutorialToggleContainer/TutorialToggle" to="." method="_on_toggled"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/TutorialToggleContainer/TutorialToggle/TouchScreenButton" to="." method="_on_touch_screen_tutorial_button_pressed"]

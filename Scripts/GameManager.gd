@@ -12,8 +12,9 @@ signal score_animation_requested(points: int, world_position: Vector2)
 var ship_color: Color = Color.WHITE
 var ship_color_hue: float = 0.0
 
+var highest_score: int = 0
 # This now stores the highest single score chunk ever achieved.
-var high_score: int = 0
+var best_combo: int = 0
 # This remains the score for the current run.
 var current_score: int = 0
 # This is the player's persistent level.
@@ -26,6 +27,7 @@ var current_game_state: GameState = GameState.MENU
 
 func _ready() -> void:
 	set_ship_color_from_hue(0.0)
+	best_combo = 0
 
 var level_goal : int = 50
 # Calculate the goal score for a given level
@@ -57,11 +59,13 @@ func check_level_completion(final_score_chunk: int):
 # This new function processes the big score chunk at the end of a run.
 func process_final_score(final_score: int, world_position: Vector2):
 	# Update the 'high_score' (Best) if this chunk is a new record.
-	if final_score > high_score:
-		high_score = final_score
+	if final_score > best_combo:
+		best_combo = final_score
 	
 	# Add the chunk to the total run score.
 	current_score += final_score
+	if(current_score > highest_score):
+		highest_score = current_score
 	
 	# Emit signals to update the HUD.
 	score_animation_requested.emit(final_score, world_position)
@@ -78,9 +82,9 @@ func add_score(points: int) -> void:
 func get_score() -> int:
 	return current_score
 
-func get_high_score() -> int:
+func get_best_combo() -> int:
 	# This function now correctly returns the best score chunk for the HUD.
-	return high_score
+	return best_combo
 
 func reset_score() -> void:
 	# This resets only the current run's score. Best and Level persist.
@@ -96,6 +100,8 @@ func set_ship_color_from_hue(hue_value: float) -> void:
 
 func get_ship_color() -> Color:
 	return ship_color
+
+
 
 func get_ship_color_hue() -> float:
 	return ship_color_hue
