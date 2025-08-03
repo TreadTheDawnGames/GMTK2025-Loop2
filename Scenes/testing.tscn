@@ -3,12 +3,20 @@
 [ext_resource type="PackedScene" uid="uid://cslq0v6w7x80a" path="res://Scenes/Player.tscn" id="1_sx6hp"]
 [ext_resource type="Material" uid="uid://bxcys6gyngoe6" path="res://Scenes/Effects/StarBackground.tres" id="2_4ppfb"]
 [ext_resource type="Script" uid="uid://dx7wa3d4fr6xu" path="res://Scripts/star_background.gd" id="3_8si1v"]
-[ext_resource type="PackedScene" uid="uid://fcdupdwq82w5" path="res://Scenes/Asteroid.tscn" id="4_4ppfb"]
+[ext_resource type="PackedScene" uid="uid://w1hy76n1gkow" path="res://Scenes/planet_Sol.tscn" id="4_4ppfb"]
 
 [node name="Node2D" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource("1_sx6hp")]
-DEBUG_DoLoseCondition = false
+orbit_completion_percentage = 0.95
+SoftlockTime = 3.0
+DEBUG_DoLoseCondition = true
+launch_power = 5.0
+boost_strength = 1000.0
+trajectory_prediction_enabled = false
+trajectory_steps = 50
+trajectory_step_time = 0.1
+softlockTime = 3.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = -1
@@ -24,5 +32,5 @@ offset_bottom = 1626.0
 color = Color(0, 0, 0, 1)
 script = ExtResource("3_8si1v")
 
-[node name="RigidBody2D2" parent="." instance=ExtResource("4_4ppfb")]
-position = Vector2(-2, 1818)
+[node name="Planet4" parent="." instance=ExtResource("4_4ppfb")]
+position = Vector2(-9149, -838)

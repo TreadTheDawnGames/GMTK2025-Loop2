@@ -39,6 +39,7 @@ var canSkip : bool = true
 # The particles
 @onready var _LaunchParticles: ParticleEffect = $LaunchParticles
 @onready var _BoostParticles: ParticleEffect = $BoostParticles
+@onready var ExplosionParticles: ParticleEffect = $ExplosionParticles
 # The sprite
 @onready var Sprite: Sprite2D = $Sprite2D
 # The Camera
@@ -96,10 +97,15 @@ var _current_aim_pull_vector: Vector2 = Vector2.ZERO
 # Stores whether a single touch is happening on mobile.
 var SingleTouchDown : bool = false
 
-# Lose condition variables	
+# Lose condition variables
 static var max_distance_from_origin: float = 30000.0  # Maximum distance before losing
-static var origin_position: Vector2 = Vector2.ZERO
+var origin_position: Vector2 = Vector2.ZERO # No longer static, can be changed.
 var has_lost: bool = false
+
+# This function allows the GameController to tell the player where its "home" is.
+func set_origin_point(new_origin: Vector2):
+	# This sets the center point for the lose condition distance check.
+	origin_position = new_origin
 
 # This creates a reference to the Line2D node for drawing the power bar.
 @onready var line_2d: Line2D = $Line2D
@@ -262,7 +268,7 @@ func _physics_process(_delta: float) -> void:
 			if(not softlockTimer):
 				softlockTimer = get_tree().create_timer(SoftlockTime)
 				softlockTimer.timeout.connect(func(): 
-					SoftlockFixer.FixSoftlock(global_position)
+					SoftlockFixer.FixSoftlock(self)
 				)
 		else:
 			doNotSave = false
@@ -302,9 +308,7 @@ func _physics_process(_delta: float) -> void:
 							TutorialManager.show_land_for_boost_tutorial(hud)
 					else:
 						# This is the logic for colliding with a regular planet.
-						if collider.owner is Planet_Sol:
-							GameManager.show_lose_screen()
-						else: if(canSkip == true) and collider.owner is not Asteroid:
+						if(canSkip == true) and collider.owner is not Asteroid:
 							print("Skip")
 							canSkip = false
 							BoostCount += 1
@@ -382,6 +386,14 @@ func handle_orbit_tracking():
 		# If it is the first time, adds it to the list of visited planets.
 		if is_first_orbit:
 			orbited_planets.append(current_orbiting_planet)
+			if(current_orbiting_planet.AtmoSprite.material):
+				current_orbiting_planet.SetShowOrbited(true)
+			
+			
+			# This adds a +5 score bonus for the first orbit.
+			GameManager.add_score(5)
+			print("First orbit bonus! +5 score")
+			PointNumbers.display_number(5, point_numbers_origin.global_position, 2)  # Green color for bonus
 
 			# Adds a +5 score bonus for discovering a new planet's orbit.
 			GameManager.add_score(5)
@@ -406,6 +418,9 @@ func handle_orbit_tracking():
 		# Resets the accumulated angle back to zero to start tracking the next loop.
 		accumulated_orbit_angle = 0.0
 
+func ColorMix(color1: Color, color2:Color, ratio:float) -> Color:
+	return ratio * color1 + (1-ratio) * color2
+
 # This is a helper function to correctly calculate the difference between two angles.
 func angle_difference(from, to):
 	var diff = fmod(to - from + PI, 2 * PI) - PI
@@ -419,11 +434,12 @@ func start_orbiting(planet: BasePlanet):
 	accumulated_orbit_angle = 0.0
 	# Records the player's angle when entering the gravity well.
 	last_angle_to_planet = (global_position - planet.global_position).angle()
-	# Stores the starting angle to draw the progress line correctly.
-	orbit_start_angle = last_angle_to_planet
+
+	orbit_start_angle = last_angle_to_planet  # Remember where we started
+	print("Started orbiting: ", planet.name)
 	
-	# DEBUG: This confirms that the player has started orbiting a specific planet.
-	print("Player started orbiting: ", planet.name)
+	mult += 1
+	PointNumbers.display_number(mult, point_numbers_origin.global_position, 1)
 
 	# Shows the first-time orbit tutorial if it hasn't been shown yet.
 	var hud = get_tree().root.get_node("Game/HUDLayer/GameHUD")
@@ -433,9 +449,11 @@ func start_orbiting(planet: BasePlanet):
 
 # This function is called by a planet when the player leaves its gravity well.
 func stop_orbiting(planet: BasePlanet):
+
 	# Ensures the player is leaving the planet it was actually orbiting.
 	if planet == current_orbiting_planet:
 		# Clears the reference to the orbiting planet.
+
 		current_orbiting_planet = null
 		# Resets the accumulated angle.
 		accumulated_orbit_angle = 0.0
@@ -444,6 +462,7 @@ func stop_orbiting(planet: BasePlanet):
 		
 		# DEBUG: This confirms that the player has stopped orbiting.
 		print("Player stopped orbiting: ", planet.name)
+
 
 # This function handles the logic for launching the player.
 func launch() -> void:
@@ -525,8 +544,13 @@ func Reset():
 		BoostCount = get_meta("starting_boosts")
 	else:
 		BoostCount = 1
-
-	# Resets trail effects.
+	
+	#resets the known orbited planets
+	for planet : BasePlanet in orbited_planets:
+		planet.SetShowOrbited(false)
+	orbited_planets.clear()
+	
+	# This resets trail effects
 	reset_trail_effects()
 
 # Gets the global click or touch position.
@@ -717,3 +741,10 @@ func apply_boost_trail_effect():
 		trail_effect_tween.parallel().tween_method(func(length): trail_2d_1.length = length, original_trail_length * 2.0, original_trail_length, 0.5)
 	if trail_2d_2.has_method("set_length"):
 		trail_effect_tween.parallel().tween_method(func(length): trail_2d_2.length = length, original_trail_length * 2.0, original_trail_length, 0.5)
+
+func Explode(_position : Vector2):
+	Sprite.hide()
+	set_deferred("freeze", true)
+	ExplosionParticles.Emit()
+	ExplosionParticles.finished.connect(GameManager.show_lose_screen)
+	pass

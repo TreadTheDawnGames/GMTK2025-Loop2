@@ -1,10 +1,9 @@
-[gd_scene load_steps=10 format=3 uid="uid://c0pbif8cyy7x7"]
+[gd_scene load_steps=9 format=3 uid="uid://c0pbif8cyy7x7"]
 
 [ext_resource type="Script" uid="uid://dx7wa3d4fr6xu" path="res://Scripts/star_background.gd" id="3_2irst"]
 [ext_resource type="Material" uid="uid://bxcys6gyngoe6" path="res://Scenes/Effects/StarBackground.tres" id="3_fgofq"]
 [ext_resource type="PackedScene" uid="uid://cslq0v6w7x80a" path="res://Scenes/Player.tscn" id="4_kldst"]
-[ext_resource type="PackedScene" uid="uid://14epulnfjodl" path="res://Scenes/Home.tscn" id="6_7lihs"]
-[ext_resource type="PackedScene" uid="uid://ku0et6l6vqic" path="res://Scenes/planet_Sol.tscn" id="7_2irst"]
+[ext_resource type="PackedScene" uid="uid://w1hy76n1gkow" path="res://Scenes/planet_Sol.tscn" id="7_2irst"]
 [ext_resource type="PackedScene" uid="uid://dg7glwq2khxr1" path="res://Scenes/planet_black_hole.tscn" id="8_bf53h"]
 [ext_resource type="PackedScene" uid="uid://p4aoyegbc6gj" path="res://Scenes/UI/GameHUD.tscn" id="8_hud"]
 [ext_resource type="Script" uid="uid://dfjdljl46khuv" path="res://Scripts/GameController.gd" id="9_controller"]
@@ -14,7 +13,6 @@ bounce = 0.5
 
 [node name="Game" type="Node2D"]
 script = ExtResource("9_controller")
-num_planets = 50
 min_distance_between_planets = 2000.0
 
 [node name="HUDLayer" type="CanvasLayer" parent="."]
@@ -41,26 +39,24 @@ script = ExtResource("3_2irst")
 layer = 10
 
 [node name="Player" parent="." instance=ExtResource("4_kldst")]
-position = Vector2(-1, -320)
 rotation = -1.5708
 physics_material_override = SubResource("PhysicsMaterial_2irst")
-orbit_completion_percentage = 0.95
-SoftlockTime = 3.0
-DEBUG_DoLoseCondition = true
+orbit_completion_percentage = null
+SoftlockTime = null
+DEBUG_DoLoseCondition = null
 launch_power = 5.0
-boost_strength = 1000.0
-trajectory_prediction_enabled = false
-trajectory_steps = 50
-trajectory_step_time = 0.1
-softlockTime = 3.0
+boost_strength = null
+trajectory_prediction_enabled = null
+trajectory_steps = null
+trajectory_step_time = null
+softlockTime = null
 
 [node name="GeneratedNebulas" type="Node2D" parent="."]
 
 [node name="GeneratedPlanets" type="Node2D" parent="."]
 
-[node name="HomeBase" parent="." instance=ExtResource("6_7lihs")]
-position = Vector2(-1516, -1075)
-
 [node name="PlanetSol" parent="." instance=ExtResource("7_2irst")]
+position = Vector2(-15717, 3209)
 
 [node name="PlanetBlackHole" parent="." instance=ExtResource("8_bf53h")]
+position = Vector2(10819, 4524)

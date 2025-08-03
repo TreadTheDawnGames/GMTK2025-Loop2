@@ -1,3 +1,4 @@
+# res://Scripts/planet.gd
 extends Area2D
 class_name BasePlanet
 
@@ -12,6 +13,8 @@ var bodies_in_gravity_field: Array[RigidBody2D] = []
 # This uses the % syntax to ensure reliable node finding.
 # This variable will be 'null' for planets that do not have this node.
 @onready var orbit_progress_indicator: Line2D
+@onready var AtmoSprite: Sprite2D
+@onready var AtmoSpriteOrbited: Sprite2D
 
 # Orbital progress tracking
 var current_orbiting_player: Player = null
@@ -34,6 +37,8 @@ var spawned_collectable: Collectable = null
 
 func _ready() -> void:
 	orbit_progress_indicator = get_node_or_null("OrbitProgressIndicator")
+	AtmoSprite = get_node_or_null("CollisionShape2D/Sprite2D")
+	AtmoSpriteOrbited = get_node_or_null("CollisionShape2D/Sprite2D/Sprite2D2")
 	# This adds the planet to a group for tracking.
 	add_to_group("planets")
 	# This attempts to spawn a collectable when the planet is ready.
@@ -194,6 +199,8 @@ func flash_orbit_completion():
 	# This calls a function to hide the line after the flash is complete.
 	flash_tween.tween_callback(stop_orbit_progress_display)
 
+# This is the first of the two functions that were in conflict.
+# It is essential for the procedural generator.
 func get_gravity_radius() -> float:
 	# This ensures the CollisionShape2D node exists before we try to access it.
 	if not is_instance_valid(collision_shape_2d):
@@ -214,3 +221,10 @@ func get_gravity_radius() -> float:
 		# If it's not a circle, we print a warning and return a default value.
 		push_warning("Planet %s does not have a CircleShape2D for its gravity field." % name)
 		return 200.0
+
+# This is the second of the two functions that were in conflict.
+# It controls the visual feedback for orbited planets.
+func SetShowOrbited(orbited : bool):
+	if is_instance_valid(AtmoSpriteOrbited):
+		AtmoSpriteOrbited.visible = orbited
+	return
