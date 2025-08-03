@@ -13,6 +13,7 @@ bounce = 0.5
 
 [node name="Game" type="Node2D"]
 script = ExtResource("9_controller")
+num_planets = 100
 min_distance_between_planets = 2000.0
 
 [node name="HUDLayer" type="CanvasLayer" parent="."]
@@ -41,17 +42,7 @@ layer = 10
 [node name="Player" parent="." instance=ExtResource("4_kldst")]
 rotation = -1.5708
 physics_material_override = SubResource("PhysicsMaterial_2irst")
-
-orbit_completion_percentage = null
-SoftlockTime = null
-DEBUG_DoLoseCondition = null
 launch_power = 5.0
-boost_strength = null
-trajectory_prediction_enabled = null
-trajectory_steps = null
-trajectory_step_time = null
-softlockTime = null
-
 
 [node name="GeneratedNebulas" type="Node2D" parent="."]
 
