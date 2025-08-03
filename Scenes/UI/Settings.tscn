@@ -59,15 +59,6 @@ busName = "Music"
 layout_mode = 2
 busName = "SFX"
 
-[node name="TutorialToggleContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
-layout_mode = 2
-
-[node name="TutorialToggle" type="CheckBox" parent="Panel/VBoxContainer/TutorialToggleContainer"]
-layout_mode = 2
-button_pressed = true
-text = "show Tutorials"
-script = ExtResource("5_kg15k")
-
 [node name="ShipColorLabel" type="Label" parent="Panel/VBoxContainer"]
 visible = false
 layout_mode = 2
@@ -136,7 +127,6 @@ script = ExtResource("5_kg15k")
 script = ExtResource("5_hfiyb")
 metadata/_custom_type_script = "uid://deew7a1ghrogw"
 
-[connection signal="toggled" from="Panel/VBoxContainer/TutorialToggleContainer/TutorialToggle" to="." method="_on_tutorial_toggle_toggled"]
 [connection signal="value_changed" from="Panel/VBoxContainer/ColorSliderContainer/ColorSlider" to="." method="_on_color_slider_value_changed"]
 [connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/CreditsButton" to="." method="_on_credits_button_pressed"]
 [connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/BackButton" to="." method="_on_back_button_pressed"]

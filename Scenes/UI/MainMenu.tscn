@@ -141,6 +141,15 @@ layout_mode = 2
 text = "SETTINGS"
 script = ExtResource("4_t6w0q")
 
+[node name="TutorialToggleContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="TutorialToggle" type="CheckBox" parent="PanelContainer/VBoxContainer/TutorialToggleContainer"]
+layout_mode = 2
+button_pressed = true
+text = "show tutorials"
+script = ExtResource("4_t6w0q")
+
 [node name="HowToPlayPanel" type="PanelContainer" parent="."]
 visible = false
 layout_mode = 2
@@ -175,3 +184,4 @@ theme_override_font_sizes/font_size = 16
 
 [connection signal="pressed" from="PanelContainer/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="toggled" from="PanelContainer/VBoxContainer/TutorialToggleContainer/TutorialToggle" to="PanelContainer/VBoxContainer/TutorialToggleContainer/TutorialToggle" method="_on_toggled"]

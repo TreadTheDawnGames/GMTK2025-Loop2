@@ -14,6 +14,7 @@ var original_trail_color: Color = Color.WHITE
 var braking_trail_color: Color = Color(0.8, 0.2, 0.2, 0.8) # Dull red
 var boost_trail_color: Color = Color(0, 1, 1, 1) # Bright cyan
 var trail_effect_tween: Tween
+var hud #= get_tree().root.get_node("Game/HUDLayer/GameHUD")
 
 # This defines a set of named states for the player's state machine.
 enum State {
@@ -84,7 +85,6 @@ var BoostCount: int = 3:
 			$"BoostParticles-Explosion".Emit(true)
 			# This shows out of boosts tutorial (only when transitioning from >0 to 0)
 			if old_value > 0:
-				var hud = get_tree().root.get_node("Game/HUDLayer/GameHUD")
 				if hud:
 					TutorialManager.show_out_of_boosts_tutorial(hud)
 		else:
@@ -125,7 +125,11 @@ var orbit_start_angle: float = 0.0  # Angle where orbit started
 var isMobile : bool = false
 
 func _ready() -> void:
+	hud = get_tree().root.get_node("Game/HUDLayer/GameHUD")
+	TutorialManager.show_how_to_play(hud)
+	#Check whether on mobile
 	isMobile = OS.has_feature("web_android") or OS.has_feature("web_ios")
+	# setup damp mode
 	linear_damp_mode = RigidBody2D.DAMP_MODE_COMBINE
 	# Stores starting position as origin
 	origin_position = global_position
@@ -307,7 +311,6 @@ func _physics_process(_delta: float) -> void:
 						onPlanet = true
 
 						# Shows a tutorial about landing to regain boosts.
-						var hud = get_tree().root.get_node("Game/HUDLayer/GameHUD")
 						if hud:
 							TutorialManager.show_land_for_boost_tutorial(hud)
 					else:
@@ -677,7 +680,6 @@ func _ready_trail_setup():
 		# Stores original trail properties.
 		original_trail_length = trail_2d_1.length if trail_2d_1.has_method("length") else 10
 		original_trail_color = trail_2d_1.default_color
-
 # This resets trails to normal appearance.
 func reset_trail_effects():
 	if not trail_2d_1 or not trail_2d_2:

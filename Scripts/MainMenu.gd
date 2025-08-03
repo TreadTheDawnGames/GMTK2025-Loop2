@@ -12,6 +12,14 @@ func _on_start_button_pressed() -> void:
 		)
 	# Start the game through GameManager
 
+@onready var tutorial_toggle: SoundButton = $PanelContainer/VBoxContainer/TutorialToggleContainer/TutorialToggle
+func _ready():
+	# Set initial tutorial toggle state
+	if tutorial_toggle:
+		tutorial_toggle.button_pressed = GameManager.get_tutorials_enabled()
+
+
+
 # Called when Settings button is pressed
 func _on_settings_button_pressed() -> void:
 	#SlideTransition.EmitOnHalfway()
@@ -26,3 +34,7 @@ func _on_settings_button_pressed() -> void:
 func _on_exit_button_pressed() -> void:
 	# Quit the game
 	get_tree().quit()
+
+func _on_tutorial_toggle_toggled(button_pressed: bool) -> void:
+	# Update GameManager with new tutorial setting
+	GameManager.set_tutorials_enabled(button_pressed)
