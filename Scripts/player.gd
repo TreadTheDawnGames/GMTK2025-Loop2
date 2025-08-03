@@ -4,8 +4,15 @@ class_name Player
 # The trail effects
 @onready var trail_2d_1: Line2D = $CollisionShape2D/Node2D/Trail2D
 @onready var trail_2d_2: Line2D = $CollisionShape2D/Node2D2/Trail2D
-
 @onready var point_numbers_origin: Node2D = $PointNumbersOrigin
+
+# This tracks if the player has purchased the orbit counter upgrade.
+var has_orbit_counter: bool = false
+
+# This tracks the maximum number of skips the player can have.
+var max_skips_per_orbit: int = 1
+# This tracks the current number of available skips.
+var current_skips_available: int = 0
 
 var dead : bool = false
 # Trail effect properties
@@ -315,13 +322,16 @@ func _physics_process(_delta: float) -> void:
 							TutorialManager.show_land_for_boost_tutorial(hud)
 					else:
 						# This is the logic for colliding with a regular planet.
-						if(canSkip == true) and collider.owner is not Asteroid:
+						if(current_skips_available > 0) and collider.owner is not Asteroid:
 							print("Skip")
-							
+
+							current_skips_available -= 1
+
 							canSkip = false
+
 							BoostCount += 1
-							mult *= 2
 							PointNumbers.display_number(mult, point_numbers_origin.global_position, 1)
+							mult *= 2
 							audioHandler.PlaySoundAtGlobalPosition(Sounds.ShipCollide, global_position)
 							audioHandler.PlaySoundAtGlobalPosition(Sounds.PingHigh, global_position)
 						else:
@@ -365,7 +375,6 @@ func _physics_process(_delta: float) -> void:
 			
 	# Calls the function to handle orbit progress tracking.
 	handle_orbit_tracking()
-
 # This function tracks the player's progress around a planet.
 func handle_orbit_tracking():
 	# Stops the function if the player is not currently orbiting a planet.
@@ -384,7 +393,8 @@ func handle_orbit_tracking():
 	last_angle_to_planet = current_angle
 	
 	# Tells the planet to update its visual progress line, passing the direction of rotation.
-	current_orbiting_planet.update_orbit_progress(accumulated_orbit_angle, orbit_completion_percentage, orbit_start_angle, sign(delta_angle))
+	if has_orbit_counter:
+		current_orbiting_planet.update_orbit_progress(accumulated_orbit_angle, orbit_completion_percentage, orbit_start_angle, sign(delta_angle))
 
 	# Checks if the accumulated angle has reached a full loop.
 	if accumulated_orbit_angle >= (2 * PI) * orbit_completion_percentage:
@@ -394,22 +404,28 @@ func handle_orbit_tracking():
 		# Checks if this is the first time orbiting this specific planet for a score bonus.
 		var is_first_orbit = current_orbiting_planet not in orbited_planets
 		# If it is the first time, adds it to the list of visited planets.
+		if current_orbiting_planet is Planet_Sol:
+			PointNumbers.display_number(50, point_numbers_origin.global_position, 0)  # Green color for bonus
+			PointNumbers.display_number(mult * 5, point_numbers_origin.global_position + Vector2(1000, 0), 1)  # Green color for bonus
+			points += 50
+			mult *= 5
+		
 		if is_first_orbit:
 			orbited_planets.append(current_orbiting_planet)
 			if(current_orbiting_planet.AtmoSprite.material):
 				current_orbiting_planet.SetShowOrbited(true)
 			
-			
-			# This adds a +5 score bonus for the first orbit.
-			GameManager.add_score(5)
-			print("First orbit bonus! +5 score")
-			points += 5
-			PointNumbers.display_number(points, point_numbers_origin.global_position, 0)  # Green color for bonus
-		else:
+			if current_orbiting_planet is not Planet_Sol:
+				# This adds a +5 score bonus for the first orbit.
+				GameManager.add_score(5)
+				print("First orbit bonus! +5 score")
+				points += 5
+				PointNumbers.display_number(5, point_numbers_origin.global_position, 0)  # Green color for bonus
+		else: if current_orbiting_planet is not Planet_Sol:
 			# Increases the base points for the final score calculation.
 			points += 1
 			# Displays the points number on screen.
-			PointNumbers.display_number(points, point_numbers_origin.global_position, 0)
+			PointNumbers.display_number(1, point_numbers_origin.global_position, 0)
 		# Tells the planet to run its completion flash animation.
 		current_orbiting_planet.flash_orbit_completion()
 		# Gives the player one boost charge.
@@ -445,7 +461,7 @@ func start_orbiting(planet: BasePlanet):
 	print("Started orbiting: ", planet.name)
 	
 	mult += 1
-	PointNumbers.display_number(mult, point_numbers_origin.global_position, 1)
+	PointNumbers.display_number(1, point_numbers_origin.global_position, 1)
 	audioHandler.PlaySoundAtGlobalPosition(Sounds.PingLow, global_position)
 	
 	# Shows the first-time orbit tutorial if it hasn't been shown yet.
@@ -465,7 +481,7 @@ func stop_orbiting(planet: BasePlanet):
 		# Resets the accumulated angle.
 		accumulated_orbit_angle = 0.0
 		# Allows the player to perform a "skip" on the next planet they hit.
-		canSkip = true
+		current_skips_available = max_skips_per_orbit
 		
 		# DEBUG: This confirms that the player has stopped orbiting.
 		print("Player stopped orbiting: ", planet.name)
