@@ -12,6 +12,8 @@ var nebula_colors = [
 	Color("4dfff2"), # Cyan
 ]
 
+var ContainedPlanets : Array[BasePlanet]
+
 func _ready():
 	# This sets a random rotation for variety.
 	rotation_degrees = randf_range(0, 360)
