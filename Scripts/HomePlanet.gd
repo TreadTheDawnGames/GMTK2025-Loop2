@@ -39,6 +39,7 @@ func _process(_delta: float) -> void:
 	if(current_player and clickTimer and mouseOverShop and not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and clickTimer.time_left > 0):
 		open_shop()
 		current_player.current_state = current_player.State.READY_TO_AIM
+		current_player.linear_velocity = Vector2.ZERO
 		mouseOverShop = false
 
 # This overrides the parent's spawning function to ensure home planets never have collectables.

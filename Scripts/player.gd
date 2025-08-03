@@ -142,6 +142,8 @@ func _ready() -> void:
 	apply_ship_color()
 	# Connects to color change signal
 	GameManager.ship_color_changed.connect(_on_ship_color_changed)
+	GameManager.reset_score()
+
 
 # Applies the current ship color from GameManager
 func apply_ship_color() -> void:
@@ -160,6 +162,10 @@ func calculate_final_score() -> void:
 	print("Final Score Calculation: ", points, " points * ", mult, " mult = ", final_score)
 	# Use the animated score addition instead of regular add_score
 	GameManager.process_final_score(final_score, point_numbers_origin.global_position)
+	if(final_score == 0):
+		audioHandler.PlaySoundAtGlobalPosition(Sounds.ShipCrash, global_position)
+	else:
+		audioHandler.PlaySoundAtGlobalPosition(Sounds.GetPOints, global_position)
 
 # Checks if player has gone too far and should lose
 func check_lose_condition() -> void:
@@ -217,7 +223,7 @@ func _process(_delta: float) -> void:
 				mobilePosition = world_position
 				
 			2: # Two touches (for braking)
-				singleTouchProcessed = false
+				#singleTouchProcessed = false
 				mobileBrake = true
 	# Does not process input if game is paused (e.g., shop is open).
 	if get_tree().paused:
@@ -344,7 +350,7 @@ func _physics_process(_delta: float) -> void:
 							linear_velocity = Vector2.ZERO
 							angular_velocity = 0.0
 							audioHandler.PlaySoundAtGlobalPosition(Sounds.ShipCollide, global_position)
-							audioHandler.PlaySoundAtGlobalPosition(Sounds.ShipCrash, global_position)
+							
 							Reset()
 							onPlanet = true
 			# Checks if the collided object is an asteroid.
@@ -556,7 +562,6 @@ func Reset():
 	
 	accumulated_orbit_angle = 0.0
 	
-	GameManager.reset_score()
 
 	# Resets scoring variables for new attempt.
 	points = 0

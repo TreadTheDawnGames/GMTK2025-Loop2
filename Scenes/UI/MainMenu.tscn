@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://din50gkoucxpp"]
+[gd_scene load_steps=22 format=3 uid="uid://din50gkoucxpp"]
 
 [ext_resource type="Script" uid="uid://ew10v6pbwxv6" path="res://Scripts/MainMenu.gd" id="1_main_menu"]
 [ext_resource type="Theme" uid="uid://dvwgvp8u8xo0i" path="res://Scenes/UI/Themes/UI_Theme.tres" id="1_mjmdf"]
@@ -53,6 +53,15 @@ _data = {
 &"RESET": SubResource("Animation_jex3y"),
 &"planet_drift": SubResource("Animation_k8um8")
 }
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_euk5f"]
+size = Vector2(223, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kdsd0"]
+size = Vector2(223, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_w0mr3"]
+size = Vector2(223, 56)
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -113,11 +122,16 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
-layout_mode = 2
-offset_left = 462.0
-offset_top = 294.0
-offset_right = 690.0
-offset_bottom = 450.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -126.0
+offset_top = -52.0
+offset_right = 126.0
+offset_bottom = 164.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -135,11 +149,19 @@ layout_mode = 2
 text = "START GAME"
 script = ExtResource("4_t6w0q")
 
+[node name="TouchScreenButton" type="TouchScreenButton" parent="PanelContainer/VBoxContainer/StartButton"]
+position = Vector2(112, 25)
+shape = SubResource("RectangleShape2D_euk5f")
+
 [node name="SettingsButton" type="Button" parent="PanelContainer/VBoxContainer" groups=["Button"]]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 text = "SETTINGS"
 script = ExtResource("4_t6w0q")
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="PanelContainer/VBoxContainer/SettingsButton"]
+position = Vector2(112, 25)
+shape = SubResource("RectangleShape2D_kdsd0")
 
 [node name="TutorialToggleContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
@@ -149,6 +171,10 @@ layout_mode = 2
 button_pressed = true
 text = "show tutorials"
 script = ExtResource("4_t6w0q")
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="PanelContainer/VBoxContainer/TutorialToggleContainer/TutorialToggle"]
+position = Vector2(112, 28)
+shape = SubResource("RectangleShape2D_w0mr3")
 
 [node name="HowToPlayPanel" type="PanelContainer" parent="."]
 visible = false
@@ -183,5 +209,8 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 16
 
 [connection signal="pressed" from="PanelContainer/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/StartButton/TouchScreenButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="released" from="PanelContainer/VBoxContainer/SettingsButton/TouchScreenButton" to="." method="_on_settings_button_pressed"]
 [connection signal="toggled" from="PanelContainer/VBoxContainer/TutorialToggleContainer/TutorialToggle" to="PanelContainer/VBoxContainer/TutorialToggleContainer/TutorialToggle" method="_on_toggled"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/TutorialToggleContainer/TutorialToggle/TouchScreenButton" to="." method="_on_touch_screen_tutorial_button_pressed"]

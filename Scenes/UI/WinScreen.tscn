@@ -214,4 +214,6 @@ offset_right = 40.0
 offset_bottom = 18.0
 
 [connection signal="pressed" from="PanelContainer/VBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/RestartTouchButton" to="." method="_on_restart_button_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MenuButton" to="." method="_on_menu_button_pressed"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/MenuTouchButton" to="." method="_on_menu_button_pressed"]

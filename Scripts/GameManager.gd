@@ -27,17 +27,20 @@ var current_game_state: GameState = GameState.MENU
 func _ready() -> void:
 	set_ship_color_from_hue(0.0)
 
+var level_goal : int = 50
 # Calculate the goal score for a given level
 func calculate_goal_for_level(level: int) -> int:
 	# A new progression better suited for single score chunks.
 	# Lvl 1->2: 50, Lvl 2->3: 200, Lvl 3->4: 450 etc.
-	var returnLevel = level * 2
-	if(current_level % 3 == 0):
-		level += level * 0.5
-	return returnLevel
+	if(level == 1):
+		return level_goal
+	level_goal += level_goal
+	if(level % 3 == 0):
+		level_goal += level_goal * 0.25
+	return level_goal
 
 func get_current_level_goal() -> int:
-	return calculate_goal_for_level(current_level)
+	return level_goal
 
 func get_current_level() -> int:
 	return current_level
@@ -48,6 +51,7 @@ func check_level_completion(final_score_chunk: int):
 		var completed_goal = get_current_level_goal()
 		level_completed.emit(current_level, completed_goal)
 		current_level += 1
+		calculate_goal_for_level(current_level)
 		print("Level Up! Reached level %d. Next goal: %d" % [current_level, get_current_level_goal()])
 
 # This new function processes the big score chunk at the end of a run.
