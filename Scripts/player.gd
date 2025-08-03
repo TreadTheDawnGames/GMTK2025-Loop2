@@ -333,7 +333,7 @@ func _physics_process(_delta: float) -> void:
 			# Checks if the collided object is an asteroid.
 			elif collider is Asteroid:
 				# Calculates the final score when crashing into an asteroid.
-				calculate_final_score()
+				#calculate_final_score()
 				audioHandler.PlaySoundAtGlobalPosition(Sounds.ShipCollide, global_position)
 				softlockTimer = null
 				isBeingSaved = false
