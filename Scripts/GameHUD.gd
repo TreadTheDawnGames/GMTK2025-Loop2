@@ -159,9 +159,9 @@ func update_level_goal_display() -> void:
 	# This updates the level and goal display.
 	var current_level = GameManager.get_current_level()
 	var current_goal = GameManager.get_current_level_goal()
-	var current_score = GameManager.get_score()
 	
-	var level_goal_text = "Level %d | Goal: %d/%d" % [current_level, current_score, current_goal]
+	# This updates the text to show the new format: Level X | Goal: current/target.
+	var level_goal_text = "Level %d | Goal: %d" % [current_level, current_goal]
 	level_goal_label.text = level_goal_text
 
 func update_boosts_display() -> void:
