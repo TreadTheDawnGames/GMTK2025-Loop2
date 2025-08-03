@@ -1,9 +1,18 @@
-[gd_scene load_steps=7 format=3 uid="uid://dg7glwq2khxr1"]
+[gd_scene load_steps=12 format=3 uid="uid://dg7glwq2khxr1"]
 
 [ext_resource type="PackedScene" uid="uid://d0j2xqgs8463m" path="res://Scenes/Planet.tscn" id="1_hjqa0"]
-[ext_resource type="Script" uid="uid://b4h62xgwafv47" path="res://Scripts/planet_black_hole.gd" id="2_7ja8a"]
+[ext_resource type="Script" path="res://Scripts/planet_black_hole.gd" id="2_7ja8a"]
 [ext_resource type="Texture2D" uid="uid://cniyri80y08pi" path="res://Assets/BlackHole.png" id="2_cv587"]
+[ext_resource type="Shader" uid="uid://8wjvxelx8i6a" path="res://Assets/Shaders/planet_black_hole.gdshader" id="2_g0sni"]
 [ext_resource type="Shader" uid="uid://dttlrh3oqhy7w" path="res://Assets/Shaders/Atmosphere.gdshader" id="3_wn18u"]
+[ext_resource type="Texture2D" uid="uid://cttrn2nakn67e" path="res://Assets/Circle.png" id="6_xj8y2"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xj8y2"]
+shader = ExtResource("2_g0sni")
+shader_parameter/pixels = 100.0
+shader_parameter/colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+shader_parameter/radius = 0.5
+shader_parameter/light_width = 0.05
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ngwap"]
 radius = 3315.39
@@ -26,27 +35,39 @@ shader_parameter/step4 = 0.264
 shader_parameter/step5 = 0.265
 shader_parameter/step6 = 0.266
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g0sni"]
+shader = ExtResource("2_g0sni")
+shader_parameter/pixels = 100.0
+shader_parameter/colors = PackedColorArray(1, 0, 0, 1, 0, 1, 0, 1, 0, 0, 1, 1)
+shader_parameter/radius = 0.5
+shader_parameter/light_width = 0.05
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_s31nm"]
 radius = 2680.39
 
 [node name="BlackHole" instance=ExtResource("1_hjqa0")]
+material = SubResource("ShaderMaterial_xj8y2")
 scale = Vector2(0.5, 0.5)
 script = ExtResource("2_7ja8a")
 collectable_spawn_chance = 0.8
 
-[node name="Sprite" parent="." index="0"]
-position = Vector2(1, 1.00001)
-scale = Vector2(73.9825, 69.4404)
-texture = ExtResource("2_cv587")
-script = null
-
-[node name="CollisionShape2D" parent="." index="1"]
+[node name="CollisionShape2D" parent="." index="0"]
 scale = Vector2(2, 2)
 shape = SubResource("CircleShape2D_ngwap")
 
 [node name="Sprite2D" parent="CollisionShape2D" index="0"]
 material = SubResource("ShaderMaterial_ratl1")
 scale = Vector2(8.92791, 8.92791)
+
+[node name="Sprite" parent="." index="1"]
+material = SubResource("ShaderMaterial_g0sni")
+position = Vector2(0, -1.19209e-07)
+scale = Vector2(73.9825, 69.4404)
+texture = ExtResource("2_cv587")
+script = null
+
+[node name="Sprite2D" type="Sprite2D" parent="Sprite" index="0"]
+texture = ExtResource("6_xj8y2")
 
 [node name="CollisionShape2D" parent="AnimatableBody2D" index="0"]
 shape = SubResource("CircleShape2D_s31nm")

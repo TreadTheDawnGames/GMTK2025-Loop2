@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://c4wdc114mt4gb"]
+
+[ext_resource type="Script" uid="uid://b4xtmjuj5up0a" path="res://Scripts/Planets/Satellite.gd" id="1_dyaci"]
+[ext_resource type="Texture2D" uid="uid://0l7e77brjgc0" path="res://Assets/kenney_space-shooter-extension/AAA-ChosenKenneySpace/spaceStation_018.png" id="2_qprvj"]
+[ext_resource type="Script" uid="uid://deew7a1ghrogw" path="res://Scripts/PlayerAudioHandler.gd" id="3_abcde"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7o7f1"]
+radius = 24.0
+
+[node name="Satellite" type="Area2D"]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_dyaci")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_qprvj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_7o7f1")
+
+[node name="ExplosionParticles" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 25
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 50.0
+initial_velocity_max = 150.0
+scale_amount_min = 2.0
+scale_amount_max = 4.0
+color = Color(0.8, 0.8, 0.8, 1)
+
+[node name="PlayerAudioHandler" type="Node2D" parent="."]
+script = ExtResource("3_abcde")

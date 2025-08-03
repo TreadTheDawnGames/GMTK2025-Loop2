@@ -41,7 +41,7 @@ radius = 845.75
 [sub_resource type="CircleShape2D" id="CircleShape2D_ouapx"]
 radius = 883.95
 
-[node name="Planet4" instance=ExtResource("1_qo6fj")]
+[node name="Planet5" instance=ExtResource("1_qo6fj")]
 scale = Vector2(4, 4)
 script = ExtResource("2_ouapx")
 can_have_collectable = false

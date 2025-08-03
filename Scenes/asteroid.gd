@@ -9,8 +9,7 @@ func _ready() -> void:
 	VisNotif.screen_exited.connect(func(): 
 		Player.isBeingSaved = false
 		Player.softlockTimer = null
-		queue_free()
-		print("Bye bye!"))
+		queue_free())
 
 func Launch(dir : Vector2):
 	apply_central_impulse(dir * FixSpeed)
