@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://w1hy76n1gkow"]
+[gd_scene load_steps=14 format=3 uid="uid://w1hy76n1gkow"]
 
 [ext_resource type="PackedScene" uid="uid://d0j2xqgs8463m" path="res://Scenes/Planet.tscn" id="1_qo6fj"]
 [ext_resource type="Shader" uid="uid://d2afeeep8niyx" path="res://Assets/Shaders/planet_fireball.gdshader" id="2_ic6og"]
@@ -20,6 +20,59 @@ shader_parameter/color2 = Color(0, 0, 0, 1)
 shader_parameter/color3 = Color(0.784314, 0.494118, 0, 0.0313726)
 shader_parameter/color4 = Color(0, 0, 0, 1)
 shader_parameter/color5 = Color(0.674434, 0.541275, 0.128692, 0.301961)
+shader_parameter/color6 = Color(0, 0, 0, 1)
+shader_parameter/step1 = 0.159
+shader_parameter/step2 = 0.182
+shader_parameter/step3 = 0.233
+shader_parameter/step4 = 0.264
+shader_parameter/step5 = 0.265
+shader_parameter/step6 = 0.266
+
+[sub_resource type="Shader" id="Shader_wkqme"]
+code = "//CC0 https://godotshaders.com/shader/radial-smooth-radial-gradient/
+shader_type canvas_item;
+render_mode blend_add; //Comment this if you want another render mode.
+uniform vec2 center = vec2(0.5);
+uniform float size: hint_range(0.0,5.0) = 1.0; //change size to well, change the size of your gradient
+uniform vec2 squishness = vec2(1.0); // how squashed your gradient is
+
+//choose colors in the inspector
+uniform vec4 color1 : source_color;
+uniform vec4 color2 : source_color;
+uniform vec4 color3 : source_color;
+uniform vec4 color4 : source_color;
+uniform vec4 color5 : source_color;
+uniform vec4 color6 : source_color;
+
+//choose how far the colors are from each other in the inspector
+uniform float step1 : hint_range(0.0,1.0) = 0.159;
+uniform float step2 : hint_range(0.0,1.0) = 0.182;
+uniform float step3 : hint_range(0.0,1.0) = 0.233;
+uniform float step4 : hint_range(0.0,1.0) = 0.264;
+uniform float step5 : hint_range(0.0,1.0) = 0.265;
+uniform float step6 : hint_range(0.0,1.0) = 0.266;
+
+void fragment() {
+	
+	float dist = distance(center*squishness,UV*squishness);
+	vec4 color = mix(color1, color2, smoothstep((step1 )*size, step2*size, dist));
+	color = mix(color, color3, smoothstep(step2*size, step3*size, dist));
+	color = mix(color, color4, smoothstep(step3*size, step4*size, dist));
+	color = mix(color, color5, smoothstep(step4*size, step5*size, dist));
+	color = mix(color, color6, smoothstep(step5*size, step6*size, dist));
+	COLOR = color;
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_khlkl"]
+shader = SubResource("Shader_wkqme")
+shader_parameter/center = Vector2(0.5, 0.5)
+shader_parameter/size = 1.0
+shader_parameter/squishness = Vector2(1, 1)
+shader_parameter/color1 = Color(1, 0.623529, 0, 0)
+shader_parameter/color2 = Color(0, 0, 0, 1)
+shader_parameter/color3 = Color(0.784314, 0.494118, 0, 0.0313726)
+shader_parameter/color4 = Color(0, 0, 0, 1)
+shader_parameter/color5 = Color(1, 1, 1, 1)
 shader_parameter/color6 = Color(0, 0, 0, 1)
 shader_parameter/step1 = 0.159
 shader_parameter/step2 = 0.182
@@ -50,7 +103,7 @@ collectable_spawn_chance = 0.8
 [node name="PointLight2D" type="PointLight2D" parent="." index="0"]
 position = Vector2(-0.125977, 0.127136)
 scale = Vector2(43.6196, 43.6196)
-energy = 4.96
+energy = 2.67
 shadow_enabled = true
 shadow_filter = 1
 shadow_filter_smooth = 7.0
@@ -64,6 +117,9 @@ shape = SubResource("CircleShape2D_ngwap")
 [node name="Sprite2D" parent="CollisionShape2D" index="0"]
 material = SubResource("ShaderMaterial_wkqme")
 scale = Vector2(4.96295, 4.96295)
+
+[node name="Sprite2D2" parent="CollisionShape2D/Sprite2D" index="0"]
+material = SubResource("ShaderMaterial_khlkl")
 
 [node name="Sprite" parent="." index="2"]
 material = SubResource("ShaderMaterial_ouapx")

@@ -1,10 +1,8 @@
-[gd_resource type="Theme" load_steps=30 format=3 uid="uid://dvwgvp8u8xo0i"]
+[gd_resource type="Theme" load_steps=36 format=3 uid="uid://dvwgvp8u8xo0i"]
 
 [ext_resource type="Texture2D" uid="uid://c3newpudfr2ym" path="res://Assets/UI/Chosen UIs/button_square-disabled.png" id="1_eejyr"]
 [ext_resource type="Texture2D" uid="uid://e46mp4fov066" path="res://Assets/UI/Chosen UIs/check_square_grey_square.png" id="1_f6jyn"]
 [ext_resource type="Texture2D" uid="uid://b76cbu5cjfx6g" path="res://Assets/UI/Chosen UIs/button_square.png" id="1_fbw4s"]
-[ext_resource type="Texture2D" uid="uid://mchwof6kq82w" path="res://Assets/UI/Chosen UIs/check_square_grey_cross.png" id="1_xky8r"]
-[ext_resource type="Texture2D" uid="uid://baroodbijeaia" path="res://Assets/UI/Chosen UIs/check_square_grey_cross-disabled.png" id="2_7memj"]
 [ext_resource type="Texture2D" uid="uid://8yaar7tt0hh6" path="res://Assets/UI/Chosen UIs/check_square_grey_square-disabled.png" id="2_j6u7m"]
 [ext_resource type="Texture2D" uid="uid://dciikypgn05e7" path="res://Assets/UI/Chosen UIs/check_square_grey-clicked.png" id="3_ldgtl"]
 [ext_resource type="Texture2D" uid="uid://delvecdvx0fim" path="res://Assets/UI/Chosen UIs/check_square_grey_square-clicked.png" id="3_wj56m"]
@@ -50,32 +48,80 @@ texture_margin_right = 12.0
 texture_margin_bottom = 12.0
 modulate_color = Color(1, 1, 1, 0.713726)
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_gpmsd"]
-content_margin_left = 4.0
-content_margin_top = 4.0
-content_margin_right = 4.0
-content_margin_bottom = 4.0
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_x151o"]
+texture = ExtResource("1_eejyr")
+texture_margin_left = 12.0
+texture_margin_top = 12.0
+texture_margin_right = 12.0
+texture_margin_bottom = 12.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_x151o"]
-content_margin_left = 4.0
-content_margin_top = 4.0
-content_margin_right = 4.0
-content_margin_bottom = 4.0
-bg_color = Color(1, 1, 1, 0.75)
-draw_center = false
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-corner_detail = 5
-expand_margin_left = 2.0
-expand_margin_top = 2.0
-expand_margin_right = 2.0
-expand_margin_bottom = 2.0
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_g3e6j"]
+texture = ExtResource("1_fbw4s")
+texture_margin_left = 12.0
+texture_margin_top = 12.0
+texture_margin_right = 12.0
+texture_margin_bottom = 12.0
+modulate_color = Color(1, 1, 1, 0.501961)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_v3uvt"]
+texture = ExtResource("1_fbw4s")
+texture_margin_left = 12.0
+texture_margin_top = 12.0
+texture_margin_right = 12.0
+texture_margin_bottom = 12.0
+modulate_color = Color(1, 1, 1, 0.501961)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t2xfd"]
+texture = ExtResource("1_fbw4s")
+texture_margin_left = 12.0
+texture_margin_top = 12.0
+texture_margin_right = 12.0
+texture_margin_bottom = 12.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_taixv"]
+texture = ExtResource("1_fbw4s")
+texture_margin_left = 12.0
+texture_margin_top = 12.0
+texture_margin_right = 12.0
+texture_margin_bottom = 12.0
+modulate_color = Color(1, 1, 1, 0.713726)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dfxgq"]
+texture = ExtResource("1_eejyr")
+texture_margin_left = 12.0
+texture_margin_top = 12.0
+texture_margin_right = 12.0
+texture_margin_bottom = 12.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_yv5vc"]
+texture = ExtResource("1_fbw4s")
+texture_margin_left = 12.0
+texture_margin_top = 12.0
+texture_margin_right = 12.0
+texture_margin_bottom = 12.0
+modulate_color = Color(1, 1, 1, 0.501961)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fh7m6"]
+texture = ExtResource("1_fbw4s")
+texture_margin_left = 12.0
+texture_margin_top = 12.0
+texture_margin_right = 12.0
+texture_margin_bottom = 12.0
+modulate_color = Color(1, 1, 1, 0.501961)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_3o7vb"]
+texture = ExtResource("1_fbw4s")
+texture_margin_left = 12.0
+texture_margin_top = 12.0
+texture_margin_right = 12.0
+texture_margin_bottom = 12.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f1wjq"]
+texture = ExtResource("1_fbw4s")
+texture_margin_left = 12.0
+texture_margin_top = 12.0
+texture_margin_right = 12.0
+texture_margin_bottom = 12.0
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kcg2t"]
 texture = ExtResource("13_7memj")
@@ -145,26 +191,42 @@ CheckBox/colors/font_pressed_color = Color(0, 0, 0, 1)
 CheckBox/constants/check_v_offset = 0
 CheckBox/constants/h_separation = 4
 CheckBox/constants/outline_size = 0
-CheckBox/icons/checked = ExtResource("1_xky8r")
-CheckBox/icons/checked_disabled = ExtResource("2_7memj")
+CheckBox/icons/checked = ExtResource("1_f6jyn")
+CheckBox/icons/checked_disabled = ExtResource("2_j6u7m")
 CheckBox/icons/radio_checked = ExtResource("3_wj56m")
 CheckBox/icons/radio_checked_disabled = ExtResource("2_j6u7m")
 CheckBox/icons/radio_unchecked = ExtResource("5_kcg2t")
 CheckBox/icons/radio_unchecked_disabled = ExtResource("4_04o3o")
 CheckBox/icons/unchecked = ExtResource("5_kcg2t")
 CheckBox/icons/unchecked_disabled = ExtResource("4_04o3o")
-CheckBox/styles/disabled = SubResource("StyleBoxEmpty_gpmsd")
-CheckBox/styles/focus = SubResource("StyleBoxFlat_x151o")
-CheckBox/styles/hover = SubResource("StyleBoxEmpty_gpmsd")
-CheckBox/styles/hover_pressed = SubResource("StyleBoxEmpty_gpmsd")
-CheckBox/styles/normal = SubResource("StyleBoxEmpty_gpmsd")
-CheckBox/styles/pressed = SubResource("StyleBoxEmpty_gpmsd")
+CheckBox/styles/disabled = SubResource("StyleBoxTexture_x151o")
+CheckBox/styles/hover = SubResource("StyleBoxTexture_g3e6j")
+CheckBox/styles/hover_pressed = SubResource("StyleBoxTexture_v3uvt")
+CheckBox/styles/normal = SubResource("StyleBoxTexture_t2xfd")
+CheckBox/styles/pressed = SubResource("StyleBoxTexture_taixv")
+CheckButton/colors/font_color = Color(0.875, 0.875, 0.875, 1)
+CheckButton/colors/font_disabled_color = Color(0, 0, 0, 0.5)
+CheckButton/colors/font_focus_color = Color(0, 0, 0, 1)
+CheckButton/colors/font_hover_color = Color(0, 0, 0, 1)
+CheckButton/colors/font_hover_pressed_color = Color(0, 0, 0, 1)
+CheckButton/colors/font_outline_color = Color(1, 1, 1, 1)
+CheckButton/colors/font_pressed_color = Color(0, 0, 0, 1)
+CheckButton/constants/check_v_offset = 0
+CheckButton/constants/h_separation = 4
+CheckButton/constants/outline_size = 0
 CheckButton/icons/checked = ExtResource("1_f6jyn")
 CheckButton/icons/checked_disabled = ExtResource("2_j6u7m")
-CheckButton/icons/checked_disabled_mirrored = null
-CheckButton/icons/checked_mirrored = null
+CheckButton/icons/checked_disabled_mirrored = ExtResource("1_f6jyn")
+CheckButton/icons/checked_mirrored = ExtResource("2_j6u7m")
 CheckButton/icons/unchecked = ExtResource("3_ldgtl")
 CheckButton/icons/unchecked_disabled = ExtResource("4_04o3o")
+CheckButton/icons/unchecked_disabled_mirrored = ExtResource("4_04o3o")
+CheckButton/icons/unchecked_mirrored = ExtResource("3_ldgtl")
+CheckButton/styles/disabled = SubResource("StyleBoxTexture_dfxgq")
+CheckButton/styles/hover = SubResource("StyleBoxTexture_yv5vc")
+CheckButton/styles/hover_pressed = SubResource("StyleBoxTexture_fh7m6")
+CheckButton/styles/normal = SubResource("StyleBoxTexture_3o7vb")
+CheckButton/styles/pressed = SubResource("StyleBoxTexture_f1wjq")
 HSlider/constants/center_grabber = 0
 HSlider/constants/grabber_offset = 0
 HSlider/icons/grabber = ExtResource("5_xky8r")

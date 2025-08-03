@@ -10,8 +10,13 @@ var current_tutorial_active: bool = false
 # These are the tutorial messages.
 const FIRST_ORBIT_MESSAGE = "You've entered a gravity well! Complete a full loop to earn another Boost Charge!"
 const OUT_OF_BOOSTS_MESSAGE = "Out of Boosts! Find a planet and orbit it to recharge."
-const LAND_FOR_BOOST_MESSAGE = "Land on a planet to get your boost back!"
-const ORBIT_FOR_EXTRA_BOOST_MESSAGE = "You can also orbit a planet to get an extra boost!"
+const LAND_FOR_BOOST_MESSAGE = "Land on a planet to get your boosts back and cache-in your points!"
+const ORBIT_FOR_EXTRA_BOOST_MESSAGE = "You can also bounce on a planet to get an extra boost!"
+const HOW_TO_PLAY_1 = "Welcome to Sol! Drag the screen to launch your ship!"
+const HOW_TO_PLAY_2 = "Left click, spacebar, or tap to boost."
+const HOW_TO_PLAY_3 = "Right click, shift, or hold with two fingers to brake."
+const HOW_TO_PLAY_4 = "Try to loop as many unique planets as you can to maximize your score!"
+
 
 # This shows a tutorial if it hasn't been shown before.
 func show_tutorial_once(tutorial_id: String, message: String, parent: Node) -> void:
@@ -71,6 +76,12 @@ func show_land_for_boost_tutorial(parent: Node) -> void:
 # This shows the orbit for extra boost tutorial
 func show_orbit_for_extra_boost_tutorial(parent: Node) -> void:
 	show_tutorial_once("orbit_for_extra_boost", ORBIT_FOR_EXTRA_BOOST_MESSAGE, parent)
+
+func show_how_to_play(parent: Node):
+	show_tutorial_once("how_to_play_1", HOW_TO_PLAY_1, parent)
+	show_tutorial_once("how_to_play_2", HOW_TO_PLAY_2, parent)
+	show_tutorial_once("how_to_play_3", HOW_TO_PLAY_3, parent)
+	show_tutorial_once("how_to_play_4", HOW_TO_PLAY_4, parent)
 
 # This resets all tutorials (for testing or new game)
 func reset_tutorials() -> void:

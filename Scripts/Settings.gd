@@ -1,7 +1,6 @@
 extends Control
 @onready var color_slider: HSlider = $Panel/VBoxContainer/ColorSliderContainer/ColorSlider
 @onready var example_ship: Sprite2D = $Panel/VBoxContainer/ExampleShipContainer/ExampleShip
-@onready var tutorial_toggle: CheckBox = $Panel/VBoxContainer/TutorialToggleContainer/TutorialToggle
 @onready var player_audio_handler: PlayerAudioHandler = $PlayerAudioHandler
 const CREDITS = preload("res://Scenes/UI/credits.tscn")
 # Called when the node enters the scene tree for the first time.
@@ -12,10 +11,6 @@ func _ready() -> void:
 	update_example_ship_color()
 	# Connect to GameManager signal for color changes
 	GameManager.ship_color_changed.connect(_on_ship_color_changed)
-
-	# Set initial tutorial toggle state
-	if tutorial_toggle:
-		tutorial_toggle.button_pressed = GameManager.get_tutorials_enabled()
 
 
 # Called when the color slider value changes
@@ -38,9 +33,6 @@ func _on_back_button_pressed() -> void:
 	queue_free()
 
 
-func _on_tutorial_toggle_toggled(button_pressed: bool) -> void:
-	# Update GameManager with new tutorial setting
-	GameManager.set_tutorials_enabled(button_pressed)
 
 func _on_credits_button_pressed() -> void:
 	get_tree().root.add_child(CREDITS.instantiate())
