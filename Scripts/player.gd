@@ -76,6 +76,9 @@ var final_score : int = 0  # Calculated when crashing
 # Track planets that have been orbited for first-time bonus
 var orbited_planets: Array[BasePlanet] = []
 
+# This array will keep track of all planets whose gravity fields the player is currently inside.
+var overlapping_planets: Array[BasePlanet] = []
+
 static var Position : Vector2
 # This variable will hold the player's current state from the enum above.
 var current_state: State = State.READY_TO_AIM
@@ -267,6 +270,7 @@ static var softlockTimer : SceneTreeTimer
 static var isBeingSaved : bool = false
 @export var softlockTime : float = 3.0
 static var doNotSave : bool = false
+
 # This function runs every physics frame, ideal for physics-related code.
 func _physics_process(_delta: float) -> void:
 	# Does not process physics input if game is paused (e.g., shop is open).
@@ -274,10 +278,46 @@ func _physics_process(_delta: float) -> void:
 	# Updates player's global position.
 	Position = global_position
 	
-	## Debug input to reset the player's launch state.
-	#if (Input.is_action_just_pressed("DEBUG-RESET_LAUNCH")):
-		#Reset()
+	# This section continuously determines the strongest gravitational influence.
+	var strongest_planet: BasePlanet = null
+	var max_force = -1.0
+
+	# Iterate through all planets the player is currently inside.
+	for planet in overlapping_planets:
+		if not is_instance_valid(planet):
+			continue
+		
+		# Calculate the force magnitude for this planet.
+		var distance = global_position.distance_to(planet.global_position)
+		var radius = planet.collision_shape_2d.shape.radius
+		var strength = planet.gravity_strength
+		var force = strength * (radius / max(distance, 1.0))
+
+		# If this planet's force is the strongest so far, it becomes the new candidate.
+		if force > max_force:
+			max_force = force
+			strongest_planet = planet
 	
+	# Check if the dominant planet has changed.
+	if strongest_planet != current_orbiting_planet:
+		# If we were orbiting a planet before, stop its indicator.
+		if is_instance_valid(current_orbiting_planet):
+			current_orbiting_planet.stop_orbit_progress_display()
+			
+		# Switch focus to the new strongest planet.
+		current_orbiting_planet = strongest_planet
+		
+		# If there is a new planet to orbit, reset the tracking for it.
+		if is_instance_valid(current_orbiting_planet):
+			# Place to reset all orbit-related state.
+			accumulated_orbit_angle = 0.0
+			last_angle_to_planet = (global_position - current_orbiting_planet.global_position).angle()
+			orbit_start_angle = last_angle_to_planet
+			current_skips_available = max_skips_per_orbit
+			canSkip = true
+			current_orbiting_planet.start_orbit_progress_display(self)
+
+
 	# This logic detects if the player is stuck at a very low velocity and summons a "saving" asteroid.
 	if(not onPlanet and BoostCount == 0 and current_state == State.LAUNCHED and (linear_velocity.length() < 5) and not isBeingSaved):
 		if(not doNotSave):
@@ -337,9 +377,6 @@ func _physics_process(_delta: float) -> void:
 							audioHandler.PlaySoundAtGlobalPosition(Sounds.ShipCollide, global_position)
 							audioHandler.PlaySoundAtGlobalPosition(Sounds.PingHigh, global_position)
 							
-							#var normal = collision.get_normal()
-							#linear_velocity = linear_velocity.bounce(normal)
-							#apply_central_impulse(normal * 500)
 						else:
 							# This handles crashing into a regular planet.
 							loopCounter = 0
@@ -354,8 +391,6 @@ func _physics_process(_delta: float) -> void:
 							onPlanet = true
 			# Checks if the collided object is an asteroid.
 			elif collider is Asteroid:
-				# Calculates the final score when crashing into an asteroid.
-				#calculate_final_score()
 				audioHandler.PlaySoundAtGlobalPosition(Sounds.ShipCollide, global_position)
 				softlockTimer = null
 				isBeingSaved = false
@@ -381,6 +416,7 @@ func _physics_process(_delta: float) -> void:
 			
 	# Calls the function to handle orbit progress tracking.
 	handle_orbit_tracking()
+	
 # This function tracks the player's progress around a planet.
 func handle_orbit_tracking():
 	# Stops the function if the player is not currently orbiting a planet.
@@ -403,9 +439,7 @@ func handle_orbit_tracking():
 	
 	# Checks if the accumulated angle has reached a full loop.
 	if accumulated_orbit_angle >= (2 * PI) * orbit_completion_percentage:
-		# DEBUG: This message will appear only when a loop is successfully completed.
-		print(">>>> ORBIT LOOP COMPLETE around '%s'! <<<<" % current_orbiting_planet.name)
-		
+
 		# Checks if this is the first time orbiting this specific planet for a score bonus.
 		var is_first_orbit = current_orbiting_planet not in orbited_planets
 		# If it is the first time, adds it to the list of visited planets.
@@ -455,18 +489,11 @@ func angle_difference(from, to):
 
 # This function is called by a planet when the player enters its gravity well.
 func start_orbiting(planet: BasePlanet):
-	current_skips_available = max_skips_per_orbit
-	canSkip = true
-	# Sets the currently orbiting planet.
-	current_orbiting_planet = planet
-	# Resets the accumulated angle to zero.
-	accumulated_orbit_angle = 0.0
-	# Records the player's angle when entering the gravity well.
-	last_angle_to_planet = (global_position - planet.global_position).angle()
 
-	orbit_start_angle = last_angle_to_planet  # Remember where we started
-	print("Started orbiting: ", planet.name)
+	if not planet in overlapping_planets:
+		overlapping_planets.append(planet)
 	
+	# The rest of the logic is now handled by the _physics_process loop,
 	mult += 1
 	PointNumbers.display_number(1, point_numbers_origin.global_position, 1)
 	audioHandler.PlaySoundAtGlobalPosition(Sounds.PingLow, global_position)
@@ -478,19 +505,8 @@ func start_orbiting(planet: BasePlanet):
 
 # This function is called by a planet when the player leaves its gravity well.
 func stop_orbiting(planet: BasePlanet):
-
-	# Ensures the player is leaving the planet it was actually orbiting.
-	if planet == current_orbiting_planet:
-		# Clears the reference to the orbiting planet.
-
-		current_orbiting_planet = null
-		# Resets the accumulated angle.
-		accumulated_orbit_angle = 0.0
-		# Allows the player to perform a "skip" on the next planet they hit.
-		current_skips_available = max_skips_per_orbit
-		
-		# DEBUG: This confirms that the player has stopped orbiting.
-		print("Player stopped orbiting: ", planet.name)
+	if planet in overlapping_planets:
+		overlapping_planets.erase(planet)
 
 
 # This function handles the logic for launching the player.
