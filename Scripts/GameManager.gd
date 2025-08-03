@@ -31,7 +31,10 @@ func _ready() -> void:
 func calculate_goal_for_level(level: int) -> int:
 	# A new progression better suited for single score chunks.
 	# Lvl 1->2: 50, Lvl 2->3: 200, Lvl 3->4: 450 etc.
-	return 50 * int(pow(level, 2))
+	var returnLevel = level * 2
+	if(current_level % 3 == 0):
+		level += level * 0.5
+	return returnLevel
 
 func get_current_level_goal() -> int:
 	return calculate_goal_for_level(current_level)

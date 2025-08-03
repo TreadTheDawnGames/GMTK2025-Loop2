@@ -25,6 +25,7 @@ func _ready() -> void:
 		Surface.mouse_entered.connect(func(): mouseOverShop = true)
 		Surface.mouse_exited.connect(func(): mouseOverShop = false)
 
+var clickTimer:SceneTreeTimer
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	# This checks for the interact key press when the player is in range to open the shop.
@@ -32,6 +33,10 @@ func _process(_delta: float) -> void:
 		print("E key pressed, opening shop")
 		open_shop()
 	if(mouseOverShop and Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)):
+		clickTimer = get_tree().create_timer(0.2)
+		clickTimer.timeout.connect(func(): clickTimer = null)
+	
+	if(current_player and clickTimer and mouseOverShop and not Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and clickTimer.time_left > 0):
 		open_shop()
 		current_player.current_state = current_player.State.READY_TO_AIM
 		mouseOverShop = false
