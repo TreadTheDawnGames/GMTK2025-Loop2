@@ -1,12 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://bo124rnslxi65"]
+[gd_scene load_steps=4 format=3 uid="uid://bo124rnslxi65"]
 
 [ext_resource type="Script" uid="uid://by6pk8ix075tr" path="res://Scripts/tools/level.gd" id="1_tumq0"]
-[ext_resource type="PackedScene" uid="uid://vuorl2ga7vdk" path="res://Scenes/planet_medium.tscn" id="2_wqkje"]
-[ext_resource type="PackedScene" uid="uid://bdnjtwxu3rtvy" path="res://Scenes/planet_tiny.tscn" id="5_0f350"]
-[ext_resource type="PackedScene" uid="uid://h0vfnklanw5d" path="res://Scenes/planet_large.tscn" id="5_8c0lf"]
-[ext_resource type="PackedScene" uid="uid://d1rrwaam8e5cr" path="res://Scenes/planet_small.tscn" id="5_wqkje"]
-[ext_resource type="PackedScene" uid="uid://ku0et6l6vqic" path="res://Scenes/planet_Sol.tscn" id="6_1o2sj"]
-[ext_resource type="PackedScene" uid="uid://dg7glwq2khxr1" path="res://Scenes/planet_black_hole.tscn" id="7_57qf2"]
+[ext_resource type="PackedScene" uid="uid://w1hy76n1gkow" path="res://Scenes/planet_Sol.tscn" id="6_1o2sj"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8c0lf"]
 
@@ -16,77 +11,12 @@ script = ExtResource("1_tumq0")
 spawn_large_planets = false
 spawn_medium_planets = false
 
+[node name="Planet4" parent="." instance=ExtResource("6_1o2sj")]
+position = Vector2(-177, 148.554)
+can_have_collectable = true
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
 scale = Vector2(1500, 1500)
 shape = SubResource("CircleShape2D_8c0lf")
 disabled = true
-
-[node name="@Area2D@36677" parent="." instance=ExtResource("5_wqkje")]
-position = Vector2(13712.1, 660)
-gravity_strength = 2800.0
-collectable_spawn_chance = 0.665
-
-[node name="@Area2D@23229" parent="." instance=ExtResource("5_wqkje")]
-position = Vector2(10588.8, 8030)
-gravity_strength = 2800.0
-collectable_spawn_chance = 0.665
-
-[node name="@Area2D@32041" parent="." instance=ExtResource("2_wqkje")]
-position = Vector2(-573.281, 11048.3)
-collectable_spawn_chance = 0.665
-
-[node name="@Area2D@41955" parent="." instance=ExtResource("5_wqkje")]
-position = Vector2(216, -7696.99)
-gravity_strength = 3000.0
-collectable_spawn_chance = 0.665
-
-[node name="@Area2D@59815" parent="." instance=ExtResource("2_wqkje")]
-position = Vector2(8448.29, 3648.97)
-collectable_spawn_chance = 0.665
-
-[node name="@Area2D@99910" parent="." instance=ExtResource("5_wqkje")]
-position = Vector2(-148353, -43567.7)
-gravity_strength = 3000.0
-collectable_spawn_chance = 0.665
-
-[node name="@Area2D@29834" parent="." instance=ExtResource("5_8c0lf")]
-position = Vector2(5456.72, 9018.44)
-can_have_collectable = null
-collectable_spawn_chance = 0.5
-collectable_scenes = null
-
-[node name="@Area2D@84178" parent="." instance=ExtResource("2_wqkje")]
-position = Vector2(4450.64, 1218.17)
-collectable_spawn_chance = 0.665
-
-[node name="@Area2D@84407" parent="." instance=ExtResource("2_wqkje")]
-position = Vector2(734.605, 8224.08)
-collectable_spawn_chance = 0.665
-
-[node name="@Area2D@85759" parent="." instance=ExtResource("5_wqkje")]
-position = Vector2(-2057.8, 8428.41)
-gravity_strength = 3000.0
-collectable_spawn_chance = 0.665
-
-[node name="@Area2D@86131" parent="." instance=ExtResource("5_wqkje")]
-position = Vector2(2192.4, 11540.6)
-gravity_strength = 3000.0
-collectable_spawn_chance = 0.665
-
-[node name="@Area2D@87474" parent="." instance=ExtResource("5_wqkje")]
-position = Vector2(12298.3, 4105.41)
-gravity_strength = 3000.0
-collectable_spawn_chance = 0.665
-
-[node name="Planet2" parent="." instance=ExtResource("5_0f350")]
-position = Vector2(-1197, 916.251)
-
-[node name="Planet9" parent="." instance=ExtResource("5_0f350")]
-position = Vector2(7566, 1595.21)
-
-[node name="Planet4" parent="." instance=ExtResource("6_1o2sj")]
-position = Vector2(7035, -6999)
-
-[node name="Planet5" parent="." instance=ExtResource("7_57qf2")]
-position = Vector2(996, 3913.26)

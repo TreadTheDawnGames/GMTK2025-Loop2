@@ -1,9 +1,14 @@
-[gd_scene load_steps=12 format=3 uid="uid://14epulnfjodl"]
+[gd_scene load_steps=13 format=3 uid="uid://14epulnfjodl"]
 
 [ext_resource type="Script" uid="uid://bdfhql41tte7y" path="res://Scripts/HomePlanet.gd" id="1_homeplanet"]
-[ext_resource type="Texture2D" uid="uid://cyut047q5pqhb" path="res://Assets/kenney_space-shooter-extension/AAA-ChosenKenneySpace/spaceStation_020.png" id="2_station_main"]
-[ext_resource type="Texture2D" uid="uid://dwrxcriyojn1o" path="res://Assets/kenney_space-shooter-extension/AAA-ChosenKenneySpace/spaceStation_022.png" id="3_station_top"]
-[ext_resource type="Texture2D" uid="uid://0l7e77brjgc0" path="res://Assets/kenney_space-shooter-extension/AAA-ChosenKenneySpace/spaceStation_018.png" id="4_station_bottom"]
+[ext_resource type="Texture2D" uid="uid://nkane6t2xqfq" path="res://Assets/kenney_space-shooter-extension/AAA-ChosenKenneySpace/FullStation.png" id="2_yx0ix"]
+[ext_resource type="Texture2D" uid="uid://cd3nqdixd30my" path="res://Assets/kenney_space-shooter-extension/AAA-ChosenKenneySpace/FullStation_normal.png" id="3_7i0kr"]
+[ext_resource type="Texture2D" uid="uid://bvuwwkt6a5ibd" path="res://Assets/kenney_space-shooter-extension/AAA-ChosenKenneySpace/FullStation_specular.png" id="4_67m2w"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_vtlm0"]
+diffuse_texture = ExtResource("2_yx0ix")
+normal_texture = ExtResource("3_7i0kr")
+specular_texture = ExtResource("4_67m2w")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_base_collider"]
 size = Vector2(173, 49)
@@ -32,20 +37,12 @@ gravity_strength = 2000.0
 
 [node name="Sprite" type="Sprite2D" parent="."]
 scale = Vector2(3, 3)
-texture = ExtResource("2_station_main")
-
-[node name="SpaceStation022" type="Sprite2D" parent="Sprite"]
-position = Vector2(0, -84)
-texture = ExtResource("3_station_top")
-
-[node name="SpaceStation018" type="Sprite2D" parent="Sprite"]
-position = Vector2(0, 59.5)
-texture = ExtResource("4_station_bottom")
+texture = SubResource("CanvasTexture_vtlm0")
 
 [node name="AnimatableBody2D" type="AnimatableBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D"]
-position = Vector2(-1, 181)
+position = Vector2(0, -177)
 scale = Vector2(3, 3)
 shape = SubResource("RectangleShape2D_base_collider")
 
@@ -55,7 +52,7 @@ scale = Vector2(3, 3)
 shape = SubResource("CircleShape2D_vtlm0")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="AnimatableBody2D"]
-position = Vector2(-3, -254)
+position = Vector2(-3, 234)
 scale = Vector2(3, 3)
 shape = SubResource("RectangleShape2D_cxprx")
 
