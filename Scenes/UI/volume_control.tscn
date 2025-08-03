@@ -10,6 +10,7 @@ script = ExtResource("1_abcde")
 
 [node name="CheckBox" type="CheckBox" parent="."]
 layout_mode = 2
+button_pressed = true
 script = ExtResource("2_rmt3s")
 
 [node name="Label" type="Label" parent="."]

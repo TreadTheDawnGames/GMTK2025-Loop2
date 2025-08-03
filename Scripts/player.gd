@@ -219,7 +219,6 @@ func _process(_delta: float) -> void:
 			2: # Two touches (for braking)
 				singleTouchProcessed = false
 				mobileBrake = true
-	
 	# Does not process input if game is paused (e.g., shop is open).
 	if get_tree().paused:
 		return
@@ -227,9 +226,9 @@ func _process(_delta: float) -> void:
 	# Updates player's global position for background parallax.
 	Position = global_position
 
-	# Debug input to reset the player's launch state.
-	if (Input.is_action_just_pressed("DEBUG-RESET_LAUNCH")):
-		Reset()
+	## Debug input to reset the player's launch state.
+	#if (Input.is_action_just_pressed("DEBUG-RESET_LAUNCH")):
+		#Reset()
 	
 	# Handles left mouse button or single touch for aiming.
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) or SingleTouchDown:
@@ -270,9 +269,9 @@ func _physics_process(_delta: float) -> void:
 	# Updates player's global position.
 	Position = global_position
 	
-	# Debug input to reset the player's launch state.
-	if (Input.is_action_just_pressed("DEBUG-RESET_LAUNCH")):
-		Reset()
+	## Debug input to reset the player's launch state.
+	#if (Input.is_action_just_pressed("DEBUG-RESET_LAUNCH")):
+		#Reset()
 	
 	# This logic detects if the player is stuck at a very low velocity and summons a "saving" asteroid.
 	if(not onPlanet and BoostCount == 0 and current_state == State.LAUNCHED and (linear_velocity.length() < 5) and not isBeingSaved):
