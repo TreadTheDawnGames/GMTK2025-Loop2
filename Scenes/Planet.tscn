@@ -100,7 +100,7 @@ normal_texture = ExtResource("5_q5dxo")
 
 [node name="Planet2" type="Area2D"]
 script = ExtResource("1_ej51v")
-collectable_spawn_chance = 0.2
+collectable_spawn_chance = 0.15
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 material = SubResource("ShaderMaterial_aogve")

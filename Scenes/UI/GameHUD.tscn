@@ -8,6 +8,7 @@
 
 [sub_resource type="LabelSettings" id="LabelSettings_4y6w4"]
 font_size = 80
+outline_size = 5
 outline_color = Color(0, 0, 0, 1)
 
 [node name="GameHUD" type="Control"]
