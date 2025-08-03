@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cslq0v6w7x80a"]
+[gd_scene load_steps=19 format=3 uid="uid://cslq0v6w7x80a"]
 
 [ext_resource type="Script" uid="uid://dton838gyavdl" path="res://Scripts/player.gd" id="1_player"]
 [ext_resource type="Texture2D" uid="uid://b3yadhtuplhg2" path="res://Assets/kenney_space-shooter-extension/AAA-ChosenKenneySpace/spaceShips_001.png" id="2_ship_tex"]
@@ -35,6 +35,17 @@ colors = PackedColorArray(1, 0, 0, 1, 1, 1, 0, 1)
 [sub_resource type="Curve" id="Curve_megsn"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
+
+[sub_resource type="Curve" id="Curve_ksbbd"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.659449, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Gradient" id="Gradient_glx4g"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="Gradient" id="Gradient_miouo"]
+offsets = PackedFloat32Array(0, 0.543568, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 0, 1)
 
 [node name="Player" type="RigidBody2D"]
 collision_layer = 3
@@ -172,14 +183,26 @@ script = ExtResource("3_particles")
 [node name="ExplosionParticles" type="CPUParticles2D" parent="."]
 emitting = false
 amount = 500
+lifetime = 0.96
 one_shot = true
+speed_scale = 1.5
 explosiveness = 1.0
 randomness = 1.0
+lifetime_randomness = 0.54
 direction = Vector2(0, 0)
 spread = 180.0
 gravity = Vector2(0, 0)
-initial_velocity_min = 453.26
 initial_velocity_max = 737.39
+radial_accel_min = -100.0
+radial_accel_max = 100.0
+tangential_accel_min = -100.0
+tangential_accel_max = 100.0
+scale_amount_max = 5.0
+scale_amount_curve = SubResource("Curve_ksbbd")
+color_ramp = SubResource("Gradient_glx4g")
+color_initial_ramp = SubResource("Gradient_miouo")
+hue_variation_min = -1.0
+hue_variation_max = 1.0
 script = ExtResource("3_particles")
 metadata/_custom_type_script = "uid://dwottdnvtkjgy"
 
