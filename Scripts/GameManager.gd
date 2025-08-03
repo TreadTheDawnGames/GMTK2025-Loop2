@@ -10,6 +10,11 @@ signal collectable_collected()
 var ship_color: Color = Color.WHITE
 var ship_color_hue: float = 0.0  # 0.0 to 1.0 for hue slider
 
+var high_score : float = 0:
+	get: return high_score
+	set (value): 
+		if value > high_score:
+			high_score = value
 # Score system
 var current_score: int = 0
 
@@ -72,6 +77,7 @@ func get_game_state() -> GameState:
 # Score management functions
 func add_score(points: int) -> void:
 	current_score += points
+	high_score = current_score
 	score_changed.emit(current_score)
 
 func get_score() -> int:

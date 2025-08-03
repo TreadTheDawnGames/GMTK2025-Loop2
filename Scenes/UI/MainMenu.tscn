@@ -1,10 +1,20 @@
-[gd_scene load_steps=9 format=3 uid="uid://din50gkoucxpp"]
+[gd_scene load_steps=19 format=3 uid="uid://din50gkoucxpp"]
 
 [ext_resource type="Script" uid="uid://ew10v6pbwxv6" path="res://Scripts/MainMenu.gd" id="1_main_menu"]
 [ext_resource type="Theme" uid="uid://dvwgvp8u8xo0i" path="res://Scenes/UI/Themes/UI_Theme.tres" id="1_mjmdf"]
 [ext_resource type="Material" uid="uid://2wo2meekggrg" path="res://Scenes/Effects/StarBackground_Menu.tres" id="3_72sra"]
 [ext_resource type="Texture2D" uid="uid://bk7d1uwiwf5vm" path="res://Assets/kenney_planets/Planets/planet02.png" id="4_jex3y"]
 [ext_resource type="Script" uid="uid://c1e04v6b22eli" path="res://Scripts/Shop/button_sounds.gd" id="4_t6w0q"]
+[ext_resource type="Script" uid="uid://d14jugjffoiv7" path="res://Scripts/rand_sprite.gd" id="5_euk5f"]
+[ext_resource type="Texture2D" uid="uid://b6y5iuktvcwd4" path="res://Assets/kenney_planets/Planets/planet00.png" id="6_kdsd0"]
+[ext_resource type="Texture2D" uid="uid://cgt4c8whbpa4p" path="res://Assets/kenney_planets/Planets/planet01.png" id="7_w0mr3"]
+[ext_resource type="Texture2D" uid="uid://b3dfuop6n5fr2" path="res://Assets/kenney_planets/Planets/planet03.png" id="8_ytwc7"]
+[ext_resource type="Texture2D" uid="uid://ef8vjx463bnj" path="res://Assets/kenney_planets/Planets/planet04.png" id="9_0ncoa"]
+[ext_resource type="Texture2D" uid="uid://bcmnm1avyhgv8" path="res://Assets/kenney_planets/Planets/planet05.png" id="10_4pyop"]
+[ext_resource type="Texture2D" uid="uid://x45e1e0ufjlm" path="res://Assets/kenney_planets/Planets/planet06.png" id="11_ervkh"]
+[ext_resource type="Texture2D" uid="uid://dgy0qlfsppkme" path="res://Assets/kenney_planets/Planets/planet07.png" id="12_2qihr"]
+[ext_resource type="Texture2D" uid="uid://fhqpobm2xyfy" path="res://Assets/kenney_planets/Planets/planet08.png" id="13_xwq8e"]
+[ext_resource type="Texture2D" uid="uid://d2lxucwpeaiew" path="res://Assets/kenney_planets/Planets/planet09.png" id="14_sdupg"]
 
 [sub_resource type="Animation" id="Animation_jex3y"]
 length = 0.001
@@ -29,7 +39,7 @@ tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/path = NodePath("Planet:position")
-tracks/0/interp = 1
+tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0, 4.53333, 9.76667, 15.0333),
@@ -60,6 +70,7 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_bottom = 244.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.1, 0.1, 0.2, 1)
@@ -76,21 +87,28 @@ grow_vertical = 2
 position = Vector2(171, 439)
 scale = Vector2(0.524609, 0.532812)
 texture = ExtResource("4_jex3y")
+script = ExtResource("5_euk5f")
+PlanetSprites = Array[Texture2D]([ExtResource("6_kdsd0"), ExtResource("7_w0mr3"), ExtResource("4_jex3y"), ExtResource("8_ytwc7"), ExtResource("9_0ncoa"), ExtResource("10_4pyop"), ExtResource("11_ervkh"), ExtResource("12_2qihr"), ExtResource("13_xwq8e"), ExtResource("14_sdupg")])
 
 [node name="PlanetAnimationPlayer" type="AnimationPlayer" parent="AnimatedBackground"]
 libraries = {
 &"": SubResource("AnimationLibrary_744d7")
 }
 autoplay = "planet_drift"
+speed_scale = 0.25
 
 [node name="GameTitle" type="Label" parent="."]
-layout_mode = 2
-offset_left = 295.0
-offset_top = 142.5
-offset_right = 857.0
-offset_bottom = 223.5
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -281.0
+offset_top = 104.0
+offset_right = 281.0
+offset_bottom = 185.0
+grow_horizontal = 2
 theme_override_font_sizes/font_size = 72
-text = "SPACE LOOP"
+text = "sol"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -99,7 +117,7 @@ layout_mode = 2
 offset_left = 462.0
 offset_top = 294.0
 offset_right = 690.0
-offset_bottom = 504.0
+offset_bottom = 450.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -123,13 +141,8 @@ layout_mode = 2
 text = "SETTINGS"
 script = ExtResource("4_t6w0q")
 
-[node name="ExitButton" type="Button" parent="PanelContainer/VBoxContainer" groups=["Button"]]
-custom_minimum_size = Vector2(200, 50)
-layout_mode = 2
-text = "EXIT"
-script = ExtResource("4_t6w0q")
-
 [node name="HowToPlayPanel" type="PanelContainer" parent="."]
+visible = false
 layout_mode = 2
 offset_left = 50.0
 offset_top = 530.0
@@ -162,4 +175,3 @@ theme_override_font_sizes/font_size = 16
 
 [connection signal="pressed" from="PanelContainer/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
-[connection signal="pressed" from="PanelContainer/VBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]

@@ -321,11 +321,16 @@ func _physics_process(_delta: float) -> void:
 						# This is the logic for colliding with a regular planet.
 						if(current_skips_available > 0) and collider.owner is not Asteroid:
 							print("Skip")
+
 							current_skips_available -= 1
+
+							canSkip = false
+
 							BoostCount += 1
 							mult *= 2
 							PointNumbers.display_number(mult, point_numbers_origin.global_position, 1)
 							audioHandler.PlaySoundAtGlobalPosition(Sounds.ShipCollide, global_position)
+							audioHandler.PlaySoundAtGlobalPosition(Sounds.PingHigh, global_position)
 						else:
 							# This handles crashing into a regular planet.
 							loopCounter = 0
@@ -335,12 +340,13 @@ func _physics_process(_delta: float) -> void:
 							linear_velocity = Vector2.ZERO
 							angular_velocity = 0.0
 							audioHandler.PlaySoundAtGlobalPosition(Sounds.ShipCollide, global_position)
+							audioHandler.PlaySoundAtGlobalPosition(Sounds.ShipCrash, global_position)
 							Reset()
 							onPlanet = true
 			# Checks if the collided object is an asteroid.
 			elif collider is Asteroid:
 				# Calculates the final score when crashing into an asteroid.
-				calculate_final_score()
+				#calculate_final_score()
 				audioHandler.PlaySoundAtGlobalPosition(Sounds.ShipCollide, global_position)
 				softlockTimer = null
 				isBeingSaved = false
@@ -411,7 +417,6 @@ func handle_orbit_tracking():
 			points += 1
 			# Displays the points number on screen.
 			PointNumbers.display_number(points, point_numbers_origin.global_position, 0)
-
 		# Tells the planet to run its completion flash animation.
 		current_orbiting_planet.flash_orbit_completion()
 		# Gives the player one boost charge.
@@ -421,7 +426,7 @@ func handle_orbit_tracking():
 		# Tells the planet to release its collectable to the player.
 		current_orbiting_planet.collect_item(self)
 		# Adds the collectable's point value to the score.
-		GameManager.add_score(50)
+		#GameManager.add_score(50)
 
 		# Resets the accumulated angle back to zero to start tracking the next loop.
 		accumulated_orbit_angle = 0.0
@@ -448,7 +453,8 @@ func start_orbiting(planet: BasePlanet):
 	
 	mult += 1
 	PointNumbers.display_number(mult, point_numbers_origin.global_position, 1)
-
+	audioHandler.PlaySoundAtGlobalPosition(Sounds.PingLow, global_position)
+	
 	# Shows the first-time orbit tutorial if it hasn't been shown yet.
 	var hud = get_tree().root.get_node("Game/HUDLayer/GameHUD")
 	if hud:
