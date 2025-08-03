@@ -455,6 +455,8 @@ func angle_difference(from, to):
 
 # This function is called by a planet when the player enters its gravity well.
 func start_orbiting(planet: BasePlanet):
+	current_skips_available = max_skips_per_orbit
+	canSkip = true
 	# Sets the currently orbiting planet.
 	current_orbiting_planet = planet
 	# Resets the accumulated angle to zero.
