@@ -1,7 +1,8 @@
-[gd_scene load_steps=16 format=3 uid="uid://cslq0v6w7x80a"]
+[gd_scene load_steps=18 format=3 uid="uid://cslq0v6w7x80a"]
 
 [ext_resource type="Script" uid="uid://dton838gyavdl" path="res://Scripts/player.gd" id="1_player"]
 [ext_resource type="Texture2D" uid="uid://b3yadhtuplhg2" path="res://Assets/kenney_space-shooter-extension/AAA-ChosenKenneySpace/spaceShips_001.png" id="2_ship_tex"]
+[ext_resource type="Texture2D" uid="uid://dilwn41tsch6s" path="res://Assets/spaceShips_001_normal2-export.png" id="3_bhhdu"]
 [ext_resource type="Texture2D" uid="uid://b86vrmxx8oexw" path="res://Assets/kenney_simple-space/AAA-ChosenKenney/effect_gray.png" id="3_nn08x"]
 [ext_resource type="Script" uid="uid://dwottdnvtkjgy" path="res://Scripts/particle_effect.gd" id="3_particles"]
 [ext_resource type="Script" uid="uid://dgc8vmme70xjb" path="res://addons/trail_2d/trail_2d.gd" id="4_52ee3"]
@@ -10,6 +11,10 @@
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_52ee3"]
 bounce = 43.4
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_ksbbd"]
+diffuse_texture = ExtResource("2_ship_tex")
+normal_texture = ExtResource("3_bhhdu")
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_kyqiw"]
 radius = 40.0
@@ -58,7 +63,7 @@ softlockTime = null
 [node name="Sprite2D" type="Sprite2D" parent="."]
 rotation = -1.5708
 scale = Vector2(0.454, 0.454)
-texture = ExtResource("2_ship_tex")
+texture = SubResource("CanvasTexture_ksbbd")
 vframes = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
