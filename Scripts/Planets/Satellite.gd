@@ -72,7 +72,7 @@ func on_hit(player : Player) -> void:
 	# This adds 3 points to the player's score
 	player.points += 3
 	# This displays the number "3" at the satellite's position to give visual feedback
-	PointNumbers.display_number(3, global_position, 0)
+	PointNumbers.display_number(player.points, global_position, 0)
 	
 	# This plays a collision sound at the satellite's current location
 	audio_handler.PlaySoundAtGlobalPosition(Sounds.ShipCollide, global_position)
