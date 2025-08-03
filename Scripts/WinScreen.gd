@@ -1,5 +1,5 @@
 extends Control
-
+class_name EndGame
 # Node references
 @onready var stats_container: VBoxContainer = $PanelContainer/VBoxContainer
 @onready var title_label: Label = $PanelContainer/VBoxContainer/TitleLabel
@@ -7,6 +7,10 @@ extends Control
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	display_victory_stats()
+@onready var end_title: Label = $VBoxContainer/EndTitle
+@onready var end_message: Label = $VBoxContainer/EndMessage
+@onready var your_score: Label = $VBoxContainer/HBoxContainer/YourScore
+@onready var high_score: Label = $VBoxContainer/HBoxContainer/HighScore
 
 # Called when Restart button is pressed
 func _on_restart_button_pressed() -> void:
