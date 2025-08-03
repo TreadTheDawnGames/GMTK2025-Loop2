@@ -7,7 +7,7 @@ class_name Player
 
 @onready var point_numbers_origin: Node2D = $PointNumbersOrigin
 
-
+var dead : bool = false
 # Trail effect properties
 var original_trail_length: int = 10
 var original_trail_color: Color = Color.WHITE
@@ -30,6 +30,7 @@ const LAUNCH_COOLDOWN_TIME : float = 0.3
 var canBoost : bool = false
 
 var canSkip : bool = true
+@onready var Shape: CollisionShape2D = $CollisionShape2D
 
 @export_category("Orbit Settings")
 @export_range(0.0, 1.0) var orbit_completion_percentage: float = 0.95 # 95%
@@ -39,7 +40,6 @@ var canSkip : bool = true
 # The particles
 @onready var _LaunchParticles: ParticleEffect = $LaunchParticles
 @onready var _BoostParticles: ParticleEffect = $BoostParticles
-@onready var ExplosionParticles: ParticleEffect = $ExplosionParticles
 # The sprite
 @onready var Sprite: Sprite2D = $Sprite2D
 # The Camera
@@ -246,8 +246,6 @@ static var doNotSave : bool = false
 # This function runs every physics frame, ideal for physics-related code.
 func _physics_process(_delta: float) -> void:
 	# Does not process physics input if game is paused (e.g., shop is open).
-	if get_tree().paused:
-		return
 	
 	# Updates player's global position.
 	Position = global_position
@@ -738,8 +736,10 @@ func apply_boost_trail_effect():
 		trail_effect_tween.parallel().tween_method(func(length): trail_2d_2.length = length, original_trail_length * 2.0, original_trail_length, 0.5)
 
 func Explode(_position : Vector2):
+	dead = true
 	Sprite.hide()
-	set_deferred("freeze", true)
-	ExplosionParticles.Emit()
-	ExplosionParticles.finished.connect(GameManager.show_lose_screen)
+	$CollisionShape2D.hide()
+	linear_damp = 10
+	audioHandler.PlaySoundAtGlobalPosition(Sounds.DownUIBeep, global_position)
+	get_tree().create_timer(1).timeout.connect(GameManager.show_lose_screen)
 	pass

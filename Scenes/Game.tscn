@@ -38,7 +38,7 @@ script = ExtResource("3_2irst")
 layer = 10
 
 [node name="Player" parent="." instance=ExtResource("4_kldst")]
-position = Vector2(-1, -320)
+position = Vector2(-499, -1465)
 rotation = -1.5708
 physics_material_override = SubResource("PhysicsMaterial_2irst")
 launch_power = 5.0
