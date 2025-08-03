@@ -336,7 +336,7 @@ func _physics_process(_delta: float) -> void:
 			# Checks if the collided object is an asteroid.
 			elif collider is Asteroid:
 				# Calculates the final score when crashing into an asteroid.
-				calculate_final_score()
+				#calculate_final_score()
 				audioHandler.PlaySoundAtGlobalPosition(Sounds.ShipCollide, global_position)
 				softlockTimer = null
 				isBeingSaved = false
@@ -416,7 +416,7 @@ func handle_orbit_tracking():
 		# Tells the planet to release its collectable to the player.
 		current_orbiting_planet.collect_item(self)
 		# Adds the collectable's point value to the score.
-		GameManager.add_score(50)
+		#GameManager.add_score(50)
 
 		# Resets the accumulated angle back to zero to start tracking the next loop.
 		accumulated_orbit_angle = 0.0
