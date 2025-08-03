@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://14epulnfjodl"]
+[gd_scene load_steps=14 format=3 uid="uid://14epulnfjodl"]
 
 [ext_resource type="Script" uid="uid://bdfhql41tte7y" path="res://Scripts/HomePlanet.gd" id="1_homeplanet"]
 [ext_resource type="Texture2D" uid="uid://nkane6t2xqfq" path="res://Assets/kenney_space-shooter-extension/AAA-ChosenKenneySpace/FullStation.png" id="2_yx0ix"]
@@ -11,16 +11,16 @@ normal_texture = ExtResource("3_7i0kr")
 specular_texture = ExtResource("4_67m2w")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_base_collider"]
-size = Vector2(173, 49)
+size = Vector2(516, 157)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_vtlm0"]
-radius = 55.0818
+radius = 165.194
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cxprx"]
-size = Vector2(170, 27)
+size = Vector2(516, 83)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bpuqj"]
-size = Vector2(29, 184)
+size = Vector2(133, 448)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xlxvy"]
 size = Vector2(8, 60)
@@ -31,9 +31,14 @@ radius = 400.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_shop_area"]
 size = Vector2(172, 347)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vtlm0"]
+size = Vector2(516, 853.585)
+
 [node name="HomePlanet" type="Area2D"]
 script = ExtResource("1_homeplanet")
 gravity_strength = 2000.0
+can_have_collectable = false
+can_have_satellites = false
 
 [node name="Sprite" type="Sprite2D" parent="."]
 scale = Vector2(3, 3)
@@ -42,23 +47,19 @@ texture = SubResource("CanvasTexture_vtlm0")
 [node name="AnimatableBody2D" type="AnimatableBody2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D"]
-position = Vector2(0, -177)
-scale = Vector2(3, 3)
+position = Vector2(-1, -178.5)
 shape = SubResource("RectangleShape2D_base_collider")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="AnimatableBody2D"]
-position = Vector2(-2, -356)
-scale = Vector2(3, 3)
+position = Vector2(0, -358)
 shape = SubResource("CircleShape2D_vtlm0")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="AnimatableBody2D"]
-position = Vector2(-3, 234)
-scale = Vector2(3, 3)
+position = Vector2(0, 229.5)
 shape = SubResource("RectangleShape2D_cxprx")
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="AnimatableBody2D"]
-position = Vector2(0, 64)
-scale = Vector2(3, 3)
+position = Vector2(0.5, 123)
 shape = SubResource("RectangleShape2D_bpuqj")
 
 [node name="CollisionShape2D5" type="CollisionShape2D" parent="AnimatableBody2D"]
@@ -77,3 +78,18 @@ visible = false
 position = Vector2(-1, -0.5)
 scale = Vector2(3, 3)
 shape = SubResource("RectangleShape2D_shop_area")
+
+[node name="TouchScreenButton" type="TouchScreenButton" parent="."]
+position = Vector2(-1, -79)
+shape = SubResource("RectangleShape2D_vtlm0")
+
+[node name="Button" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0)
+self_modulate = Color(1, 1, 1, 0)
+offset_left = -259.0
+offset_top = -507.0
+offset_right = 257.0
+offset_bottom = 349.0
+
+[connection signal="pressed" from="TouchScreenButton" to="." method="open_shop"]
+[connection signal="pressed" from="Button" to="." method="open_shop"]

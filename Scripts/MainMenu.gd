@@ -16,7 +16,8 @@ func _on_start_button_pressed() -> void:
 func _ready():
 	# Set initial tutorial toggle state
 	if tutorial_toggle:
-		tutorial_toggle.button_pressed = GameManager.get_tutorials_enabled()
+		tutorial_toggle.button_pressed = not GameManager.get_tutorials_enabled()
+	TutorialManager.tutorials_shown.clear()
 
 
 

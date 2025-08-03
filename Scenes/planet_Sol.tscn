@@ -99,6 +99,7 @@ scale = Vector2(4, 4)
 script = ExtResource("2_ouapx")
 can_have_collectable = false
 collectable_spawn_chance = 0.8
+can_have_satellites = false
 
 [node name="PointLight2D" type="PointLight2D" parent="." index="0"]
 position = Vector2(-0.125977, 0.127136)
