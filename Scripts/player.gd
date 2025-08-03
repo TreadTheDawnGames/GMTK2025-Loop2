@@ -117,10 +117,8 @@ var accumulated_orbit_angle: float = 0.0
 var orbit_start_angle: float = 0.0  # Angle where orbit started
 
 # Whether the game is running on a mobile OS
-var isMobile : bool = false
 
 func _ready() -> void:
-	isMobile = OS.has_feature("web_android") or OS.has_feature("web_ios")
 	linear_damp_mode = RigidBody2D.DAMP_MODE_COMBINE
 	# Stores starting position as origin
 	origin_position = global_position
@@ -177,7 +175,7 @@ var singleTouchProcessed : bool = false
 # This function is called every frame.
 func _process(_delta: float) -> void:
 	# Handles mobile touch inputs to determine player action.
-	if(isMobile):
+	if(GameManager.IsMobile):
 		match TouchHelper.state.size():
 			0: # No touches
 				mobileBrake = false

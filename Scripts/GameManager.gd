@@ -40,7 +40,10 @@ var ship_colors: Array[Color] = [
 
 @onready var Background: StarBackground
 
+var IsMobile : bool
+
 func _ready() -> void:
+	IsMobile = OS.has_feature("web_android") or OS.has_feature("web_ios")
 	# Set initial ship color
 	set_ship_color_from_hue(0.0)  # Start with red
 # Set ship color based on hue value (0.0 to 1.0)
