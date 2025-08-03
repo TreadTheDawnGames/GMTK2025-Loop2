@@ -398,7 +398,6 @@ func handle_orbit_tracking():
 			points += 1
 			# Displays the points number on screen.
 			PointNumbers.display_number(points, point_numbers_origin.global_position, 0)
-
 		# Tells the planet to run its completion flash animation.
 		current_orbiting_planet.flash_orbit_completion()
 		# Gives the player one boost charge.

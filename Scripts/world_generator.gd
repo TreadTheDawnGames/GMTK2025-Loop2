@@ -1,5 +1,44 @@
 extends Node2D
+class_name PlanetGenerator
+@onready var generated_planets_node = $GeneratedPlanets
+@onready var generated_nebulas_node = $GeneratedNebulas
 
+# --- Procedural Generation Settings ---
+@export_category("Level Generation")
+# The scenes for planets that can be randomly spawned.
+@export var planet_scenes: Array[PackedScene] = [
+	preload("res://Scenes/planet_small.tscn"),
+	preload("res://Scenes/planet_medium.tscn"),
+	preload("res://Scenes/planet_large.tscn")
+]
+# The scene for the nebula visual effect.
+@export var nebula_scene: PackedScene = preload("res://Scenes/Planets/Nebula.tscn")
+# The maximum radius from the center (0,0) where planets can spawn.
+@export var spawn_radius: float = 30000.0
+# The number of nebulas to spawn.
+@export var num_nebulas: int = 8
+# The number of planets to spawn.
+@export var num_planets: int = 50
+# The minimum empty space to leave between the edges of two regular planets.
+@export var min_distance_between_planets: float = 1500.0
+# How many planets should be clustered inside nebulas.
+@export var planets_in_nebulas: int = 8
+
+# --- Special Celestial Body Settings ---
+@export_category("Special Objects")
+# The scene for the Sun, which will be placed at the center.
+@export var sun_scene: PackedScene = preload("res://Scenes/planet_Sol.tscn")
+# The scene for the Black Hole, placed randomly.
+@export var black_hole_scene: PackedScene = preload("res://Scenes/planet_black_hole.tscn")
+# The scene for additional Home Stations/Shops.
+@export var station_scene: PackedScene = preload("res://Scenes/Home.tscn")
+# The number of ADDITIONAL random stations to spawn (on top of the main HomeBase).
+@export var num_additional_stations: int = 2
+# The extra empty space required around stations to prevent them from feeling crowded.
+@export var station_separation_buffer: float = 4000.0
+@onready var player: Player = $Player
+
+var home_planet: HomePlanet
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
