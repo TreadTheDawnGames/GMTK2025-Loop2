@@ -317,8 +317,8 @@ func _physics_process(_delta: float) -> void:
 							
 							canSkip = false
 							BoostCount += 1
-							mult *= 2
 							PointNumbers.display_number(mult, point_numbers_origin.global_position, 1)
+							mult *= 2
 							audioHandler.PlaySoundAtGlobalPosition(Sounds.ShipCollide, global_position)
 							audioHandler.PlaySoundAtGlobalPosition(Sounds.PingHigh, global_position)
 						else:
@@ -391,22 +391,28 @@ func handle_orbit_tracking():
 		# Checks if this is the first time orbiting this specific planet for a score bonus.
 		var is_first_orbit = current_orbiting_planet not in orbited_planets
 		# If it is the first time, adds it to the list of visited planets.
+		if current_orbiting_planet is Planet_Sol:
+			PointNumbers.display_number(50, point_numbers_origin.global_position, 0)  # Green color for bonus
+			PointNumbers.display_number(mult * 5, point_numbers_origin.global_position + Vector2(1000, 0), 1)  # Green color for bonus
+			points += 50
+			mult *= 5
+		
 		if is_first_orbit:
 			orbited_planets.append(current_orbiting_planet)
 			if(current_orbiting_planet.AtmoSprite.material):
 				current_orbiting_planet.SetShowOrbited(true)
 			
-			
-			# This adds a +5 score bonus for the first orbit.
-			GameManager.add_score(5)
-			print("First orbit bonus! +5 score")
-			points += 5
-			PointNumbers.display_number(points, point_numbers_origin.global_position, 0)  # Green color for bonus
-		else:
+			if current_orbiting_planet is not Planet_Sol:
+				# This adds a +5 score bonus for the first orbit.
+				GameManager.add_score(5)
+				print("First orbit bonus! +5 score")
+				points += 5
+				PointNumbers.display_number(5, point_numbers_origin.global_position, 0)  # Green color for bonus
+		else: if current_orbiting_planet is not Planet_Sol:
 			# Increases the base points for the final score calculation.
 			points += 1
 			# Displays the points number on screen.
-			PointNumbers.display_number(points, point_numbers_origin.global_position, 0)
+			PointNumbers.display_number(1, point_numbers_origin.global_position, 0)
 		# Tells the planet to run its completion flash animation.
 		current_orbiting_planet.flash_orbit_completion()
 		# Gives the player one boost charge.
@@ -442,7 +448,7 @@ func start_orbiting(planet: BasePlanet):
 	print("Started orbiting: ", planet.name)
 	
 	mult += 1
-	PointNumbers.display_number(mult, point_numbers_origin.global_position, 1)
+	PointNumbers.display_number(1, point_numbers_origin.global_position, 1)
 	audioHandler.PlaySoundAtGlobalPosition(Sounds.PingLow, global_position)
 	
 	# Shows the first-time orbit tutorial if it hasn't been shown yet.
