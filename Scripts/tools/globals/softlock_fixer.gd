@@ -3,19 +3,19 @@ extends Node
 const ASTEROID = preload("res://Scenes/Asteroid.tscn")
 @export var FixDistance : float = 6000
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-	if Input.is_action_just_pressed("DEBUG-SpawnSoftlockFix"):
-		# This finds the player node in the current scene by looking for the "player" group.
-		var player_node = get_tree().get_first_node_in_group("player")
-		
-		# This is a safety check to make sure the player exists before we try to use it.
-		if is_instance_valid(player_node):
-			# This now correctly passes the entire player node instance to the function.
-			FixSoftlock(player_node)
-			print("fixing")
-	pass
+#
+## Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(_delta: float) -> void:
+	#if Input.is_action_just_pressed("DEBUG-SpawnSoftlockFix"):
+		## This finds the player node in the current scene by looking for the "player" group.
+		#var player_node = get_tree().get_first_node_in_group("player")
+		#
+		## This is a safety check to make sure the player exists before we try to use it.
+		#if is_instance_valid(player_node):
+			## This now correctly passes the entire player node instance to the function.
+			#FixSoftlock(player_node)
+			#print("fixing")
+	#pass
 
 func FixSoftlock(player_node: Player):
 	# This ensures the player node is valid before proceeding.
