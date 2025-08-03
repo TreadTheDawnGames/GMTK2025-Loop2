@@ -2,10 +2,10 @@
 
 [ext_resource type="Theme" uid="uid://dvwgvp8u8xo0i" path="res://Scenes/UI/Themes/UI_Theme.tres" id="1_femvg"]
 [ext_resource type="Script" uid="uid://p432xwmpien4" path="res://Scripts/WinScreen.gd" id="1_win_screen"]
-[ext_resource type="Script" uid="uid://wuua7oqwf6au" path="res://Scenes/UI/your_score.gd" id="3_2tjps"]
+[ext_resource type="Script" path="res://Scenes/UI/your_score.gd" id="3_2tjps"]
 [ext_resource type="Script" uid="uid://c1e04v6b22eli" path="res://Scripts/Shop/button_sounds.gd" id="3_pj8m8"]
-[ext_resource type="Script" uid="uid://bf7scr8t0oybb" path="res://Scripts/UI/high_score_label.gd" id="4_3i2rc"]
-[ext_resource type="Script" uid="uid://cjkkfcvmfftea" path="res://Scenes/UI/bestCombo.gd" id="5_dhi7o"]
+[ext_resource type="Script" path="res://Scripts/UI/high_score_label.gd" id="4_3i2rc"]
+[ext_resource type="Script" path="res://Scenes/UI/bestCombo.gd" id="5_dhi7o"]
 
 [sub_resource type="Shader" id="Shader_femvg"]
 code = "shader_type canvas_item;

@@ -4,7 +4,7 @@
 [ext_resource type="Theme" uid="uid://dvwgvp8u8xo0i" path="res://Scenes/UI/Themes/UI_Theme.tres" id="1_663bt"]
 [ext_resource type="PackedScene" uid="uid://fcnfyre27jqd" path="res://Scenes/UI/Compass.tscn" id="2_compass"]
 [ext_resource type="PackedScene" uid="uid://djb632ayh6gg0" path="res://Scenes/UI/ObjectivesPanel.tscn" id="3_objectives"]
-[ext_resource type="PackedScene" uid="uid://cctmook84b7aa" path="res://Scenes/UI/CollectableCounter.tscn" id="4_collectable_counter"]
+[ext_resource type="PackedScene" path="res://Scenes/UI/CollectableCounter.tscn" id="4_collectable_counter"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_4y6w4"]
 font_size = 80

@@ -18,7 +18,7 @@ const WARNING_FOR_MOBILE = "Sol is best played in landscape mode."
 const HOW_TO_PLAY_1 = "Welcome to Sol! Drag the screen to launch your ship!"
 const HOW_TO_PLAY_2 = "Left click, spacebar, or tap to boost."
 const HOW_TO_PLAY_3 = "Right click, shift, or hold with two fingers to brake."
-const HOW_TO_PLAY_4 = "Press \"E\" or click/tap the stations near to open the shop."
+const HOW_TO_PLAY_4 = "When on a station (like the one you spawned near), press \"E\" or click/tap it to open the shop."
 const HOW_TO_PLAY_5 = "Try to loop as many unique planets as you can to maximize your score!"
 
 

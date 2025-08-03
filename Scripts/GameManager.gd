@@ -31,7 +31,7 @@ func _ready() -> void:
 	set_ship_color_from_hue(0.0)
 	best_combo = 0
 
-var level_goal : int = 50
+var level_goal : int = 5
 # Calculate the goal score for a given level
 func calculate_goal_for_level(level: int) -> int:
 	# A new progression better suited for single score chunks.
