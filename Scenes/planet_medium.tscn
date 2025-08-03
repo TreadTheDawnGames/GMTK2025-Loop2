@@ -83,7 +83,7 @@ uniform float step5 : hint_range(0.0,1.0) = 0.265;
 uniform float step6 : hint_range(0.0,1.0) = 0.266;
 
 void fragment() {
-	
+
 	float dist = distance(center*squishness,UV*squishness);
 	vec4 color = mix(color1, color2, smoothstep((step1 )*size, step2*size, dist));
 	color = mix(color, color3, smoothstep(step2*size, step3*size, dist));

@@ -44,16 +44,8 @@ physics_material_override = SubResource("PhysicsMaterial_52ee3")
 gravity_scale = 0.0
 freeze_mode = 1
 script = ExtResource("1_player")
-orbit_completion_percentage = null
-SoftlockTime = null
-DEBUG_DoLoseCondition = null
 launch_power = 400.0
 max_pull_distance = 300.0
-boost_strength = null
-trajectory_prediction_enabled = null
-trajectory_steps = null
-trajectory_step_time = null
-softlockTime = null
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 rotation = -1.5708

@@ -397,16 +397,13 @@ func handle_orbit_tracking():
 			# This adds a +5 score bonus for the first orbit.
 			GameManager.add_score(5)
 			print("First orbit bonus! +5 score")
-			PointNumbers.display_number(5, point_numbers_origin.global_position, 2)  # Green color for bonus
-
-			# Adds a +5 score bonus for discovering a new planet's orbit.
-			GameManager.add_score(5)
-			PointNumbers.display_number(5, point_numbers_origin.global_position, 2)
-
-		# Increases the base points for the final score calculation.
-		points += 1
-		# Displays the points number on screen.
-		PointNumbers.display_number(points, point_numbers_origin.global_position, 0)
+			points += 5
+			PointNumbers.display_number(points, point_numbers_origin.global_position, 0)  # Green color for bonus
+		else:
+			# Increases the base points for the final score calculation.
+			points += 1
+			# Displays the points number on screen.
+			PointNumbers.display_number(points, point_numbers_origin.global_position, 0)
 
 		# Tells the planet to run its completion flash animation.
 		current_orbiting_planet.flash_orbit_completion()
