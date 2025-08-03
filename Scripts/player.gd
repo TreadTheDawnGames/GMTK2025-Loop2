@@ -98,9 +98,14 @@ var _current_aim_pull_vector: Vector2 = Vector2.ZERO
 var SingleTouchDown : bool = false
 
 # Lose condition variables
-static var max_distance_from_origin: float = 15000.0  # Maximum distance before losing
-static var origin_position: Vector2 = Vector2.ZERO
+static var max_distance_from_origin: float = 30000.0  # Maximum distance before losing
+var origin_position: Vector2 = Vector2.ZERO # No longer static, can be changed.
 var has_lost: bool = false
+
+# This function allows the GameController to tell the player where its "home" is.
+func set_origin_point(new_origin: Vector2):
+	# This sets the center point for the lose condition distance check.
+	origin_position = new_origin
 
 # This creates a reference to the Line2D node for drawing the power bar.
 @onready var line_2d: Line2D = $Line2D
@@ -261,7 +266,7 @@ func _physics_process(_delta: float) -> void:
 			if(not softlockTimer):
 				softlockTimer = get_tree().create_timer(SoftlockTime)
 				softlockTimer.timeout.connect(func(): 
-					SoftlockFixer.FixSoftlock(global_position)
+					SoftlockFixer.FixSoftlock(self)
 				)
 		else:
 			doNotSave = false

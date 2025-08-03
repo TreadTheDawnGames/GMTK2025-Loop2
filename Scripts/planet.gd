@@ -1,3 +1,4 @@
+# res://Scripts/planet.gd
 extends Area2D
 class_name BasePlanet
 
@@ -14,8 +15,6 @@ var bodies_in_gravity_field: Array[RigidBody2D] = []
 @onready var orbit_progress_indicator: Line2D
 @onready var AtmoSprite: Sprite2D
 @onready var AtmoSpriteOrbited: Sprite2D
-
-
 
 # Orbital progress tracking
 var current_orbiting_player: Player = null
@@ -200,6 +199,32 @@ func flash_orbit_completion():
 	# This calls a function to hide the line after the flash is complete.
 	flash_tween.tween_callback(stop_orbit_progress_display)
 
+# This is the first of the two functions that were in conflict.
+# It is essential for the procedural generator.
+func get_gravity_radius() -> float:
+	# This ensures the CollisionShape2D node exists before we try to access it.
+	if not is_instance_valid(collision_shape_2d):
+		return 200.0 # Return a default radius if the node isn't ready.
+
+	# This checks if the shape assigned to the collider is a circle.
+	if collision_shape_2d.shape is CircleShape2D:
+		# First, get the base radius from the shape resource itself.
+		var local_radius = collision_shape_2d.shape.radius
+		
+		# Next, get the scale of the parent Area2D node (this planet).
+		var planet_scale = self.scale
+		
+		# The true radius is the local radius multiplied by the largest scale component.
+		# We use max() to be safe in case the scaling is not uniform (e.g., stretched).
+		return local_radius * max(planet_scale.x, planet_scale.y)
+	else:
+		# If it's not a circle, we print a warning and return a default value.
+		push_warning("Planet %s does not have a CircleShape2D for its gravity field." % name)
+		return 200.0
+
+# This is the second of the two functions that were in conflict.
+# It controls the visual feedback for orbited planets.
 func SetShowOrbited(orbited : bool):
-	AtmoSpriteOrbited.visible = orbited
+	if is_instance_valid(AtmoSpriteOrbited):
+		AtmoSpriteOrbited.visible = orbited
 	return

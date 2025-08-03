@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dg7glwq2khxr1"]
+[gd_scene load_steps=7 format=3 uid="uid://dg7glwq2khxr1"]
 
 [ext_resource type="PackedScene" uid="uid://d0j2xqgs8463m" path="res://Scenes/Planet.tscn" id="1_hjqa0"]
 [ext_resource type="Script" uid="uid://b4h62xgwafv47" path="res://Scripts/planet_black_hole.gd" id="2_7ja8a"]

@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://fcdupdwq82w5"]
 
 [ext_resource type="Script" uid="uid://d14jugjffoiv7" path="res://Scripts/rand_sprite.gd" id="1_3euil"]
-[ext_resource type="Script" uid="uid://c0sft04xgu1fv" path="res://Scenes/asteroid.gd" id="1_j8gw4"]
+[ext_resource type="Script" uid="uid://c0sft04xgu1fv" path="res://Scripts/asteroid.gd" id="1_j8gw4"]
 [ext_resource type="Texture2D" uid="uid://d0h11jt244n5q" path="res://Assets/kenney_space-shooter-extension/AAA-ChosenKenneySpace/spaceMeteors_001.png" id="2_j8gw4"]
 [ext_resource type="Texture2D" uid="uid://dy7pg5gpxeud7" path="res://Assets/kenney_space-shooter-extension/AAA-ChosenKenneySpace/spaceMeteors_002.png" id="3_4m2h8"]
 [ext_resource type="Texture2D" uid="uid://dq4eanpy4a027" path="res://Assets/kenney_space-shooter-extension/AAA-ChosenKenneySpace/spaceMeteors_003.png" id="4_llr48"]
