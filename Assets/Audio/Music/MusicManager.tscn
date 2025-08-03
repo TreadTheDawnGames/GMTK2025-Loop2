@@ -99,6 +99,7 @@ playback_type = 0
 metadata/_custom_type_script = "uid://ehkw6w2xh2bq"
 
 [node name="AudioManager" type="Node"]
+process_mode = 3
 script = ExtResource("1_cj4tn")
 audios_omni = Array[ExtResource("2_8ycmr")]([SubResource("Resource_b7n4u"), SubResource("Resource_rf0fm"), SubResource("Resource_31cx6"), SubResource("Resource_hjcxj"), SubResource("Resource_rse6j")])
 metadata/_custom_type_script = "uid://jdiu05rj7h3d"

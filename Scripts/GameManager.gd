@@ -1,200 +1,130 @@
+# res://Scripts/GameManager.gd
 extends Node
 
 # Singleton for managing game state and settings
 signal ship_color_changed(new_color: Color)
 signal score_changed(new_score: int)
 signal level_completed(new_level: int, goal_score: int)
-# This new signal is emitted only when a collectable is picked up.
 signal collectable_collected()
+signal score_animation_requested(points: int, world_position: Vector2)
 
 # Ship color settings
 var ship_color: Color = Color.WHITE
-var ship_color_hue: float = 0.0  # 0.0 to 1.0 for hue slider
+var ship_color_hue: float = 0.0
 
-var high_score : float = 0:
-	get: return high_score
-	set (value): 
-		if value > high_score:
-			high_score = value
-
-# Score system
+# This now stores the highest single score chunk ever achieved.
+var high_score: int = 0
+# This remains the score for the current run.
 var current_score: int = 0
-
-# Level/Goal system - based on single run high scores
+# This is the player's persistent level.
 var current_level: int = 1
-var level_just_completed: bool = false
 
-# Tutorial settings
 var tutorials_enabled: bool = true
 
-# Game state
-enum GameState {
-	MENU,
-	PLAYING,
-	WIN,
-	LOSE
-}
-
+enum GameState { MENU, PLAYING, WIN, LOSE }
 var current_game_state: GameState = GameState.MENU
 
-# Predefined ship colors for easy access
-var ship_colors: Array[Color] = [
-	Color.RED,        # Hue 0.0
-	Color.ORANGE,     # Hue ~0.08
-	Color.YELLOW,     # Hue ~0.17
-	Color.GREEN,      # Hue ~0.33
-	Color.CYAN,       # Hue ~0.5
-	Color.BLUE,       # Hue ~0.67
-	Color.MAGENTA,    # Hue ~0.83
-	Color.WHITE       # Special case
-]
-
-@onready var Background: StarBackground
-
 func _ready() -> void:
-	# Set initial ship color
-	set_ship_color_from_hue(0.0)  # Start with red
-	
-	# Determine the current level based on high score
-	update_current_level_from_high_score()
+	set_ship_color_from_hue(0.0)
 
 # Calculate the goal score for a given level
 func calculate_goal_for_level(level: int) -> int:
-	# Progressive formula: 10 * level^2
-	# Level 1: 10, Level 2: 40, Level 3: 90, Level 4: 160, Level 5: 250, etc.
-	return 10 * level * level
+	# A new progression better suited for single score chunks.
+	# Lvl 1->2: 50, Lvl 2->3: 200, Lvl 3->4: 450 etc.
+	return 50 * int(pow(level, 2))
 
-# Get the current level's goal score
 func get_current_level_goal() -> int:
 	return calculate_goal_for_level(current_level)
 
-# Get the current level
 func get_current_level() -> int:
 	return current_level
 
-# Update current level based on high score
-func update_current_level_from_high_score() -> void:
-	var new_level = 1
-	
-	# Find the highest level the player has achieved based on high score
-	while calculate_goal_for_level(new_level) <= high_score:
-		new_level += 1
-	
-	# If we completed a level this run, advance to the next level
-	if level_just_completed:
-		current_level = new_level
-		level_just_completed = false
-	else:
-		current_level = new_level
-
-# Check if the player has reached the next level
-func check_level_completion() -> void:
-	var current_goal = get_current_level_goal()
-	
-	# Check if the current score has reached the level goal
-	if current_score >= current_goal:
-		# Player completed this level!
-		level_completed.emit(current_level, current_goal)
-		level_just_completed = true
+func check_level_completion(final_score_chunk: int):
+	# Checks if the cashed-in score meets the goal.
+	if final_score_chunk >= get_current_level_goal():
+		var completed_goal = get_current_level_goal()
+		level_completed.emit(current_level, completed_goal)
 		current_level += 1
-		print("Level %d completed! Goal was %d points. Next goal: %d points" % [current_level - 1, current_goal, get_current_level_goal()])
+		print("Level Up! Reached level %d. Next goal: %d" % [current_level, get_current_level_goal()])
 
-# Set ship color based on hue value (0.0 to 1.0)
-func set_ship_color_from_hue(hue_value: float) -> void:
-	ship_color_hue = clamp(hue_value, 0.0, 1.0)
+# This new function processes the big score chunk at the end of a run.
+func process_final_score(final_score: int, world_position: Vector2):
+	# Update the 'high_score' (Best) if this chunk is a new record.
+	if final_score > high_score:
+		high_score = final_score
 	
-	# Create color from HSV (Hue, Saturation, Value)
-	var _ship_color = Color.from_hsv(ship_color_hue, 1.0, 1.0)
+	# Add the chunk to the total run score.
+	current_score += final_score
 	
-	# Emit signal to notify other nodes
-	ship_color_changed.emit(ship_color)
+	# Emit signals to update the HUD.
+	score_animation_requested.emit(final_score, world_position)
+	score_changed.emit(current_score)
+	
+	# Check if this score chunk achieves the level goal.
+	check_level_completion(final_score)
 
-# Get current ship color
-func get_ship_color() -> Color:
-	return ship_color
-
-# Get current hue value for slider
-func get_ship_color_hue() -> float:
-	return ship_color_hue
-
-# Set game state
-func set_game_state(new_state: GameState) -> void:
-	current_game_state = new_state
-
-# Get current game state
-func get_game_state() -> GameState:
-	return current_game_state
-
-# Score management functions
+# This is for small, incidental points (like first orbit bonus).
 func add_score(points: int) -> void:
 	current_score += points
-	high_score = current_score
 	score_changed.emit(current_score)
-	
-	# Check for level completion after score changes
-	check_level_completion()
-
-# Add score with animation from a world position
-func add_score_with_animation(points: int, world_position: Vector2) -> void:
-	current_score += points
-	high_score = current_score
-	score_changed.emit(current_score)
-	
-	# Emit a special signal for animated score
-	score_animation_requested.emit(points, world_position)
-	
-	# Check for level completion after score changes
-	check_level_completion()
-
-# New signal for animated score additions
-signal score_animation_requested(points: int, world_position: Vector2)
 
 func get_score() -> int:
 	return current_score
 
 func get_high_score() -> int:
-	return int(high_score)
+	# This function now correctly returns the best score chunk for the HUD.
+	return high_score
 
 func reset_score() -> void:
+	# This resets only the current run's score. Best and Level persist.
 	current_score = 0
-	# Don't reset current_level - it should be based on high score achievement
-	update_current_level_from_high_score()
 	score_changed.emit(current_score)
 
-# Restart the game
+# --- The rest of the functions from your original script ---
+
+func set_ship_color_from_hue(hue_value: float) -> void:
+	ship_color_hue = clamp(hue_value, 0.0, 1.0)
+	ship_color = Color.from_hsv(ship_color_hue, 1.0, 1.0)
+	ship_color_changed.emit(ship_color)
+
+func get_ship_color() -> Color:
+	return ship_color
+
+func get_ship_color_hue() -> float:
+	return ship_color_hue
+
+func set_game_state(new_state: GameState) -> void:
+	current_game_state = new_state
+
+func get_game_state() -> GameState:
+	return current_game_state
+
 func restart_game() -> void:
-	reset_score()  # Reset score when restarting
+	reset_score()
 	set_game_state(GameState.PLAYING)
 	get_tree().change_scene_to_file("res://Scenes/Game.tscn")
 
-# Go to main menu
 func go_to_main_menu() -> void:
 	set_game_state(GameState.MENU)
 	get_tree().change_scene_to_file("res://Scenes/UI/MainMenu.tscn")
 
-# Show win screen
 func show_win_screen() -> void:
 	set_game_state(GameState.WIN)
 	get_tree().change_scene_to_file.call_deferred("res://Scenes/UI/WinScreen.tscn")
 
-# Show win screen with victory stats
 func show_win_screen_with_stats(stats: Dictionary) -> void:
-	# This stores stats for the win screen to access
 	set_meta("victory_stats", stats)
 	show_win_screen()
 
-# Show lose screen
 func show_lose_screen() -> void:
 	set_game_state(GameState.LOSE)
 	get_tree().change_scene_to_file("res://Scenes/UI/LoseScreen.tscn")
 
-# Tutorial settings functions
 func set_tutorials_enabled(enabled: bool) -> void:
 	tutorials_enabled = enabled
 
 func get_tutorials_enabled() -> bool:
 	return tutorials_enabled
 
-# Collectable collection notification
 func notify_collectable_collected() -> void:
 	collectable_collected.emit()

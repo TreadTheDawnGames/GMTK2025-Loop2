@@ -159,8 +159,7 @@ func calculate_final_score() -> void:
 	final_score = points * mult
 	print("Final Score Calculation: ", points, " points * ", mult, " mult = ", final_score)
 	# Use the animated score addition instead of regular add_score
-	GameManager.add_score_with_animation(final_score, point_numbers_origin.global_position)
-	PointNumbers.display_number(final_score, point_numbers_origin.global_position, 2, -2)
+	GameManager.process_final_score(final_score, point_numbers_origin.global_position)
 
 # Checks if player has gone too far and should lose
 func check_lose_condition() -> void:
@@ -556,6 +555,8 @@ func Reset():
 	current_state = State.READY_TO_AIM
 	
 	accumulated_orbit_angle = 0.0
+	
+	GameManager.reset_score()
 
 	# Resets scoring variables for new attempt.
 	points = 0
