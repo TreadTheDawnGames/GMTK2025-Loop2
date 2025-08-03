@@ -4,7 +4,7 @@ extends Node2D
 var settings
 const SETTINGS = preload("res://Scenes/UI/Settings.tscn")
 
-func _process(delta):
+func _process(_delta):
 	if(Input.is_action_just_pressed("Pause")):
 		if(not is_instance_valid(settings)):
 			settings = SETTINGS.instantiate()

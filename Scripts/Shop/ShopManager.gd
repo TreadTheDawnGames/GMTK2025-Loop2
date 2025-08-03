@@ -110,6 +110,7 @@ func create_item_ui(item: ShopItem) -> Control:
 	purchase_button.text = item.get_purchase_text()
 	purchase_button.custom_minimum_size = Vector2(120, 50)
 	purchase_button.disabled = not item.can_purchase()
+	purchase_button.do_touch_button = true
 
 	# This connects the button's 'pressed' signal to the purchase_item function.
 	purchase_button.pressed.connect(func(): purchase_item(item, purchase_button, cost_label))
@@ -118,6 +119,7 @@ func create_item_ui(item: ShopItem) -> Control:
 
 	return item_container
 
+	
 # This function opens the shop UI.
 func open_shop(player: Player):
 	current_player = player

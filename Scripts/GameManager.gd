@@ -40,6 +40,7 @@ func calculate_goal_for_level(level: int) -> int:
 		return level_goal
 	level_goal += level_goal
 	if(level % 3 == 0):
+		@warning_ignore("narrowing_conversion")
 		level_goal += level_goal * 0.25
 	return level_goal
 

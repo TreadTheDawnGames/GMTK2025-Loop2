@@ -7,6 +7,7 @@ var hover_scale: Vector2
 var click_scale: Vector2
 var hover_tween: Tween
 var click_tween: Tween
+var do_touch_button : bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -19,6 +20,23 @@ func _ready() -> void:
 	original_scale = scale
 	hover_scale = original_scale * 1.1
 	click_scale = original_scale * 0.9
+	if(do_touch_button):
+		create_touch_screen_button(self)
+
+
+func create_touch_screen_button(purchase_button : SoundButton):
+	#This creates the purchase button for the item for mobile.
+	var touch_button = TouchScreenButton.new()
+	var rectShape = RectangleShape2D.new()
+	rectShape.size=purchase_button.size
+	touch_button.position = purchase_button.position + (purchase_button.size * 0.5)
+	touch_button.shape = rectShape
+	add_child(touch_button)
+	touch_button.pressed.connect(func(): 
+		if not disabled:
+			get_connections()[0].call()
+		)
+
 
 # This function is called when the button is clicked.
 func on_button_pressed()->void:

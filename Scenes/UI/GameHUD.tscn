@@ -33,11 +33,18 @@ bbcode_enabled = true
 text = "10 * 10"
 
 [node name="BoostsLabel" type="Label" parent="."]
-layout_mode = 2
-offset_left = 1073.0
-offset_top = 543.0
-offset_right = 1500.0
-offset_bottom = 635.0
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -79.0
+offset_top = -105.0
+offset_right = 348.0
+offset_bottom = -13.0
+grow_horizontal = 0
+grow_vertical = 0
 scale = Vector2(0.89, 0.89)
 theme_override_font_sizes/font_size = 70
 text = "1"
