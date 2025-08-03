@@ -127,13 +127,10 @@ var accumulated_orbit_angle: float = 0.0
 var orbit_start_angle: float = 0.0  # Angle where orbit started
 
 # Whether the game is running on a mobile OS
-var isMobile : bool = false
 
 func _ready() -> void:
 	hud = get_tree().root.get_node("Game/HUDLayer/GameHUD")
 	TutorialManager.show_how_to_play(hud)
-	#Check whether on mobile
-	isMobile = OS.has_feature("web_android") or OS.has_feature("web_ios")
 	# setup damp mode
 	linear_damp_mode = RigidBody2D.DAMP_MODE_COMBINE
 	# Stores starting position as origin
@@ -203,7 +200,7 @@ var singleTouchProcessed : bool = false
 # This function is called every frame.
 func _process(_delta: float) -> void:
 	# Handles mobile touch inputs to determine player action.
-	if(isMobile):
+	if(GameManager.IsMobile):
 		match TouchHelper.state.size():
 			0: # No touches
 				mobileBrake = false
@@ -584,7 +581,7 @@ func Reset():
 
 # Gets the global click or touch position.
 func GetGlobalClickPosition() -> Vector2:
-	if isMobile and TouchHelper.state.values()[0] :
+	if GameManager.IsMobile and TouchHelper.state.values()[0] :
 		return mobilePosition
 	else:
 		return get_global_mouse_position()

@@ -12,10 +12,13 @@ const FIRST_ORBIT_MESSAGE = "You've entered a gravity well! Complete a full loop
 const OUT_OF_BOOSTS_MESSAGE = "Out of Boosts! Find a planet and orbit it to recharge."
 const LAND_FOR_BOOST_MESSAGE = "Land on a planet to get your boosts back and cache-in your points!"
 const ORBIT_FOR_EXTRA_BOOST_MESSAGE = "You can also bounce on a planet to get an extra boost!"
+
+const WARNING_FOR_MOBILE = "Sol is best played in landscape mode."
+
 const HOW_TO_PLAY_1 = "Welcome to Sol! Drag the screen to launch your ship!"
 const HOW_TO_PLAY_2 = "Left click, spacebar, or tap to boost."
 const HOW_TO_PLAY_3 = "Right click, shift, or hold with two fingers to brake."
-const HOW_TO_PLAY_4 = "Click, e, or tap the stations to open the shop."
+const HOW_TO_PLAY_4 = "Press \"E\" or click/tap the stations near to open the shop."
 const HOW_TO_PLAY_5 = "Try to loop as many unique planets as you can to maximize your score!"
 
 
@@ -79,6 +82,9 @@ func show_orbit_for_extra_boost_tutorial(parent: Node) -> void:
 	show_tutorial_once("orbit_for_extra_boost", ORBIT_FOR_EXTRA_BOOST_MESSAGE, parent)
 
 func show_how_to_play(parent: Node):
+	if(GameManager.IsMobile):
+		show_tutorial_once("mobile_warning", WARNING_FOR_MOBILE, parent)
+	
 	show_tutorial_once("how_to_play_1", HOW_TO_PLAY_1, parent)
 	show_tutorial_once("how_to_play_2", HOW_TO_PLAY_2, parent)
 	show_tutorial_once("how_to_play_3", HOW_TO_PLAY_3, parent)

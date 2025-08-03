@@ -24,8 +24,10 @@ var tutorials_enabled: bool = true
 
 enum GameState { MENU, PLAYING, WIN, LOSE }
 var current_game_state: GameState = GameState.MENU
-
+var IsMobile : bool
 func _ready() -> void:
+	IsMobile = OS.has_feature("web_android") or OS.has_feature("web_ios")
+
 	set_ship_color_from_hue(0.0)
 	best_combo = 0
 
@@ -130,8 +132,11 @@ func show_win_screen_with_stats(stats: Dictionary) -> void:
 	show_win_screen()
 
 func show_lose_screen() -> void:
-	set_game_state(GameState.LOSE)
-	get_tree().change_scene_to_file("res://Scenes/UI/LoseScreen.tscn")
+	if(current_level >= 10):
+		show_win_screen()
+	else:
+		set_game_state(GameState.LOSE)
+		get_tree().change_scene_to_file("res://Scenes/UI/LoseScreen.tscn")
 
 func set_tutorials_enabled(enabled: bool) -> void:
 	tutorials_enabled = enabled
