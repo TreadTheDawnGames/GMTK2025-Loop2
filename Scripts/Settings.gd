@@ -29,6 +29,7 @@ func update_example_ship_color() -> void:
 	pass
 # Called when Back button is pressed
 func _on_back_button_pressed() -> void:
+	get_tree().paused = false
 	# Return to main menu
 	queue_free()
 

@@ -1,5 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://c0pbif8cyy7x7"]
+[gd_scene load_steps=9 format=3 uid="uid://c0pbif8cyy7x7"]
 
+[ext_resource type="Script" uid="uid://fh3430ko4xwd" path="res://Scripts/pause_assistant.gd" id="2_fgofq"]
 [ext_resource type="Script" uid="uid://dx7wa3d4fr6xu" path="res://Scripts/star_background.gd" id="3_2irst"]
 [ext_resource type="Material" uid="uid://bxcys6gyngoe6" path="res://Scenes/Effects/StarBackground.tres" id="3_fgofq"]
 [ext_resource type="PackedScene" uid="uid://cslq0v6w7x80a" path="res://Scenes/Player.tscn" id="4_kldst"]
@@ -15,6 +16,10 @@ script = ExtResource("9_controller")
 num_nebulas = 30
 num_planets = 450
 min_distance_between_planets = 1600.0
+
+[node name="PauseAssistant" type="Node2D" parent="."]
+process_mode = 3
+script = ExtResource("2_fgofq")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color(0.256036, 0.337469, 0.342932, 1)
@@ -42,14 +47,14 @@ script = ExtResource("3_2irst")
 [node name="HUDLayer2" type="CanvasLayer" parent="."]
 layer = 10
 
-[node name="Player" parent="." instance=ExtResource("4_kldst")]
-rotation = -1.5708
-physics_material_override = SubResource("PhysicsMaterial_2irst")
-launch_power = 5.0
-
 [node name="GeneratedNebulas" type="Node2D" parent="."]
 
 [node name="GeneratedPlanets" type="Node2D" parent="."]
 
 [node name="WorldGenerator" type="Node2D" parent="."]
 script = ExtResource("6_7lihs")
+
+[node name="Player" parent="." instance=ExtResource("4_kldst")]
+rotation = -1.5708
+physics_material_override = SubResource("PhysicsMaterial_2irst")
+launch_power = 5.0

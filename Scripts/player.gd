@@ -223,8 +223,10 @@ func _process(_delta: float) -> void:
 				#singleTouchProcessed = false
 				mobileBrake = true
 	# Does not process input if game is paused (e.g., shop is open).
+	
 	if get_tree().paused:
 		return
+
 
 	# Updates player's global position for background parallax.
 	Position = global_position
