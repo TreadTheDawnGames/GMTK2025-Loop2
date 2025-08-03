@@ -13,6 +13,7 @@ class_name GameController
 @export_range(3, 10) var nebulas_per_cluster_max: int = 20
 @export var cluster_radius: float = 2500.0 # How far nebulas can spawn from cluster center
 
+var IsMobile : bool = false
 # This array now lives in the GameController, which manages the clusters.
 var nebula_colors = [
 	Color("ff4545"), # Red
@@ -73,6 +74,8 @@ var victory_sequence_active: bool = false
 
 
 func _ready() -> void:
+
+	
 	# Generate the random level layout.
 	_generate_level()
 	

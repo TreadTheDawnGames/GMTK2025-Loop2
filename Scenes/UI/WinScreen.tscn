@@ -134,7 +134,7 @@ size_flags_horizontal = 3
 [node name="EndMessage" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
-text = "You collected all the collectables!"
+text = "you did it!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
