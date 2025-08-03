@@ -7,8 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cctmook84b7aa" path="res://Scenes/UI/CollectableCounter.tscn" id="4_collectable_counter"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_4y6w4"]
-font_size = 24
-outline_size = 5
+font_size = 80
 outline_color = Color(0, 0, 0, 1)
 
 [node name="GameHUD" type="Control"]
@@ -24,30 +23,42 @@ script = ExtResource("1_31s1k")
 
 [node name="PointsLabel" type="RichTextLabel" parent="."]
 layout_mode = 2
-offset_left = 33.0
-offset_top = 596.0
-offset_right = 802.0
-offset_bottom = 738.0
-theme_override_font_sizes/normal_font_size = 30
+offset_left = 44.0
+offset_top = 543.0
+offset_right = 813.0
+offset_bottom = 685.0
+theme_override_font_sizes/normal_font_size = 70
 bbcode_enabled = true
 text = "10 * 10"
 
 [node name="BoostsLabel" type="Label" parent="."]
 layout_mode = 2
-offset_left = 964.0
-offset_top = 601.0
-offset_right = 1249.0
-offset_bottom = 693.0
-theme_override_font_sizes/font_size = 30
-text = "Boosts: 1"
+offset_left = 1073.0
+offset_top = 543.0
+offset_right = 1500.0
+offset_bottom = 635.0
+scale = Vector2(0.89, 0.89)
+theme_override_font_sizes/font_size = 70
+text = "1"
 label_settings = SubResource("LabelSettings_4y6w4")
+
+[node name="Label" type="Label" parent="BoostsLabel"]
+layout_mode = 0
+offset_left = -133.708
+offset_top = 43.8202
+offset_right = -26.7079
+offset_bottom = 66.8202
+scale = Vector2(1.195, 1.195)
+theme_override_font_sizes/font_size = 20
+text = "Boosts:"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 0
 offset_left = 15.0
 offset_top = 15.0
-offset_right = 265.0
-offset_bottom = 104.0
+offset_right = 966.0
+offset_bottom = 199.0
+scale = Vector2(0.395, 0.395)
 
 [node name="ScoreLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
@@ -89,9 +100,9 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -683.0
-offset_top = -544.0
-offset_right = -433.0
-offset_bottom = -444.0
+offset_left = -687.0
+offset_top = -543.0
+offset_right = -437.0
+offset_bottom = -443.0
 grow_horizontal = 0
 grow_vertical = 0

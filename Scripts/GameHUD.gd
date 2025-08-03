@@ -63,7 +63,7 @@ func update_score_display() -> void:
 func update_boosts_display() -> void:
 	# This updates the text for available boosts.
 	if player:
-		var boost_text = "Boosts: " + str(player.BoostCount)
+		var boost_text = str(player.BoostCount)
 		boosts_label.text = boost_text
 
 func update_boost_power_display() -> void:

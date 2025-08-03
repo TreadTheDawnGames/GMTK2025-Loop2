@@ -50,11 +50,13 @@ collectable_spawn_chance = 0.8
 [node name="PointLight2D" type="PointLight2D" parent="." index="0"]
 position = Vector2(-0.125977, 0.127136)
 scale = Vector2(43.6196, 43.6196)
+energy = 4.96
 shadow_enabled = true
 shadow_filter = 1
-shadow_filter_smooth = 35.0
+shadow_filter_smooth = 7.0
 texture = ExtResource("3_wkqme")
-texture_scale = 50.0
+texture_scale = 1.47
+height = 2719.0
 
 [node name="CollisionShape2D" parent="." index="1"]
 shape = SubResource("CircleShape2D_ngwap")
