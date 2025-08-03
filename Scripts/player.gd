@@ -6,8 +6,6 @@ class_name Player
 @onready var trail_2d_2: Line2D = $CollisionShape2D/Node2D2/Trail2D
 @onready var point_numbers_origin: Node2D = $PointNumbersOrigin
 
-# This tracks if the player has purchased the orbit counter upgrade.
-var has_orbit_counter: bool = false
 
 # This tracks the maximum number of skips the player can have.
 var max_skips_per_orbit: int = 1
@@ -331,6 +329,10 @@ func _physics_process(_delta: float) -> void:
 							PointNumbers.display_number(mult, point_numbers_origin.global_position, 1)
 							audioHandler.PlaySoundAtGlobalPosition(Sounds.ShipCollide, global_position)
 							audioHandler.PlaySoundAtGlobalPosition(Sounds.PingHigh, global_position)
+							
+							#var normal = collision.get_normal()
+							#linear_velocity = linear_velocity.bounce(normal)
+							#apply_central_impulse(normal * 500)
 						else:
 							# This handles crashing into a regular planet.
 							loopCounter = 0
@@ -390,9 +392,8 @@ func handle_orbit_tracking():
 	last_angle_to_planet = current_angle
 	
 	# Tells the planet to update its visual progress line, passing the direction of rotation.
-	if has_orbit_counter:
-		current_orbiting_planet.update_orbit_progress(accumulated_orbit_angle, orbit_completion_percentage, orbit_start_angle, sign(delta_angle))
-
+	current_orbiting_planet.update_orbit_progress(accumulated_orbit_angle, orbit_completion_percentage, orbit_start_angle, sign(delta_angle))
+	
 	# Checks if the accumulated angle has reached a full loop.
 	if accumulated_orbit_angle >= (2 * PI) * orbit_completion_percentage:
 		# DEBUG: This message will appear only when a loop is successfully completed.
