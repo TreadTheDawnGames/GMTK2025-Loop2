@@ -30,6 +30,8 @@ TutorialManager="*res://Scripts/TutorialManager.gd"
 
 window/stretch/mode="viewport"
 window/stretch/aspect="expand"
+mouse_cursor/custom_image="uid://b1oaxlu0km6w0"
+mouse_cursor/custom_image_hotspot=Vector2(4, 4)
 
 [dotnet]
 

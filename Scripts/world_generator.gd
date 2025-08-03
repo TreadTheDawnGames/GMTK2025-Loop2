@@ -29,7 +29,7 @@ class_name PlanetGenerator
 # The scene for the Sun, which will be placed at the center.
 @export var sun_scene: PackedScene = preload("res://Scenes/planet_Sol.tscn")
 # The scene for the Black Hole, placed randomly.
-@export var black_hole_scene: PackedScene = preload("res://Scenes/planet_black_hole.tscn")
+#@export var black_hole_scene: PackedScene = preload("res://Scenes/planet_black_hole.tscn")
 # The scene for additional Home Stations/Shops.
 @export var station_scene: PackedScene = preload("res://Scenes/Home.tscn")
 # The number of ADDITIONAL random stations to spawn (on top of the main HomeBase).

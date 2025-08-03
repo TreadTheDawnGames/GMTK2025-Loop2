@@ -101,7 +101,7 @@ text = "Art:"
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 12
-text = "Kenney (kenney.nl)"
+text = "Kenney and foozle as edited by ttdg and zmanjim"
 
 [node name="HBoxContainer6" type="HBoxContainer" parent="Panel/VBoxContainer"]
 layout_mode = 2
@@ -115,7 +115,7 @@ text = "Shaders:"
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 12
-text = "Pixelipy Pixelipy, Bruno Dalagnol"
+text = "Pixelipy Pixelipy, Bruno Dalagnol,  ahaugas"
 
 [node name="HBoxContainer8" type="HBoxContainer" parent="Panel/VBoxContainer"]
 layout_mode = 2

@@ -1,8 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://c4wdc114mt4gb"]
+[gd_scene load_steps=9 format=3 uid="uid://c4wdc114mt4gb"]
 
 [ext_resource type="Script" uid="uid://b4xtmjuj5up0a" path="res://Scripts/Planets/Satellite.gd" id="1_dyaci"]
 [ext_resource type="Texture2D" uid="uid://0l7e77brjgc0" path="res://Assets/kenney_space-shooter-extension/AAA-ChosenKenneySpace/spaceStation_018.png" id="2_qprvj"]
 [ext_resource type="Script" uid="uid://deew7a1ghrogw" path="res://Scripts/PlayerAudioHandler.gd" id="3_abcde"]
+[ext_resource type="Script" uid="uid://d14jugjffoiv7" path="res://Scripts/rand_sprite.gd" id="3_lvip2"]
+[ext_resource type="Texture2D" uid="uid://dwrxcriyojn1o" path="res://Assets/kenney_space-shooter-extension/AAA-ChosenKenneySpace/spaceStation_022.png" id="5_iqe7o"]
+[ext_resource type="Texture2D" uid="uid://bfjw3a3lu85py" path="res://Assets/kenney_space-shooter-extension/AAA-ChosenKenneySpace/spaceStation_018_normal.png" id="6_uvdj0"]
+[ext_resource type="Texture2D" uid="uid://l4xufjikww0b" path="res://Assets/kenney_space-shooter-extension/AAA-ChosenKenneySpace/spaceStation_022_normal.png" id="7_ylh2v"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7o7f1"]
 radius = 24.0
@@ -12,11 +16,8 @@ collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_dyaci")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_qprvj")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(3.00649, 3.00649)
 shape = SubResource("CircleShape2D_7o7f1")
 
 [node name="ExplosionParticles" type="CPUParticles2D" parent="."]
@@ -35,3 +36,10 @@ color = Color(0.8, 0.8, 0.8, 1)
 
 [node name="PlayerAudioHandler" type="Node2D" parent="."]
 script = ExtResource("3_abcde")
+
+[node name="RandSprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1.50324, 1.50324)
+script = ExtResource("3_lvip2")
+PlanetSprites = Array[Texture2D]([ExtResource("2_qprvj"), ExtResource("5_iqe7o")])
+normalMap = Array[Texture2D]([ExtResource("6_uvdj0"), ExtResource("7_ylh2v")])
+metadata/_custom_type_script = "uid://d14jugjffoiv7"

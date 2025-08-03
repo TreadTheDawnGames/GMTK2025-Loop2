@@ -465,7 +465,6 @@ func start_orbiting(planet: BasePlanet):
 	audioHandler.PlaySoundAtGlobalPosition(Sounds.PingLow, global_position)
 	
 	# Shows the first-time orbit tutorial if it hasn't been shown yet.
-	var hud = get_tree().root.get_node("Game/HUDLayer/GameHUD")
 	if hud:
 		TutorialManager.show_first_orbit_tutorial(hud)
 		TutorialManager.show_orbit_for_extra_boost_tutorial(hud)

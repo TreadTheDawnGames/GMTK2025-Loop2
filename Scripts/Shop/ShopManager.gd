@@ -9,11 +9,11 @@ class_name ShopManager # This assigns a class name for easier referencing.
 @onready var close_button: Button = $Control/ShopPanel/VBoxContainer/HeaderContainer/CloseButton
 @onready var title_label: Label = $Control/ShopPanel/VBoxContainer/HeaderContainer/TitleLabel
 
-# These preload the scripts for the new shop items.
-const ExtraSkipItem = preload("res://Scripts/Shop/ExtraSkipItem.gd")
-const OrbitCounterItem = preload("res://Scripts/Shop/OrbitCounterItem.gd")
-# This is an existing item that will be kept.
-const StartingBoostsItem = preload("res://Scripts/Shop/StartingBoostsItem.gd")
+## These preload the scripts for the new shop items.
+#const ExtraSkipItem = preload("res://Scripts/Shop/ExtraSkipItem.gd")
+#const OrbitCounterItem = preload("res://Scripts/Shop/OrbitCounterItem.gd")
+## This is an existing item that will be kept.
+#const StartingBoostsItem = preload("res://Scripts/Shop/StartingBoostsItem.gd")
 
 
 var shop_items: Array[ShopItem] = [] # This array will hold all the available shop items.

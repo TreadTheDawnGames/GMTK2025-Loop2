@@ -1,4 +1,4 @@
-// Adopted from https://godotshaders.com/shader/ball-of-fire/ by https://godotshaders.com/author/ahaugas/
+// CC BY-NC-SA: https://godotshaders.com/shader/ball-of-fire/ by https://godotshaders.com/author/ahaugas/
 // 
 shader_type canvas_item;
 render_mode blend_mix;

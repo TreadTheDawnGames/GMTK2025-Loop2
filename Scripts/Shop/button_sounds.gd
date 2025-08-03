@@ -51,7 +51,3 @@ func on_button_unhovered()->void:
 		hover_tween.kill()
 	hover_tween = create_tween()
 	hover_tween.tween_property(self, "scale", original_scale, 0.1)
-
-
-func _on_toggled(toggled_on: bool) -> void:
-	pass # Replace with function body.

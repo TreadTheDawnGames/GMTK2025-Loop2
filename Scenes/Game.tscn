@@ -1,11 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://c0pbif8cyy7x7"]
+[gd_scene load_steps=8 format=3 uid="uid://c0pbif8cyy7x7"]
 
 [ext_resource type="Script" uid="uid://dx7wa3d4fr6xu" path="res://Scripts/star_background.gd" id="3_2irst"]
 [ext_resource type="Material" uid="uid://bxcys6gyngoe6" path="res://Scenes/Effects/StarBackground.tres" id="3_fgofq"]
 [ext_resource type="PackedScene" uid="uid://cslq0v6w7x80a" path="res://Scenes/Player.tscn" id="4_kldst"]
-
 [ext_resource type="Script" uid="uid://bbqlhhfc46lo3" path="res://Scripts/world_generator.gd" id="6_7lihs"]
-
 [ext_resource type="PackedScene" uid="uid://p4aoyegbc6gj" path="res://Scenes/UI/GameHUD.tscn" id="8_hud"]
 [ext_resource type="Script" uid="uid://dfjdljl46khuv" path="res://Scripts/GameController.gd" id="9_controller"]
 
@@ -54,4 +52,3 @@ launch_power = 5.0
 
 [node name="WorldGenerator" type="Node2D" parent="."]
 script = ExtResource("6_7lihs")
-
