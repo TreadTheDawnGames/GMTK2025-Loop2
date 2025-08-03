@@ -169,13 +169,6 @@ func _generate_level():
 		generated_planets_node.add_child(sun)
 		placed_celestial_bodies.append(sun)
 
-	# --- Step 3: Place the Black Hole Randomly ---
-	if is_instance_valid(black_hole_scene):
-		for attempt in range(50):
-			var pos = Vector2.from_angle(randf() * TAU) * randf_range(spawn_radius * 0.1, spawn_radius)
-			if is_instance_valid(place_object.call(black_hole_scene, placed_celestial_bodies, pos)):
-				break
-
 	# --- Step 4: Spawn Nebulas (visuals for clusters) ---
 	var spawned_nebulas = []
 	if is_instance_valid(nebula_scene) and is_instance_valid(generated_nebulas_node):

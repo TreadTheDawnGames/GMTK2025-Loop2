@@ -2,6 +2,9 @@
 extends Area2D
 class_name BasePlanet
 
+# This preloads the satellite scene so it can be spawned from code.
+const SATELLITE_SCENE = preload("res://Scenes/Planets/Satellite.tscn")
+
 # This exports a variable to the Godot editor, allowing to change it without code.
 @export var gravity_strength: float = 4000.0
 # This creates an array to store physics bodies that enter the gravity field.
@@ -21,6 +24,7 @@ var current_orbiting_player: Player = null
 var orbit_radius: float = 0.0
 
 # This section controls collectable spawning
+@export_group("Collectables")
 @export var can_have_collectable: bool = true
 # This sets the probability (from 0.0 to 1.0) that a collectable will spawn on this planet.
 @export_range(0.0, 1.0) var collectable_spawn_chance: float = 0.8
@@ -31,9 +35,20 @@ var orbit_radius: float = 0.0
 	preload("res://Scenes/Collectables/Collectable_EnergyCore.tscn")
 ]
 
-
 # This holds a reference to the spawned collectable instance.
 var spawned_collectable: Collectable = null
+
+# This section controls satellite spawning
+@export_group("Satellites")
+# This toggles whether this planet can have satellites
+@export var can_have_satellites: bool = true
+# This sets the probability (from 0.0 to 1.0) that satellites will spawn
+@export_range(0.0, 1.0) var satellite_spawn_chance: float = 0.1
+# This is the minimum number of satellites that can spawn
+@export var num_satellites_min: int = 1
+# This is the maximum number of satellites that can spawn
+@export var num_satellites_max: int = 3
+
 
 func _ready() -> void:
 	orbit_progress_indicator = get_node_or_null("OrbitProgressIndicator")
@@ -43,6 +58,41 @@ func _ready() -> void:
 	add_to_group("planets")
 	# This attempts to spawn a collectable when the planet is ready.
 	spawn_collectable_at_center()
+	# This attempts to spawn satellites around the planet
+	_spawn_satellites()
+
+func _spawn_satellites() -> void:
+	# This checks if satellites are allowed on this planet type.
+	if not can_have_satellites:
+		return
+	
+	# This creates a random chance for satellites to spawn based on the spawn chance variable.
+	if randf() > satellite_spawn_chance:
+		return
+		
+	# This determines a random number of satellites to spawn within the specified range.
+	var num_to_spawn = randi_range(num_satellites_min, num_satellites_max)
+	
+	# This loops to create each satellite.
+	for i in range(num_to_spawn):
+		# This creates a new satellite instance from the preloaded scene.
+		var satellite = SATELLITE_SCENE.instantiate() as Satellite
+		
+		# This adds the satellite to the scene tree as a child of the planet.
+		add_child(satellite)
+		
+		# This sets the center of the satellite's orbit to the planet's position.
+		satellite.orbit_center = global_position
+		
+		# This gets the visual radius of the planet's sprite.
+		var planet_visual_radius = sprite.texture.get_width() * sprite.scale.x / 2.0
+		# This gets the radius of the planet's gravity field.
+		var gravity_radius = collision_shape_2d.shape.radius
+		
+		# This sets the satellite's orbit radius to be between the planet surface and its gravity edge.
+		satellite.orbit_radius = randf_range(planet_visual_radius * 1.5, gravity_radius * 0.8)
+		# This sets a random orbit speed for the satellite.
+		satellite.orbit_speed = randf_range(0.5, 1.5) * [-1, 1].pick_random() # This also randomizes direction
 
 func spawn_collectable_at_center():
 	# This checks if the planet is allowed to have a collectable.
@@ -173,8 +223,7 @@ func update_orbit_progress(accumulated_angle: float, completion_percentage: floa
 
 	# This loop creates the points for the visual arc.
 	for i in range(num_points + 1):
-		# MODIFICATION: The angle calculation now multiplies by the 'direction' parameter.
-		# This makes the line draw clockwise or counter-clockwise from the starting point.
+		# This calculates the angle for each point of the arc.
 		var angle = start_angle + (float(i) / num_points) * progress * 2 * PI * completion_percentage * direction
 		# This converts the angle and radius into a 2D position.
 		var point = Vector2(cos(angle), sin(angle)) * orbit_radius
@@ -199,32 +248,31 @@ func flash_orbit_completion():
 	# This calls a function to hide the line after the flash is complete.
 	flash_tween.tween_callback(stop_orbit_progress_display)
 
-# This is the first of the two functions that were in conflict.
-# It is essential for the procedural generator.
+# This gets the radius of the gravity field for procedural generation.
 func get_gravity_radius() -> float:
 	# This ensures the CollisionShape2D node exists before we try to access it.
 	if not is_instance_valid(collision_shape_2d):
-		return 200.0 # Return a default radius if the node isn't ready.
+		return 200.0 # This returns a default radius if the node isn't ready.
 
 	# This checks if the shape assigned to the collider is a circle.
 	if collision_shape_2d.shape is CircleShape2D:
-		# First, get the base radius from the shape resource itself.
+		# This gets the base radius from the shape resource itself.
 		var local_radius = collision_shape_2d.shape.radius
 		
-		# Next, get the scale of the parent Area2D node (this planet).
+		# This gets the scale of the parent Area2D node (this planet).
 		var planet_scale = self.scale
 		
-		# The true radius is the local radius multiplied by the largest scale component.
-		# We use max() to be safe in case the scaling is not uniform (e.g., stretched).
+		# This calculates the true radius by multiplying the local radius by the largest scale component.
 		return local_radius * max(planet_scale.x, planet_scale.y)
 	else:
-		# If it's not a circle, we print a warning and return a default value.
+		# This shows a warning and returns a default value if the shape is not a circle.
 		push_warning("Planet %s does not have a CircleShape2D for its gravity field." % name)
 		return 200.0
 
-# This is the second of the two functions that were in conflict.
-# It controls the visual feedback for orbited planets.
+# This function controls the visual feedback for orbited planets.
 func SetShowOrbited(orbited : bool):
+	# This checks if the atmosphere sprite for orbited planets exists.
 	if is_instance_valid(AtmoSpriteOrbited):
+		# This sets the visibility of the orbited indicator sprite.
 		AtmoSpriteOrbited.visible = orbited
 	return
