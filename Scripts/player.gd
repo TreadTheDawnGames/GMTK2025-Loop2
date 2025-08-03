@@ -74,7 +74,7 @@ static var Position : Vector2
 # This variable will hold the player's current state from the enum above.
 var current_state: State = State.READY_TO_AIM
 # This boolean tracks if the one-time boost is still available.
-var BoostCount: int = 1:
+var BoostCount: int = 3:
 	get: return BoostCount
 	set(value):
 		var old_value = BoostCount
@@ -98,7 +98,7 @@ var _current_aim_pull_vector: Vector2 = Vector2.ZERO
 var SingleTouchDown : bool = false
 
 # Lose condition variables
-static var max_distance_from_origin: float = 30000.0  # Maximum distance before losing
+static var max_distance_from_origin: float = 35000.0  # Maximum distance before losing
 var origin_position: Vector2 = Vector2.ZERO # No longer static, can be changed.
 var has_lost: bool = false
 
@@ -154,16 +154,22 @@ func calculate_final_score() -> void:
 
 # Checks if player has gone too far and should lose
 func check_lose_condition() -> void:
+	# This stops the function if the player has already lost or if the debug flag is off.
 	if has_lost or not DEBUG_DoLoseCondition:
 		return
 
-	var distance_from_origin = global_position.distance_to(origin_position)
-	if distance_from_origin > max_distance_from_origin:
+	# This calculates the distance from the center of the map (0,0) instead of the starting origin.
+	var distance_from_center = global_position.distance_to(Vector2.ZERO)
+	# This checks if the player's distance from the center exceeds the maximum allowed distance.
+	if distance_from_center > max_distance_from_origin:
+		# This sets a flag to ensure the lose sequence only runs once.
 		has_lost = true
-		print("Player went too far! Distance: ", distance_from_origin)
+		# This prints a debug message to the console.
+		print("Player went too far! Distance from center: ", distance_from_center)
 
-		# Calculates and adds final score before showing lose screen
+		# This calculates and adds the final score before showing the lose screen.
 		calculate_final_score()
+		# This tells the GameManager to switch to the lose screen.
 		GameManager.show_lose_screen()
 
 var mobilePosition : Vector2
@@ -541,7 +547,7 @@ func Reset():
 	if has_meta("starting_boosts"):
 		BoostCount = get_meta("starting_boosts")
 	else:
-		BoostCount = 1
+		BoostCount = 3
 	
 	#resets the known orbited planets
 	for planet : BasePlanet in orbited_planets:

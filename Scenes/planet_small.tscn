@@ -41,6 +41,7 @@ void fragment() {
 }"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ect5g"]
+resource_local_to_scene = true
 shader = SubResource("Shader_s0sgh")
 shader_parameter/center = Vector2(0.5, 0.5)
 shader_parameter/size = 1.0
