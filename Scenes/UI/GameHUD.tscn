@@ -61,12 +61,23 @@ offset_right = 966.0
 offset_bottom = 199.0
 scale = Vector2(0.395, 0.395)
 
+[node name="LevelGoalLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 80
+text = "Goal"
+
+[node name="HighScoreLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 80
+text = "Current"
+
 [node name="ScoreLabel" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 text = "Score: 0"
 label_settings = SubResource("LabelSettings_4y6w4")
 
 [node name="BoostPowerLabel" type="Label" parent="VBoxContainer"]
+visible = false
 layout_mode = 2
 text = "Launch Power: 0%"
 label_settings = SubResource("LabelSettings_4y6w4")

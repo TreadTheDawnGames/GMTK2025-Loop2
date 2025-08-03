@@ -158,7 +158,8 @@ func _on_ship_color_changed(_new_color: Color) -> void:
 func calculate_final_score() -> void:
 	final_score = points * mult
 	print("Final Score Calculation: ", points, " points * ", mult, " mult = ", final_score)
-	GameManager.add_score(final_score)
+	# Use the animated score addition instead of regular add_score
+	GameManager.add_score_with_animation(final_score, point_numbers_origin.global_position)
 	PointNumbers.display_number(final_score, point_numbers_origin.global_position, 2, -2)
 
 # Checks if player has gone too far and should lose
