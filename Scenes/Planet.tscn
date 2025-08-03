@@ -1,6 +1,5 @@
 [gd_scene load_steps=24 format=3 uid="uid://d0j2xqgs8463m"]
 
-
 [ext_resource type="Script" uid="uid://bkgfm5k1vexr" path="res://Scripts/planet.gd" id="1_ej51v"]
 [ext_resource type="Shader" uid="uid://dttlrh3oqhy7w" path="res://Assets/Shaders/Atmosphere.gdshader" id="2_ej51v"]
 [ext_resource type="Texture2D" uid="uid://b6y5iuktvcwd4" path="res://Assets/kenney_planets/Planets/planet00.png" id="2_m5833"]

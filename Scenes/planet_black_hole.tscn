@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://dg7glwq2khxr1"]
 
 [ext_resource type="PackedScene" uid="uid://d0j2xqgs8463m" path="res://Scenes/Planet.tscn" id="1_hjqa0"]
-[ext_resource type="Script" path="res://Scripts/planet_black_hole.gd" id="2_7ja8a"]
+[ext_resource type="Script" uid="uid://b4h62xgwafv47" path="res://Scripts/planet_black_hole.gd" id="2_7ja8a"]
 [ext_resource type="Texture2D" uid="uid://cniyri80y08pi" path="res://Assets/BlackHole.png" id="2_cv587"]
 [ext_resource type="Shader" uid="uid://8wjvxelx8i6a" path="res://Assets/Shaders/planet_black_hole.gdshader" id="2_g0sni"]
 [ext_resource type="Shader" uid="uid://dttlrh3oqhy7w" path="res://Assets/Shaders/Atmosphere.gdshader" id="3_wn18u"]

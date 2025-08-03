@@ -14,6 +14,9 @@ script = ExtResource("9_controller")
 num_planets = 450
 min_distance_between_planets = 1600.0
 
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.256036, 0.337469, 0.342932, 1)
+
 [node name="HUDLayer" type="CanvasLayer" parent="."]
 layer = 10
 
