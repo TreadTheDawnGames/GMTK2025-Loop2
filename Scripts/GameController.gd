@@ -82,6 +82,9 @@ func _ready() -> void:
 	# Connect to the signals of all collectables in the scene after a short delay.
 	call_deferred("connect_collectables")
 
+# This constant defines a safe radius around the sun for the Nebulas
+const SUN_EXCLUSION_RADIUS = 3000.0
+
 # This is the main function for procedural generation.
 func _generate_level():
 	# This array will keep track of all placed objects to check for overlaps.
@@ -169,19 +172,13 @@ func _generate_level():
 		generated_planets_node.add_child(sun)
 		placed_celestial_bodies.append(sun)
 
-	## --- Step 3: Place the Black Hole Randomly ---
-	#if is_instance_valid(black_hole_scene):
-		#for attempt in range(50):
-			#var pos = Vector2.from_angle(randf() * TAU) * randf_range(spawn_radius * 0.1, spawn_radius)
-			#if is_instance_valid(place_object.call(black_hole_scene, placed_celestial_bodies, pos)):
-				#break
-
 	# --- Step 4: Spawn Nebulas (visuals for clusters) ---
 	var spawned_nebulas = []
 	if is_instance_valid(nebula_scene) and is_instance_valid(generated_nebulas_node):
 		for i in range(num_nebulas):
 			var nebula = nebula_scene.instantiate()
-			var nebula_pos = Vector2.from_angle(randf() * TAU) * randf_range(0, spawn_radius * 0.75)
+			# Nebulas are now placed outside of the sun's exclusion zone.
+			var nebula_pos = Vector2.from_angle(randf() * TAU) * randf_range(SUN_EXCLUSION_RADIUS, spawn_radius * 0.85)
 			nebula.global_position = nebula_pos
 			generated_nebulas_node.add_child(nebula)
 			spawned_nebulas.append(nebula)
@@ -193,10 +190,16 @@ func _generate_level():
 			for attempt in range(20):
 				var planet_scene = planet_scenes.pick_random()
 				var spawn_center = Vector2.ZERO
+				var placement_radius = spawn_radius
+
+				# This is the improved logic for placing planets inside nebulas.
 				if i < planets_in_nebulas and not spawned_nebulas.is_empty():
-					spawn_center = spawned_nebulas.pick_random().global_position
+					var target_nebula = spawned_nebulas.pick_random()
+					spawn_center = target_nebula.global_position
+					# The placement radius is now based on the nebula's actual size.
+					placement_radius = target_nebula.get_radius() * 0.8 # 0.8 keeps planets from the very edge.
 				
-				var pos = spawn_center + Vector2.from_angle(randf() * TAU) * randf_range(0, spawn_radius / 2 if spawn_center != Vector2.ZERO else spawn_radius)
+				var pos = spawn_center + Vector2.from_angle(randf() * TAU) * randf_range(0, placement_radius)
 				if is_instance_valid(place_object.call(planet_scene, placed_celestial_bodies, pos)):
 					break
 

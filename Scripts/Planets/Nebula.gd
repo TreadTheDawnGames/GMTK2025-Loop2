@@ -12,8 +12,21 @@ var nebula_colors = [
 	Color("4dfff2"), # Cyan
 ]
 
+const SPRITE_WIDTH = 128
+const SPRITE_HEIGHT = 128
+const COLUMNS = 11
+const ROWS = 1
+
+
 func _ready():
 	# This sets a random rotation for variety.
+	sprite.region_enabled = true
+	
+	var random_col = randi() % COLUMNS
+	var region_x = random_col * SPRITE_WIDTH
+	
+	sprite.region_rect = Rect2(region_x, 0, SPRITE_WIDTH, SPRITE_HEIGHT)
+	
 	rotation_degrees = randf_range(0, 360)
 	
 	# This picks a random color from our list and applies it to the sprite.
@@ -22,13 +35,11 @@ func _ready():
 	random_color.a = 0.25
 	sprite.modulate = random_color
 	
-	# This randomly scales the nebula to make them different sizes.
-	var random_scale = randf_range(6.0, 10.0)
-	sprite.scale = Vector2(random_scale, random_scale)
+	# This significantly increases the size of the nebulas to be large enough for multiple planets.
+	var random_scale = randf_range(25.0, 40.0)
+	self.scale = Vector2(random_scale, random_scale)
 
-# This function helps the GameController know the size of the nebula for clustering planets.
+
 func get_radius() -> float:
-	# It calculates the radius based on the texture's width and the sprite's current scale.
-	if sprite and sprite.texture:
-		return sprite.texture.get_width() * sprite.scale.x / 2.0
-	return 500.0 # This is a default radius if something goes wrong.
+	# This calculates the radius based on a single sprite's width and the nebula's current scale.
+	return SPRITE_WIDTH * self.scale.x / 2.0
