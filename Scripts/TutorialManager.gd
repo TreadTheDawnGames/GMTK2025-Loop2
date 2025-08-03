@@ -21,6 +21,8 @@ const HOW_TO_PLAY_3 = "Right click, shift, or hold with two fingers to brake."
 const HOW_TO_PLAY_4 = "When on a station (like the one you spawned near), press \"E\" or click/tap it to open the shop."
 const HOW_TO_PLAY_5 = "Try to loop as many unique planets as you can to maximize your score!"
 
+const BOOST_TO_CONTINUE = "You have boosts! Use them to continue."
+
 
 # This shows a tutorial if it hasn't been shown before.
 func show_tutorial_once(tutorial_id: String, message: String, parent: Node) -> void:
@@ -90,6 +92,9 @@ func show_how_to_play(parent: Node):
 	show_tutorial_once("how_to_play_3", HOW_TO_PLAY_3, parent)
 	show_tutorial_once("how_to_play_4", HOW_TO_PLAY_4, parent)
 	show_tutorial_once("how_to_play_5", HOW_TO_PLAY_5, parent)
+
+func show_stuck_with_boosts(parent: Node):
+	show_tutorial_once("stuck_on_planet", BOOST_TO_CONTINUE, parent)
 
 # This resets all tutorials (for testing or new game)
 func reset_tutorials() -> void:

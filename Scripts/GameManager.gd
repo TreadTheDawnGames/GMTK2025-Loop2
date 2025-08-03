@@ -32,32 +32,37 @@ func _ready() -> void:
 	best_combo = 0
 
 var level_goal : int = 5
+var need_to_calculate_goal : bool = true
+
 # Calculate the goal score for a given level
-func calculate_goal_for_level(level: int) -> int:
+func calculate_goal_for_level(level_to_calculate: int) -> int:
 	# A new progression better suited for single score chunks.
 	# Lvl 1->2: 50, Lvl 2->3: 200, Lvl 3->4: 450 etc.
-	if(level == 1):
+	if(level_to_calculate == 1 or not need_to_calculate_goal):
 		return level_goal
 	level_goal += level_goal
-	if(level % 3 == 0):
+	if(level_to_calculate % 3 == 0):
 		level_goal += level_goal * 0.25
+	need_to_calculate_goal = false
 	return level_goal
 
 func get_current_level_goal() -> int:
-	return level_goal
+	return calculate_goal_for_level(current_level)
 
 func get_current_level() -> int:
 	return current_level
 
 func check_level_completion(final_score_chunk: int):
+	var completed_at_once : int = 0
 	# Checks if the cashed-in score meets the goal.
-	if final_score_chunk >= get_current_level_goal():
+	while final_score_chunk >= get_current_level_goal():
 		var completed_goal = get_current_level_goal()
-		level_completed.emit(current_level, completed_goal)
+		level_completed.emit(current_level, completed_goal, completed_at_once)
 		current_level += 1
+		need_to_calculate_goal = true
 		calculate_goal_for_level(current_level)
 		print("Level Up! Reached level %d. Next goal: %d" % [current_level, get_current_level_goal()])
-
+		completed_at_once+=1
 # This new function processes the big score chunk at the end of a run.
 func process_final_score(final_score: int, world_position: Vector2):
 	# Update the 'high_score' (Best) if this chunk is a new record.
