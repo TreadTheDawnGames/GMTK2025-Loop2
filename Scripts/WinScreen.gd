@@ -2,7 +2,6 @@ extends Control
 class_name EndGame
 # Node references
 @onready var stats_container: VBoxContainer = $PanelContainer/VBoxContainer
-@onready var title_label: Label = $PanelContainer/VBoxContainer/TitleLabel
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

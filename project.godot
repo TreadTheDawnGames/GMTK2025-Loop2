@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="GMTK2025-LoopTake2"
-run/main_scene="uid://c0pbif8cyy7x7"
+run/main_scene="uid://din50gkoucxpp"
 config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://Assets/icon.svg"
 
