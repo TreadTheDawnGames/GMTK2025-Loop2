@@ -8,6 +8,21 @@ class_name GameController
 @onready var generated_planets_node = $GeneratedPlanets
 @onready var generated_nebulas_node = $GeneratedNebulas
 
+@export var num_nebula_clusters: int = 8
+@export_range(3, 10) var nebulas_per_cluster_min: int = 10
+@export_range(3, 10) var nebulas_per_cluster_max: int = 20
+@export var cluster_radius: float = 2500.0 # How far nebulas can spawn from cluster center
+
+# This array now lives in the GameController, which manages the clusters.
+var nebula_colors = [
+	Color("ff4545"), # Red
+	Color("4dff8a"), # Green
+	Color("4d5bff"), # Blue
+	Color("ff4dcf"), # Pink/Purple
+	Color("4dfff2"), # Cyan
+]
+
+
 # This holds a reference to the home planet.
 var home_planet: HomePlanet
 # This holds references to all planets in the scene (static and generated).
@@ -82,6 +97,9 @@ func _ready() -> void:
 	# Connect to the signals of all collectables in the scene after a short delay.
 	call_deferred("connect_collectables")
 
+# This constant defines a safe radius around the sun for the Nebulas
+const SUN_EXCLUSION_RADIUS = 3000.0
+
 # This is the main function for procedural generation.
 func _generate_level():
 	# This array will keep track of all placed objects to check for overlaps.
@@ -96,7 +114,6 @@ func _generate_level():
 		var instance = scene.instantiate()
 		var new_radius = instance.get_gravity_radius()
 		
-		# Check for overlaps with all previously placed bodies.
 		var overlaps = false
 		for existing_body in tracking_array:
 			if not is_instance_valid(existing_body): continue
@@ -104,43 +121,34 @@ func _generate_level():
 			var existing_radius = existing_body.get_gravity_radius()
 			var distance = pos.distance_to(existing_body.global_position)
 			
-			# Determine the required buffer based on what's being placed.
 			var required_buffer = min_distance_between_planets
-			# Check if either the new object or the existing one is a station.
 			var is_new_obj_station = instance is HomePlanet
 			var is_existing_obj_station = existing_body is HomePlanet
 			if is_new_obj_station or is_existing_obj_station:
 				required_buffer = station_separation_buffer
 
-			# If the distance is less than the sum of both radii plus our required buffer, it overlaps.
 			if distance < new_radius + existing_radius + required_buffer:
 				overlaps = true
 				break
 		
-		# If the position is valid (no overlaps), place the object.
 		if not overlaps:
 			instance.global_position = pos
 			generated_planets_node.add_child(instance)
 			tracking_array.append(instance)
 			return instance
 		else:
-			# If the position was invalid, free the unused instance.
 			instance.queue_free()
 			return null
 
 	# --- Step 1: Place Stations Evenly Across the Map ---
 	var total_stations = 1 + num_additional_stations
-	var angle_per_sector = TAU / total_stations # TAU is 360 degrees in radians.
+	var angle_per_sector = TAU / total_stations
 	
 	for i in range(total_stations):
 		var station_placed = false
-		for attempt in range(20): # Try multiple times to place a station in its sector.
-			# Calculate the angle range for the current "slice" of the map.
+		for attempt in range(20):
 			var sector_start_angle = i * angle_per_sector
 			var sector_end_angle = (i + 1) * angle_per_sector
-			
-			# Pick a random angle and distance within this sector.
-			# Stations are placed in the outer half of the map to feel like outposts.
 			var random_angle = randf_range(sector_start_angle, sector_end_angle)
 			var random_radius = randf_range(spawn_radius * 0.5, spawn_radius * 0.9)
 			var station_pos = Vector2.from_angle(random_angle) * random_radius
@@ -148,7 +156,6 @@ func _generate_level():
 			var station_instance = place_object.call(station_scene, placed_celestial_bodies, station_pos)
 
 			if is_instance_valid(station_instance):
-				# If this is the first station being placed, it's the player's home base.
 				if not is_instance_valid(self.home_planet):
 					self.home_planet = station_instance
 					# Move the player to start next to this newly placed station.
@@ -157,7 +164,7 @@ func _generate_level():
 					player.set_origin_point(home_planet.global_position)
 					print("setting home planet")
 				station_placed = true
-				break # Move to the next sector.
+				break
 		
 		if not station_placed:
 			print("Could not place a station in sector %d after 20 attempts." % i)
@@ -169,22 +176,29 @@ func _generate_level():
 		generated_planets_node.add_child(sun)
 		placed_celestial_bodies.append(sun)
 
-	## --- Step 3: Place the Black Hole Randomly ---
-	#if is_instance_valid(black_hole_scene):
-		#for attempt in range(50):
-			#var pos = Vector2.from_angle(randf() * TAU) * randf_range(spawn_radius * 0.1, spawn_radius)
-			#if is_instance_valid(place_object.call(black_hole_scene, placed_celestial_bodies, pos)):
-				#break
-
-	# --- Step 4: Spawn Nebulas (visuals for clusters) ---
+	# --- Step 4: Spawn Nebula CLUSTERS ---
 	var spawned_nebulas = []
 	if is_instance_valid(nebula_scene) and is_instance_valid(generated_nebulas_node):
-		for i in range(num_nebulas):
-			var nebula = nebula_scene.instantiate()
-			var nebula_pos = Vector2.from_angle(randf() * TAU) * randf_range(0, spawn_radius * 0.75)
-			nebula.global_position = nebula_pos
-			generated_nebulas_node.add_child(nebula)
-			spawned_nebulas.append(nebula)
+		# This is the outer loop for creating clusters.
+		for i in range(num_nebula_clusters):
+			var cluster_center = Vector2.from_angle(randf() * TAU) * randf_range(SUN_EXCLUSION_RADIUS, spawn_radius * 0.85)
+			
+			# This picks a random color group index for the entire cluster (0=Red, 1=Green, 2=Purple, 3=Blue).
+			var cluster_color_index = randi() % 4
+			
+			var num_in_cluster = randi_range(nebulas_per_cluster_min, nebulas_per_cluster_max)
+			
+			# This is the inner loop to spawn nebulas *within* the cluster.
+			for j in range(num_in_cluster):
+				var nebula = nebula_scene.instantiate()
+				var nebula_pos = cluster_center + Vector2.from_angle(randf() * TAU) * randf_range(0, cluster_radius)
+				nebula.global_position = nebula_pos
+				
+				generated_nebulas_node.add_child(nebula)
+				# This tells the new nebula which color group it belongs to.
+				nebula.setup_nebula(cluster_color_index)
+				
+				spawned_nebulas.append(nebula)
 	
 	# --- Step 5: Fill the rest of the space with Regular Planets ---
 	if not planet_scenes.is_empty():
@@ -193,10 +207,14 @@ func _generate_level():
 			for attempt in range(20):
 				var planet_scene = planet_scenes.pick_random()
 				var spawn_center = Vector2.ZERO
+				var placement_radius = spawn_radius
+
 				if i < planets_in_nebulas and not spawned_nebulas.is_empty():
-					spawn_center = spawned_nebulas.pick_random().global_position
+					var target_nebula = spawned_nebulas.pick_random()
+					spawn_center = target_nebula.global_position
+					placement_radius = target_nebula.get_radius() * 0.8
 				
-				var pos = spawn_center + Vector2.from_angle(randf() * TAU) * randf_range(0, spawn_radius / 2 if spawn_center != Vector2.ZERO else spawn_radius)
+				var pos = spawn_center + Vector2.from_angle(randf() * TAU) * randf_range(0, placement_radius)
 				if is_instance_valid(place_object.call(planet_scene, placed_celestial_bodies, pos)):
 					break
 
