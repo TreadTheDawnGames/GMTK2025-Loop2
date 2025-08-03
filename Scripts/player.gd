@@ -314,11 +314,13 @@ func _physics_process(_delta: float) -> void:
 						# This is the logic for colliding with a regular planet.
 						if(canSkip == true) and collider.owner is not Asteroid:
 							print("Skip")
+							
 							canSkip = false
 							BoostCount += 1
 							mult *= 2
 							PointNumbers.display_number(mult, point_numbers_origin.global_position, 1)
 							audioHandler.PlaySoundAtGlobalPosition(Sounds.ShipCollide, global_position)
+							audioHandler.PlaySoundAtGlobalPosition(Sounds.PingHigh, global_position)
 						else:
 							# This handles crashing into a regular planet.
 							loopCounter = 0
@@ -328,6 +330,7 @@ func _physics_process(_delta: float) -> void:
 							linear_velocity = Vector2.ZERO
 							angular_velocity = 0.0
 							audioHandler.PlaySoundAtGlobalPosition(Sounds.ShipCollide, global_position)
+							audioHandler.PlaySoundAtGlobalPosition(Sounds.ShipCrash, global_position)
 							Reset()
 							onPlanet = true
 			# Checks if the collided object is an asteroid.
@@ -440,7 +443,7 @@ func start_orbiting(planet: BasePlanet):
 	
 	mult += 1
 	PointNumbers.display_number(mult, point_numbers_origin.global_position, 1)
-	audioHandler.PlaySoundAtGlobalPosition(Sounds.UpUIBeep, global_position)
+	audioHandler.PlaySoundAtGlobalPosition(Sounds.PingLow, global_position)
 	
 	# Shows the first-time orbit tutorial if it hasn't been shown yet.
 	var hud = get_tree().root.get_node("Game/HUDLayer/GameHUD")

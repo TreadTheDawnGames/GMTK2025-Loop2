@@ -13,3 +13,6 @@ class_name Sound
 @export var UIHover : AudioStream = preload("res://Assets/Audio/SFX/UIHoverSFX.wav")
 @export var UpUIBeep : AudioStream = preload("res://Assets/Audio/SFX/UpBeepUI.wav")
 @export var DownUIBeep : AudioStream = preload("res://Assets/Audio/SFX/DownBeepUI.wav")
+@export var PingHigh : AudioStream = preload("res://Assets/Audio/SFX/PingHighSFX2.wav")
+@export var PingLow : AudioStream = preload("res://Assets/Audio/SFX/PingLowSFX2.wav")
+@export var ShipCrash : AudioStream = preload("res://Assets/Audio/SFX/CrashSFX2.wav")
