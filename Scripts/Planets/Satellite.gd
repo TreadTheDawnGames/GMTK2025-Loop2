@@ -48,7 +48,7 @@ func _on_body_entered(body: Node2D) -> void:
 		# This checks if the player's speed is greater than the destruction threshold.
 		if player_speed > destruction_speed_threshold:
 			# This calls the function to handle the satellite's destruction if the player is moving fast.
-			on_hit()
+			on_hit(body)
 		else:
 			# This handles the bounce logic if the player is moving slowly.
 			on_bounce(body)
@@ -68,9 +68,9 @@ func on_bounce(player: Player) -> void:
 	audio_handler.PlaySoundAtGlobalPosition(Sounds.ShipCollide, global_position)
 
 # This function handles the logic for when the satellite is destroyed.
-func on_hit() -> void:
+func on_hit(player : Player) -> void:
 	# This adds 3 points to the player's score
-	GameManager.add_score(3)
+	player.points += 3
 	# This displays the number "3" at the satellite's position to give visual feedback
 	PointNumbers.display_number(3, global_position, 0)
 	

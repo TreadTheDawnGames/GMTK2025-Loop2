@@ -62,20 +62,10 @@ busName = "SFX"
 [node name="TutorialToggleContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
 layout_mode = 2
 
-[node name="TutorialIcon" type="TextureRect" parent="Panel/VBoxContainer/TutorialToggleContainer"]
-custom_minimum_size = Vector2(50, 50)
-layout_mode = 2
-
-[node name="TutorialLabel" type="Label" parent="Panel/VBoxContainer/TutorialToggleContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "TUTORIALS"
-horizontal_alignment = 0
-
 [node name="TutorialToggle" type="CheckBox" parent="Panel/VBoxContainer/TutorialToggleContainer"]
 layout_mode = 2
 button_pressed = true
-text = "ENABLED"
+text = "show Tutorials"
 script = ExtResource("5_kg15k")
 
 [node name="ShipColorLabel" type="Label" parent="Panel/VBoxContainer"]

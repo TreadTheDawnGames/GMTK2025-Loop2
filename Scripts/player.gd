@@ -404,7 +404,6 @@ func handle_orbit_tracking():
 			points += 1
 			# Displays the points number on screen.
 			PointNumbers.display_number(points, point_numbers_origin.global_position, 0)
-
 		# Tells the planet to run its completion flash animation.
 		current_orbiting_planet.flash_orbit_completion()
 		# Gives the player one boost charge.
@@ -441,7 +440,8 @@ func start_orbiting(planet: BasePlanet):
 	
 	mult += 1
 	PointNumbers.display_number(mult, point_numbers_origin.global_position, 1)
-
+	audioHandler.PlaySoundAtGlobalPosition(Sounds.UpUIBeep, global_position)
+	
 	# Shows the first-time orbit tutorial if it hasn't been shown yet.
 	var hud = get_tree().root.get_node("Game/HUDLayer/GameHUD")
 	if hud:
