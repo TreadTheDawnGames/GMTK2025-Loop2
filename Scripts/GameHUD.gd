@@ -77,7 +77,7 @@ func _on_score_animation_requested(points: int, world_position: Vector2) -> void
 	# This creates an animated score that flies from the world position to the score UI
 	animate_score_to_ui(points, world_position)
 
-func _on_level_completed(completed_level: int, goal_score: int) -> void:
+func _on_level_completed(completed_level: int, goal_score: int, delay : int = 0) -> void:
 	# This creates a special notification when a level is completed.
 	print("Level %d completed! Reached goal of %d points" % [completed_level, goal_score])
 	
@@ -86,9 +86,10 @@ func _on_level_completed(completed_level: int, goal_score: int) -> void:
 	
 	# Show a level completion notification
 	if notification_container:
-		var screen_pos = Vector2(0, -40 * notification_container.get_child_count())
-		CollectionNotification.create_notification(notification_container, "LEVEL " + str(completed_level) + " COMPLETE!", goal_score, screen_pos)
-
+		get_tree().create_timer(delay).timeout.connect(func():
+			var screen_pos = Vector2(0, -40 * notification_container.get_child_count())
+			CollectionNotification.create_notification(notification_container, "LEVEL " + str(completed_level) + " COMPLETE!", goal_score, screen_pos)
+		)
 func animate_score_to_ui(points: int, world_position: Vector2) -> void:
 	# This creates a label that animates from the world position to the score UI
 	var animated_label = Label.new()

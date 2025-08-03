@@ -329,7 +329,10 @@ func _physics_process(_delta: float) -> void:
 				)
 		else:
 			doNotSave = false
-			
+	elif not onPlanet and BoostCount > 0 and current_state == State.LAUNCHED and (linear_velocity.length() < 5) and not isBeingSaved:
+		get_tree().create_timer(5).timeout.connect(func(): TutorialManager.show_stuck_with_boosts(hud))
+		pass
+		
 	# Checks if the player has drifted too far from the starting origin.
 	check_lose_condition()
 	if is_inside_tree():
@@ -456,7 +459,7 @@ func handle_orbit_tracking():
 			
 			if current_orbiting_planet is not Planet_Sol:
 				# This adds a +5 score bonus for the first orbit.
-				GameManager.add_score(5)
+				#GameManager.add_score(5)
 				print("First orbit bonus! +5 score")
 				points += 5
 				PointNumbers.display_number(5, point_numbers_origin.global_position, 0)  # Green color for bonus
