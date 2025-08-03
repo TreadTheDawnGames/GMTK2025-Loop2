@@ -1,79 +1,95 @@
-extends CanvasLayer
-class_name ShopManager
+# res://Scripts/Shop/ShopManager.gd
+extends CanvasLayer # This makes the shop a UI layer that draws on top of the game.
+class_name ShopManager # This assigns a class name for easier referencing.
 
-# Shop UI Manager
-
+# These get references to the various UI nodes within the shop scene.
 @onready var shop_panel: Panel = $Control/ShopPanel
 @onready var items_container: VBoxContainer = $Control/ShopPanel/VBoxContainer/ScrollContainer/ItemsContainer
 @onready var score_label: Label = $Control/ShopPanel/VBoxContainer/HeaderContainer/ScoreLabel
 @onready var close_button: Button = $Control/ShopPanel/VBoxContainer/HeaderContainer/CloseButton
 @onready var title_label: Label = $Control/ShopPanel/VBoxContainer/HeaderContainer/TitleLabel
 
-# Shop items
-var shop_items: Array[ShopItem] = []
-var current_player: Player = null
+# These preload the scripts for the new shop items.
+const ExtraSkipItem = preload("res://Scripts/Shop/ExtraSkipItem.gd")
+const OrbitCounterItem = preload("res://Scripts/Shop/OrbitCounterItem.gd")
+# This is an existing item that will be kept.
+const StartingBoostsItem = preload("res://Scripts/Shop/StartingBoostsItem.gd")
 
-# Signals
-signal shop_closed
 
-# Purchase feedback properties
+var shop_items: Array[ShopItem] = [] # This array will hold all the available shop items.
+var current_player: Player = null # This will hold a reference to the player when the shop is open.
+
+signal shop_closed # This signal is emitted when the shop is closed.
+
+# These variables are for purchase feedback animations and messages.
 var score_flash_tween: Tween
 var success_message_scene = preload("res://Scenes/UI/TutorialNotification.tscn")
 
+# This function is called once when the node is added to the scene.
 func _ready():
-	# This tells the node to keep running even when the game is paused.
+	# This tells the node to continue processing even when the game is paused.
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	
-	# This hides shop initially
+	# This hides the shop UI by default.
 	visible = false
 	
-	# This connects close button
+	# This connects the close button's 'pressed' signal to the close_shop function.
 	if close_button:
 		close_button.pressed.connect(close_shop)
 	
-	# This initializes shop items
+	# This calls the function to set up all the shop items.
 	initialize_shop_items()
 	
-	# This connects to score changes
+	# This connects to the GameManager's signal to update the score display when it changes.
 	GameManager.score_changed.connect(_on_score_changed)
 
+# This function creates instances of all the shop items.
 func initialize_shop_items():
-	# This creates shop items TODO Add more
-	var magnet_item = MagnetItem.new()
+	# This creates an instance of the Starting Boosts item.
 	var boosts_item = StartingBoostsItem.new()
-	var gravity_upgrade_item = GravityUpgradeItem.new()
-	var trajectory_item = TrajectoryPredictionItem.new()
+	# This creates an instance of the Extra Skip item.
+	var extra_skip_item = ExtraSkipItem.new()
+	# This creates an instance of the Orbit Counter item.
+	var orbit_counter_item = OrbitCounterItem.new()
 
-	shop_items = [magnet_item, boosts_item, gravity_upgrade_item, trajectory_item]
+	# The following items are commented out as requested to remove them from the shop.
+	#var magnet_item = MagnetItem.new()
+	#var gravity_upgrade_item = GravityUpgradeItem.new()
+	#var trajectory_item = TrajectoryPredictionItem.new()
 
-	# This creates UI for each item
+	# This populates the shop_items array with the items that should appear in the shop.
+	shop_items = [boosts_item, extra_skip_item, orbit_counter_item]
+
+	# This calls the function to create the UI elements for each item.
 	create_shop_ui()
 
+# This function builds the UI for all items in the shop.
 func create_shop_ui():
-	# This clears existing items
+	# This clears any existing items from the container to prevent duplicates.
 	for child in items_container.get_children():
 		child.queue_free()
 	
-	# This creates UI for each shop item
+	# This loops through each shop item and creates its UI representation.
 	for item in shop_items:
 		var item_ui = create_item_ui(item)
 		items_container.add_child(item_ui)
 
+# This function creates the specific UI for a single shop item.
 func create_item_ui(item: ShopItem) -> Control:
 	var item_container = HBoxContainer.new()
 	item_container.custom_minimum_size = Vector2(0, 60)
 
-	# Item info container
+	# This container holds the item's name and description.
 	var info_container = VBoxContainer.new()
 	info_container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 
-	# Item name
+	# This creates the label for the item's name.
 	var name_label = Label.new()
 	name_label.text = item.item_name
 	name_label.add_theme_font_size_override("font_size", 16)
 	info_container.add_child(name_label)
 
-	# Item description
+	# This creates the label for the item's description.
 	var desc_label = Label.new()
 	desc_label.text = item.description
 	desc_label.add_theme_font_size_override("font_size", 12)
@@ -81,245 +97,137 @@ func create_item_ui(item: ShopItem) -> Control:
 	info_container.add_child(desc_label)
 
 	item_container.add_child(info_container)
+	
+	# This handles regular, non-specialized shop items.
+	# This creates the label for the item's cost.
+	var cost_label = Label.new()
+	cost_label.text = "Cost: %d pts" % item.get_current_cost()
+	cost_label.add_theme_font_size_override("font_size", 12)
+	info_container.add_child(cost_label)
 
-	# Special handling for GravityUpgradeItem
-	if item is GravityUpgradeItem:
-		var gravity_item = item as GravityUpgradeItem
+	# This creates the purchase button for the item.
+	var purchase_button = SoundButton.new()
+	purchase_button.text = item.get_purchase_text()
+	purchase_button.custom_minimum_size = Vector2(120, 50)
+	purchase_button.disabled = not item.can_purchase()
 
-		# Create button container
-		var button_container = VBoxContainer.new()
+	# This connects the button's 'pressed' signal to the purchase_item function.
+	purchase_button.pressed.connect(func(): purchase_item(item, purchase_button, cost_label))
 
-		# Level display
-		var level_label = Label.new()
-		level_label.text = "Level: %d (-3 to 3)" % gravity_item.get_current_level()
-		level_label.add_theme_font_size_override("font_size", 12)
-		level_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		button_container.add_child(level_label)
-
-		# Button row container
-		var button_row = HBoxContainer.new()
-
-		# Minus button
-		var minus_button = SoundButton.new()
-		minus_button.text = "-"
-		minus_button.custom_minimum_size = Vector2(50, 40)
-		minus_button.disabled = not gravity_item.can_downgrade()
-		minus_button.pressed.connect(func(): downgrade_gravity(gravity_item, minus_button, level_label))
-		button_row.add_child(minus_button)
-
-		# Plus button
-		var plus_button = SoundButton.new()
-		plus_button.text = "+"
-		plus_button.custom_minimum_size = Vector2(50, 40)
-		plus_button.disabled = not gravity_item.can_upgrade()
-		plus_button.pressed.connect(func(): upgrade_gravity(gravity_item, plus_button, level_label))
-		button_row.add_child(plus_button)
-
-		button_container.add_child(button_row)
-
-		# Cost info
-		var cost_label = Label.new()
-		cost_label.text = "120 pts/level"
-		cost_label.add_theme_font_size_override("font_size", 10)
-		cost_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		button_container.add_child(cost_label)
-
-		item_container.add_child(button_container)
-	else:
-		# Regular item handling
-		# Cost label
-		var cost_label = Label.new()
-		cost_label.text = "Cost: %d pts" % item.get_current_cost()
-		cost_label.add_theme_font_size_override("font_size", 12)
-		info_container.add_child(cost_label)
-
-		# Purchase button
-		var purchase_button = SoundButton.new()
-		purchase_button.text = item.get_purchase_text()
-		purchase_button.custom_minimum_size = Vector2(120, 50)
-		purchase_button.disabled = not item.can_purchase()
-
-		# Connect purchase button
-		purchase_button.pressed.connect(func(): purchase_item(item, purchase_button, cost_label))
-
-		item_container.add_child(purchase_button)
+	item_container.add_child(purchase_button)
 
 	return item_container
 
+# This function opens the shop UI.
 func open_shop(player: Player):
 	current_player = player
 	visible = true
-	get_tree().paused = true
+	get_tree().paused = true # This pauses the main game simulation.
 	update_shop_display()
 
+# This function closes the shop UI.
 func close_shop():
 	visible = false
-	get_tree().paused = false
-	shop_closed.emit()
+	get_tree().paused = false # This unpauses the main game simulation.
+	shop_closed.emit() # This emits a signal to notify that the shop has closed.
 
+# This function is called when a purchase button is pressed.
 func purchase_item(item: ShopItem, button: SoundButton, cost_label: Label):
 	if not current_player:
 		return
 
 	if item.purchase(current_player):
-		# Update button and cost display
+		# This updates the button text and state after a successful purchase.
 		button.text = item.get_purchase_text()
 		button.disabled = not item.can_purchase()
 		cost_label.text = "Cost: %d pts" % item.get_current_cost()
 
-		# Update score display with flash effect
+		# This updates the score display with a flashing effect.
 		update_score_display()
 		flash_score_label()
 
-		# This shows success message
+		# This shows a success message to the player.
 		show_purchase_success_message(item.item_name)
 
 		print("Purchased: %s" % item.item_name)
 	else:
 		print("Cannot purchase: %s" % item.item_name)
 
-func upgrade_gravity(gravity_item: GravityUpgradeItem, plus_button: SoundButton, level_label: Label):
-	if not current_player:
-		return
-
-	if gravity_item.upgrade_gravity(current_player):
-		# Update UI
-		level_label.text = "Level: %d (-3 to 3)" % gravity_item.get_current_level()
-		plus_button.disabled = not gravity_item.can_upgrade()
-
-		# Update minus button (find it as sibling)
-		var button_row = plus_button.get_parent()
-		var minus_button = button_row.get_child(0) as SoundButton
-		if minus_button:
-			minus_button.disabled = not gravity_item.can_downgrade()
-
-		# Update score display with flash effect
-		update_score_display()
-		flash_score_label()
-
-		# This shows success message
-		show_purchase_success_message("Gravity Upgraded!")
-
-func downgrade_gravity(gravity_item: GravityUpgradeItem, minus_button: SoundButton, level_label: Label):
-	if not current_player:
-		return
-
-	if gravity_item.downgrade_gravity(current_player):
-		# Update UI
-		level_label.text = "Level: %d (-3 to 3)" % gravity_item.get_current_level()
-		minus_button.disabled = not gravity_item.can_downgrade()
-
-		# Update plus button (find it as sibling)
-		var button_row = minus_button.get_parent()
-		var plus_button = button_row.get_child(1) as SoundButton
-		if plus_button:
-			plus_button.disabled = not gravity_item.can_upgrade()
-
-		# Update score display with flash effect
-		update_score_display()
-		flash_score_label()
-
-		# This shows success message
-		show_purchase_success_message("Gravity Downgraded!")
-
+# This function updates all displayed information in the shop.
 func update_shop_display():
 	update_score_display()
 
-	# Update all item UIs
+	# This loops through all item UIs to update their states (e.g., if a button should be disabled).
 	var item_uis = items_container.get_children()
 	for i in range(min(shop_items.size(), item_uis.size())):
 		var item = shop_items[i]
 		var item_ui = item_uis[i]
+		
+		# This handles regular items.
+		var button = item_ui.get_child(1) as SoundButton
+		if button:
+			button.text = item.get_purchase_text()
+			button.disabled = not item.can_purchase()
 
-		if item is GravityUpgradeItem:
-			# Handle GravityUpgradeItem special case
-			var gravity_item = item as GravityUpgradeItem
-			var button_container = item_ui.get_child(1)
-			var level_label = button_container.get_child(0) as Label
-			var button_row = button_container.get_child(1)
-			var minus_button = button_row.get_child(0) as SoundButton
-			var plus_button = button_row.get_child(1) as SoundButton
+		# This updates the cost label for items with dynamic costs.
+		var info_container = item_ui.get_child(0)
+		var cost_label = info_container.get_child(2) as Label
+		if cost_label:
+			cost_label.text = "Cost: %d pts" % item.get_current_cost()
 
-			if level_label:
-				level_label.text = "Level: %d (-3 to 3)" % gravity_item.get_current_level()
-			if minus_button:
-				minus_button.disabled = not gravity_item.can_downgrade()
-			if plus_button:
-				plus_button.disabled = not gravity_item.can_upgrade()
-		else:
-			# Handle regular items
-			var button = item_ui.get_child(1) as SoundButton
-			if button:
-				button.text = item.get_purchase_text()
-				button.disabled = not item.can_purchase()
 
-			# Update cost label
-			var info_container = item_ui.get_child(0)
-			var cost_label = info_container.get_child(2) as Label
-			if cost_label:
-				cost_label.text = "Cost: %d pts" % item.get_current_cost()
-
+# This function updates the score label with the current score from the GameManager.
 func update_score_display():
 	if score_label:
 		score_label.text = "Score: %d" % GameManager.get_score()
 
+# This function is called when the GameManager's score changes.
 func _on_score_changed(_new_score: int):
 	update_score_display()
 
-	# Update button states when score changes
+	# This updates the state of all purchase buttons whenever the score changes.
 	var item_uis = items_container.get_children()
 	for i in range(min(shop_items.size(), item_uis.size())):
 		var item = shop_items[i]
 		var item_ui = item_uis[i]
 
-		if item is GravityUpgradeItem:
-			# Handle GravityUpgradeItem special case
-			var gravity_item = item as GravityUpgradeItem
-			var button_container = item_ui.get_child(1)
-			var button_row = button_container.get_child(1)
-			var minus_button = button_row.get_child(0) as SoundButton
-			var plus_button = button_row.get_child(1) as SoundButton
+		# This handles regular items.
+		var button = item_ui.get_child(1) as SoundButton
+		if button:
+			button.disabled = not item.can_purchase()
 
-			if minus_button:
-				minus_button.disabled = not gravity_item.can_downgrade()
-			if plus_button:
-				plus_button.disabled = not gravity_item.can_upgrade()
-		else:
-			# Handle regular items
-			var button = item_ui.get_child(1) as SoundButton
-			if button:
-				button.disabled = not item.can_purchase()
-
+# This function handles input events while the shop is open.
 func _input(event):
+	# This allows closing the shop with the Escape key or the "interact" key (E).
 	if visible and (event.is_action_pressed("ui_cancel") or event.is_action_pressed("interact")):
 		close_shop()
 
-# This creates score flash effect
+# This function creates a flashing effect on the score label.
 func flash_score_label():
 	if not score_label:
 		return
 
-	# This stops any ongoing flash
+	# This stops any ongoing flash animation.
 	if score_flash_tween:
 		score_flash_tween.kill()
 
-	# This creates flash animation
+	# This creates the new flash animation.
 	score_flash_tween = create_tween()
 	score_flash_tween.tween_property(score_label, "modulate", Color.GREEN, 0.1)
 	score_flash_tween.tween_property(score_label, "modulate", Color.WHITE, 0.3)
 
-# This shows purchase success message
+# This function shows a success message after a purchase.
 func show_purchase_success_message(item_name: String):
-	# This plays purchase success sound
+	# This plays a success sound.
 	MusicManager.play_audio_omni("UpUIBeep")
 
 	var success_message = success_message_scene.instantiate()
 	add_child(success_message)
 
-	# This positions the message near the top of the shop
+	# This positions the message near the top of the shop panel.
 	success_message.position = Vector2(0, -100)
 
-	# This shows the success message (without playing sound again since we already played it)
+	# This sets the text and fades in the success message.
 	success_message.tutorial_label.text = "✓ " + item_name + " purchased!"
 	success_message.modulate.a = 0.0
 	var fade_in_tween = success_message.create_tween()

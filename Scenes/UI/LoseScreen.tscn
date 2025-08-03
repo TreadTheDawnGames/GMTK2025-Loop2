@@ -1,10 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://del8gwsewiqo8"]
+[gd_scene load_steps=4 format=3 uid="uid://del8gwsewiqo8"]
 
-[ext_resource type="Theme" uid="uid://dvwgvp8u8xo0i" path="res://Scenes/UI/Themes/UI_Theme.tres" id="1_6xaih"]
-[ext_resource type="Script" uid="uid://b58h6psnc56vf" path="res://Scripts/LoseScreen.gd" id="1_lose_screen"]
-[ext_resource type="Script" uid="uid://c1e04v6b22eli" path="res://Scripts/Shop/button_sounds.gd" id="3_3abt3"]
+[ext_resource type="PackedScene" uid="uid://c483p85jd82im" path="res://Scenes/UI/WinScreen.tscn" id="1_f7j0d"]
 
-[sub_resource type="Shader" id="Shader_6xaih"]
+[sub_resource type="Shader" id="Shader_f7j0d"]
 code = "shader_type canvas_item;
 
 uniform vec4 bg_color: source_color;
@@ -68,8 +66,8 @@ void fragment() {
 	COLOR = vec4(vec3(color),color) + bg_color;
 }"
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_3abt3"]
-shader = SubResource("Shader_6xaih")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6xaih"]
+shader = SubResource("Shader_f7j0d")
 shader_parameter/bg_color = Color(0.329412, 0, 0, 1)
 shader_parameter/bigStarSlow = 2.0
 shader_parameter/mediumStarSlow = 6.0
@@ -79,104 +77,16 @@ shader_parameter/mediumStarAmount = 0.01
 shader_parameter/bigStarAmount = 0.02
 shader_parameter/circleRadius = 200.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_3abt3"]
-size = Vector2(200, 50)
+[node name="LoseScreen" instance=ExtResource("1_f7j0d")]
 
-[node name="LoseScreen" type="Control"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme = ExtResource("1_6xaih")
-script = ExtResource("1_lose_screen")
+[node name="Background" parent="." index="0"]
+material = SubResource("ShaderMaterial_6xaih")
 
-[node name="Background" type="ColorRect" parent="."]
-material = SubResource("ShaderMaterial_3abt3")
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.2, 0.05, 0.05, 1)
-
-[node name="LoseTitle" type="Label" parent="Background"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -463.0
-offset_top = 120.0
-offset_right = 464.0
-offset_bottom = 201.0
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 72
+[node name="EndTitle" parent="VBoxContainer" index="0"]
 text = "MISSION FAILED!"
-horizontal_alignment = 1
-vertical_alignment = 1
 
-[node name="LoseMessage" type="Label" parent="Background"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -429.0
-offset_top = -82.0
-offset_right = 429.0
-offset_bottom = -46.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_font_sizes/font_size = 32
-text = "You drifted too far from home."
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="EndMessage" parent="VBoxContainer" index="2"]
+text = "Your run has ended."
 
-[node name="PanelContainer2" type="PanelContainer" parent="Background"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -114.0
-offset_top = -324.0
-offset_right = 114.0
-offset_bottom = -168.0
-grow_horizontal = 2
-grow_vertical = 0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Background/PanelContainer2"]
-layout_mode = 2
-
-[node name="Spacer2" type="Control" parent="Background/PanelContainer2/VBoxContainer"]
-custom_minimum_size = Vector2(0, 32)
-layout_mode = 2
-
-[node name="RestartButton" type="Button" parent="Background/PanelContainer2/VBoxContainer" groups=["Button"]]
-custom_minimum_size = Vector2(200, 50)
-layout_mode = 2
-text = "TRY AGAIN"
-script = ExtResource("3_3abt3")
-
-[node name="RestartButtonTouch" type="TouchScreenButton" parent="Background/PanelContainer2/VBoxContainer"]
-position = Vector2(100, 61)
-shape = SubResource("RectangleShape2D_3abt3")
-
-[node name="MenuButton" type="Button" parent="Background/PanelContainer2/VBoxContainer" groups=["Button"]]
-custom_minimum_size = Vector2(200, 50)
-layout_mode = 2
-text = "MAIN MENU"
-script = ExtResource("3_3abt3")
-
-[node name="MunuButtonTouch" type="TouchScreenButton" parent="Background/PanelContainer2/VBoxContainer"]
-position = Vector2(100, 115)
-shape = SubResource("RectangleShape2D_3abt3")
-
-[connection signal="pressed" from="Background/PanelContainer2/VBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
-[connection signal="pressed" from="Background/PanelContainer2/VBoxContainer/RestartButtonTouch" to="." method="_on_restart_button_pressed"]
-[connection signal="pressed" from="Background/PanelContainer2/VBoxContainer/MenuButton" to="." method="_on_menu_button_pressed"]
-[connection signal="pressed" from="Background/PanelContainer2/VBoxContainer/MunuButtonTouch" to="." method="_on_menu_button_pressed"]
+[node name="RestartButton" parent="PanelContainer/VBoxContainer" index="1"]
+text = "Retry"
