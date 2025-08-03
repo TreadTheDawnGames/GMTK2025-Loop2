@@ -4,8 +4,15 @@ class_name Player
 # The trail effects
 @onready var trail_2d_1: Line2D = $CollisionShape2D/Node2D/Trail2D
 @onready var trail_2d_2: Line2D = $CollisionShape2D/Node2D2/Trail2D
-
 @onready var point_numbers_origin: Node2D = $PointNumbersOrigin
+
+# This tracks if the player has purchased the orbit counter upgrade.
+var has_orbit_counter: bool = false
+
+# This tracks the maximum number of skips the player can have.
+var max_skips_per_orbit: int = 1
+# This tracks the current number of available skips.
+var current_skips_available: int = 0
 
 var dead : bool = false
 # Trail effect properties
@@ -312,9 +319,9 @@ func _physics_process(_delta: float) -> void:
 							TutorialManager.show_land_for_boost_tutorial(hud)
 					else:
 						# This is the logic for colliding with a regular planet.
-						if(canSkip == true) and collider.owner is not Asteroid:
+						if(current_skips_available > 0) and collider.owner is not Asteroid:
 							print("Skip")
-							canSkip = false
+							current_skips_available -= 1
 							BoostCount += 1
 							mult *= 2
 							PointNumbers.display_number(mult, point_numbers_origin.global_position, 1)
@@ -359,7 +366,6 @@ func _physics_process(_delta: float) -> void:
 			
 	# Calls the function to handle orbit progress tracking.
 	handle_orbit_tracking()
-
 # This function tracks the player's progress around a planet.
 func handle_orbit_tracking():
 	# Stops the function if the player is not currently orbiting a planet.
@@ -378,7 +384,8 @@ func handle_orbit_tracking():
 	last_angle_to_planet = current_angle
 	
 	# Tells the planet to update its visual progress line, passing the direction of rotation.
-	current_orbiting_planet.update_orbit_progress(accumulated_orbit_angle, orbit_completion_percentage, orbit_start_angle, sign(delta_angle))
+	if has_orbit_counter:
+		current_orbiting_planet.update_orbit_progress(accumulated_orbit_angle, orbit_completion_percentage, orbit_start_angle, sign(delta_angle))
 
 	# Checks if the accumulated angle has reached a full loop.
 	if accumulated_orbit_angle >= (2 * PI) * orbit_completion_percentage:
@@ -459,7 +466,7 @@ func stop_orbiting(planet: BasePlanet):
 		# Resets the accumulated angle.
 		accumulated_orbit_angle = 0.0
 		# Allows the player to perform a "skip" on the next planet they hit.
-		canSkip = true
+		current_skips_available = max_skips_per_orbit
 		
 		# DEBUG: This confirms that the player has stopped orbiting.
 		print("Player stopped orbiting: ", planet.name)

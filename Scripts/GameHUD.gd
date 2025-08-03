@@ -1,6 +1,8 @@
 extends Control
 class_name GameHUD
 
+const FloatingNumber = preload("res://Scenes/UI/FloatingNumber.tscn")
+
 # This stores references to UI elements.
 @onready var score_label: Label = $VBoxContainer/ScoreLabel
 @onready var boost_power_label: Label = $VBoxContainer/BoostPowerLabel
@@ -19,12 +21,14 @@ var game_controller
 
 # This stores the tween for the score flash effect.
 var score_flash_tween: Tween
+var score: int = 0
 
 func _ready() -> void:
 	# This connects to the signal for when the score changes.
 	GameManager.score_changed.connect(_on_score_changed)
 	
 	# This sets the initial display values.
+	score = GameManager.get_score()
 	update_score_display()
 	update_boosts_display()
 	boost_power_label.visible = false
@@ -50,10 +54,20 @@ func _process(_delta: float) -> void:
 	update_boosts_display()
 	update_points_display()
 
-func _on_score_changed(_new_score: int) -> void:
+func _on_score_changed(new_score: int) -> void:
 	# This updates the score and creates a flash effect.
+	var difference = new_score - score
+	score = new_score
+	if difference > 0:
+		show_floating_score(difference)
 	update_score_display()
 	flash_score_label()
+
+func show_floating_score(amount: int):
+	var floating_number = FloatingNumber.instantiate()
+	PointNumbers.add_child(floating_number)
+	var start_pos = score_label.global_position + Vector2(score_label.size.x, 0)
+	floating_number.start(amount, start_pos)
 
 func update_score_display() -> void:
 	# This updates only the score text.
