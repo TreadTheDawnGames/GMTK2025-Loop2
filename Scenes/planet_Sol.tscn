@@ -1,10 +1,11 @@
-[gd_scene load_steps=13 format=3 uid="uid://w1hy76n1gkow"]
+[gd_scene load_steps=14 format=3 uid="uid://w1hy76n1gkow"]
 
 [ext_resource type="PackedScene" uid="uid://d0j2xqgs8463m" path="res://Scenes/Planet.tscn" id="1_qo6fj"]
 [ext_resource type="Shader" uid="uid://d2afeeep8niyx" path="res://Assets/Shaders/planet_fireball.gdshader" id="2_ic6og"]
 [ext_resource type="Script" uid="uid://dilnepq3bn8iy" path="res://Scripts/planet_sol.gd" id="2_ouapx"]
 [ext_resource type="Texture2D" uid="uid://cttrn2nakn67e" path="res://Assets/Circle.png" id="3_vrufb"]
 [ext_resource type="Shader" uid="uid://dttlrh3oqhy7w" path="res://Assets/Shaders/Atmosphere.gdshader" id="4_vrufb"]
+[ext_resource type="Texture2D" uid="uid://3gse6thgj77" path="res://Assets/light.png" id="6_wkqme"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ngwap"]
 radius = 1843.0
@@ -128,3 +129,13 @@ disabled = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="0"]
 shape = SubResource("CircleShape2D_ouapx")
+
+[node name="PointLight2D" type="PointLight2D" parent="." index="6"]
+position = Vector2(-16.0002, 16.0002)
+scale = Vector2(1.37375, 1.37375)
+color = Color(1, 0.427451, 1, 1)
+energy = 4.97
+shadow_filter_smooth = 64.0
+texture = ExtResource("6_wkqme")
+texture_scale = 50.0
+height = 2048.0
