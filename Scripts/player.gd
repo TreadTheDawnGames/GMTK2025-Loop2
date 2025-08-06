@@ -164,6 +164,11 @@ func calculate_final_score() -> void:
 	print("Final Score Calculation: ", points, " points * ", mult, " mult = ", final_score)
 	# Use the animated score addition instead of regular add_score
 	GameManager.process_final_score(final_score, point_numbers_origin.global_position)
+	
+	#also display the green number
+	PointNumbers.display_number(final_score, point_numbers_origin.global_position, 2, -1)
+	
+	
 	if(final_score == 0):
 		audioHandler.PlaySoundAtGlobalPosition(Sounds.ShipCrash, global_position)
 	else:
