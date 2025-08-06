@@ -18,6 +18,9 @@ num_nebulas = 30
 num_planets = 450
 min_distance_between_planets = 1600.0
 
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.252464, 0.335036, 0.309032, 1)
+
 [node name="PauseAssistant" type="Node2D" parent="."]
 process_mode = 3
 script = ExtResource("2_fgofq")

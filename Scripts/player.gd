@@ -263,6 +263,7 @@ func _process(_delta: float) -> void:
 		
 	# Checks for a quick click to apply a boost.
 	if(not (Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)or SingleTouchDown)):
+		#this shouldn't need a timer to detect when the mouse is down, we want to detect when it's lifted.  It shouldn't matter because of the state the player is in.
 		if clickTimer and clickTimer.time_left > 0 and BoostCount > 0 and canBoost:
 			apply_boost()
 			clickTimer = null
