@@ -404,10 +404,11 @@ func _physics_process(_delta: float) -> void:
 							print("Skip")
 
 							current_skips_available -= 1
-
+							if(canSkip):
+								BoostCount += 1
+	
 							canSkip = false
 
-							BoostCount += 1
 							PointNumbers.display_number(mult, point_numbers_origin.global_position, 1)
 							mult *= 2
 							audioHandler.PlaySoundAtGlobalPosition(Sounds.ShipCollide, global_position)
