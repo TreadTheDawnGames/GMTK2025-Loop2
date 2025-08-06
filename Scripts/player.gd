@@ -61,7 +61,7 @@ var canSkip : bool = true
 @export var boost_strength: float = 1000.0
 
 #defines how fast a click should be. I use 0.2 in another game just fine.
-const CLICK_TIME : float = 0.2
+#const CLICK_TIME : float = 0.2
 
 # Flag to double launch if on planet
 var onPlanet : bool = false
@@ -191,24 +191,22 @@ func check_lose_condition() -> void:
 
 var mobilePosition : Vector2
 # This function is called by Godot when an input event occurs on this object.
-func _input(ev: InputEvent) -> void:
-	if ev is InputEventMouseButton:
-		var event = ev as InputEventMouseButton
-		if event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-			clickTimer = get_tree().create_timer(CLICK_TIME)
-			get_viewport().set_input_as_handled()
+#func _input(ev: InputEvent) -> void:
+	#if ev is InputEventMouseButton:
+		#var event = ev as InputEventMouseButton
+		#if event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+			#clickTimer = get_tree().create_timer(CLICK_TIME)
+			#get_viewport().set_input_as_handled()
 
 # A timer to check if the mouse button was down/up quick
-var clickTimer : SceneTreeTimer
+#var clickTimer : SceneTreeTimer
 
 var singleTouchProcessed : bool = false
 var mouseReleased = true
 var initialClickPos : Vector2
 var aim_canceled : bool = false
 
-# This function is called every frame.
-func _process(_delta: float) -> void:
-	# Handles mobile touch inputs to determine player action.
+func process_mobile_input():
 	if(GameManager.IsMobile):
 		match TouchHelper.state.size():
 			0: # No touches
@@ -220,17 +218,19 @@ func _process(_delta: float) -> void:
 				if(not singleTouchProcessed):
 					SingleTouchDown = true
 					singleTouchProcessed = true
-				clickTimer = get_tree().create_timer(CLICK_TIME)
+				#clickTimer = get_tree().create_timer(CLICK_TIME)
 				
 				# Converts screen touch position to world position.
 				var screen_position = TouchHelper.state.values()[0]
 				var canvas_transform = get_viewport().get_canvas_transform()
 				var world_position = canvas_transform.affine_inverse() * screen_position
 				mobilePosition = world_position
-				
-			2: # Two touches (for braking)
-				#singleTouchProcessed = false
-				mobileBrake = true
+	return
+
+# This function is called every frame.
+func _process(_delta: float) -> void:
+	# Handles mobile touch inputs to determine player action.
+	process_mobile_input()
 	# Does not process input if game is paused (e.g., shop is open).
 	
 	if get_tree().paused:
@@ -254,7 +254,10 @@ func _process(_delta: float) -> void:
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) or SingleTouchDown:
 		if not aim_canceled:
 			if mouseReleased:
-				initialClickPos = GetGlobalClickPosition()
+				if (current_state == State.LAUNCHED):
+					apply_boost()
+				else:
+					initialClickPos = GetGlobalClickPosition()
 				mouseReleased = false
 			# Starts aiming only when pressed and from the READY_TO_AIM state.
 			if current_state == State.READY_TO_AIM:
@@ -287,12 +290,12 @@ func _process(_delta: float) -> void:
 		# Calls the function to launch the player using the stored aim vector.
 		launch()
 		
-	# Checks for a quick click to apply a boost.
-	if(not (Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)or SingleTouchDown)):
-		#this shouldn't need a timer to detect when the mouse is down, we want to detect when it's lifted.  It shouldn't matter because of the state the player is in.
-		if clickTimer and clickTimer.time_left > 0 and BoostCount > 0 and canBoost:
-			apply_boost()
-			clickTimer = null
+	## Checks for a quick click to apply a boost.
+	#if((Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)or SingleTouchDown) and current_state == State.LAUNCHED):
+		##this shouldn't need a timer to detect when the mouse is down, we want to detect when it's lifted.  It shouldn't matter because of the state the player is in.
+		##if clickTimer and clickTimer.time_left > 0 and BoostCount > 0 and canBoost:
+			#apply_boost()
+			##clickTimer = null
 
 static var softlockTimer : SceneTreeTimer
 static var isBeingSaved : bool = false
@@ -570,6 +573,9 @@ func launch() -> void:
 
 # This function applies the one-time boost.
 func apply_boost() -> void:
+	#Don't boost if you don't have any boosts
+	if(BoostCount <= 0):
+		return
 	# Gets the forward direction of the rocket.
 	var boost_direction = Vector2.RIGHT.rotated(rotation)
 	# Applies an instant force (impulse) in the forward direction.
