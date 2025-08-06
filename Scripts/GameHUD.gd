@@ -88,12 +88,12 @@ func _on_level_completed(completed_level: int, goal_score: int, delay : int = 0)
 	if notification_container:
 		get_tree().create_timer(delay).timeout.connect(func():
 			var screen_pos = Vector2(0, -40 * notification_container.get_child_count())
-			CollectionNotification.create_notification(notification_container, "LEVEL " + str(completed_level) + " COMPLETE!", goal_score, screen_pos)
+			CollectionNotification.create_notification(notification_container, "LEVEL " + comma_separated_string(completed_level) + " COMPLETE!", goal_score, screen_pos)
 		)
 func animate_score_to_ui(points: int, world_position: Vector2) -> void:
 	# This creates a label that animates from the world position to the score UI
 	var animated_label = Label.new()
-	animated_label.text = "+" + str(points)
+	animated_label.text = "+" + comma_separated_string(points)
 	animated_label.add_theme_font_size_override("font_size", 24)
 	
 	# Add the label to the HUD
@@ -148,12 +148,12 @@ func show_floating_score(amount: int):
 
 func update_score_display() -> void:
 	# This updates only the score text.
-	var score_text = "Score: " + str(GameManager.get_score())
+	var score_text = "Score: " + comma_separated_string(GameManager.get_score())
 	score_label.text = score_text
 
 func update_high_score_display() -> void:
 	# This updates the high score display.
-	var high_score_text = "Best: " + str(GameManager.get_best_combo())
+	var high_score_text = "Best: " + comma_separated_string(GameManager.get_best_combo())
 	high_score_label.text = high_score_text
 
 func update_level_goal_display() -> void:
@@ -162,13 +162,13 @@ func update_level_goal_display() -> void:
 	var current_goal = GameManager.get_current_level_goal()
 	
 	# This updates the text to show the new format: Level X | Goal: current/target.
-	var level_goal_text = "Level %d | Goal: %d" % [current_level, current_goal]
+	var level_goal_text = "Level "+comma_separated_string(current_level)+" | Goal: " +comma_separated_string(current_goal)
 	level_goal_label.text = level_goal_text
 
 func update_boosts_display() -> void:
 	# This updates the text for available boosts.
 	if player:
-		var boost_text = str(player.BoostCount)
+		var boost_text = comma_separated_string(player.BoostCount)
 		boosts_label.text = boost_text
 
 func update_boost_power_display() -> void:
@@ -181,9 +181,17 @@ func update_boost_power_display() -> void:
 	else:
 		boost_power_label.visible = false
 
+#Godot forums
+static func comma_separated_string(num : int):
+	var string = str(num)
+	for itr in range(0, len(str(num)), 3):
+		if itr !=0:
+			string = string.insert(len(str(num))-itr, ",")
+	return string
+
 func update_points_display() -> void:
 	if player:
-		var points_text = str(player.points) + " * [color=red]" + str(player.mult) + "[/color]"
+		var points_text = comma_separated_string(player.points) + " * [color=red]" + comma_separated_string(player.mult) + "[/color]"
 		points_label.text = points_text
 
 func update_collectable_counts() -> void:

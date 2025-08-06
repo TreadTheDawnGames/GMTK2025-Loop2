@@ -4,7 +4,7 @@
 [ext_resource type="Theme" uid="uid://dvwgvp8u8xo0i" path="res://Scenes/UI/Themes/UI_Theme.tres" id="1_663bt"]
 [ext_resource type="PackedScene" uid="uid://fcnfyre27jqd" path="res://Scenes/UI/Compass.tscn" id="2_compass"]
 [ext_resource type="PackedScene" uid="uid://djb632ayh6gg0" path="res://Scenes/UI/ObjectivesPanel.tscn" id="3_objectives"]
-[ext_resource type="PackedScene" uid="uid://cctmook84b7aa" path="res://Scenes/UI/CollectableCounter.tscn" id="4_collectable_counter"]
+[ext_resource type="PackedScene" path="res://Scenes/UI/CollectableCounter.tscn" id="4_collectable_counter"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_4y6w4"]
 font_size = 80
@@ -24,23 +24,35 @@ script = ExtResource("1_31s1k")
 
 [node name="PointsLabel" type="RichTextLabel" parent="."]
 layout_mode = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
 offset_left = 44.0
-offset_top = 543.0
-offset_right = 813.0
-offset_bottom = 685.0
+offset_top = -92.0
+offset_right = 903.0
+offset_bottom = -13.0
+grow_vertical = 0
 theme_override_font_sizes/normal_font_size = 70
 bbcode_enabled = true
-text = "10 * 10"
+text = "10 * 10,000,000,000,000,000"
+scroll_active = false
+autowrap_mode = 1
+vertical_alignment = 2
 
 [node name="BoostsLabel" type="Label" parent="."]
-layout_mode = 2
-offset_left = 1073.0
-offset_top = 543.0
-offset_right = 1500.0
-offset_bottom = 635.0
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -63.0
+offset_top = -92.0
+offset_right = -8.0
+grow_horizontal = 0
+grow_vertical = 0
 scale = Vector2(0.89, 0.89)
 theme_override_font_sizes/font_size = 70
-text = "1"
+text = "3"
 label_settings = SubResource("LabelSettings_4y6w4")
 
 [node name="Label" type="Label" parent="BoostsLabel"]
