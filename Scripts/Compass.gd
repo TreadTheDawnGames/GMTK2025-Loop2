@@ -22,7 +22,8 @@ var collectable_indicator_icons: Array[TextureRect] = []
 # Textures for the different map icons
 var planet_texture: Texture2D = preload("res://Assets/kenney_simple-space/meteor_small.png")
 var shop_texture: Texture2D = preload("res://Assets/kenney_simple-space/AAA-ChosenKenney/station_A.png")#preload("res://Assets/kenney_space-shooter-extension/AAA-ChosenKenneySpace/spaceStation_020.png")#preload("res://Assets/kenney_space-shooter-extension/PNG/Sprites/Station/spaceStation_021.png")
-var player_texture: Texture2D = preload("res://Assets/Circle.png")
+@onready var center_ship: Sprite2D = $CenterShip
+
 # This texture will be used for the new indicator icon.
 var collectable_indicator_texture: Texture2D = preload("res://Assets/kenney_simple-space/AAA-ChosenKenney/star_small.png")
 
@@ -77,7 +78,7 @@ func create_planet_and_indicator_icons():
 		indicator_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 		indicator_icon.size = Vector2(8, 8)
 		indicator_icon.pivot_offset = indicator_icon.size / 2
-		indicator_icon.modulate = Color.GOLD
+		indicator_icon.modulate = Color.PINK
 		indicator_icon.visible = false # This hides it by default.
 		planet_icons_container.add_child(indicator_icon)
 		collectable_indicator_icons.append(indicator_icon)
@@ -108,7 +109,9 @@ func _process(_delta):
 func update_map():
 	var player_pos = player.global_position
 	#update_icon_position(home_icon, home_planet.global_position, player_pos)
-
+	
+	center_ship.rotation = player.rotation + deg_to_rad(90)
+	
 	for i in range(min(planets.size(), planet_icons.size())):
 		if is_instance_valid(planets[i]) and is_instance_valid(planet_icons[i]):
 			var planet = planets[i]

@@ -14,7 +14,7 @@ const ROWS = 1
 func _ready():
 	# Most logic is moved to the setup function.
 	# This ensures the sprite is ready to be configured.
-	sprite.region_enabled = true
+	#sprite.region_enabled = true
 	rotation_degrees = randf_range(0, 360)
 	var random_scale = randf_range(7.0, 14.0)
 	self.scale = Vector2(random_scale, random_scale)
@@ -28,9 +28,9 @@ func setup_nebula(color_group_index: int):
 	# This picks a random sprite from the 3 available for that color group.
 	var random_col = start_col + (randi() % 3)
 	
-	var region_x = random_col * SPRITE_WIDTH
-	
-	sprite.region_rect = Rect2(region_x, 0, SPRITE_WIDTH, SPRITE_HEIGHT)
+	#var region_x = random_col * SPRITE_WIDTH
+	sprite.frame = clamp(start_col + (randi() % 3), 0, sprite.hframes-1) #randi_range(0,sprite.hframes-1)
+	#sprite.region_rect = Rect2(region_x, 0, SPRITE_WIDTH, SPRITE_HEIGHT)
 	
 	# We no longer apply a random color tint, as the sprites are already colored.
 	# The alpha is set directly.

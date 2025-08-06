@@ -38,10 +38,11 @@ var canBoost : bool = false
 var canSkip : bool = true
 @onready var Shape: CollisionShape2D = $CollisionShape2D
 
+@export var softlock_sensitivity = 50
 @export_category("Orbit Settings")
 @export_range(0.0, 1.0) var orbit_completion_percentage: float = 0.95 # 95%
 
-@export var SoftlockTime : float = 3
+@export var SoftlockTime : float = 2
 @export var DEBUG_DoLoseCondition : bool = true
 # The particles
 @onready var _LaunchParticles: ParticleEffect = $LaunchParticles
@@ -275,6 +276,8 @@ static var doNotSave : bool = false
 func _physics_process(_delta: float) -> void:
 	# Does not process physics input if game is paused (e.g., shop is open).
 	
+	var debugInput = Vector2(Input.get_axis("DEBUG-LEFT", "DEBUG-RIGHT"), Input.get_axis("DEBUG-UP", "DEBUG-DOWN")) * 50
+	move_and_collide(debugInput)
 	# Updates player's global position.
 	Position = global_position
 	
@@ -319,7 +322,7 @@ func _physics_process(_delta: float) -> void:
 
 
 	# This logic detects if the player is stuck at a very low velocity and summons a "saving" asteroid.
-	if(not onPlanet and BoostCount == 0 and current_state == State.LAUNCHED and (linear_velocity.length() < 5) and not isBeingSaved):
+	if(not onPlanet and BoostCount == 0 and current_state == State.LAUNCHED and (linear_velocity.length() < softlock_sensitivity) and not isBeingSaved):
 		if(not doNotSave):
 			isBeingSaved = true
 			if(not softlockTimer):
