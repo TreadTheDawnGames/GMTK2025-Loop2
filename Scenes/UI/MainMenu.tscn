@@ -1,9 +1,10 @@
-[gd_scene load_steps=22 format=3 uid="uid://din50gkoucxpp"]
+[gd_scene load_steps=24 format=3 uid="uid://din50gkoucxpp"]
 
 [ext_resource type="Script" uid="uid://ew10v6pbwxv6" path="res://Scripts/MainMenu.gd" id="1_main_menu"]
 [ext_resource type="Theme" uid="uid://dvwgvp8u8xo0i" path="res://Scenes/UI/Themes/UI_Theme.tres" id="1_mjmdf"]
 [ext_resource type="Material" uid="uid://2wo2meekggrg" path="res://Scenes/Effects/StarBackground_Menu.tres" id="3_72sra"]
 [ext_resource type="Texture2D" uid="uid://bk7d1uwiwf5vm" path="res://Assets/kenney_planets/Planets/planet02.png" id="4_jex3y"]
+[ext_resource type="Texture2D" uid="uid://dvsna3s82htyr" path="res://Assets/Shaders/CircleNormalMap.png" id="4_kdsd0"]
 [ext_resource type="Script" uid="uid://c1e04v6b22eli" path="res://Scripts/Shop/button_sounds.gd" id="4_t6w0q"]
 [ext_resource type="Script" uid="uid://d14jugjffoiv7" path="res://Scripts/rand_sprite.gd" id="5_euk5f"]
 [ext_resource type="Texture2D" uid="uid://b6y5iuktvcwd4" path="res://Assets/kenney_planets/Planets/planet00.png" id="6_kdsd0"]
@@ -15,6 +16,9 @@
 [ext_resource type="Texture2D" uid="uid://dgy0qlfsppkme" path="res://Assets/kenney_planets/Planets/planet07.png" id="12_2qihr"]
 [ext_resource type="Texture2D" uid="uid://fhqpobm2xyfy" path="res://Assets/kenney_planets/Planets/planet08.png" id="13_xwq8e"]
 [ext_resource type="Texture2D" uid="uid://d2lxucwpeaiew" path="res://Assets/kenney_planets/Planets/planet09.png" id="14_sdupg"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_w0mr3"]
+normal_texture = ExtResource("4_kdsd0")
 
 [sub_resource type="Animation" id="Animation_jex3y"]
 length = 0.001
@@ -95,7 +99,7 @@ grow_vertical = 2
 [node name="Planet" type="Sprite2D" parent="AnimatedBackground"]
 position = Vector2(171, 439)
 scale = Vector2(0.524609, 0.532812)
-texture = ExtResource("4_jex3y")
+texture = SubResource("CanvasTexture_w0mr3")
 script = ExtResource("5_euk5f")
 PlanetSprites = Array[Texture2D]([ExtResource("6_kdsd0"), ExtResource("7_w0mr3"), ExtResource("4_jex3y"), ExtResource("8_ytwc7"), ExtResource("9_0ncoa"), ExtResource("10_4pyop"), ExtResource("11_ervkh"), ExtResource("12_2qihr"), ExtResource("13_xwq8e"), ExtResource("14_sdupg")])
 
@@ -207,6 +211,17 @@ text = "• GOAL: Orbit planets to collect all the data and earn boosts."
 [node name="ExtraLabel" type="Label" parent="HowToPlayPanel/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
+
+[node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
+position = Vector2(1378, -349)
+skew = 0.507891
+energy = 1.1
+shadow_filter_smooth = 64.0
+height = 0.12
+max_distance = 100.0
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.196078, 0.196078, 0.196078, 1)
 
 [connection signal="pressed" from="PanelContainer/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/StartButton/TouchScreenButton" to="." method="_on_start_button_pressed"]
