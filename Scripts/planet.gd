@@ -224,7 +224,7 @@ func update_orbit_progress(accumulated_angle: float, completion_percentage: floa
 	# This loop creates the points for the visual arc.
 	for i in range(num_points + 1):
 		# This calculates the angle for each point of the arc.
-		var angle = start_angle + (float(i) / num_points) * progress * 2 * PI * completion_percentage * direction
+		var angle = start_angle + (float(i) / num_points) * progress * 2 * PI  * direction# * completion_percentage
 		# This converts the angle and radius into a 2D position.
 		var point = Vector2(cos(angle), sin(angle)) * orbit_radius
 		# This adds the calculated point to the line.
@@ -235,6 +235,7 @@ func flash_orbit_completion():
 	# This ensures the orbit progress indicator exists before flashing.
 	if not is_instance_valid(orbit_progress_indicator):
 		return
+
 
 	# This plays completion sound
 	MusicManager.play_audio_omni("UpUIBeep")

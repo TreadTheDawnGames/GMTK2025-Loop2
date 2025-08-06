@@ -41,7 +41,7 @@ var canSkip : bool = true
 
 @export var softlock_sensitivity = 50
 @export_category("Orbit Settings")
-@export_range(0.0, 1.0) var orbit_completion_percentage: float = 0.95 # 95%
+@export_range(0.0, 1.0) var orbit_completion_percentage: float = 0.5#0.95 # 95%
 
 @export var SoftlockTime : float = 2
 @export var DEBUG_DoLoseCondition : bool = true
@@ -504,6 +504,8 @@ func handle_orbit_tracking():
 			PointNumbers.display_number(1, point_numbers_origin.global_position, 0)
 		# Tells the planet to run its completion flash animation.
 		current_orbiting_planet.flash_orbit_completion()
+		orbit_start_angle = last_angle_to_planet
+		#current_orbiting_planet.start_orbit_progress_display(self)
 		# Gives the player one boost charge.
 		BoostCount += 1
 		# Plays the collectable sound effect.

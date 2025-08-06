@@ -185,6 +185,7 @@ script = ExtResource("5_audio")
 [node name="PointNumbersOrigin" type="Node2D" parent="."]
 
 [node name="AimLine" type="Line2D" parent="."]
+visible = false
 top_level = true
 position = Vector2(6, 1)
 points = PackedVector2Array(79, 6, 231, 29)
