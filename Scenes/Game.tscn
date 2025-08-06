@@ -19,6 +19,7 @@ num_planets = 450
 min_distance_between_planets = 1600.0
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.436317, 0.610524, 0.664657, 1)
 
 [node name="PauseAssistant" type="Node2D" parent="."]
 process_mode = 3

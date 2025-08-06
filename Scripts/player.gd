@@ -556,8 +556,8 @@ func launch() -> void:
 	# Uses the pre-calculated and stored aim vector.
 	var final_pull_vector = _current_aim_pull_vector
 	
-	# Sets the player's initial velocity based on the stored pull vector and launch power.
-	linear_velocity = final_pull_vector * launch_power * (2.0 if onPlanet else 1.0)
+	# Sets the player's initial velocity based on the stored pull vector and launch power.  THIS IS THE FREAKING LAUNCH CODE
+	linear_velocity = final_pull_vector * launch_power * (4.0 if onPlanet else 2.5)
 	
 	# Changes the state to LAUNCHED.
 	current_state = State.LAUNCHED
@@ -666,7 +666,7 @@ func create_straight_aim_line(power_percentage: float) -> void:
 
 # Creates a curved trajectory line accounting for gravity effects.
 func create_curved_trajectory_line(power_percentage: float) -> void:
-	# Calculates initial velocity for trajectory simulation.
+	# Calculates initial velocity for trajectory simulation
 	var initial_velocity = _current_aim_pull_vector * launch_power * (2.0 if onPlanet else 1.0)
 
 	# Simulates trajectory with physics.
