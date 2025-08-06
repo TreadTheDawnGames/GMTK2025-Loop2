@@ -133,7 +133,7 @@ shape = SubResource("CircleShape2D_ouapx")
 [node name="PointLight2D" type="PointLight2D" parent="." index="6"]
 position = Vector2(-16.0002, 16.0002)
 scale = Vector2(1.37375, 1.37375)
-color = Color(1, 0.427451, 1, 1)
+color = Color(0.780074, 0.71137, 0.437822, 1)
 energy = 4.97
 shadow_filter_smooth = 64.0
 texture = ExtResource("6_wkqme")

@@ -26,7 +26,7 @@ func setup_nebula(color_group_index: int):
 	var start_col = color_group_index * 3
 	
 	# This picks a random sprite from the 3 available for that color group.
-	var random_col = start_col + (randi() % 3)
+	#var random_col = start_col + (randi() % 3)
 	
 	#var region_x = random_col * SPRITE_WIDTH
 	sprite.frame = clamp(start_col + (randi() % 3), 0, sprite.hframes-1) #randi_range(0,sprite.hframes-1)

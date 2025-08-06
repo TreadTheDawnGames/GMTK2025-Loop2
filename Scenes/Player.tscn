@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cslq0v6w7x80a"]
+[gd_scene load_steps=21 format=3 uid="uid://cslq0v6w7x80a"]
 
 [ext_resource type="Script" uid="uid://dton838gyavdl" path="res://Scripts/player.gd" id="1_player"]
 [ext_resource type="Texture2D" uid="uid://b3yadhtuplhg2" path="res://Assets/kenney_space-shooter-extension/AAA-ChosenKenneySpace/spaceShips_001.png" id="2_ship_tex"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://dgc8vmme70xjb" path="res://addons/trail_2d/trail_2d.gd" id="4_52ee3"]
 [ext_resource type="Script" uid="uid://vv5wxkdlfjyc" path="res://Scripts/camera_shake.gd" id="4_camera"]
 [ext_resource type="Script" uid="uid://deew7a1ghrogw" path="res://Scripts/PlayerAudioHandler.gd" id="5_audio"]
+[ext_resource type="Texture2D" uid="uid://ceetw8dkqfdua" path="res://Assets/kenney_simple-space/AAA-ChosenKenney/ship_K.png" id="9_megsn"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_52ee3"]
 bounce = 43.4
@@ -40,6 +41,12 @@ colors = PackedColorArray(1, 0, 0, 1, 1, 1, 0, 1)
 [sub_resource type="Curve" id="Curve_megsn"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_megsn"]
+colors = PackedColorArray(0, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_megsn"]
+atlas = ExtResource("9_megsn")
 
 [node name="Player" type="RigidBody2D"]
 collision_layer = 3
@@ -176,3 +183,12 @@ script = ExtResource("5_audio")
 [node name="AudioListener2D" type="AudioListener2D" parent="."]
 
 [node name="PointNumbersOrigin" type="Node2D" parent="."]
+
+[node name="AimLine" type="Line2D" parent="."]
+top_level = true
+position = Vector2(6, 1)
+points = PackedVector2Array(79, 6, 231, 29)
+width = 40.0
+gradient = SubResource("Gradient_megsn")
+texture = SubResource("AtlasTexture_megsn")
+texture_mode = 1

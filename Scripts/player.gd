@@ -5,6 +5,7 @@ class_name Player
 @onready var trail_2d_1: Line2D = $CollisionShape2D/Node2D/Trail2D
 @onready var trail_2d_2: Line2D = $CollisionShape2D/Node2D2/Trail2D
 @onready var point_numbers_origin: Node2D = $PointNumbersOrigin
+@onready var aim_line: Line2D = $AimLine
 
 
 # This tracks the maximum number of skips the player can have.
@@ -201,6 +202,10 @@ func _input(ev: InputEvent) -> void:
 var clickTimer : SceneTreeTimer
 
 var singleTouchProcessed : bool = false
+var mouseReleased = true
+var initialClickPos : Vector2
+var aim_canceled : bool = false
+
 # This function is called every frame.
 func _process(_delta: float) -> void:
 	# Handles mobile touch inputs to determine player action.
@@ -235,27 +240,48 @@ func _process(_delta: float) -> void:
 	# Updates player's global position for background parallax.
 	Position = global_position
 
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
+		aim_canceled = true
+		current_state = State.READY_TO_AIM
+		update_aim_line()
+		line_2d.clear_points()
+		pass
+
 	## Debug input to reset the player's launch state.
 	#if (Input.is_action_just_pressed("DEBUG-RESET_LAUNCH")):
 		#Reset()
-	
 	# Handles left mouse button or single touch for aiming.
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) or SingleTouchDown:
-		# Starts aiming only when pressed and from the READY_TO_AIM state.
-		if current_state == State.READY_TO_AIM:
-			current_state = State.AIMING
-			# Immediately updates aim line for visual feedback.
-			update_aim_line()
-
+		if not aim_canceled:
+			if mouseReleased:
+				initialClickPos = GetGlobalClickPosition()
+				mouseReleased = false
+			# Starts aiming only when pressed and from the READY_TO_AIM state.
+			if current_state == State.READY_TO_AIM:
+				current_state = State.AIMING
+				# Immediately updates aim line for visual feedback.
+				update_aim_line()
+	else:
+		if(aim_canceled):
+			aim_canceled= false
+		mouseReleased = true
+		initialClickPos = Vector2.ZERO
+	
 	# Updates the aim line only while AIMING and the mouse button/touch is held.
 	if current_state == State.AIMING and (Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) or SingleTouchDown):
 		# Updates the aim line visuals and _current_aim_pull_vector.
 		update_aim_line()
 		
+		aim_line.clear_points()
+		aim_line.add_point((initialClickPos))
+		aim_line.add_point((GetGlobalClickPosition()))
+
+		
 		# Makes the ship face the mouse cursor while aiming.
-		var mouse_position = to_local(global_position) - to_local(GetGlobalClickPosition())
+		var mouse_position = to_local(initialClickPos) - to_local(GetGlobalClickPosition())
 		look_at(to_global(mouse_position))
-	
+	else:
+		aim_line.clear_points()
 	# Launches on mouse release while AIMING.
 	if current_state == State.AIMING and not ((Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) or SingleTouchDown)):
 		# Calls the function to launch the player using the stored aim vector.
@@ -560,9 +586,9 @@ func apply_boost() -> void:
 
 # This function draws and updates the aiming line.
 func update_aim_line() -> void:
-
+	
 	# Calculates the global vector from the player's current position to the current mouse position.
-	var pull_vector_from_player_to_mouse = global_position - GetGlobalClickPosition()
+	var pull_vector_from_player_to_mouse = initialClickPos - GetGlobalClickPosition()
 	# Clamps the vector's length to the max_pull_distance.
 	_current_aim_pull_vector = pull_vector_from_player_to_mouse.limit_length(max_pull_distance)
 
