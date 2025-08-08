@@ -1,7 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://h0vfnklanw5d"]
+[gd_scene load_steps=11 format=3 uid="uid://d3p8w14ggj0yl"]
 
-[ext_resource type="PackedScene" uid="uid://d0j2xqgs8463m" path="res://Scenes/Planet.tscn" id="1_xtc1m"]
-[ext_resource type="Texture2D" uid="uid://b6y5iuktvcwd4" path="res://Assets/kenney_planets/Planets/planet00.png" id="2_qlmj2"]
+[ext_resource type="PackedScene" uid="uid://d0j2xqgs8463m" path="res://Scenes/Planet.tscn" id="1_5nist"]
+[ext_resource type="Texture2D" uid="uid://bmb15u42kwkus" path="res://Assets/kenney_planets/Planets/planetTunnel.png" id="2_5nist"]
+[ext_resource type="Script" uid="uid://66xrnidec0jl" path="res://Scenes/planet_tunnel.gd" id="2_5obcg"]
+[ext_resource type="Texture2D" uid="uid://dvsna3s82htyr" path="res://Assets/Shaders/CircleNormalMap.png" id="3_4vlpe"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ngwap"]
 radius = 2200.0
@@ -59,11 +61,19 @@ shader_parameter/step4 = 0.264
 shader_parameter/step5 = 0.265
 shader_parameter/step6 = 0.266
 
+[sub_resource type="CanvasTexture" id="CanvasTexture_5obcg"]
+diffuse_texture = ExtResource("2_5nist")
+normal_texture = ExtResource("3_4vlpe")
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_s31nm"]
 radius = 871.001
 
-[node name="Planet5" instance=ExtResource("1_xtc1m")]
-gravity_strength = 4800.0
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5obcg"]
+size = Vector2(1646, 47)
+
+[node name="Planet4" instance=ExtResource("1_5nist")]
+script = ExtResource("2_5obcg")
+collectable_spawn_chance = 0.8
 
 [node name="CollisionShape2D" parent="." index="0"]
 shape = SubResource("CircleShape2D_ngwap")
@@ -76,7 +86,25 @@ material = SubResource("ShaderMaterial_k6nrp")
 
 [node name="Sprite" parent="." index="1"]
 scale = Vector2(1.7, 1.72)
-texture = ExtResource("2_qlmj2")
+texture = SubResource("CanvasTexture_5obcg")
+script = null
 
 [node name="CollisionShape2D" parent="AnimatableBody2D" index="0"]
 shape = SubResource("CircleShape2D_s31nm")
+disabled = true
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="AnimatableBody2D" index="1"]
+polygon = PackedVector2Array(-818, -282, 826, -272, 756, -432, 615, -617, 435, -755, 226, -841, 0, -871, -226, -841, -436, -754, -616, -617, -755, -435)
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="AnimatableBody2D" index="2"]
+polygon = PackedVector2Array(-822, 275, 821, 274, 755, 436, 617, 616, 435, 754, 225, 841, -1, 872, -224, 843, -438, 757, -615, 617, -755, 430)
+
+[node name="Area2D" type="Area2D" parent="." index="5"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="0"]
+position = Vector2(0, 276.5)
+shape = SubResource("RectangleShape2D_5obcg")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2D" index="1"]
+position = Vector2(0, -275.5)
+shape = SubResource("RectangleShape2D_5obcg")

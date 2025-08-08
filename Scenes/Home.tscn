@@ -2,12 +2,12 @@
 
 [ext_resource type="Script" uid="uid://bdfhql41tte7y" path="res://Scripts/HomePlanet.gd" id="1_homeplanet"]
 [ext_resource type="Texture2D" uid="uid://nkane6t2xqfq" path="res://Assets/kenney_space-shooter-extension/AAA-ChosenKenneySpace/FullStation.png" id="2_yx0ix"]
-[ext_resource type="Texture2D" uid="uid://cd3nqdixd30my" path="res://Assets/kenney_space-shooter-extension/AAA-ChosenKenneySpace/FullStation_normal.png" id="3_7i0kr"]
+[ext_resource type="Texture2D" uid="uid://du4hyay0axra6" path="res://Assets/kenney_space-shooter-extension/AAA-ChosenKenneySpace/FullStation_normalmap2.png" id="3_vtlm0"]
 [ext_resource type="Texture2D" uid="uid://bvuwwkt6a5ibd" path="res://Assets/kenney_space-shooter-extension/AAA-ChosenKenneySpace/FullStation_specular.png" id="4_67m2w"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_vtlm0"]
 diffuse_texture = ExtResource("2_yx0ix")
-normal_texture = ExtResource("3_7i0kr")
+normal_texture = ExtResource("3_vtlm0")
 specular_texture = ExtResource("4_67m2w")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_base_collider"]

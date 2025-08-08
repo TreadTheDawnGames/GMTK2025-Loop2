@@ -11,7 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://ceetw8dkqfdua" path="res://Assets/kenney_simple-space/AAA-ChosenKenney/ship_K.png" id="9_megsn"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_52ee3"]
-bounce = 43.4
+bounce = 8000.0
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_ksbbd"]
 diffuse_texture = ExtResource("2_ship_tex")

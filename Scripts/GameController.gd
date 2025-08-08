@@ -44,7 +44,8 @@ var victory_sequence_active: bool = false
 @export var planet_scenes: Array[PackedScene] = [
 	preload("res://Scenes/planet_small.tscn"),
 	preload("res://Scenes/planet_medium.tscn"),
-	preload("res://Scenes/planet_large.tscn")
+	preload("res://Scenes/planet_large.tscn"),
+	preload("res://Scenes/planet_tunnel.tscn")
 ]
 # The scene for the nebula visual effect.
 @export var nebula_scene: PackedScene = preload("res://Scenes/Planets/Nebula.tscn")
