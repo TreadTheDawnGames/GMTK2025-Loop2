@@ -116,7 +116,7 @@ shader_parameter/step6 = 0.266
 radius = 162.0
 
 [node name="Planet" instance=ExtResource("1_rk3qr")]
-gravity_strength = 1200.0
+gravity_strength = 2400.0
 
 [node name="CollisionShape2D" parent="." index="0"]
 shape = SubResource("CircleShape2D_hmd8h")

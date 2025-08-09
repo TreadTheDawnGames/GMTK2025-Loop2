@@ -58,6 +58,7 @@ freeze_mode = 1
 script = ExtResource("1_player")
 launch_power = 400.0
 max_pull_distance = 300.0
+boost_strength = 1500.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 rotation = -1.5708

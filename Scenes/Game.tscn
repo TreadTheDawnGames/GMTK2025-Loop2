@@ -13,13 +13,14 @@ bounce = 0.5
 
 [node name="Game" type="Node2D"]
 script = ExtResource("9_controller")
-num_nebula_clusters = 10
-num_nebulas = 30
+num_nebula_clusters = 20
+cluster_radius = 5000.0
+num_nebulas = 10
 num_planets = 450
 min_distance_between_planets = 1600.0
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-color = Color(0.252464, 0.335036, 0.309032, 1)
+color = Color(0.436317, 0.610524, 0.664657, 1)
 
 [node name="PauseAssistant" type="Node2D" parent="."]
 process_mode = 3
