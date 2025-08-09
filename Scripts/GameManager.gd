@@ -22,6 +22,10 @@ var current_level: int = 1
 
 var tutorials_enabled: bool = true
 
+#Whether to use the aim arrow and a signal to alert it's usage change
+signal UseAimArrow(yes_use : bool)
+var use_aim_arrow : bool = false
+
 enum GameState { MENU, PLAYING, WIN, LOSE }
 var current_game_state: GameState = GameState.MENU
 var IsMobile : bool

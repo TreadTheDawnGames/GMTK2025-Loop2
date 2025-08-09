@@ -2,6 +2,7 @@ extends Control
 @onready var color_slider: HSlider = $Panel/VBoxContainer/ColorSliderContainer/ColorSlider
 @onready var example_ship: Sprite2D = $Panel/VBoxContainer/ExampleShipContainer/ExampleShip
 @onready var player_audio_handler: PlayerAudioHandler = $PlayerAudioHandler
+@onready var use_aim_arrow_toggle: CheckBox = $Panel/VBoxContainer/HBoxContainer2/CheckBox2
 const CREDITS = preload("res://Scenes/UI/credits.tscn")
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -11,6 +12,9 @@ func _ready() -> void:
 	update_example_ship_color()
 	# Connect to GameManager signal for color changes
 	GameManager.ship_color_changed.connect(_on_ship_color_changed)
+	# Set initial tutorial toggle state
+	if use_aim_arrow_toggle:
+		use_aim_arrow_toggle.button_pressed = GameManager.use_aim_arrow
 
 
 # Called when the color slider value changes
@@ -44,4 +48,9 @@ func toggle_banger_music(ticked : bool):
 
 func _on_credits_button_pressed() -> void:
 	get_tree().root.add_child(CREDITS.instantiate())
+	pass # Replace with function body.
+
+func _use_aim_arrow_toggled(toggled_on: bool) -> void:
+	GameManager.use_aim_arrow = toggled_on
+	GameManager.UseAimArrow.emit(toggled_on)
 	pass # Replace with function body.

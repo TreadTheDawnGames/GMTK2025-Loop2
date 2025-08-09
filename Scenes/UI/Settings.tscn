@@ -110,6 +110,12 @@ layout_mode = 2
 text = "banger music"
 script = ExtResource("5_kg15k")
 
+[node name="CheckBox2" type="CheckBox" parent="Panel/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Use aim arrow"
+script = ExtResource("5_kg15k")
+
 [node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
 layout_mode = 2
 
@@ -123,7 +129,7 @@ metadata/_custom_type_script = "uid://c1e04v6b22eli"
 
 [node name="BackButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer" groups=["Button"]]
 modulate = Color(1, 0.9, 0.9, 1)
-custom_minimum_size = Vector2(200, 50)
+custom_minimum_size = Vector2(207, 50)
 layout_mode = 2
 text = "CLOSE"
 script = ExtResource("5_kg15k")
@@ -134,5 +140,6 @@ metadata/_custom_type_script = "uid://deew7a1ghrogw"
 
 [connection signal="value_changed" from="Panel/VBoxContainer/ColorSliderContainer/ColorSlider" to="." method="_on_color_slider_value_changed"]
 [connection signal="toggled" from="Panel/VBoxContainer/HBoxContainer2/CheckBox" to="." method="toggle_banger_music"]
+[connection signal="toggled" from="Panel/VBoxContainer/HBoxContainer2/CheckBox2" to="." method="_use_aim_arrow_toggled"]
 [connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/CreditsButton" to="." method="_on_credits_button_pressed"]
 [connection signal="pressed" from="Panel/VBoxContainer/HBoxContainer/BackButton" to="." method="_on_back_button_pressed"]

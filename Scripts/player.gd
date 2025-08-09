@@ -142,6 +142,8 @@ func _ready() -> void:
 	origin_position = global_position
 	# Applies ship color from GameManager
 	apply_ship_color()
+	aim_line.visible = GameManager.use_aim_arrow
+	GameManager.UseAimArrow.connect(func(use): aim_line.visible = use)
 	# Connects to color change signal
 	GameManager.ship_color_changed.connect(_on_ship_color_changed)
 	GameManager.reset_score()
@@ -240,7 +242,7 @@ func _process(_delta: float) -> void:
 	# Updates player's global position for background parallax.
 	Position = global_position
 
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT):
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT) and onPlanet:
 		aim_canceled = true
 		current_state = State.READY_TO_AIM
 		update_aim_line()
