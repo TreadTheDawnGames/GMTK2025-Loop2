@@ -15,6 +15,7 @@ const FloatingNumber = preload("res://Scenes/UI/FloatingNumber.tscn")
 @onready var boosts_label: Label = $BoostsLabel
 
 @onready var collectable_counter: CollectableCounter = $CollectableCounter
+@onready var mobile_controls: MobileControls = $MobileControls
 
 # This stores references to game objects.
 var player: Player

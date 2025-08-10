@@ -64,7 +64,8 @@ func _on_tutorial_finished():
 	if not tutorial_queue.is_empty():
 		var next_tutorial = tutorial_queue.pop_front()
 		# This calls the show function again to display the next tutorial.
-		show_tutorial_once(next_tutorial.id, next_tutorial.message, next_tutorial.parent)
+		if(is_instance_valid(next_tutorial.id) and is_instance_valid(next_tutorial.message) and is_instance_valid(next_tutorial.parent)):
+			show_tutorial_once(next_tutorial.id, next_tutorial.message, next_tutorial.parent)
 
 
 # This shows the first orbit tutorial

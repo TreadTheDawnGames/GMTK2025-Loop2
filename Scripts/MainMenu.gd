@@ -24,7 +24,7 @@ func _ready():
 # Called when Settings button is pressed
 func _on_settings_button_pressed() -> void:
 	#SlideTransition.EmitOnHalfway()
-	## Load the Settings scene
+	# Load the Settings scene
 	#SlideTransition.Halfway.connect(func(): 
 		#get_tree().change_scene_to_file("res://Scenes/UI/Settings.tscn")
 		#)

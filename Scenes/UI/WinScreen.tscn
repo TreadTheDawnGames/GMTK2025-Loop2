@@ -1,11 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://c483p85jd82im"]
+[gd_scene load_steps=9 format=3 uid="uid://c483p85jd82im"]
 
 [ext_resource type="Theme" uid="uid://dvwgvp8u8xo0i" path="res://Scenes/UI/Themes/UI_Theme.tres" id="1_femvg"]
 [ext_resource type="Script" uid="uid://p432xwmpien4" path="res://Scripts/WinScreen.gd" id="1_win_screen"]
-[ext_resource type="Script" path="res://Scenes/UI/your_score.gd" id="3_2tjps"]
+[ext_resource type="Script" uid="uid://wuua7oqwf6au" path="res://Scenes/UI/your_score.gd" id="3_2tjps"]
 [ext_resource type="Script" uid="uid://c1e04v6b22eli" path="res://Scripts/Shop/button_sounds.gd" id="3_pj8m8"]
-[ext_resource type="Script" path="res://Scripts/UI/high_score_label.gd" id="4_3i2rc"]
-[ext_resource type="Script" path="res://Scenes/UI/bestCombo.gd" id="5_dhi7o"]
+[ext_resource type="Script" uid="uid://bf7scr8t0oybb" path="res://Scripts/UI/high_score_label.gd" id="4_3i2rc"]
+[ext_resource type="Script" uid="uid://cjkkfcvmfftea" path="res://Scenes/UI/bestCombo.gd" id="5_dhi7o"]
 
 [sub_resource type="Shader" id="Shader_femvg"]
 code = "shader_type canvas_item;
@@ -81,12 +81,6 @@ shader_parameter/smallStarAmount = 0.002
 shader_parameter/mediumStarAmount = 0.01
 shader_parameter/bigStarAmount = 0.02
 shader_parameter/circleRadius = 200.0
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_pj8m8"]
-size = Vector2(200, 50)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_2tjps"]
-size = Vector2(200, 50)
 
 [node name="EndScreen" type="Control"]
 layout_mode = 3
@@ -195,19 +189,11 @@ layout_mode = 2
 text = "PLAY AGAIN"
 script = ExtResource("3_pj8m8")
 
-[node name="RestartTouchButton" type="TouchScreenButton" parent="PanelContainer/VBoxContainer"]
-position = Vector2(100, 61)
-shape = SubResource("RectangleShape2D_pj8m8")
-
 [node name="MenuButton" type="Button" parent="PanelContainer/VBoxContainer" groups=["Button"]]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 text = "MAIN MENU"
 script = ExtResource("3_pj8m8")
-
-[node name="MenuTouchButton" type="TouchScreenButton" parent="PanelContainer/VBoxContainer"]
-position = Vector2(100, 115)
-shape = SubResource("RectangleShape2D_2tjps")
 
 [node name="HighScore" type="Label" parent="."]
 layout_mode = 0
@@ -215,6 +201,4 @@ offset_right = 40.0
 offset_bottom = 18.0
 
 [connection signal="pressed" from="PanelContainer/VBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
-[connection signal="pressed" from="PanelContainer/VBoxContainer/RestartTouchButton" to="." method="_on_restart_button_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/MenuButton" to="." method="_on_menu_button_pressed"]
-[connection signal="pressed" from="PanelContainer/VBoxContainer/MenuTouchButton" to="." method="_on_menu_button_pressed"]

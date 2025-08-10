@@ -17,6 +17,7 @@ func _ready() -> void:
 		use_aim_arrow_toggle.button_pressed = GameManager.use_aim_arrow
 
 
+
 # Called when the color slider value changes
 func _on_color_slider_value_changed(value: float) -> void:
 	# Update GameManager with new hue value

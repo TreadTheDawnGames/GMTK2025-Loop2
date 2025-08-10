@@ -13,14 +13,12 @@ layout_mode = 2
 button_pressed = true
 script = ExtResource("2_rmt3s")
 
-[node name="Label" type="Label" parent="."]
-custom_minimum_size = Vector2(100, 0)
+[node name="Control" type="Control" parent="."]
 layout_mode = 2
-size_flags_horizontal = 0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-text = "- Master"
+size_flags_horizontal = 3
 
 [node name="HSlider2" type="HSlider" parent="."]
+custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1

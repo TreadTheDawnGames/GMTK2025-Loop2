@@ -20,7 +20,7 @@ var original_trail_color: Color = Color.WHITE
 var braking_trail_color: Color = Color(0.8, 0.2, 0.2, 0.8) # Dull red
 var boost_trail_color: Color = Color(0, 1, 1, 1) # Bright cyan
 var trail_effect_tween: Tween
-var hud #= get_tree().root.get_node("Game/HUDLayer/GameHUD")
+var hud : GameHUD #= get_tree().root.get_node("Game/HUDLayer/GameHUD")
 
 # This defines a set of named states for the player's state machine.
 enum State {
@@ -29,7 +29,6 @@ enum State {
 	LAUNCHED
 }
 
-var mobileBrake : bool = false
 
 # A cooldown for launching. TTDG: I use it to make sure releasing fast doesn't use a boost.
 const LAUNCH_COOLDOWN_TIME : float = 0.3
@@ -105,7 +104,7 @@ var BoostCount: int = 3:
 var _current_aim_pull_vector: Vector2 = Vector2.ZERO
 
 # Stores whether a single touch is happening on mobile.
-var SingleTouchDown : bool = false
+var any_fingies_down : bool = false
 
 # Lose condition variables
 static var max_distance_from_origin: float = 35000.0  # Maximum distance before losing
@@ -136,6 +135,15 @@ var orbit_start_angle: float = 0.0  # Angle where orbit started
 func _ready() -> void:
 	hud = get_tree().root.get_node("Game/HUDLayer/GameHUD")
 	TutorialManager.show_how_to_play(hud)
+	
+	#setup mobile boost/brake buttons
+	hud.mobile_controls.primary.pressed.connect(func(): 
+		if(current_state == State.LAUNCHED):
+			mobileBoost = true)
+	hud.mobile_controls.secondary.pressed.connect(func(): 
+		if(current_state == State.LAUNCHED):
+			mobileBrake = true)
+		
 	# setup damp mode
 	linear_damp_mode = RigidBody2D.DAMP_MODE_COMBINE
 	# Stores starting position as origin
@@ -212,26 +220,33 @@ var singleTouchProcessed : bool = false
 var mouseReleased = true
 var initialClickPos : Vector2
 var aim_canceled : bool = false
-
+var mobileBrake : bool = false
+var mobileBoost : bool = false
+var has_boosted_this_touch : bool = false
 func process_mobile_input():
 	if(GameManager.IsMobile):
-		match TouchHelper.state.size():
-			0: # No touches
-				mobileBrake = false
-				SingleTouchDown = false
-				singleTouchProcessed = false
+		if TouchHelper.state.size() == 0 and (mobileBrake):
+			mobileBrake = false
+	
+		if(current_state == State.READY_TO_AIM or current_state == State.AIMING):
+			any_fingies_down = TouchHelper.state.size() > 0
+		else:
+			any_fingies_down = false
+
+		#if TouchHelper.state.size() == 0:
+			#singleTouchProcessed = false
+			## No touches
+				##mobileBrake = false
+				##any_fingies_down = false
+			#modulate = Color.RED
 			
-			1: # One touch (for aiming/launching)
-				if(not singleTouchProcessed):
-					SingleTouchDown = true
-					singleTouchProcessed = true
-				#clickTimer = get_tree().create_timer(CLICK_TIME)
-				
-				# Converts screen touch position to world position.
-				var screen_position = TouchHelper.state.values()[0]
-				var canvas_transform = get_viewport().get_canvas_transform()
-				var world_position = canvas_transform.affine_inverse() * screen_position
-				mobilePosition = world_position
+		if (any_fingies_down):
+			#if(not singleTouchProcessed):
+			# One touch (for aiming/launching)
+			var screen_position = TouchHelper.state.values()[0]
+			var canvas_transform = get_viewport().get_canvas_transform()
+			var world_position = canvas_transform.affine_inverse() * screen_position
+			mobilePosition = world_position
 	return
 
 # This function is called every frame.
@@ -250,6 +265,7 @@ func _process(_delta: float) -> void:
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT) and onPlanet:
 		aim_canceled = true
 		current_state = State.READY_TO_AIM
+		hud.mobile_controls.set_ready_to_launch(false)
 		update_aim_line()
 		line_2d.clear_points()
 		pass
@@ -258,27 +274,41 @@ func _process(_delta: float) -> void:
 	#if (Input.is_action_just_pressed("DEBUG-RESET_LAUNCH")):
 		#Reset()
 	# Handles left mouse button or single touch for aiming.
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) or SingleTouchDown:
-		if not aim_canceled:
-			if mouseReleased:
-				if (current_state == State.LAUNCHED):
-					apply_boost()
-				else:
-					initialClickPos = GetGlobalClickPosition()
-				mouseReleased = false
-			# Starts aiming only when pressed and from the READY_TO_AIM state.
+	if(not GameManager.IsMobile):
+		if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
+			if not aim_canceled:
+				if mouseReleased:
+					if (current_state == State.LAUNCHED):
+						apply_boost()
+					else:
+						initialClickPos = GetGlobalClickPosition()
+					mouseReleased = false
+				# Starts aiming only when pressed and from the READY_TO_AIM state.
+				if current_state == State.READY_TO_AIM:
+					current_state = State.AIMING
+					# Immediately updates aim line for visual feedback.
+					update_aim_line()
+		else:
+			if(aim_canceled):
+				aim_canceled= false
+			mouseReleased = true
+			initialClickPos = Vector2.ZERO
+	else:
+		if any_fingies_down:
 			if current_state == State.READY_TO_AIM:
+				initialClickPos = GetGlobalClickPosition()
 				current_state = State.AIMING
 				# Immediately updates aim line for visual feedback.
 				update_aim_line()
-	else:
-		if(aim_canceled):
-			aim_canceled= false
-		mouseReleased = true
-		initialClickPos = Vector2.ZERO
+			pass
+		if(current_state == State.LAUNCHED and mobileBoost and canBoost):
+			apply_boost()
+			has_boosted_this_touch = true
+			mobileBoost = false
+	
 	
 	# Updates the aim line only while AIMING and the mouse button/touch is held.
-	if current_state == State.AIMING and (Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) or SingleTouchDown):
+	if current_state == State.AIMING and (Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) or any_fingies_down):
 		# Updates the aim line visuals and _current_aim_pull_vector.
 		update_aim_line()
 		
@@ -293,12 +323,13 @@ func _process(_delta: float) -> void:
 	else:
 		aim_line.clear_points()
 	# Launches on mouse release while AIMING.
-	if current_state == State.AIMING and not ((Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) or SingleTouchDown)):
+	if current_state == State.AIMING and not ((Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) or any_fingies_down)):
 		# Calls the function to launch the player using the stored aim vector.
 		launch()
+		hud.mobile_controls.set_ready_to_launch(false)
 		
 	## Checks for a quick click to apply a boost.
-	#if((Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)or SingleTouchDown) and current_state == State.LAUNCHED):
+	#if((Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT)or any_fingies_down) and current_state == State.LAUNCHED):
 		##this shouldn't need a timer to detect when the mouse is down, we want to detect when it's lifted.  It shouldn't matter because of the state the player is in.
 		##if clickTimer and clickTimer.time_left > 0 and BoostCount > 0 and canBoost:
 			#apply_boost()
@@ -445,11 +476,11 @@ func _physics_process(_delta: float) -> void:
 		# Makes the rocket point in the direction it's moving.
 		if linear_velocity.length() > 0.01:
 			rotation = linear_velocity.angle()
-		# Checks if the boost is available and the user pressed the boost action.
+		# Checks if the boost is available and the user pressed the boost action (for keyboard).
 		if BoostCount > 0 and Input.is_action_just_pressed("boost"):
 			apply_boost()
 		# Checks for the brake action (keyboard, right mouse, or mobile).
-		if(Input.is_action_pressed("brake") or Input.is_mouse_button_pressed(MOUSE_BUTTON_RIGHT) or mobileBrake):
+		if(Input.is_action_pressed("brake") or mobileBrake):
 			linear_damp = 5
 			apply_braking_trail_effect()
 		else:
@@ -625,6 +656,7 @@ func update_aim_line() -> void:
 func Reset():
 	Sprite.frame_coords.y = 0
 	current_state = State.READY_TO_AIM
+	hud.mobile_controls.set_ready_to_launch(false)
 	
 	accumulated_orbit_angle = 0.0
 	

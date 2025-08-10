@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://din50gkoucxpp"]
+[gd_scene load_steps=21 format=3 uid="uid://din50gkoucxpp"]
 
 [ext_resource type="Script" uid="uid://ew10v6pbwxv6" path="res://Scripts/MainMenu.gd" id="1_main_menu"]
 [ext_resource type="Theme" uid="uid://dvwgvp8u8xo0i" path="res://Scenes/UI/Themes/UI_Theme.tres" id="1_mjmdf"]
@@ -57,15 +57,6 @@ _data = {
 &"RESET": SubResource("Animation_jex3y"),
 &"planet_drift": SubResource("Animation_k8um8")
 }
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_euk5f"]
-size = Vector2(223, 50)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_kdsd0"]
-size = Vector2(223, 50)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_w0mr3"]
-size = Vector2(223, 56)
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -153,19 +144,11 @@ layout_mode = 2
 text = "START GAME"
 script = ExtResource("4_t6w0q")
 
-[node name="TouchScreenButton" type="TouchScreenButton" parent="PanelContainer/VBoxContainer/StartButton"]
-position = Vector2(112, 25)
-shape = SubResource("RectangleShape2D_euk5f")
-
 [node name="SettingsButton" type="Button" parent="PanelContainer/VBoxContainer" groups=["Button"]]
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 text = "SETTINGS"
 script = ExtResource("4_t6w0q")
-
-[node name="TouchScreenButton" type="TouchScreenButton" parent="PanelContainer/VBoxContainer/SettingsButton"]
-position = Vector2(112, 25)
-shape = SubResource("RectangleShape2D_kdsd0")
 
 [node name="TutorialToggleContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
@@ -175,10 +158,6 @@ layout_mode = 2
 button_pressed = true
 text = "show tutorials"
 script = ExtResource("4_t6w0q")
-
-[node name="TouchScreenButton" type="TouchScreenButton" parent="PanelContainer/VBoxContainer/TutorialToggleContainer/TutorialToggle"]
-position = Vector2(112, 28)
-shape = SubResource("RectangleShape2D_w0mr3")
 
 [node name="HowToPlayPanel" type="PanelContainer" parent="."]
 visible = false
@@ -212,20 +191,27 @@ text = "• GOAL: Orbit planets to collect all the data and earn boosts."
 layout_mode = 2
 theme_override_font_sizes/font_size = 16
 
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -93.0
+offset_top = -121.0
+offset_right = 93.0
+offset_bottom = -103.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "MOBILE TEST BUILD"
+
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="."]
 position = Vector2(1378, -349)
-skew = 0.507891
-energy = 1.1
-shadow_filter_smooth = 64.0
-height = 0.12
-max_distance = 100.0
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-color = Color(0.196078, 0.196078, 0.196078, 1)
+color = Color(0.435294, 0.611765, 0.662745, 1)
 
 [connection signal="pressed" from="PanelContainer/VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
-[connection signal="pressed" from="PanelContainer/VBoxContainer/StartButton/TouchScreenButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
-[connection signal="released" from="PanelContainer/VBoxContainer/SettingsButton/TouchScreenButton" to="." method="_on_settings_button_pressed"]
 [connection signal="toggled" from="PanelContainer/VBoxContainer/TutorialToggleContainer/TutorialToggle" to="." method="_on_toggled"]
-[connection signal="pressed" from="PanelContainer/VBoxContainer/TutorialToggleContainer/TutorialToggle/TouchScreenButton" to="." method="_on_touch_screen_tutorial_button_pressed"]

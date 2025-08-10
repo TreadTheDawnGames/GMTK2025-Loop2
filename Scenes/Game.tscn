@@ -19,12 +19,12 @@ num_nebulas = 10
 num_planets = 450
 min_distance_between_planets = 1600.0
 
-[node name="CanvasModulate" type="CanvasModulate" parent="."]
-color = Color(0.436317, 0.610524, 0.664657, 1)
-
 [node name="PauseAssistant" type="Node2D" parent="."]
 process_mode = 3
 script = ExtResource("2_fgofq")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0.435294, 0.611765, 0.662745, 1)
 
 [node name="HUDLayer" type="CanvasLayer" parent="."]
 layer = 10
@@ -45,9 +45,6 @@ offset_bottom = 3132.0
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
 script = ExtResource("3_2irst")
-
-[node name="HUDLayer2" type="CanvasLayer" parent="."]
-layer = 10
 
 [node name="GeneratedNebulas" type="Node2D" parent="."]
 

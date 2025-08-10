@@ -23,6 +23,7 @@ var current_level: int = 1
 var tutorials_enabled: bool = true
 
 #Whether to use the aim arrow and a signal to alert it's usage change
+@warning_ignore("unused_signal")
 signal UseAimArrow(yes_use : bool)
 var use_aim_arrow : bool = false
 
@@ -31,7 +32,11 @@ var current_game_state: GameState = GameState.MENU
 var IsMobile : bool
 func _ready() -> void:
 	IsMobile = OS.has_feature("web_android") or OS.has_feature("web_ios")
-
+	if GameManager.IsMobile:
+		use_aim_arrow = true
+	else:
+		use_aim_arrow = false
+	
 	set_ship_color_from_hue(0.0)
 	best_combo = 0
 
