@@ -656,7 +656,7 @@ func update_aim_line() -> void:
 func Reset():
 	Sprite.frame_coords.y = 0
 	current_state = State.READY_TO_AIM
-	hud.mobile_controls.set_ready_to_launch(false)
+	hud.mobile_controls.set_ready_to_launch(true)
 	
 	accumulated_orbit_angle = 0.0
 	
