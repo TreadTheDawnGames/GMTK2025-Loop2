@@ -46,13 +46,13 @@ func _ready() -> void:
 	if notification_container:
 		notification_container.position = Vector2(get_viewport().size.x - 250, get_viewport().size.y - 100)
 
-func setup_references(player_ref: RigidBody2D, home_ref: Area2D, planets_ref: Array[Area2D]) -> void:
+func setup_references(player_ref: RigidBody2D, home_ref: Area2D, planets_ref: Array[Area2D], sun_ref: Area2D) -> void:
 	# This sets up references to core game nodes.
 	player = player_ref
 	game_controller = get_node("../../") as GameController
 
 	if compass:
-		compass.setup_compass(player, home_ref, planets_ref)
+		compass.setup_compass(player, home_ref, planets_ref, sun_ref)
 
 func _process(_delta: float) -> void:
 	# This does nothing if the player is not valid.

@@ -660,6 +660,7 @@ func Reset():
 	
 	accumulated_orbit_angle = 0.0
 	
+	current_skips_available = max_skips_per_orbit
 
 	# Resets scoring variables for new attempt.
 	points = 0

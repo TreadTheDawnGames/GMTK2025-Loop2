@@ -3,6 +3,27 @@ class_name HomePlanet
 
 @onready var Surface: Area2D = $ShopArea
 
+# --- Per-Planet Shop Inventory ---
+# This list can be configured in the editor for each HomePlanet instance.
+@export var shop_items_scenes: Array = [
+	preload("res://Scripts/Shop/StartingBoostsItem.gd"),
+	preload("res://Scripts/Shop/ExtraSkipItem.gd"),
+	preload("res://Scripts/Shop/OrbitCounterItem.gd")
+]
+var shop_items: Array[ShopItem] = [] # This will hold the actual item instances for this planet.
+
+func is_sold_out() -> bool:
+	if shop_items.is_empty():
+		return true # No items means it's "sold out".
+
+	for item in shop_items:
+		if item.max_purchases == -1: # Unlimited items can't sell out
+			return false
+		if item.current_purchases < item.max_purchases:
+			return false # Found an item that isn't maxed out.
+			
+	return true # All items are at max purchases.
+
 # Shop interaction variables
 var player_in_shop_range: bool = false
 var current_player: Player = null
@@ -16,6 +37,12 @@ var mouseOverShop = false
 func _ready() -> void:
 	# This calls the _ready function from the parent BasePlanet script.
 	super._ready()
+	
+	# Instantiate our unique shop items
+	for item_scene in shop_items_scenes:
+		if item_scene:
+			var item_instance = item_scene.new()
+			shop_items.append(item_instance)
 	
 	# This connects the signals for the shop interaction area.
 	if Surface:
@@ -97,7 +124,7 @@ func open_shop() -> void:
 		shop_ui.shop_closed.connect(_on_shop_closed)
 
 	if shop_ui and current_player:
-		shop_ui.open_shop(current_player)
+		shop_ui.open_shop(current_player, self) # Pass a reference to this HomePlanet instance
 		hide_shop_prompt()
 
 func close_shop() -> void:

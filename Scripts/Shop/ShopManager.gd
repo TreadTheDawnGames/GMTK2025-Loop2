@@ -45,23 +45,8 @@ func _ready():
 
 # This function creates instances of all the shop items.
 func initialize_shop_items():
-	# This creates an instance of the Starting Boosts item.
-	var boosts_item = StartingBoostsItem.new()
-	# This creates an instance of the Extra Skip item.
-	var extra_skip_item = ExtraSkipItem.new()
-	# This creates an instance of the Orbit Counter item.
-	var orbit_counter_item = OrbitCounterItem.new()
-
-	# The following items are commented out as requested to remove them from the shop.
-	#var magnet_item = MagnetItem.new()
-	#var gravity_upgrade_item = GravityUpgradeItem.new()
-	#var trajectory_item = TrajectoryPredictionItem.new()
-
-	# This populates the shop_items array with the items that should appear in the shop.
-	shop_items = [boosts_item, extra_skip_item, orbit_counter_item]
-
-	# This calls the function to create the UI elements for each item.
-	create_shop_ui()
+	# This function is no longer needed, as items are now managed by each HomePlanet.
+	pass
 
 # This function builds the UI for all items in the shop.
 func create_shop_ui():
@@ -69,7 +54,7 @@ func create_shop_ui():
 	for child in items_container.get_children():
 		child.queue_free()
 	
-	# This loops through each shop item and creates its UI representation.
+	# This loops through each shop item from the CURRENT planet and creates its UI representation.
 	for item in shop_items:
 		var item_ui = create_item_ui(item)
 		items_container.add_child(item_ui)
@@ -119,10 +104,12 @@ func create_item_ui(item: ShopItem) -> Control:
 	return item_container
 
 # This function opens the shop UI.
-func open_shop(player: Player):
+func open_shop(player: Player, from_planet: HomePlanet):
 	current_player = player
+	shop_items = from_planet.shop_items # Use the specific planet's inventory
 	visible = true
-	get_tree().paused = true # This pauses the main game simulation.
+	get_tree().paused = true
+	create_shop_ui() # Rebuild the UI with the new items
 	update_shop_display()
 
 # This function closes the shop UI.
@@ -179,7 +166,8 @@ func update_shop_display():
 # This function updates the score label with the current score from the GameManager.
 func update_score_display():
 	if score_label:
-		score_label.text = "Score: %d" % GameManager.get_score()
+		# Use the comma-separated string function for consistency with the main HUD.
+		score_label.text = "Score: " + GameHUD.comma_separated_string(GameManager.get_score())
 
 # This function is called when the GameManager's score changes.
 func _on_score_changed(_new_score: int):

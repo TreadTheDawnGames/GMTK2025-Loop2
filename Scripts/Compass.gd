@@ -11,6 +11,8 @@ var planet_icons: Array[TextureRect] = []
 var shop_icons: Array[TextureRect] = []
 # This is a new array for the collectable indicators.
 var collectable_indicator_icons: Array[TextureRect] = []
+var sun_icon: Control
+var sun: Area2D
 
 # --- Minimap Settings ---
 # The radius of the map circle in pixels.
@@ -32,12 +34,14 @@ func _ready():
 	background.modulate = Color(0.1, 0.1, 0.2, 0.8)
 	#setup_player_dot()
 
-func setup_compass(player_ref: RigidBody2D, home_ref: Area2D, planets_ref: Array[Area2D]):
+func setup_compass(player_ref: RigidBody2D, home_ref: Area2D, planets_ref: Array[Area2D], sun_ref: Area2D):
 	player = player_ref
 	home_planet = home_ref
 	planets = planets_ref
+	sun = sun_ref
 	create_planet_and_indicator_icons()
 	create_shop_icons()
+	create_sun_icon()
 
 #func setup_player_dot():
 	#if not player_dot:
@@ -101,6 +105,14 @@ func create_shop_icons():
 		planet_icons_container.add_child(shop_icon)
 		shop_icons.append(shop_icon)
 
+func create_sun_icon():
+	sun_icon = Control.new()
+	sun_icon.custom_minimum_size = Vector2(12, 12) # Initial size for the sun
+	sun_icon.pivot_offset = sun_icon.custom_minimum_size / 2
+	sun_icon.connect("draw", Callable(self, "_on_sun_icon_draw"))
+	planet_icons_container.add_child(sun_icon, false, Node.InternalMode.INTERNAL_MODE_DISABLED)
+	planet_icons_container.move_child(sun_icon, 0)
+
 func _process(_delta):
 	if not is_instance_valid(player) or not is_instance_valid(home_planet):
 		return
@@ -111,6 +123,8 @@ func update_map():
 	#update_icon_position(home_icon, home_planet.global_position, player_pos)
 	
 	center_ship.rotation = player.rotation + deg_to_rad(90)
+	
+	update_sun_icon_position(sun_icon, sun, player_pos)
 	
 	for i in range(min(planets.size(), planet_icons.size())):
 		if is_instance_valid(planets[i]) and is_instance_valid(planet_icons[i]):
@@ -176,16 +190,43 @@ func update_shop_icon_position(shop_icon: TextureRect, planet: Area2D, player_po
 	if not planet is HomePlanet:
 		shop_icon.visible = false
 		return
+		
 	shop_icon.visible = true
 	var planet_world_pos = planet.global_position
 	var relative_pos = planet_world_pos - player_pos
 	var map_pos = relative_pos * map_scale
+
 	if map_pos.length() > map_radius:
 		map_pos = map_pos.normalized() * map_radius
+
 	var offset = Vector2(8, -8)
 	shop_icon.position = map_pos + $CompassCenter.size / 2.0 + offset
 	var distance = player_pos.distance_to(planet_world_pos)
-	if distance < planet_range_threshold:
-		shop_icon.modulate = Color.CYAN #Color(0.8, 0.4, 0.0, 0.7)
+	
+	# New logic to check if the shop is sold out
+	if planet.is_sold_out():
+		shop_icon.modulate = Color.GRAY # Set to gray if sold out
 	else:
-		shop_icon.modulate = Color.DARK_CYAN
+		if distance < planet_range_threshold:
+			shop_icon.modulate = Color.CYAN
+		else:
+			shop_icon.modulate = Color.DARK_CYAN
+
+func update_sun_icon_position(p_sun_icon: Control, p_sun: Area2D, player_pos: Vector2):
+	var sun_world_pos = p_sun.global_position
+	var relative_pos = sun_world_pos - player_pos
+	var map_pos = relative_pos * map_scale
+
+	if map_pos.length() > map_radius:
+		map_pos = map_pos.normalized() * map_radius
+
+	p_sun_icon.position = map_pos + $CompassCenter.size / 2.0
+	
+	var distance = player_pos.distance_to(sun_world_pos)
+	var scale_factor = lerp(10.0, 0.5, clamp(distance / 10000.0, 0.0, 1.0)) # Adjust min/max scale as needed
+	p_sun_icon.custom_minimum_size = Vector2(12, 12) * scale_factor # Scale the size of the Control node
+	p_sun_icon.queue_redraw() # Trigger redraw to update circle size
+
+func _on_sun_icon_draw():
+	var icon_draw_size = sun_icon.size
+	sun_icon.draw_circle(Vector2(icon_draw_size.x / 2, icon_draw_size.y / 2), icon_draw_size.x / 2, Color.YELLOW)

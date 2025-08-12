@@ -26,6 +26,7 @@ var nebula_colors = [
 
 # This holds a reference to the home planet.
 var home_planet: HomePlanet
+var sun: Area2D
 # This holds references to all planets in the scene (static and generated).
 var all_planets: Array[Area2D] = []
 
@@ -96,7 +97,7 @@ func _ready() -> void:
 	print("Found ", all_planets.size(), " planets in the scene")
 
 	# Set up the HUD with references to the player and all found planets.
-	hud.setup_references(player, home_planet, all_planets)
+	hud.setup_references(player, home_planet, all_planets, self.sun)
 
 	# Connect to the signals of all collectables in the scene after a short delay.
 	call_deferred("connect_collectables")
@@ -175,10 +176,10 @@ func _generate_level():
 
 	# --- Step 2: Place the Sun at the Center ---
 	if is_instance_valid(sun_scene):
-		var sun = sun_scene.instantiate()
-		sun.global_position = Vector2.ZERO
-		generated_planets_node.add_child(sun)
-		placed_celestial_bodies.append(sun)
+		self.sun = sun_scene.instantiate()
+		self.sun.global_position = Vector2.ZERO
+		generated_planets_node.add_child(self.sun)
+		placed_celestial_bodies.append(self.sun)
 
 	# --- Step 4: Spawn Nebula CLUSTERS ---
 	var spawned_nebulas = []

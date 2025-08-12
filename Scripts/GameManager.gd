@@ -129,12 +129,27 @@ func set_game_state(new_state: GameState) -> void:
 func get_game_state() -> GameState:
 	return current_game_state
 
+# Resets all run-specific state for a new game.
+# Persists high scores and other cross-run data.
+func _reset_run_state() -> void:
+	# Reset score for the current run.
+	current_score = 0
+	score_changed.emit(current_score)
+	# Resets the player's level back to 1.
+	current_level = 1
+	# Resets the level goal calculation logic.
+	level_goal = 5 # Reset to base value
+	need_to_calculate_goal = true
+	# Clears tutorial tracking for the new run.
+	TutorialManager.reset_tutorials()
+
 func restart_game() -> void:
-	reset_score()
+	_reset_run_state() # Clear all run data before restarting.
 	set_game_state(GameState.PLAYING)
 	get_tree().change_scene_to_file("res://Scenes/Game.tscn")
 
 func go_to_main_menu() -> void:
+	_reset_run_state() # Also reset state when returning to the main menu.
 	set_game_state(GameState.MENU)
 	get_tree().change_scene_to_file("res://Scenes/UI/MainMenu.tscn")
 
