@@ -93,9 +93,9 @@ var BoostCount: int = 3:
 			Sprite.frame_coords.y = 1
 			$"BoostParticles-Explosion".Emit(true)
 			# This shows out of boosts tutorial (only when transitioning from >0 to 0)
-			if old_value > 0:
-				if hud:
-					TutorialManager.show_out_of_boosts_tutorial(hud)
+			#if old_value > 0:
+				#if hud:
+					#TutorialManager.show_out_of_boosts_tutorial(hud)
 		else:
 			# Sets the sprite frame to indicate boosts are available.
 			Sprite.frame_coords.y = 0
@@ -134,7 +134,7 @@ var orbit_start_angle: float = 0.0  # Angle where orbit started
 
 func _ready() -> void:
 	hud = get_tree().root.get_node("Game/HUDLayer/GameHUD")
-	TutorialManager.show_how_to_play(hud)
+	#TutorialManager.show_how_to_play(hud)
 	
 	#setup mobile boost/brake buttons
 	hud.mobile_controls.primary.pressed.connect(func(): 
@@ -434,8 +434,8 @@ func _physics_process(_delta: float) -> void:
 						onPlanet = true
 
 						# Shows a tutorial about landing to regain boosts.
-						if hud:
-							TutorialManager.show_land_for_boost_tutorial(hud)
+						#if hud:
+							#TutorialManager.show_land_for_boost_tutorial(hud)
 					else:
 						# This is the logic for colliding with a regular planet.
 						if(current_skips_available > 0) and collider.owner is not Asteroid:
@@ -489,8 +489,10 @@ func _physics_process(_delta: float) -> void:
 			if trail_effect_tween and trail_2d_1.default_color == braking_trail_color:
 				reset_trail_effects()
 			
-	# Calls the function to handle orbit progress tracking.
-	handle_orbit_tracking()
+	
+
+		# Calls the function to handle orbit progress tracking.
+		handle_orbit_tracking()
 	
 # This function tracks the player's progress around a planet.
 func handle_orbit_tracking():
@@ -498,6 +500,9 @@ func handle_orbit_tracking():
 	if not is_instance_valid(current_orbiting_planet):
 		return
 	
+	#Don't do anything if the orbited object doesn't allow points.
+	if(not current_orbiting_planet.has_points):
+		return
 	# Calculates the player's current angle relative to the planet's center.
 	var current_angle = (global_position - current_orbiting_planet.global_position).angle()
 	# Calculates how much the angle has changed since the last physics frame.
@@ -576,9 +581,9 @@ func start_orbiting(planet: BasePlanet):
 	audioHandler.PlaySoundAtGlobalPosition(Sounds.PingLow, global_position)
 	
 	# Shows the first-time orbit tutorial if it hasn't been shown yet.
-	if hud:
-		TutorialManager.show_first_orbit_tutorial(hud)
-		TutorialManager.show_orbit_for_extra_boost_tutorial(hud)
+	#if hud:
+		#TutorialManager.show_first_orbit_tutorial(hud)
+		#TutorialManager.show_orbit_for_extra_boost_tutorial(hud)
 
 # This function is called by a planet when the player leaves its gravity well.
 func stop_orbiting(planet: BasePlanet):

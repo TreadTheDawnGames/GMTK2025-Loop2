@@ -132,6 +132,7 @@ func get_game_state() -> GameState:
 # Resets all run-specific state for a new game.
 # Persists high scores and other cross-run data.
 func _reset_run_state() -> void:
+	best_combo = 0
 	# Reset score for the current run.
 	current_score = 0
 	score_changed.emit(current_score)

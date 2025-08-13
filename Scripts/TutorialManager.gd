@@ -16,10 +16,12 @@ const ORBIT_FOR_EXTRA_BOOST_MESSAGE = "You can also bounce on a planet to get an
 const WARNING_FOR_MOBILE = "Sol is best played in landscape mode."
 
 const HOW_TO_PLAY_1 = "Welcome to Sol! Drag the screen to launch your ship!"
-const HOW_TO_PLAY_2 = "Left click, spacebar, or tap to boost."
-const HOW_TO_PLAY_3 = "Right click, shift, or hold with two fingers to brake."
-const HOW_TO_PLAY_4 = "When on a station (like the one you spawned near), press \"E\" or click/tap it to open the shop."
+const HOW_TO_PLAY_2 = "Left click or spacebar to boost.\nRight click or shift to brake."
+const HOW_TO_PLAY_4 = "When on a station (like the one you spawned near), press \"E\" or click it to open the shop."
 const HOW_TO_PLAY_5 = "Try to loop as many unique planets as you can to maximize your score!"
+
+const HOW_TO_PLAY_2_MOBILE = "Tap the left side of the screen to boost.\nHold the right side to brake."
+const HOW_TO_PLAY_4_MOBILE = "When on a station (like the one you spawned near), tap it to open the shop."
 
 const BOOST_TO_CONTINUE = "You have boosts! Use them to continue."
 
@@ -87,12 +89,15 @@ func show_orbit_for_extra_boost_tutorial(parent: Node) -> void:
 func show_how_to_play(parent: Node):
 	if(GameManager.IsMobile):
 		show_tutorial_once("mobile_warning", WARNING_FOR_MOBILE, parent)
-	
-	show_tutorial_once("how_to_play_1", HOW_TO_PLAY_1, parent)
-	show_tutorial_once("how_to_play_2", HOW_TO_PLAY_2, parent)
-	show_tutorial_once("how_to_play_3", HOW_TO_PLAY_3, parent)
-	show_tutorial_once("how_to_play_4", HOW_TO_PLAY_4, parent)
-	show_tutorial_once("how_to_play_5", HOW_TO_PLAY_5, parent)
+		show_tutorial_once("how_to_play_1", HOW_TO_PLAY_1, parent)
+		show_tutorial_once("how_to_play_2_mobile", HOW_TO_PLAY_2_MOBILE, parent)
+		show_tutorial_once("how_to_play_4_mobile", HOW_TO_PLAY_4_MOBILE, parent)
+		show_tutorial_once("how_to_play_5", HOW_TO_PLAY_5, parent)
+	else:
+		show_tutorial_once("how_to_play_1", HOW_TO_PLAY_1, parent)
+		show_tutorial_once("how_to_play_2", HOW_TO_PLAY_2, parent)
+		show_tutorial_once("how_to_play_4", HOW_TO_PLAY_4, parent)
+		show_tutorial_once("how_to_play_5", HOW_TO_PLAY_5, parent)
 
 func show_stuck_with_boosts(parent: Node):
 	show_tutorial_once("stuck_on_planet", BOOST_TO_CONTINUE, parent)

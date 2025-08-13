@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://c4wdc114mt4gb"]
+[gd_scene load_steps=12 format=3 uid="uid://c4wdc114mt4gb"]
 
 [ext_resource type="Script" uid="uid://b4xtmjuj5up0a" path="res://Scripts/Planets/Satellite.gd" id="1_dyaci"]
 [ext_resource type="Texture2D" uid="uid://0l7e77brjgc0" path="res://Assets/kenney_space-shooter-extension/AAA-ChosenKenneySpace/spaceStation_018.png" id="2_qprvj"]
@@ -11,12 +11,23 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_7o7f1"]
 radius = 24.0
 
+[sub_resource type="Curve" id="Curve_uvdj0"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_ylh2v"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 1, 1, 1)
+
+[sub_resource type="Gradient" id="Gradient_3rkvr"]
+offsets = PackedFloat32Array(0, 0.282158)
+colors = PackedColorArray(0, 1, 1, 1, 1, 1, 1, 1)
+
 [node name="Satellite" type="Area2D"]
 scale = Vector2(2, 2)
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_dyaci")
-destruction_speed_threshold = 30200.0
+destruction_speed_threshold = 4000.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 scale = Vector2(3.00649, 3.00649)
@@ -24,17 +35,21 @@ shape = SubResource("CircleShape2D_7o7f1")
 
 [node name="ExplosionParticles" type="CPUParticles2D" parent="."]
 emitting = false
-amount = 25
-lifetime = 0.5
+amount = 150
+lifetime = 0.75
 one_shot = true
+speed_scale = 1.5
 explosiveness = 1.0
 spread = 180.0
 gravity = Vector2(0, 0)
 initial_velocity_min = 50.0
 initial_velocity_max = 150.0
-scale_amount_min = 2.0
-scale_amount_max = 4.0
+scale_amount_min = 15.0
+scale_amount_max = 20.0
+scale_amount_curve = SubResource("Curve_uvdj0")
 color = Color(0.8, 0.8, 0.8, 1)
+color_ramp = SubResource("Gradient_ylh2v")
+color_initial_ramp = SubResource("Gradient_3rkvr")
 
 [node name="PlayerAudioHandler" type="Node2D" parent="."]
 script = ExtResource("3_abcde")

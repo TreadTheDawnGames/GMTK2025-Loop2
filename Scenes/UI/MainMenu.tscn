@@ -150,7 +150,13 @@ layout_mode = 2
 text = "SETTINGS"
 script = ExtResource("4_t6w0q")
 
+[node name="HowToButton" type="Button" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "How to play"
+script = ExtResource("4_t6w0q")
+
 [node name="TutorialToggleContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+visible = false
 layout_mode = 2
 
 [node name="TutorialToggle" type="CheckBox" parent="PanelContainer/VBoxContainer/TutorialToggleContainer"]
@@ -192,6 +198,7 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 16
 
 [node name="Label" type="Label" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5

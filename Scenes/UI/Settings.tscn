@@ -121,7 +121,7 @@ script = ExtResource("5_kg15k")
 layout_mode = 2
 
 [node name="CreditsButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
-modulate = Color(0.9, 0.9, 0.9, 1)
+modulate = Color(0.74, 0.74, 0.74, 1)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "CREDITS"
@@ -129,7 +129,7 @@ script = ExtResource("5_kg15k")
 metadata/_custom_type_script = "uid://c1e04v6b22eli"
 
 [node name="BackButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer" groups=["Button"]]
-modulate = Color(1, 0.9, 0.9, 1)
+modulate = Color(1, 0.6, 0.6, 1)
 layout_mode = 2
 size_flags_horizontal = 3
 text = "CLOSE"

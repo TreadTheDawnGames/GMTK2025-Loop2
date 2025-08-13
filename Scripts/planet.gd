@@ -23,6 +23,8 @@ var bodies_in_gravity_field: Array[RigidBody2D] = []
 var current_orbiting_player: Player = null
 var orbit_radius: float = 0.0
 
+@export var has_points: bool = true
+
 # This section controls collectable spawning
 @export_group("Collectables")
 @export var can_have_collectable: bool = true
@@ -159,8 +161,9 @@ func _on_body_entered(body: Node2D) -> void:
 			# This adds the body to the array so gravity will affect it.
 			bodies_in_gravity_field.append(body)
 			if body is Player:
-				body.start_orbiting(self)
-				start_orbit_progress_display(body)
+				if(has_points):
+					body.start_orbiting(self)
+					start_orbit_progress_display(body)
 
 
 # This function runs when a body exits the Area2D's collision shape.

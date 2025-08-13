@@ -140,7 +140,7 @@ layout_mode = 2
 size_flags_horizontal = 8
 
 [node name="BackButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer" groups=["Button"]]
-modulate = Color(1, 0.9, 0.9, 1)
+modulate = Color(1, 0.6, 0.6, 1)
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 size_flags_horizontal = 8

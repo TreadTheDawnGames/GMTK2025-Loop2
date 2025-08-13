@@ -37,7 +37,6 @@ var mouseOverShop = false
 func _ready() -> void:
 	# This calls the _ready function from the parent BasePlanet script.
 	super._ready()
-	
 	# Instantiate our unique shop items
 	for item_scene in shop_items_scenes:
 		if item_scene:

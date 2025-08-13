@@ -1,7 +1,10 @@
 extends Control
 
 const SETTINGS = preload("res://Scenes/UI/Settings.tscn")
+@onready var how_to_button: Button = $PanelContainer/VBoxContainer/HowToButton
 
+const HOW_TO_PLAY = preload("res://Scenes/UI/how_to_play.tscn")
+var loaded_how_to
 
 # Called when Start Game button is pressed
 func _on_start_button_pressed() -> void:
@@ -18,8 +21,14 @@ func _ready():
 	if tutorial_toggle:
 		tutorial_toggle.button_pressed = GameManager.get_tutorials_enabled()
 	TutorialManager.tutorials_shown.clear()
+	
+	how_to_button.pressed.connect(create_how_to)
 
-
+func create_how_to():
+	if(not is_instance_valid(loaded_how_to)):
+		var scene = HOW_TO_PLAY.instantiate()
+		add_child(scene)
+	return
 
 # Called when Settings button is pressed
 func _on_settings_button_pressed() -> void:

@@ -40,7 +40,7 @@ shader_parameter/step4 = 0.264
 shader_parameter/step5 = 0.265
 shader_parameter/step6 = 0.266
 
-[sub_resource type="Shader" id="Shader_m5833"]
+[sub_resource type="Shader" id="Shader_q5dxo"]
 code = "//CC0 https://godotshaders.com/shader/radial-smooth-radial-gradient/
 shader_type canvas_item;
 render_mode blend_add; //Comment this if you want another render mode.
@@ -76,7 +76,7 @@ void fragment() {
 }"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_q5dxo"]
-shader = SubResource("Shader_m5833")
+shader = SubResource("Shader_q5dxo")
 shader_parameter/center = Vector2(0.5, 0.5)
 shader_parameter/size = 1.0
 shader_parameter/squishness = Vector2(1, 1)

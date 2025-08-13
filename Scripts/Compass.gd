@@ -213,7 +213,7 @@ func update_shop_icon_position(shop_icon: TextureRect, planet: Area2D, player_po
 			shop_icon.modulate = Color.DARK_CYAN
 
 func update_sun_icon_position(p_sun_icon: Control, p_sun: Area2D, player_pos: Vector2):
-	var sun_world_pos = p_sun.global_position
+	var sun_world_pos = p_sun.global_position - (p_sun_icon.get_rect().size*0.5)
 	var relative_pos = sun_world_pos - player_pos
 	var map_pos = relative_pos * map_scale
 

@@ -283,10 +283,10 @@ func start_victory_sequence():
 	if player:
 		player.apply_boost_trail_effect()
 	if hud:
-		TutorialManager.show_tutorial_once("victory_lap", "🎉 VICTORY LAP! All collectables found!", hud)
-	await get_tree().create_timer(3.0).timeout
-	Engine.time_scale = 1.0
-	GameManager.show_win_screen_with_stats(victory_stats)
+		TutorialManager.show_tutorial_once("victory_lap", "Congradulations! You found all the artifacts! You win, but you can continue to get points. Let us know if you beat level 100!", hud)
+	#await get_tree().create_timer(3.0).timeout
+	#Engine.time_scale = 1.0
+	#GameManager.show_win_screen_with_stats(victory_stats)
 
 func calculate_victory_stats():
 	victory_stats = {

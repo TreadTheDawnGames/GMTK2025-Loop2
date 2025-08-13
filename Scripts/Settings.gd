@@ -47,8 +47,11 @@ func toggle_banger_music(ticked : bool):
 		MusicManager.play_audio_omni("background_music")
 	return
 
+var instantiated_credits
 func _on_credits_button_pressed() -> void:
-	get_tree().root.add_child(CREDITS.instantiate())
+	if(not is_instance_valid(instantiated_credits)):
+		instantiated_credits = CREDITS.instantiate()
+		get_tree().root.add_child(instantiated_credits)
 	pass # Replace with function body.
 
 func _use_aim_arrow_toggled(toggled_on: bool) -> void:
